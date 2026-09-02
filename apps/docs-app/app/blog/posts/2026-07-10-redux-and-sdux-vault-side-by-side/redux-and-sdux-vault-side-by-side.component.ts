@@ -21,11 +21,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Redux and SDuX Vault Can Run Side by Side — Indefinitely"
-      date="2026-07-10"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="redux-and-sdux-vault-side-by-side">
       <header class="docs-header">
         <p class="lead">
           You do not have to choose. <sdux-brand-name /> runs alongside Redux in

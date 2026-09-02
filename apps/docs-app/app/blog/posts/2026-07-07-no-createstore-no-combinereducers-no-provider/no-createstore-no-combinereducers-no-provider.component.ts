@@ -24,11 +24,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines"
-      date="2026-07-07"
-      pillar="ED"
-      readingTime="4">
+    <sdux-blog-layout id="no-createstore-no-combinereducers-no-provider">
       <header class="docs-header">
         <p class="lead">
           Redux setup is a ceremony. You create a store, compose your reducers

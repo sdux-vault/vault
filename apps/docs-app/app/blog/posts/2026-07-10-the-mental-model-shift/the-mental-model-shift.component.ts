@@ -23,11 +23,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     PackageNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title='The Mental Model Shift — From "What Action Happened" to "What State Should Exist"'
-      date="2026-07-10"
-      pillar="TA"
-      readingTime="8">
+    <sdux-blog-layout id="the-mental-model-shift">
       <header class="docs-header">
         <p class="lead">
           Redux asks: <em>what action happened?</em> and derives state by

@@ -20,12 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     StackBlitzTryItLiveComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="React + Tab Sync: Render the Initial Snapshot Correctly"
-      date="2026-06-27"
-      pillar="SP"
-      [tryItNow]="false"
-      readingTime="3">
+    <sdux-blog-layout id="react-tab-sync-subscribe-before-initialize">
       <header class="docs-header">
         <p class="lead">
           React components render <sdux-brand-name /> Tab Sync State through

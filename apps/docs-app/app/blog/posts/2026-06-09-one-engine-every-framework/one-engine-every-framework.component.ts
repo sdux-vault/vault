@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="One State Engine. Every Framework."
-      date="2026-06-09"
-      pillar="TA"
-      readingTime="3">
+    <sdux-blog-layout id="one-engine-every-framework">
       <header class="docs-header">
         <p class="lead">
           Your state management shouldn't be married to your component

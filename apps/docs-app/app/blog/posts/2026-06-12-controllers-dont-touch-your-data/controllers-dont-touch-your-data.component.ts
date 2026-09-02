@@ -8,11 +8,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [BlogLayoutComponent, RouterModule, BrandNameComponent],
   template: `
-    <sdux-blog-layout
-      title="Controllers Don't Touch Your Data"
-      date="2026-06-12"
-      pillar="ED"
-      readingTime="3">
+    <sdux-blog-layout id="controllers-dont-touch-your-data">
       <header class="docs-header">
         <p class="lead">
           In most state libraries, middleware can do anything — transform data,

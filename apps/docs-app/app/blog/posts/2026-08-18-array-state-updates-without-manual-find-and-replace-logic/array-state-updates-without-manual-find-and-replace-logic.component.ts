@@ -24,11 +24,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   ],
   template: `
     <sdux-blog-layout
-      title="Array State Updates Without Manual Find-and-Replace Logic"
-      date="2026-08-18"
-      pillar="SP"
-      [tryItNow]="false"
-      readingTime="5">
+      id="array-state-updates-without-manual-find-and-replace-logic">
       <header class="docs-header">
         <p class="lead">
           Updating collection state should not mean rebuilding the same

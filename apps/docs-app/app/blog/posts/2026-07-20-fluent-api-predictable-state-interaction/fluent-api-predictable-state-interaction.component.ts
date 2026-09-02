@@ -18,11 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="The Fluent API That Makes State Interaction Predictable by Design"
-      date="2026-07-20"
-      pillar="TA"
-      readingTime="7">
+    <sdux-blog-layout id="fluent-api-predictable-state-interaction">
       <header class="docs-header">
         <p class="lead">
           Most state libraries hand you a grab-bag of loosely related functions

@@ -20,11 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability"
-      date="2026-07-15"
-      pillar="ED"
-      readingTime="5">
+    <sdux-blog-layout id="what-transfers-directly-from-redux">
       <header class="docs-header">
         <p class="lead">
           Moving from Redux to <sdux-brand-name /> is not starting over. The

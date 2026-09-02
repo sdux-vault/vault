@@ -10,11 +10,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [BlogLayoutComponent, RouterModule],
   template: `
-    <sdux-blog-layout
-      title="Welcome to the SDuX Vault Blog"
-      date="2026-06-01"
-      pillar="CE"
-      readingTime="3">
+    <sdux-blog-layout id="welcome">
       <header class="docs-header">
         <p class="lead">
           I've been building SDuX Vault for a while now, and I've learned that

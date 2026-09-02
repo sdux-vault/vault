@@ -25,11 +25,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Actions Are Ceremony — What Happens When You Remove Them"
-      date="2026-06-24"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="actions-are-ceremony">
       <header class="docs-header">
         <p class="lead">
           Redux actions were a breakthrough — explicit intent as data. But

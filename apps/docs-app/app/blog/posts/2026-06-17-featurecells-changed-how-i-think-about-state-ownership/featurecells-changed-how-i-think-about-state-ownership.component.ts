@@ -21,10 +21,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   ],
   template: `
     <sdux-blog-layout
-      title="FeatureCells™ Changed How I Think About State Ownership"
-      date="2026-06-17"
-      pillar="ED"
-      readingTime="5">
+      id="featurecells-changed-how-i-think-about-state-ownership">
       <header class="docs-header">
         <p class="lead">
           Every state library I used before

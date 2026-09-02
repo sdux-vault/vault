@@ -18,11 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Testing State Is 3 Steps. That's It."
-      date="2026-06-11"
-      pillar="TA"
-      readingTime="4">
+    <sdux-blog-layout id="testing-state-3-steps">
       <header class="docs-header">
         <p class="lead">
           How many lines of test setup does your state management need?

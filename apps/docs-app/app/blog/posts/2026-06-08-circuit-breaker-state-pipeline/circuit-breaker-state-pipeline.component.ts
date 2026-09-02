@@ -14,11 +14,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Circuit Breaker Pattern, Built Into Your State Pipeline"
-      date="2026-08-13"
-      pillar="ED"
-      readingTime="4">
+    <sdux-blog-layout id="circuit-breaker-state-pipeline">
       <header class="docs-header">
         <p class="lead">
           Every backend engineer knows the circuit breaker pattern: after N

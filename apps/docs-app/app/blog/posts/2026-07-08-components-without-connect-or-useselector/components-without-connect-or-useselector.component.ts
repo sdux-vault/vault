@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Components Without connect() or useSelector — Direct State Injection"
-      date="2026-07-08"
-      pillar="ED"
-      readingTime="5">
+    <sdux-blog-layout id="components-without-connect-or-useselector">
       <header class="docs-header">
         <p class="lead">
           Redux components wire to state through

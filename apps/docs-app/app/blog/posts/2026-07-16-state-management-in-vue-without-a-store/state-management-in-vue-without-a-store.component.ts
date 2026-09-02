@@ -26,11 +26,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     PackageNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="State Management in Vue Without a Store"
-      date="2026-07-16"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="state-management-in-vue-without-a-store">
       <header class="docs-header">
         <p class="lead">
           Reaching for Pinia or Vuex the moment two Vue components need to share

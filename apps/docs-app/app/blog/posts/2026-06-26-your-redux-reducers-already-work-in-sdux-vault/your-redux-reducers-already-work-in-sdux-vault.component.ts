@@ -23,11 +23,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Your Redux Reducers Already Work in SDuX Vault"
-      date="2026-06-26"
-      pillar="ED"
-      readingTime="6">
+    <sdux-blog-layout id="your-redux-reducers-already-work-in-sdux-vault">
       <header class="docs-header">
         <p class="lead">
           If your Redux reducer is pure, does not mutate, and preserves shape —

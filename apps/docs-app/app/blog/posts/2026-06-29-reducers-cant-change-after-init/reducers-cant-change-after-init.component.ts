@@ -18,11 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Reducers That Can't Change After Init — Why That's a Feature"
-      date="2026-06-29"
-      pillar="ED"
-      readingTime="6">
+    <sdux-blog-layout id="reducers-cant-change-after-init">
       <header class="docs-header">
         <p class="lead">
           Redux lets you dynamically inject, replace, and reorder reducers at

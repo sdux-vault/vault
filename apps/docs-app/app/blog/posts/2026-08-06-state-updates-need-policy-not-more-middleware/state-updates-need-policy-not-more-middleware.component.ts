@@ -20,11 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="State Updates Need Policy, Not More Middleware"
-      date="2026-08-06"
-      pillar="ED"
-      readingTime="9">
+    <sdux-blog-layout id="state-updates-need-policy-not-more-middleware">
       <header class="docs-header">
         <p class="lead">
           State computation and execution authority are different problems.

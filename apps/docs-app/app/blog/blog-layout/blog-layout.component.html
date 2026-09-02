@@ -5,13 +5,13 @@
     </div>
 
     <div class="blog-meta">
-      <span class="blog-date">{{ date() }}</span>
-      <span class="blog-reading-time">{{ readingTime() }} min read</span>
+      <span class="blog-date">{{ displayDate() }}</span>
+      <span class="blog-reading-time">{{ displayReadingTime() }} min read</span>
     </div>
   </div>
 
   <div class="header">
-    <h2>{{ title() }}</h2>
+    <h2>{{ displayTitle() }}</h2>
   </div>
 
   <ng-content />
@@ -38,7 +38,7 @@
     </section>
   }
 
-  <sdux-share-bar [title]="title()" [url]="shareUrl()" />
+  <sdux-share-bar [title]="displayTitle()" [url]="shareUrl()" />
 
   <sdux-blog-keep-reading />
 

@@ -17,11 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Mutation Bugs? Eliminated by Architecture"
-      date="2026-06-06"
-      pillar="TA"
-      readingTime="5">
+    <sdux-blog-layout id="mutation-bugs-eliminated">
       <header class="docs-header">
         <p class="lead">
           Most state management libraries tell you "don't mutate state."

@@ -16,11 +16,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Your State Updates Are Atomic and Deterministic"
-      date="2026-07-30"
-      pillar="TA"
-      readingTime="5">
+    <sdux-blog-layout id="atomic-deterministic-updates">
       <header class="docs-header">
         <p class="lead">
           How many bugs in your app are timing bugs? Race conditions.

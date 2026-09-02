@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     PackageNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="A FeatureCell in Plain JavaScript — No Framework, No Build Step"
-      date="2026-07-23"
-      pillar="TA"
-      readingTime="7">
+    <sdux-blog-layout id="a-featurecell-in-plain-javascript">
       <header class="docs-header">
         <p class="lead">
           Every state library markets itself as an accessory to a UI framework —
