@@ -7,104 +7,108 @@
 
   <div class="tutorial-layout">
     <nav class="tutorial-steps" aria-label="Tutorial steps">
-      @for (group of chapters; track group.id; let groupIndex = $index) {
-        <section
-          class="tutorial-group"
-          [attr.aria-labelledby]="'tutorial-group-' + group.id">
-          <div class="tutorial-steps-heading">
-            <h2
-              class="tutorial-steps-title"
-              [id]="'tutorial-group-' + group.id">
-              <a
-                [routerLink]="[]"
-                [fragment]="group.fragment"
-                [attr.aria-label]="
-                  getTutorialGroupAriaLabel(groupIndex, group.label)
-                ">
-                {{ groupIndex + 1 }}:
-                {{ group.label }}
-              </a>
-            </h2>
+      <div class="tutorial-chapters-title">Chapters</div>
 
-            <button
-              type="button"
-              class="tutorial-group-chevron"
-              [attr.aria-controls]="'tutorial-step-list-' + group.id"
-              [attr.aria-expanded]="isTutorialGroupExpanded(group.id)"
-              [matTooltip]="
-                getTutorialGroupToggleAriaLabel(
-                  group.label,
-                  isTutorialGroupExpanded(group.id)
-                )
-              "
-              [attr.aria-label]="
-                getTutorialGroupToggleAriaLabel(
-                  group.label,
-                  isTutorialGroupExpanded(group.id)
-                )
-              "
-              (click)="toggleTutorialGroup(group.id)">
-              <mat-icon aria-hidden="true">
-                {{
-                  isTutorialGroupExpanded(group.id)
-                    ? 'keyboard_arrow_down'
-                    : 'keyboard_arrow_right'
-                }}
-              </mat-icon>
-            </button>
-          </div>
-
-          @if (isTutorialGroupExpanded(group.id)) {
-            <div class="chapter-meta-group">
-              <div class="chapter-meta">
-                <strong>
-                  {{ group.metadata?.track }}
-                </strong>
-              </div>
-              <div class="chapter-meta">
-                Prerequisite:
-                {{ group.metadata?.prerequisite }}
-              </div>
-              <div class="chapter-meta">
-                <span class="difficulty">
-                  {{ group.metadata?.tier }}
-                </span>
-                ({{ group.metadata?.estimatedTime }})
-              </div>
-            </div>
-            <div
-              class="tutorial-step-list"
-              [id]="'tutorial-step-list-' + group.id">
-              @for (
-                step of group.steps;
-                track step.id;
-                let stepIndex = $index
-              ) {
-                <div
-                  class="tutorial-step-item"
-                  [class.tutorial-step-active]="
-                    isActiveStep(getStepId(groupIndex, stepIndex))
+      <div class="tutorial-steps-container">
+        @for (group of chapters; track group.id; let groupIndex = $index) {
+          <section
+            class="tutorial-group"
+            [attr.aria-labelledby]="'tutorial-group-' + group.id">
+            <div class="tutorial-steps-heading">
+              <h2
+                class="tutorial-steps-title"
+                [id]="'tutorial-group-' + group.id">
+                <a
+                  [routerLink]="[]"
+                  [fragment]="group.fragment"
+                  [attr.aria-label]="
+                    getTutorialGroupAriaLabel(groupIndex, group.label)
                   ">
-                  <span class="tutorial-step-number">
-                    {{ getStepId(groupIndex, stepIndex) }}.
-                  </span>
-                  <a
-                    [routerLink]="[]"
-                    [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
-                    [attr.aria-label]="
-                      getStepAriaLabel(groupIndex, stepIndex, step.label)
-                    "
-                    [attr.aria-current]="
-                      isAriaStep(getStepId(groupIndex, stepIndex))
-                    ">
-                    <span class="tutorial-step-label">{{ step.label }}</span>
-                  </a>
-                </div>
-              }
+                  {{ groupIndex + 1 }}.
+                  {{ group.label }}
+                </a>
+              </h2>
+
+              <button
+                type="button"
+                class="tutorial-group-chevron"
+                [attr.aria-controls]="'tutorial-step-list-' + group.id"
+                [attr.aria-expanded]="isTutorialGroupExpanded(group.id)"
+                [matTooltip]="
+                  getTutorialGroupToggleAriaLabel(
+                    group.label,
+                    isTutorialGroupExpanded(group.id)
+                  )
+                "
+                [attr.aria-label]="
+                  getTutorialGroupToggleAriaLabel(
+                    group.label,
+                    isTutorialGroupExpanded(group.id)
+                  )
+                "
+                (click)="toggleTutorialGroup(group.id)">
+                <mat-icon aria-hidden="true">
+                  {{
+                    isTutorialGroupExpanded(group.id)
+                      ? 'keyboard_arrow_down'
+                      : 'keyboard_arrow_right'
+                  }}
+                </mat-icon>
+              </button>
             </div>
-          }
-        </section>
-      }
+
+            @if (isTutorialGroupExpanded(group.id)) {
+              <div class="chapter-meta-group">
+                <div class="chapter-meta">
+                  <strong>
+                    {{ group.metadata?.track }}
+                  </strong>
+                </div>
+                <div class="chapter-meta">
+                  Prerequisite:
+                  {{ group.metadata?.prerequisite }}
+                </div>
+                <div class="chapter-meta">
+                  <span class="difficulty">
+                    {{ group.metadata?.tier }}
+                  </span>
+                  ({{ group.metadata?.estimatedTime }})
+                </div>
+              </div>
+              <div
+                class="tutorial-step-list"
+                [id]="'tutorial-step-list-' + group.id">
+                @for (
+                  step of group.steps;
+                  track step.id;
+                  let stepIndex = $index
+                ) {
+                  <div
+                    class="tutorial-step-item"
+                    [class.tutorial-step-active]="
+                      isActiveStep(getStepId(groupIndex, stepIndex))
+                    ">
+                    <span class="tutorial-step-number">
+                      {{ getStepId(groupIndex, stepIndex) }}.
+                    </span>
+                    <a
+                      [routerLink]="[]"
+                      [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
+                      [attr.aria-label]="
+                        getStepAriaLabel(groupIndex, stepIndex, step.label)
+                      "
+                      [attr.aria-current]="
+                        isAriaStep(getStepId(groupIndex, stepIndex))
+                      ">
+                      <span class="tutorial-step-label">{{ step.label }}</span>
+                    </a>
+                  </div>
+                }
+              </div>
+            }
+          </section>
+        }
+      </div>
     </nav>
 
     <main class="tutorial-content">
@@ -122,7 +126,7 @@
         </p>
 
         <p class="lead">
-          By the end of the page, you will have a typed
+          By the end of the tutorial, you will have a typed
           <sdux-feature-cell />, an Angular service that owns the Feature
           boundary, a component that binds to reactive State, and a complete
           character workflow that can render, select, create, update, delete,
@@ -162,46 +166,59 @@
           <p>
             This tutorial is written for Angular developers who already know
             standalone components, dependency injection, services, reactive
-            forms, Signals, and basic RxJS. No previous
-            <sdux-brand-name /> experience is required.
+            forms, Signals, and basic RxJS.
+          </p>
+          <p>
+            <em> No previous <sdux-brand-name /> experience is required. </em>
           </p>
 
           <div class="callout callout-info">
             <div class="title">Environment and Time</div>
             <ul>
               <li>
-                The checked-in tutorial baseline uses Node.js
-                {{ verifiedEnvironment.node }}, npm
-                {{ verifiedEnvironment.npm }}, Angular
-                {{ verifiedEnvironment.angular }},
-                <span class="code">&#64;sdux-vault/angular</span>
-                {{ verifiedEnvironment.sduxAngular }}, and
-                <span class="code">&#64;sdux-vault/addons</span>
-                {{ verifiedEnvironment.sduxAddons }}.
+                The checked-in tutorial baseline uses
+                <ul>
+                  <li>Node.js {{ verifiedEnvironment.node }}</li>
+                  <li>npm {{ verifiedEnvironment.npm }}</li>
+                  <li>Angular {{ verifiedEnvironment.angular }}</li>
+                  <li>
+                    <sdux-package-name
+                      [package]="'angular'"></sdux-package-name>
+                    {{ verifiedEnvironment.sduxAngular }}
+                  </li>
+                  <li>
+                    <sdux-package-name [package]="'addons'"></sdux-package-name>
+                    {{ verifiedEnvironment.sduxAddons }}
+                  </li>
+                </ul>
               </li>
               <li>
-                <strong>Last verified:</strong>
-                <time [attr.datetime]="verifiedEnvironment.verifiedOn">
-                  {{ verifiedEnvironment.verifiedOnLabel }} </time
-                >. The StackBlitz manifests use the latest published SDuX
-                packages; use versions compatible with the checked-in library
-                baseline when reproducing the tutorial locally.
+                The StackBlitz manifests use the latest published SDuX packages;
+                use versions compatible with the checked-in library baseline
+                when reproducing the tutorial locally.
               </li>
               <li>
-                Complete Chapters 1–7 for the core read, write, lifecycle,
-                transformation, and error-management path. Chapters 8–14 are
-                focused capability labs that you should adopt only when their
-                requirements match your application.
-              </li>
-              <li>
-                Allow roughly 60–90 minutes for Chapter 1 and 20–45 minutes for
-                each later chapter. Complex capability labs may take longer if
-                you explore every failure path.
-              </li>
-              <li>
-                Chapters 10 and 12 demonstrate Pro capabilities. Their chapter
-                introductions explain evaluation and production licensing before
-                you configure them.
+                Chapter Composition
+                <ul>
+                  <li>
+                    Complete Chapters 1–7 for the core read, write, lifecycle,
+                    transformation, and error-management path.
+                  </li>
+                  <li>
+                    Chapters 8–14 are focused optional labs that you should
+                    adopt only when their requirements match your application.
+                  </li>
+                  <li>
+                    Allow roughly 60–90 minutes for Chapter 1 and 20–45 minutes
+                    for each later chapter. Complex add-on labs may take longer
+                    if you explore every failure path.
+                  </li>
+                  <li>
+                    Chapters 10 and 12 demonstrate Pro capabilities. Their
+                    chapter introductions explain evaluation and production
+                    licensing before you configure them.
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -228,9 +245,7 @@
           </div>
 
           <div class="callout callout-warning">
-            <div class="title">
-              Capability Labs Are Choices, Not a Checklist
-            </div>
+            <div class="title">Add-on Labs Are Choices, Not a Checklist</div>
             <p>
               The complete tutorial makes many SDuX capabilities visible in one
               teaching application. A production feature rarely needs all of

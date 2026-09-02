@@ -20,6 +20,11 @@
     font-weight: global.$font-weight-semibold;
   }
 
+  ul,
+  ol {
+    padding-left: global.$spacing-md;
+  }
+
   // p {
   //   margin: global.$spacing-xs 0 0;
   // }

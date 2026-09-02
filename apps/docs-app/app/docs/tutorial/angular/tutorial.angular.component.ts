@@ -13,6 +13,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
   FeatureCellBrandNameComponent,
+  PackageNameComponent,
   SDuXVideoComponent
 } from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
@@ -71,7 +72,8 @@ import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.co
     StateIntrospectionChapterComponent,
     TabSyncChapterComponent,
     DistinctUntilChangedChapterComponent,
-    StepwiseChapterComponent
+    StepwiseChapterComponent,
+    PackageNameComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
@@ -83,9 +85,9 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     verifiedOnLabel: 'August 6, 2026',
     node: '24 or newer',
     npm: '11 or newer',
-    angular: '21.2.13',
-    sduxAngular: '1.0.6',
-    sduxAddons: '1.0.4'
+    angular: '21',
+    sduxAngular: 'latest',
+    sduxAddons: 'latest'
   } as const;
 
   readonly #route = inject(ActivatedRoute);
