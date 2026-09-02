@@ -27,22 +27,6 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
-    slug: 'testing-state-3-steps',
-    title: "Testing State Is 3 Steps. That's It.",
-    date: '2026-06-11',
-    readingTime: 4,
-    pillar: 'TA',
-    active: true
-  },
-  {
-    slug: 'ai-assisted-debugging',
-    title: 'AI-Assisted Debugging Reports',
-    date: '2026-06-10',
-    readingTime: 4,
-    pillar: 'SP',
-    active: true
-  },
-  {
     slug: 'one-engine-every-framework',
     title: 'One State Engine. Every Framework.',
     date: '2026-06-09',
@@ -51,43 +35,11 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
-    slug: 'circuit-breaker-state-pipeline',
-    title: 'Circuit Breaker Pattern, Built Into Your State Pipeline',
-    date: '2026-08-13',
+    slug: 'testing-state-3-steps',
+    title: "Testing State Is 3 Steps. That's It.",
+    date: '2026-06-11',
     readingTime: 4,
-    pillar: 'ED',
-    active: true
-  },
-  {
-    slug: 'pipeline-anatomy',
-    title: 'Pipeline Anatomy — What Happens When You Update State',
-    date: '2026-08-11',
-    readingTime: 8,
-    pillar: 'ED',
-    active: true
-  },
-  {
-    slug: 'atomic-deterministic-updates',
-    title: 'Your State Updates Are Atomic and Deterministic',
-    date: '2026-07-30',
-    readingTime: 5,
     pillar: 'TA',
-    active: true
-  },
-  {
-    slug: 'controllers-dont-touch-your-data',
-    title: "Controllers Don't Touch Your Data",
-    date: '2026-06-12',
-    readingTime: 3,
-    pillar: 'ED',
-    active: true
-  },
-  {
-    slug: 'tab-sync-state',
-    title: 'Open a New Tab. State Is Already There.',
-    date: '2026-06-12',
-    readingTime: 4,
-    pillar: 'SP',
     active: true
   },
   {
@@ -96,14 +48,6 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-06-16',
     readingTime: 8,
     pillar: 'TA',
-    active: true
-  },
-  {
-    slug: 'featurecells-changed-how-i-think-about-state-ownership',
-    title: 'FeatureCells™ Changed How I Think About State Ownership',
-    date: '2026-06-17',
-    readingTime: 5,
-    pillar: 'ED',
     active: true
   },
   {
@@ -334,6 +278,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
+    slug: 'atomic-deterministic-updates',
+    title: 'Your State Updates Are Atomic and Deterministic',
+    date: '2026-07-30',
+    readingTime: 5,
+    pillar: 'TA',
+    active: true
+  },
+  {
     slug: 'behaviors-are-why-the-pipeline-stays-predictable',
     title: 'Behaviors Are Why the Pipeline Stays Predictable',
     date: '2026-08-04',
@@ -350,6 +302,22 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
+    slug: 'pipeline-anatomy',
+    title: 'Pipeline Anatomy — What Happens When You Update State',
+    date: '2026-08-11',
+    readingTime: 8,
+    pillar: 'ED',
+    active: true
+  },
+  {
+    slug: 'circuit-breaker-state-pipeline',
+    title: 'Circuit Breaker Pattern, Built Into Your State Pipeline',
+    date: '2026-08-13',
+    readingTime: 4,
+    pillar: 'ED',
+    active: true
+  },
+  {
     slug: 'array-state-updates-without-manual-find-and-replace-logic',
     title: 'Array State Updates Without Manual Find-and-Replace Logic',
     date: '2026-08-18',
@@ -361,6 +329,38 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     slug: 'svelte-reactivity-without-a-second-state-subscription',
     title: 'Svelte Reactivity Without a Second State Subscription',
     date: '2026-08-20',
+    readingTime: 5,
+    pillar: 'ED',
+    active: true
+  },
+  {
+    slug: 'ai-assisted-debugging',
+    title: 'AI-Assisted Debugging Reports',
+    date: '2026-08-25',
+    readingTime: 4,
+    pillar: 'SP',
+    active: true
+  },
+  {
+    slug: 'tab-sync-state',
+    title: 'Open a New Tab. State Is Already There.',
+    date: '2026-08-27',
+    readingTime: 4,
+    pillar: 'SP',
+    active: true
+  },
+  {
+    slug: 'controllers-dont-touch-your-data',
+    title: "Controllers Don't Touch Your Data",
+    date: '2026-09-01',
+    readingTime: 3,
+    pillar: 'ED',
+    active: true
+  },
+  {
+    slug: 'featurecells-changed-how-i-think-about-state-ownership',
+    title: 'FeatureCells™ Changed How I Think About State Ownership',
+    date: '2026-09-03',
     readingTime: 5,
     pillar: 'ED',
     active: true
