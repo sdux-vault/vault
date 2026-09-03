@@ -15,7 +15,7 @@
             class="tutorial-group"
             [attr.aria-labelledby]="'tutorial-group-' + group.id">
             <div class="tutorial-steps-heading">
-              <h2
+              <div
                 class="tutorial-steps-title"
                 [id]="'tutorial-group-' + group.id">
                 <a
@@ -27,7 +27,7 @@
                   {{ groupIndex + 1 }}.
                   {{ group.label }}
                 </a>
-              </h2>
+              </div>
 
               <button
                 type="button"
@@ -158,9 +158,9 @@
       </header>
 
       <section class="section" aria-labelledby="before-you-begin-title">
-        <h2 class="section-title" id="before-you-begin-title">
+        <div class="section-title" id="before-you-begin-title">
           Before You Begin
-        </h2>
+        </div>
 
         <div class="section-body">
           <p>
@@ -258,24 +258,33 @@
       </section>
 
       <section class="section" aria-labelledby="mental-model-title">
-        <h2 class="section-title" id="mental-model-title">
+        <div class="section-title" id="mental-model-title">
           The SDuX Mental Model
-        </h2>
+        </div>
 
         <div class="section-body">
-          <p>
-            Keep this ownership path in mind throughout the tutorial. Angular UI
-            events call a feature service. The service is the only application
-            layer that configures and updates its <sdux-feature-cell />. The
-            pipeline resolves and shapes a candidate before committing a new
-            immutable snapshot. The component then reads that snapshot and
-            derives presentation state for the template.
-          </p>
+          <p>Keep this ownership path in mind throughout the tutorial.</p>
+          <ul>
+            <li>Angular UI events call a feature service.</li>
+            <li>
+              The service is the only application layer that configures and
+              updates its
+              <sdux-feature-cell />.
+            </li>
+            <li>
+              The pipeline resolves and shapes a candidate before committing a
+              new immutable snapshot.
+            </li>
+            <li>
+              The component then reads that snapshot and derives presentation
+              state for the template.
+            </li>
+          </ul>
 
           <pre class="code-inline"><code>Angular UI action
   → feature service method
   → FeatureCell request
-  → Resolve → Merge → Operators → Filters → Reducers → Emit
+  → FeatureCell pipeline execution
   → committed StateSnapshot
   → component Signal or Observable
   → template</code></pre>
@@ -285,10 +294,17 @@
             <ul>
               <li>
                 <strong>Structural registration:</strong>
-                <span class="code">provideVault()</span> creates the application
-                runtime and <span class="code">provideFeatureCell()</span>
-                registers a feature key, initial value, behaviors, and
-                controllers.
+                <ul>
+                  <li>
+                    <span class="code">provideVault()</span> creates the
+                    application runtime
+                  </li>
+                  <li>
+                    <span class="code">provideFeatureCell()</span>
+                    registers a feature key, initial value, behaviors, and
+                    controllers.
+                  </li>
+                </ul>
               </li>
               <li>
                 <strong>Service connection and configuration:</strong> the
@@ -335,7 +351,7 @@
       </section>
 
       <section class="diagram-section">
-        <h2 class="section-title"><sdux-brand-name /> in 5 Minutes</h2>
+        <div class="section-title"><sdux-brand-name /> in 5 Minutes</div>
 
         <div class="section-body">
           <p>
@@ -356,7 +372,9 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 1</p>
           <div class="chapter-header">
-            <h2 id="chapter-1-title">Foundation Flow</h2>
+            <div class="fake-div no-margin" id="chapter-1-title">
+              Foundation Flow
+            </div>
 
             <button
               type="button"
@@ -420,7 +438,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 2</p>
           <div class="chapter-header">
-            <h2 id="chapter-2-title">Multi-Select Flow</h2>
+            <div id="chapter-2-title">Multi-Select Flow</div>
 
             <button
               type="button"
@@ -485,7 +503,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 3</p>
           <div class="chapter-header">
-            <h2 id="chapter-3-title">Add/Edit Flow</h2>
+            <div id="chapter-3-title">Add/Edit Flow</div>
 
             <button
               type="button"
@@ -550,7 +568,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 4</p>
           <div class="chapter-header">
-            <h2 id="chapter-4-title">Delete Flow</h2>
+            <div id="chapter-4-title">Delete Flow</div>
 
             <button
               type="button"
@@ -616,7 +634,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 5</p>
           <div class="chapter-header">
-            <h2 id="chapter-5-title">Lifecycle Flow</h2>
+            <div id="chapter-5-title">Lifecycle Flow</div>
 
             <button
               type="button"
@@ -684,7 +702,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 6</p>
           <div class="chapter-header">
-            <h2 id="chapter-6-title">Filters and Reducers Flow</h2>
+            <div id="chapter-6-title">Filters and Reducers Flow</div>
 
             <button
               type="button"
@@ -749,7 +767,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 7</p>
           <div class="chapter-header">
-            <h2 id="chapter-7-title">Errors Flow</h2>
+            <div id="chapter-7-title">Errors Flow</div>
 
             <button
               type="button"
@@ -816,7 +834,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 8</p>
           <div class="chapter-header">
-            <h2 id="chapter-8-title">Async Input Flow</h2>
+            <div id="chapter-8-title">Async Input Flow</div>
 
             <button
               type="button"
@@ -883,7 +901,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 9</p>
           <div class="chapter-header">
-            <h2 id="chapter-9-title">Delay Controller Flow</h2>
+            <div id="chapter-9-title">Delay Controller Flow</div>
 
             <button
               type="button"
@@ -947,7 +965,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 10</p>
           <div class="chapter-header">
-            <h2 id="chapter-10-title">Encrypt and Persist Flow</h2>
+            <div id="chapter-10-title">Encrypt and Persist Flow</div>
             <button
               type="button"
               class="chapter-toggle"
@@ -1005,7 +1023,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 11</p>
           <div class="chapter-header">
-            <h2 id="chapter-11-title">State Introspection Flow</h2>
+            <div id="chapter-11-title">State Introspection Flow</div>
             <button
               type="button"
               class="chapter-toggle"
@@ -1064,7 +1082,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 12</p>
           <div class="chapter-header">
-            <h2 id="chapter-12-title">Tab Sync Flow</h2>
+            <div id="chapter-12-title">Tab Sync Flow</div>
             <button
               type="button"
               class="chapter-toggle"
@@ -1122,7 +1140,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 13</p>
           <div class="chapter-header">
-            <h2 id="chapter-13-title">Distinct Until Changed Flow</h2>
+            <div id="chapter-13-title">Distinct Until Changed Flow</div>
             <button
               type="button"
               class="chapter-toggle"
@@ -1179,7 +1197,7 @@
         <div class="chapter-copy">
           <p class="chapter-eyebrow">Chapter 14</p>
           <div class="chapter-header">
-            <h2 id="chapter-14-title">Stepwise Flow</h2>
+            <div id="chapter-14-title">Stepwise Flow</div>
             <button
               type="button"
               class="chapter-toggle"
@@ -1231,9 +1249,9 @@
         </div>
       </div>
       <section class="section" aria-labelledby="tutorial-complete-title">
-        <h2 class="section-title" id="tutorial-complete-title">
+        <div class="section-title" id="tutorial-complete-title">
           Tutorial Completion Checklist
-        </h2>
+        </div>
         <div class="section-body">
           <p>
             You have completed the curriculum when you can explain and verify

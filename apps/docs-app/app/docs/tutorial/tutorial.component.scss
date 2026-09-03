@@ -261,7 +261,7 @@
         }
 
         .chapter-toggle {
-          @include global.sdux-icon-button();
+          @include global.sdux-icon-button(24px);
 
           flex-shrink: 0;
         }
