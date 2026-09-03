@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   computed,
@@ -37,19 +38,7 @@ import { BlogKeepReadingComponent } from '../blog-keep-reading/blog-keep-reading
 })
 export class BlogLayoutComponent extends PipelineRoutingDirective {
   /** Blog entry slug used to populate metadata from BLOG_ENTRIES. */
-  readonly id = input<string>();
-
-  /** Blog post title displayed in the header. Overrides the entry title. */
-  readonly title = input<string>();
-
-  /** Publication date rendered in the meta bar. Overrides the entry date. */
-  readonly date = input<string>();
-
-  /** Content pillar code used for related-topic categorization. */
-  readonly pillar = input<string>();
-
-  /** Estimated reading time in minutes. Overrides the entry reading time. */
-  readonly readingTime = input<string>();
+  readonly id = input.required<string>();
 
   /** Try it now - default is true. */
   readonly tryItNow = input<boolean>(true);
@@ -57,39 +46,28 @@ export class BlogLayoutComponent extends PipelineRoutingDirective {
   /** Router instance used to derive the canonical share URL. */
   readonly #router = inject(Router);
 
+  /** Current document used to derive the active site's origin. */
+  readonly #document = inject(DOCUMENT);
+
   /** Blog entry resolved from the supplied id. */
   readonly #entry = computed<BlogEntry | undefined>(() => {
-    const id = this.id();
-    return id ? BLOG_ENTRIES.find((entry) => entry.slug === id) : undefined;
+    return BLOG_ENTRIES.find((entry) => entry.slug === this.id());
   });
 
-  /** Resolved title, using the explicit input before the entry metadata. */
-  readonly displayTitle = computed(
-    () => this.title() ?? this.#entry()?.title ?? this.#missingMetadata('title')
-  );
+  /** Resolved title from the blog entry metadata. */
+  readonly displayTitle = computed(() => this.#entry()?.title ?? '');
 
-  /** Resolved publication date, using the explicit input before the entry metadata. */
-  readonly displayDate = computed(
-    () => this.date() ?? this.#entry()?.date ?? this.#missingMetadata('date')
-  );
+  /** Resolved publication date from the blog entry metadata. */
+  readonly displayDate = computed(() => this.#entry()?.date ?? '');
 
-  /** Resolved reading time, using the explicit input before the entry metadata. */
-  readonly displayReadingTime = computed(() => {
-    const readingTime = this.readingTime() ?? this.#entry()?.readingTime;
-    return readingTime === undefined
-      ? this.#missingMetadata('readingTime')
-      : String(readingTime);
-  });
+  /** Resolved reading time from the blog entry metadata. */
+  readonly displayReadingTime = computed(() =>
+    String(this.#entry()?.readingTime ?? '')
+  );
 
   /** Canonical share URL constructed from the current route path. */
   readonly shareUrl = computed(() => {
     const path = this.#router.url.split('?')[0];
-    return `https://www.sdux-vault.com${path}`;
+    return `${this.#document.location?.origin}${path}`;
   });
-
-  #missingMetadata(field: string): never {
-    throw new Error(
-      `BlogLayoutComponent requires an ${field} input or a valid blog entry id.`
-    );
-  }
 }
