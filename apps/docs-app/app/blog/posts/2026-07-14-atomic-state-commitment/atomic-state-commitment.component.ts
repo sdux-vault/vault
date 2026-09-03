@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Atomic State Commitment — Why Components Never See Partial Updates"
-      date="2026-07-14"
-      pillar="ED"
-      readingTime="7">
+    <sdux-blog-layout id="atomic-state-commitment">
       <header class="docs-header">
         <p class="lead">
           In Redux, a selector can read intermediate state in the middle of a

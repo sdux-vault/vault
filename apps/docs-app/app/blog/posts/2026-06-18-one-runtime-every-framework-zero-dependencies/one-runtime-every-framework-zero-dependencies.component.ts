@@ -20,12 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     PackageNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="One Runtime, Every Framework, Zero Dependencies"
-      date="2026-06-18"
-      pillar="SP"
-      [tryItNow]="false"
-      readingTime="5">
+    <sdux-blog-layout id="one-runtime-every-framework-zero-dependencies">
       <header class="docs-header">
         <p class="lead">
           <sdux-brand-name /> 1.0 is here. A pure TypeScript state engine with

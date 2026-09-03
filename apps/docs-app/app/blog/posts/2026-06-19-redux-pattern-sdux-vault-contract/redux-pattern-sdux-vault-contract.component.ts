@@ -23,11 +23,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract"
-      date="2026-06-19"
-      pillar="RC"
-      readingTime="9">
+    <sdux-blog-layout id="redux-pattern-sdux-vault-contract">
       <header class="docs-header">
         <p class="lead">
           Redux defined how a generation of developers thinks about state

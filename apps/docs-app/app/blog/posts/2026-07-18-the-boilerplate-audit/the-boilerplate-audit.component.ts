@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="The Boilerplate Audit — Counting the Files Redux Requires for One Feature"
-      date="2026-07-18"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="the-boilerplate-audit">
       <header class="docs-header">
         <p class="lead">
           Add one feature to a Redux app and count the files: action types,

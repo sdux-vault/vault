@@ -18,12 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     StackBlitzTryItLiveComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Open a New Tab. State Is Already There."
-      date="2026-06-12"
-      pillar="SP"
-      [tryItNow]="false"
-      readingTime="4">
+    <sdux-blog-layout id="tab-sync-state">
       <header class="docs-header">
         <p class="lead">
           Open a second browser tab. Your state is already there — no custom

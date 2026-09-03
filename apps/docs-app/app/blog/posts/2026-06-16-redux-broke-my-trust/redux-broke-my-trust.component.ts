@@ -20,11 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="I Built a State Engine Because Redux Broke My Trust"
-      date="2026-06-16"
-      pillar="TA"
-      readingTime="8">
+    <sdux-blog-layout id="redux-broke-my-trust">
       <header class="docs-header">
         <p class="lead">
           I set out to build a state management library — a deterministic

@@ -17,11 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   ],
   template: `
     <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
-    <sdux-blog-layout
-      title="What Is SDuX Vault? A Pipeline-Based State Engine for Every Framework"
-      date="2026-06-01"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="what-is-sdux-vault">
       <header class="docs-header">
         <p class="lead">
           State management in modern web applications is harder than it should

@@ -9,23 +9,22 @@ import { BlogLayoutComponent } from './blog-layout.component';
   standalone: true,
   imports: [BlogLayoutComponent],
   template: `
-    <sdux-blog-layout
-      [title]="title"
-      [date]="date"
-      [pillar]="pillar"
-      [readingTime]="readingTime"
-      [tryItNow]="tryItNow">
+    <sdux-blog-layout [id]="blogId" [tryItNow]="tryItNow">
       <p class="test-content">Projected content</p>
     </sdux-blog-layout>
   `
 })
 class TestHostComponent {
-  title = 'Test Post';
-  date = '2026-06-04';
-  pillar = 'TA';
-  readingTime = '5';
+  blogId = 'mutation-bugs-eliminated';
   tryItNow = true;
 }
+
+@Component({
+  standalone: true,
+  imports: [BlogLayoutComponent],
+  template: '<sdux-blog-layout id="unknown-post" />'
+})
+class UnknownBlogHostComponent {}
 
 describe('Component: BlogLayout', () => {
   let fixture: ComponentFixture<TestHostComponent>;
@@ -43,7 +42,9 @@ describe('Component: BlogLayout', () => {
   });
 
   it('should render the post title', () => {
-    expect(el.querySelector('.header h2')?.textContent).toEqual('Test Post');
+    expect(el.querySelector('.header h2')?.textContent).toEqual(
+      'Mutation Bugs? Eliminated by Architecture'
+    );
   });
 
   it('should render the date', () => {
@@ -53,6 +54,22 @@ describe('Component: BlogLayout', () => {
   it('should render the reading time', () => {
     expect(el.querySelector('.blog-reading-time')?.textContent).toEqual(
       '5 min read'
+    );
+  });
+
+  it('should leave metadata empty for an unknown blog id', () => {
+    const unknownFixture = TestBed.createComponent(UnknownBlogHostComponent);
+    unknownFixture.detectChanges();
+    const unknownEl = unknownFixture.nativeElement as HTMLElement;
+
+    expect(unknownEl.querySelector('.header h2')?.textContent?.trim()).toEqual(
+      ''
+    );
+    expect(unknownEl.querySelector('.blog-date')?.textContent?.trim()).toEqual(
+      ''
+    );
+    expect(unknownEl.querySelector('.blog-reading-time')?.textContent).toEqual(
+      ' min read'
     );
   });
 
@@ -106,7 +123,9 @@ describe('Component: BlogLayout', () => {
       '.share-bar-links a[aria-label="Share on X"]'
     ) as HTMLAnchorElement;
     expect(xLink.href).toContain('twitter.com/intent/tweet');
-    expect(xLink.href).toContain('Test%20Post');
+    expect(xLink.href).toContain(
+      'Mutation%20Bugs%3F%20Eliminated%20by%20Architecture'
+    );
   });
 
   it('should call clipboard on copy link click', () => {
@@ -114,7 +133,7 @@ describe('Component: BlogLayout', () => {
     const btn = el.querySelector('.share-bar-copy') as HTMLButtonElement;
     btn.click();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      'https://www.sdux-vault.com/'
+      `${window.location.origin}/`
     );
   });
 });

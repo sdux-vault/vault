@@ -8,11 +8,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [BlogLayoutComponent, RouterModule, BrandNameComponent],
   template: `
-    <sdux-blog-layout
-      title="Pipeline Anatomy — What Happens When You Update State"
-      date="2026-08-11"
-      pillar="ED"
-      readingTime="8">
+    <sdux-blog-layout id="pipeline-anatomy">
       <header class="docs-header">
         <p class="lead">
           What actually happens when you call

@@ -25,11 +25,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything"
-      date="2026-06-22"
-      pillar="TA"
-      readingTime="10">
+    <sdux-blog-layout id="from-redux-to-sdux-vault">
       <header class="docs-header">
         <p class="lead">
           You have a Redux codebase. It works. It has tests. It has years of

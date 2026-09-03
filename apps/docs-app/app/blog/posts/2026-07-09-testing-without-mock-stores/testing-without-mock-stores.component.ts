@@ -18,11 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     BrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Testing Without Mock Stores — act, settle, assert"
-      date="2026-07-09"
-      pillar="ED"
-      readingTime="7">
+    <sdux-blog-layout id="testing-without-mock-stores">
       <header class="docs-header">
         <p class="lead">
           Redux testing requires mock stores, fake dispatch queues, middleware

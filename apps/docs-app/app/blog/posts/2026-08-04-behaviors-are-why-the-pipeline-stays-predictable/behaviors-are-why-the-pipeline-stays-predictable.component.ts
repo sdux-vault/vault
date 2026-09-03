@@ -18,11 +18,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Behaviors Are Why the Pipeline Stays Predictable"
-      date="2026-08-04"
-      pillar="ED"
-      readingTime="6">
+    <sdux-blog-layout id="behaviors-are-why-the-pipeline-stays-predictable">
       <header class="docs-header">
         <p class="lead">
           Most state tools describe updates as a blur of callbacks, middleware,

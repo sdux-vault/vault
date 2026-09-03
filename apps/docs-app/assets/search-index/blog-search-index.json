@@ -2,293 +2,293 @@
   "documents": [
     {
       "id": "blog:welcome",
-      "title": "Welcome to the SDuX Vault Blog",
+      "title": "welcome",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/welcome",
       "symbols": ["welcome"],
-      "content": "Welcome to the SDuX Vault Blog welcome CE"
+      "content": "welcome welcome"
     },
     {
       "id": "blog:what-is-sdux-vault",
-      "title": "What Is SDuX Vault? A Pipeline-Based State Engine for Every Framework",
+      "title": "what is sdux vault",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/what-is-sdux-vault",
       "symbols": ["what-is-sdux-vault"],
-      "content": "What Is SDuX Vault? A Pipeline-Based State Engine for Every Framework what-is-sdux-vault TA"
+      "content": "what is sdux vault what-is-sdux-vault"
     },
     {
       "id": "blog:mutation-bugs-eliminated",
-      "title": "Mutation Bugs? Eliminated by Architecture",
+      "title": "mutation bugs eliminated",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/mutation-bugs-eliminated",
       "symbols": ["mutation-bugs-eliminated"],
-      "content": "Mutation Bugs? Eliminated by Architecture mutation-bugs-eliminated TA"
+      "content": "mutation bugs eliminated mutation-bugs-eliminated"
     },
     {
       "id": "blog:atomic-deterministic-updates",
-      "title": "Your State Updates Are Atomic and Deterministic",
+      "title": "atomic deterministic updates",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/atomic-deterministic-updates",
       "symbols": ["atomic-deterministic-updates"],
-      "content": "Your State Updates Are Atomic and Deterministic atomic-deterministic-updates TA"
+      "content": "atomic deterministic updates atomic-deterministic-updates"
     },
     {
       "id": "blog:pipeline-anatomy",
-      "title": "Pipeline Anatomy — What Happens When You Update State",
+      "title": "pipeline anatomy",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/pipeline-anatomy",
       "symbols": ["pipeline-anatomy"],
-      "content": "Pipeline Anatomy — What Happens When You Update State pipeline-anatomy ED"
+      "content": "pipeline anatomy pipeline-anatomy"
     },
     {
       "id": "blog:circuit-breaker-state-pipeline",
-      "title": "Circuit Breaker Pattern, Built Into Your State Pipeline",
+      "title": "circuit breaker state pipeline",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/circuit-breaker-state-pipeline",
       "symbols": ["circuit-breaker-state-pipeline"],
-      "content": "Circuit Breaker Pattern, Built Into Your State Pipeline circuit-breaker-state-pipeline ED"
+      "content": "circuit breaker state pipeline circuit-breaker-state-pipeline"
     },
     {
       "id": "blog:one-engine-every-framework",
-      "title": "One State Engine. Every Framework.",
+      "title": "one engine every framework",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/one-engine-every-framework",
       "symbols": ["one-engine-every-framework"],
-      "content": "One State Engine. Every Framework. one-engine-every-framework TA"
+      "content": "one engine every framework one-engine-every-framework"
     },
     {
       "id": "blog:ai-assisted-debugging",
-      "title": "AI-Assisted Debugging Reports",
+      "title": "ai assisted debugging",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/ai-assisted-debugging",
       "symbols": ["ai-assisted-debugging"],
-      "content": "AI-Assisted Debugging Reports ai-assisted-debugging SP"
+      "content": "ai assisted debugging ai-assisted-debugging"
     },
     {
       "id": "blog:testing-state-3-steps",
-      "title": "Testing State Is 3 Steps. That's It.",
+      "title": "testing state 3 steps",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/testing-state-3-steps",
       "symbols": ["testing-state-3-steps"],
-      "content": "Testing State Is 3 Steps. That's It. testing-state-3-steps TA"
+      "content": "testing state 3 steps testing-state-3-steps"
     },
     {
       "id": "blog:controllers-dont-touch-your-data",
-      "title": "Controllers Don't Touch Your Data",
+      "title": "controllers dont touch your data",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/controllers-dont-touch-your-data",
       "symbols": ["controllers-dont-touch-your-data"],
-      "content": "Controllers Don't Touch Your Data controllers-dont-touch-your-data ED"
+      "content": "controllers dont touch your data controllers-dont-touch-your-data"
     },
     {
       "id": "blog:tab-sync-state",
-      "title": "Open a New Tab. State Is Already There.",
+      "title": "tab sync state",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/tab-sync-state",
       "symbols": ["tab-sync-state"],
-      "content": "Open a New Tab. State Is Already There. tab-sync-state SP"
+      "content": "tab sync state tab-sync-state"
     },
     {
       "id": "blog:redux-broke-my-trust",
-      "title": "I Built a State Engine Because Redux Broke My Trust",
+      "title": "redux broke my trust",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/redux-broke-my-trust",
       "symbols": ["redux-broke-my-trust"],
-      "content": "I Built a State Engine Because Redux Broke My Trust redux-broke-my-trust TA"
+      "content": "redux broke my trust redux-broke-my-trust"
     },
     {
       "id": "blog:featurecells-changed-how-i-think-about-state-ownership",
-      "title": "FeatureCells™ Changed How I Think About State Ownership",
+      "title": "featurecells changed how i think about state ownership",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/featurecells-changed-how-i-think-about-state-ownership",
       "symbols": ["featurecells-changed-how-i-think-about-state-ownership"],
-      "content": "FeatureCells™ Changed How I Think About State Ownership featurecells-changed-how-i-think-about-state-ownership ED"
+      "content": "featurecells changed how i think about state ownership featurecells-changed-how-i-think-about-state-ownership"
     },
     {
       "id": "blog:one-runtime-every-framework-zero-dependencies",
-      "title": "One Runtime, Every Framework, Zero Dependencies",
+      "title": "one runtime every framework zero dependencies",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/one-runtime-every-framework-zero-dependencies",
       "symbols": ["one-runtime-every-framework-zero-dependencies"],
-      "content": "One Runtime, Every Framework, Zero Dependencies one-runtime-every-framework-zero-dependencies SP"
+      "content": "one runtime every framework zero dependencies one-runtime-every-framework-zero-dependencies"
     },
     {
       "id": "blog:redux-pattern-sdux-vault-contract",
-      "title": "Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract",
+      "title": "redux pattern sdux vault contract",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/redux-pattern-sdux-vault-contract",
       "symbols": ["redux-pattern-sdux-vault-contract"],
-      "content": "Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract redux-pattern-sdux-vault-contract RC"
+      "content": "redux pattern sdux vault contract redux-pattern-sdux-vault-contract"
     },
     {
       "id": "blog:from-redux-to-sdux-vault",
-      "title": "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything",
+      "title": "from redux to sdux vault",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/from-redux-to-sdux-vault",
       "symbols": ["from-redux-to-sdux-vault"],
-      "content": "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything from-redux-to-sdux-vault TA"
+      "content": "from redux to sdux vault from-redux-to-sdux-vault"
     },
     {
       "id": "blog:global-store-shared-dependency",
-      "title": "Global Store Is a Shared Dependency — Why Scoped State Ownership Wins",
+      "title": "global store shared dependency",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/global-store-shared-dependency",
       "symbols": ["global-store-shared-dependency"],
-      "content": "Global Store Is a Shared Dependency — Why Scoped State Ownership Wins global-store-shared-dependency TA"
+      "content": "global store shared dependency global-store-shared-dependency"
     },
     {
       "id": "blog:actions-are-ceremony",
-      "title": "Actions Are Ceremony — What Happens When You Remove Them",
+      "title": "actions are ceremony",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/actions-are-ceremony",
       "symbols": ["actions-are-ceremony"],
-      "content": "Actions Are Ceremony — What Happens When You Remove Them actions-are-ceremony TA"
+      "content": "actions are ceremony actions-are-ceremony"
     },
     {
       "id": "blog:global-dispatch-broadcasts-scoped-updates-dont",
-      "title": "Global Dispatch Broadcasts to Everything — Scoped Updates Don't",
+      "title": "global dispatch broadcasts scoped updates dont",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/global-dispatch-broadcasts-scoped-updates-dont",
       "symbols": ["global-dispatch-broadcasts-scoped-updates-dont"],
-      "content": "Global Dispatch Broadcasts to Everything — Scoped Updates Don't global-dispatch-broadcasts-scoped-updates-dont TA"
+      "content": "global dispatch broadcasts scoped updates dont global-dispatch-broadcasts-scoped-updates-dont"
     },
     {
       "id": "blog:your-redux-reducers-already-work-in-sdux-vault",
-      "title": "Your Redux Reducers Already Work in SDuX Vault",
+      "title": "your redux reducers already work in sdux vault",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/your-redux-reducers-already-work-in-sdux-vault",
       "symbols": ["your-redux-reducers-already-work-in-sdux-vault"],
-      "content": "Your Redux Reducers Already Work in SDuX Vault your-redux-reducers-already-work-in-sdux-vault ED"
+      "content": "your redux reducers already work in sdux vault your-redux-reducers-already-work-in-sdux-vault"
     },
     {
       "id": "blog:react-tab-sync-subscribe-before-initialize",
-      "title": "React + Tab Sync: Render the Initial Snapshot Correctly",
+      "title": "react tab sync subscribe before initialize",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/react-tab-sync-subscribe-before-initialize",
       "symbols": ["react-tab-sync-subscribe-before-initialize"],
-      "content": "React + Tab Sync: Render the Initial Snapshot Correctly react-tab-sync-subscribe-before-initialize SP"
+      "content": "react tab sync subscribe before initialize react-tab-sync-subscribe-before-initialize"
     },
     {
       "id": "blog:reducers-cant-change-after-init",
-      "title": "Reducers That Can't Change After Init — Why That's a Feature",
+      "title": "reducers cant change after init",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/reducers-cant-change-after-init",
       "symbols": ["reducers-cant-change-after-init"],
-      "content": "Reducers That Can't Change After Init — Why That's a Feature reducers-cant-change-after-init ED"
+      "content": "reducers cant change after init reducers-cant-change-after-init"
     },
     {
       "id": "blog:pipeline-overview-video",
-      "title": "Introducing the SDuX Vault Pipeline Video",
+      "title": "pipeline overview video",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/pipeline-overview-video",
       "symbols": ["pipeline-overview-video"],
-      "content": "Introducing the SDuX Vault Pipeline Video pipeline-overview-video SP"
+      "content": "pipeline overview video pipeline-overview-video"
     },
     {
       "id": "blog:effects-without-middleware",
-      "title": "Effects Without Middleware — How Pipeline Stages Replace Thunks & Sagas",
+      "title": "effects without middleware",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/effects-without-middleware",
       "symbols": ["effects-without-middleware"],
-      "content": "Effects Without Middleware — How Pipeline Stages Replace Thunks & Sagas effects-without-middleware ED"
+      "content": "effects without middleware effects-without-middleware"
     },
     {
       "id": "blog:selectors-without-a-global-tree",
-      "title": "Selectors Without a Global Tree — Scoped State Access That Scales",
+      "title": "selectors without a global tree",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/selectors-without-a-global-tree",
       "symbols": ["selectors-without-a-global-tree"],
-      "content": "Selectors Without a Global Tree — Scoped State Access That Scales selectors-without-a-global-tree TA"
+      "content": "selectors without a global tree selectors-without-a-global-tree"
     },
     {
       "id": "blog:no-createstore-no-combinereducers-no-provider",
-      "title": "No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines",
+      "title": "no createstore no combinereducers no provider",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/no-createstore-no-combinereducers-no-provider",
       "symbols": ["no-createstore-no-combinereducers-no-provider"],
-      "content": "No createStore, No combineReducers, No Provider — Setting Up State in 3 Lines no-createstore-no-combinereducers-no-provider ED"
+      "content": "no createstore no combinereducers no provider no-createstore-no-combinereducers-no-provider"
     },
     {
       "id": "blog:components-without-connect-or-useselector",
-      "title": "Components Without connect() or useSelector — Direct State Injection",
+      "title": "components without connect or useselector",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/components-without-connect-or-useselector",
       "symbols": ["components-without-connect-or-useselector"],
-      "content": "Components Without connect() or useSelector — Direct State Injection components-without-connect-or-useselector ED"
+      "content": "components without connect or useselector components-without-connect-or-useselector"
     },
     {
       "id": "blog:testing-without-mock-stores",
-      "title": "Testing Without Mock Stores — act, settle, assert",
+      "title": "testing without mock stores",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/testing-without-mock-stores",
       "symbols": ["testing-without-mock-stores"],
-      "content": "Testing Without Mock Stores — act, settle, assert testing-without-mock-stores ED"
+      "content": "testing without mock stores testing-without-mock-stores"
     },
     {
       "id": "blog:redux-and-sdux-vault-side-by-side",
-      "title": "Redux and SDuX Vault Can Run Side by Side — Indefinitely",
+      "title": "redux and sdux vault side by side",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/redux-and-sdux-vault-side-by-side",
       "symbols": ["redux-and-sdux-vault-side-by-side"],
-      "content": "Redux and SDuX Vault Can Run Side by Side — Indefinitely redux-and-sdux-vault-side-by-side TA"
+      "content": "redux and sdux vault side by side redux-and-sdux-vault-side-by-side"
     },
     {
       "id": "blog:the-mental-model-shift",
@@ -298,147 +298,147 @@
       "docLink": "blog",
       "url": "/blog/the-mental-model-shift",
       "symbols": ["the-mental-model-shift"],
-      "content": "the mental model shift the-mental-model-shift TA"
+      "content": "the mental model shift the-mental-model-shift"
     },
     {
       "id": "blog:no-middleware-registration-order",
-      "title": "No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way",
+      "title": "no middleware registration order",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/no-middleware-registration-order",
       "symbols": ["no-middleware-registration-order"],
-      "content": "No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way no-middleware-registration-order ED"
+      "content": "no middleware registration order no-middleware-registration-order"
     },
     {
       "id": "blog:atomic-state-commitment",
-      "title": "Atomic State Commitment — Why Components Never See Partial Updates",
+      "title": "atomic state commitment",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/atomic-state-commitment",
       "symbols": ["atomic-state-commitment"],
-      "content": "Atomic State Commitment — Why Components Never See Partial Updates atomic-state-commitment ED"
+      "content": "atomic state commitment atomic-state-commitment"
     },
     {
       "id": "blog:what-transfers-directly-from-redux",
-      "title": "What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability",
+      "title": "what transfers directly from redux",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/what-transfers-directly-from-redux",
       "symbols": ["what-transfers-directly-from-redux"],
-      "content": "What Transfers Directly from Redux — Pure Functions, State Shapes, and Immutability what-transfers-directly-from-redux ED"
+      "content": "what transfers directly from redux what-transfers-directly-from-redux"
     },
     {
       "id": "blog:state-management-in-vue-without-a-store",
-      "title": "State Management in Vue Without a Store",
+      "title": "state management in vue without a store",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/state-management-in-vue-without-a-store",
       "symbols": ["state-management-in-vue-without-a-store"],
-      "content": "State Management in Vue Without a Store state-management-in-vue-without-a-store TA"
+      "content": "state management in vue without a store state-management-in-vue-without-a-store"
     },
     {
       "id": "blog:plain-typescript-zero-magic",
-      "title": "Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means",
+      "title": "plain typescript zero magic",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/plain-typescript-zero-magic",
       "symbols": ["plain-typescript-zero-magic"],
-      "content": "Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means plain-typescript-zero-magic TA"
+      "content": "plain typescript zero magic plain-typescript-zero-magic"
     },
     {
       "id": "blog:the-boilerplate-audit",
-      "title": "The Boilerplate Audit — Counting the Files Redux Requires for One Feature",
+      "title": "the boilerplate audit",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/the-boilerplate-audit",
       "symbols": ["the-boilerplate-audit"],
-      "content": "The Boilerplate Audit — Counting the Files Redux Requires for One Feature the-boilerplate-audit TA"
+      "content": "the boilerplate audit the-boilerplate-audit"
     },
     {
       "id": "blog:fluent-api-predictable-state-interaction",
-      "title": "The Fluent API That Makes State Interaction Predictable by Design",
+      "title": "fluent api predictable state interaction",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/fluent-api-predictable-state-interaction",
       "symbols": ["fluent-api-predictable-state-interaction"],
-      "content": "The Fluent API That Makes State Interaction Predictable by Design fluent-api-predictable-state-interaction TA"
+      "content": "fluent api predictable state interaction fluent-api-predictable-state-interaction"
     },
     {
       "id": "blog:state-management-without-a-ui-on-deno",
-      "title": "State Management Without a UI — Running SDuX Vault on Deno",
+      "title": "state management without a ui on deno",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/state-management-without-a-ui-on-deno",
       "symbols": ["state-management-without-a-ui-on-deno"],
-      "content": "State Management Without a UI — Running SDuX Vault on Deno state-management-without-a-ui-on-deno TA"
+      "content": "state management without a ui on deno state-management-without-a-ui-on-deno"
     },
     {
       "id": "blog:a-featurecell-in-plain-javascript",
-      "title": "A FeatureCell in Plain JavaScript — No Framework, No Build Step",
+      "title": "a featurecell in plain javascript",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/a-featurecell-in-plain-javascript",
       "symbols": ["a-featurecell-in-plain-javascript"],
-      "content": "A FeatureCell in Plain JavaScript — No Framework, No Build Step a-featurecell-in-plain-javascript TA"
+      "content": "a featurecell in plain javascript a-featurecell-in-plain-javascript"
     },
     {
       "id": "blog:state-management-without-framework-lock-in",
-      "title": "Plain TypeScript, Zero Magic: State Management Without Framework Lock-In",
+      "title": "state management without framework lock in",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/state-management-without-framework-lock-in",
       "symbols": ["state-management-without-framework-lock-in"],
-      "content": "Plain TypeScript, Zero Magic: State Management Without Framework Lock-In state-management-without-framework-lock-in TA"
+      "content": "state management without framework lock in state-management-without-framework-lock-in"
     },
     {
       "id": "blog:behaviors-are-why-the-pipeline-stays-predictable",
-      "title": "Behaviors Are Why the Pipeline Stays Predictable",
+      "title": "behaviors are why the pipeline stays predictable",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/behaviors-are-why-the-pipeline-stays-predictable",
       "symbols": ["behaviors-are-why-the-pipeline-stays-predictable"],
-      "content": "Behaviors Are Why the Pipeline Stays Predictable behaviors-are-why-the-pipeline-stays-predictable ED"
+      "content": "behaviors are why the pipeline stays predictable behaviors-are-why-the-pipeline-stays-predictable"
     },
     {
       "id": "blog:state-updates-need-policy-not-more-middleware",
-      "title": "State Updates Need Policy, Not More Middleware",
+      "title": "state updates need policy not more middleware",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/state-updates-need-policy-not-more-middleware",
       "symbols": ["state-updates-need-policy-not-more-middleware"],
-      "content": "State Updates Need Policy, Not More Middleware state-updates-need-policy-not-more-middleware ED"
+      "content": "state updates need policy not more middleware state-updates-need-policy-not-more-middleware"
     },
     {
       "id": "blog:array-state-updates-without-manual-find-and-replace-logic",
-      "title": "Array State Updates Without Manual Find-and-Replace Logic",
+      "title": "array state updates without manual find and replace logic",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/array-state-updates-without-manual-find-and-replace-logic",
       "symbols": ["array-state-updates-without-manual-find-and-replace-logic"],
-      "content": "Array State Updates Without Manual Find-and-Replace Logic array-state-updates-without-manual-find-and-replace-logic SP"
+      "content": "array state updates without manual find and replace logic array-state-updates-without-manual-find-and-replace-logic"
     },
     {
       "id": "blog:svelte-reactivity-without-a-second-state-subscription",
-      "title": "Svelte Reactivity Without a Second State Subscription",
+      "title": "svelte reactivity without a second state subscription",
       "kind": "blog",
       "project": "blog",
       "docLink": "blog",
       "url": "/blog/svelte-reactivity-without-a-second-state-subscription",
       "symbols": ["svelte-reactivity-without-a-second-state-subscription"],
-      "content": "Svelte Reactivity Without a Second State Subscription svelte-reactivity-without-a-second-state-subscription ED"
+      "content": "svelte reactivity without a second state subscription svelte-reactivity-without-a-second-state-subscription"
     }
   ]
 }

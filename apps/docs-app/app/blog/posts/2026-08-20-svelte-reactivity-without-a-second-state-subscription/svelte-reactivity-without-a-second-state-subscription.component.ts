@@ -21,10 +21,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   ],
   template: `
     <sdux-blog-layout
-      title="Svelte Reactivity Without a Second State Subscription"
-      date="2026-08-20"
-      pillar="ED"
-      readingTime="5">
+      id="svelte-reactivity-without-a-second-state-subscription">
       <header class="docs-header">
         <p class="lead">
           Svelte state integration should not require a second subscription in

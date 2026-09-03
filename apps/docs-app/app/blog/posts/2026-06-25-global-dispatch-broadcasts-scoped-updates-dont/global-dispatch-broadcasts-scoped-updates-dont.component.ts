@@ -25,11 +25,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Global Dispatch Broadcasts to Everything — Scoped Updates Don't"
-      date="2026-06-25"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="global-dispatch-broadcasts-scoped-updates-dont">
       <header class="docs-header">
         <p class="lead">
           Every Redux dispatch broadcasts to the entire reducer tree. Every

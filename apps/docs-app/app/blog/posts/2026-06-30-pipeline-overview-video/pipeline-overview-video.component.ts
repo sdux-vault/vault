@@ -17,11 +17,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Introducing the SDuX Vault Pipeline Video"
-      date="2026-06-30"
-      pillar="SP"
-      readingTime="2">
+    <sdux-blog-layout id="pipeline-overview-video">
       <header class="docs-header">
         <p class="lead">
           Today I'm excited to share something I've wanted to build for a long

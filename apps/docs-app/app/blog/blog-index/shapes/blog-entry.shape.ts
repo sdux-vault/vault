@@ -23,6 +23,11 @@ export interface BlogEntry {
   readonly readingTime: number;
 
   /**
+   * Provides the content pillar for the blog entry.
+   */
+  readonly pillar?: string;
+
+  /**
    * Indicates whether the blog entry is available for display.
    */
   readonly active?: boolean;

@@ -27,11 +27,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Selectors Without a Global Tree — Scoped State Access That Scales"
-      date="2026-07-02"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="selectors-without-a-global-tree">
       <header class="docs-header">
         <p class="lead">
           Redux selectors project slices from a global store tree. When the tree

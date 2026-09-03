@@ -20,11 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     MultiFrameworkExampleComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Plain TypeScript, Zero Magic: State Management Without Framework Lock-In"
-      date="2026-07-28"
-      pillar="TA"
-      readingTime="7">
+    <sdux-blog-layout id="state-management-without-framework-lock-in">
       <header class="docs-header">
         <p class="lead">
           Most state libraries are really framework libraries with a state API

@@ -25,11 +25,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     PackageNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Effects Without Middleware — How Pipeline Stages Replace Thunks & Sagas"
-      date="2026-07-01"
-      pillar="ED"
-      readingTime="9">
+    <sdux-blog-layout id="effects-without-middleware">
       <header class="docs-header">
         <p class="lead">
           Redux effects are middleware — thunks dispatching thunks, sagas

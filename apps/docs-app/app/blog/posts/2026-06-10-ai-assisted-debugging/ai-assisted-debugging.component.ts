@@ -14,12 +14,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     StackBlitzTryItLiveComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="AI-Assisted Debugging Reports"
-      date="2026-06-10"
-      pillar="SP"
-      [tryItNow]="false"
-      readingTime="4">
+    <sdux-blog-layout id="ai-assisted-debugging">
       <header class="docs-header">
         <p class="lead">
           Most frontend debugging is manual: console.log, reproduce, guess,

@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Plain TypeScript, Zero Magic — What 'No Hidden Runtime Behavior' Actually Means"
-      date="2026-07-17"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="plain-typescript-zero-magic">
       <header class="docs-header">
         <p class="lead">
           <sdux-catch-phrase [tm]="true" /> is not a tagline &mdash; it is a

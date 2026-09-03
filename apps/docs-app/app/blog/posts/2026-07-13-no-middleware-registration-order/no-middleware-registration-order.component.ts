@@ -20,11 +20,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="No Middleware Registration Order — Pipeline Stages That Always Execute the Same Way"
-      date="2026-07-13"
-      pillar="ED"
-      readingTime="7">
+    <sdux-blog-layout id="no-middleware-registration-order">
       <header class="docs-header">
         <p class="lead">
           Redux middleware runs in registration order. Change the order, change

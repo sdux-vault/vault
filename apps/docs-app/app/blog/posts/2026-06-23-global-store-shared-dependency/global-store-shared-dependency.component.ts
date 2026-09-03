@@ -21,11 +21,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     SDuXVideoComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="Global Store Is a Shared Dependency — Why Scoped State Ownership Wins"
-      date="2026-06-23"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="global-store-shared-dependency">
       <header class="docs-header">
         <p class="lead">
           Redux popularized the idea of a single global store — one tree of

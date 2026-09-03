@@ -22,11 +22,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     PackageNameComponent
   ],
   template: `
-    <sdux-blog-layout
-      title="State Management Without a UI — Running SDuX Vault on Deno"
-      date="2026-07-21"
-      pillar="TA"
-      readingTime="6">
+    <sdux-blog-layout id="state-management-without-a-ui-on-deno">
       <header class="docs-header">
         <p class="lead">
           "State management" is almost always sold as a UI concern — a store
