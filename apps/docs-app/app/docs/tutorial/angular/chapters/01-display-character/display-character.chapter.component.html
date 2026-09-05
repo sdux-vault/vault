@@ -869,10 +869,10 @@ cd sdux-tutorial;
 
   <div class="section-body">
     <p>
-      You now have a working <sdux-brand-name /> <sdux-feature-cell /> feature:
-      the State contract is defined, the Angular service owns the Feature
-      boundary, the application has registered the feature, and the UI can
-      render one character from managed State.
+      You now have a working <sdux-brand-name />&nbsp;<sdux-feature-cell />
+      feature: the State contract is defined, the Angular service owns the
+      Feature boundary, the application has registered the feature, and the UI
+      can render one character from managed State.
     </p>
 
     <p>
@@ -938,32 +938,15 @@ cd sdux-tutorial;
       </ul>
     </div>
 
-    <div class="callout callout-warning">
-      <div class="title">Tutorial Data Boundary</div>
-      <p>
-        The checked-in constant supplies deterministic teaching data. In a
-        production feature, adapt an authoritative API or persistence result
-        before submitting it through the service-owned
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>; keep
-        transport parsing and hydration ownership out of the component.
-      </p>
-    </div>
-
-    <details class="tutorial-checkpoint">
-      <summary>Complete Chapter 1 files</summary>
-      <p>
-        Compare implementation files first. Open the specifications only when
-        you need to verify the registration or UI-projection contract.
-      </p>
-      <sdux-example-viewer-source>
-        @for (file of displayCharacterSource; track file.type) {
-          <sdux-example-viewer-tab [label]="file.fileName">
-            <pre
-              class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
-          </sdux-example-viewer-tab>
-        }
-      </sdux-example-viewer-source>
-    </details>
+    <h4>All the chapter 1 files</h4>
+    <sdux-example-viewer-source>
+      @for (file of displayCharacterSource; track file.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
   </div>
 </section>
 
