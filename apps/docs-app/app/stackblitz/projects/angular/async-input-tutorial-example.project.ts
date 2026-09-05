@@ -1044,7 +1044,6 @@ export class ExampleCharacterEditor {
   }
 
   @if (globalError(); as error) {
-    <!-- Teaching point: Global Error (ex-011) -->
     <div class="feedback error global-error" role="alert" aria-live="assertive">
       <span>{{ error.message }}</span>
       <!-- Teaching point: Errors (ex-004) -->

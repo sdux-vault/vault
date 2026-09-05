@@ -1,9 +1,7 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 <section class="section">
   <div class="section-body">
-    <h3 class="fake-h4">
-      Build a feature whose State has a home outside the component.
-    </h3>
+    <h3 class="fake-h4">Build a feature with State outside the component.</h3>
     <p>
       A detail view is easy to begin and easy to outgrow. As loading, editing,
       errors, and cleanup arrive, one component can become responsible for user
@@ -49,10 +47,18 @@
   <div class="section-body">
     <p>
       Start from an empty working directory. This chapter creates the Angular
-      project and every file required for the first read path. The checked-in
-      tutorial baseline uses Node.js 24 or newer, npm 11 or newer, and Angular
-      21. If your organization standardizes different supported versions, use a
-      mutually compatible Angular and SDuX package set.
+      project and every file required for the first read path.
+    </p>
+
+    <p>The checked-in tutorial baseline uses:</p>
+    <ul>
+      <li>Node.js 24 or newer</li>
+      <li>npm 11 or newer</li>
+      <li>and Angular 21.</li>
+    </ul>
+    <p>
+      If your organization standardizes different supported versions, use a
+      mutually compatible Angular and <sdux-brand-name /> package set.
     </p>
     <div class="callout callout-info">
       <div class="title">Files You Will Create or Change</div>
@@ -63,7 +69,8 @@
           domain contract and seed data.
         </li>
         <li>
-          <span class="code">example.service.ts</span> owns the FeatureCell and
+          <span class="code">example.service.ts</span> owns the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> and
           exposes its reactive snapshot.
         </li>
         <li>
@@ -72,17 +79,18 @@
         </li>
         <li>
           The component, template, and stylesheet render the first committed
-          character without calling SDuX APIs directly.
+          character without calling <sdux-brand-name /> APIs directly.
         </li>
       </ul>
     </div>
     <div class="callout callout-warning">
       <div class="title">Ownership Rule for Every Chapter</div>
       <p>
-        Keep committed Feature State and all FeatureCell calls in the service.
-        Keep selection, form controls, confirmation prompts, and display-only
-        feedback in the component unless a later requirement explicitly makes
-        that data shared Feature State.
+        Keep committed Feature State and all
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> calls
+        in the service. Keep selection, form controls, confirmation prompts, and
+        display-only feedback in the component unless a later requirement
+        explicitly makes that data shared Feature State.
       </p>
     </div>
   </div>
@@ -291,7 +299,8 @@ cd sdux-tutorial;
         <dt><span class="code">ExampleService</span></dt>
         <dd>
           Names the feature boundary that later steps decorate, register, and
-          connect to one FeatureCell.
+          connect to one
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
         </dd>
       </dl>
     </div>
@@ -465,22 +474,38 @@ cd sdux-tutorial;
       <div class="title">Registration Is Not Activation</div>
       <ul>
         <li>
-          <span class="code">provideVault()</span> creates the application-level
-          SDuX runtime.
+          <span class="code"
+            ><a href="/docs/references/functions/provide-vault">provideVault</a
+            >()</span
+          >
+          creates the application-level SDuX runtime.
         </li>
         <li>
-          <span class="code">provideFeatureCell()</span> declares the unique
-          key, State type, initial value, behaviors, and controllers available
-          to this feature.
+          <span class="code"
+            ><a href="/docs/references/functions/provide-feature-cell"
+              >provideFeatureCell</a
+            >()</span
+          >
+          declares the unique key, State type, initial value, behaviors, and
+          controllers available to this feature.
         </li>
         <li>
-          <span class="code">&#64;FeatureCell()</span> associates the service
-          with that same key, and <span class="code">injectVault()</span> gives
-          the service its typed API.
+          <span class="code"
+            >&#64;<a href="/docs/references/functions/feature-cell"
+              >FeatureCell</a
+            >()</span
+          >
+          associates the service with that same key, and
+          <span class="code"
+            ><a href="/docs/references/functions/inject-vault">injectVault</a
+            >()</span
+          >
+          gives the service its typed API.
         </li>
         <li>
           <span class="code">initialize()</span> starts the registered
-          FeatureCell lifecycle. Configure fluent APIs before calling it.
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          lifecycle. Configure fluent APIs before calling it.
         </li>
       </ul>
     </div>
@@ -717,7 +742,9 @@ cd sdux-tutorial;
         </li>
         <li>
           The component injects <span class="code">ExampleService</span>; it
-          never injects or configures the FeatureCell directly.
+          never injects or configures the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          directly.
         </li>
         <li>
           The template reads component values only. The SCSS is reusable
@@ -797,11 +824,25 @@ cd sdux-tutorial;
           present yet.
         </li>
         <li>
-          If Angular reports that the service or FeatureCell cannot be resolved,
-          compare the key in <span class="code">provideFeatureCell()</span> with
-          the key in <span class="code">&#64;FeatureCell()</span>, and confirm
-          <span class="code">provideVault()</span> appears first in the provider
-          list.
+          If Angular reports that the service or
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          cannot be resolved, compare the key in
+          <span class="code"
+            ><a href="/docs/references/functions/provide-feature-cell"
+              >provideFeatureCell</a
+            >()</span
+          >
+          with the key in
+          <span class="code"
+            >&#64;<a href="/docs/references/functions/feature-cell"
+              >FeatureCell</a
+            >()</span
+          >, and confirm
+          <span class="code"
+            ><a href="/docs/references/functions/provide-vault">provideVault</a
+            >()</span
+          >
+          appears first in the provider list.
         </li>
         <li>
           If the page renders but no value appears, confirm the seed collection
@@ -908,7 +949,8 @@ cd sdux-tutorial;
       <p>
         The checked-in constant supplies deterministic teaching data. In a
         production feature, adapt an authoritative API or persistence result
-        before submitting it through the service-owned FeatureCell; keep
+        before submitting it through the service-owned
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>; keep
         transport parsing and hydration ownership out of the component.
       </p>
     </div>
@@ -943,7 +985,8 @@ cd sdux-tutorial;
       </li>
       <li>
         The component renders committed State through the service without
-        injecting the FeatureCell.
+        injecting the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
       </li>
       <li>
         Save this checkpoint for Chapter 2, where only local selection and

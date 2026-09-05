@@ -98,7 +98,9 @@
       <div class="title">Observation Timeline for One Mutation</div>
       <table>
         <caption>
-          When each introspection surface observes one FeatureCell mutation
+          When each introspection surface observes one
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          mutation
         </caption>
         <thead>
           <tr>
@@ -113,11 +115,19 @@
             <td><span class="code">state</span></td>
             <td>Latest reactive read</td>
             <td>Four Angular Signal accessors</td>
-            <td>What is the FeatureCell reporting now?</td>
+            <td>
+              What is the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              reporting now?
+            </td>
           </tr>
           <tr>
             <td><span class="code">state$</span></td>
-            <td>Each FeatureCell state event</td>
+            <td>
+              Each
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              state event
+            </td>
             <td>Event containing an immutable snapshot</td>
             <td>Which snapshots arrived over time?</td>
           </tr>
@@ -318,9 +328,12 @@
       <ol>
         <li>
           In <span class="code">example.service.ts</span>, import
-          <span class="code">TapCallback</span> and create a private writable
-          Signal named <span class="code">#beforeTapInput</span>. Expose only
-          its <span class="code">asReadonly()</span> result.
+          <span class="code"
+            ><a href="/docs/references/types/tap-callback">TapCallback</a></span
+          >
+          and create a private writable Signal named
+          <span class="code">#beforeTapInput</span>. Expose only its
+          <span class="code">asReadonly()</span> result.
         </li>
         <li>
           Add <span class="code">#captureBeforeTapInput</span> as a typed
@@ -384,7 +397,9 @@
     <p>
       The reducers—not the observation callback—produce the transformed value.
       “After Taps” publishes that post-reducer candidate for comparison and
-      cannot change what the FeatureCell later commits.
+      cannot change what the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> later
+      commits.
     </p>
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
@@ -457,14 +472,23 @@
       <ol>
         <li>
           In the service, create <span class="code">#emittedState</span> as a
-          Signal of <span class="code">StateSnapshotShape</span> or
-          <span class="code">undefined</span>, and expose its read-only view as
-          <span class="code">emittedState</span>.
+          Signal of
+          <span class="code"
+            ><a href="/docs/references/shapes/state-snapshot-shape"
+              >StateSnapshotShape</a
+            ></span
+          >
+          or <span class="code">undefined</span>, and expose its read-only view
+          as <span class="code">emittedState</span>.
         </li>
         <li>
           Add <span class="code">#captureEmittedState</span> as a
-          <span class="code">CoreEmitStateCallback</span> that publishes the
-          snapshot. Register it through
+          <span class="code"
+            ><a href="/docs/references/types/core-emit-state-callback"
+              >CoreEmitStateCallback</a
+            ></span
+          >
+          that publishes the snapshot. Register it through
           <span class="code"
             >this.#vault.emitStates([this.#captureEmittedState])</span
           >

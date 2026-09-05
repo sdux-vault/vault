@@ -60,14 +60,22 @@
       <div class="title">Separate Four Responsibilities</div>
       <ul>
         <li>The throwing filter creates the teaching failure.</li>
-        <li>The pipeline normalizes and finalizes the FeatureCell error.</li>
+        <li>
+          The pipeline normalizes and finalizes the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          error.
+        </li>
         <li>
           <span class="code">errors()</span> observes the feature-specific
           finalized error and snapshot.
         </li>
         <li>
-          <span class="code">VaultErrorService</span> exposes application-level
-          error state for presentation or monitoring.
+          <span class="code"
+            ><a href="/docs/references/functions/vault-error-service"
+              >VaultErrorService</a
+            ></span
+          >
+          exposes application-level error state for presentation or monitoring.
         </li>
       </ul>
     </div>
@@ -290,7 +298,13 @@
             <td>Do not render or transmit without redaction.</td>
           </tr>
           <tr>
-            <td><span class="code">VaultErrorShape</span></td>
+            <td>
+              <span class="code"
+                ><a href="/docs/references/shapes/vault-error-shape"
+                  >VaultErrorShape</a
+                ></span
+              >
+            </td>
             <td>Application error handling</td>
             <td>Normalized classification and approved context.</td>
           </tr>

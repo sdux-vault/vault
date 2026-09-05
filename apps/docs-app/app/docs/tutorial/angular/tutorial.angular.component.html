@@ -296,11 +296,19 @@
                 <strong>Structural registration:</strong>
                 <ul>
                   <li>
-                    <span class="code">provideVault()</span> creates the
-                    application runtime
+                    <span class="code"
+                      ><a href="/docs/references/functions/provide-vault"
+                        >provideVault</a
+                      >()</span
+                    >
+                    creates the application runtime
                   </li>
                   <li>
-                    <span class="code">provideFeatureCell()</span>
+                    <span class="code"
+                      ><a href="/docs/references/functions/provide-feature-cell"
+                        >provideFeatureCell</a
+                      >()</span
+                    >
                     registers a feature key, initial value, behaviors, and
                     controllers.
                   </li>
@@ -308,9 +316,18 @@
               </li>
               <li>
                 <strong>Service connection and configuration:</strong> the
-                <span class="code">&#64;FeatureCell()</span> decorator,
-                <span class="code">injectVault()</span>, and fluent methods bind
-                one Angular service to that registration before
+                <span class="code"
+                  >&#64;<a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >()</span
+                >
+                decorator,
+                <span class="code"
+                  ><a href="/docs/references/functions/inject-vault"
+                    >injectVault</a
+                  >()</span
+                >, and fluent methods bind one Angular service to that
+                registration before
                 <span class="code">initialize()</span> activates it.
               </li>
               <li>
@@ -344,7 +361,8 @@
           <p>
             Persistence, synchronization, timing, and policy controllers are
             optional branches. Add them only when a production requirement needs
-            that capability; they are not required for the core FeatureCell
+            that capability; they are not required for the core
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             path.
           </p>
         </div>

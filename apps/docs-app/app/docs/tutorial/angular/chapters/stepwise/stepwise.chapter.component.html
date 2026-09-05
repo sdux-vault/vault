@@ -164,18 +164,53 @@
       <ol>
         <li>
           In <span class="code">app.config.ts</span>, import
-          <span class="code">withStepwiseResolveBehavior</span>,
-          <span class="code">withStepwiseFilterBehavior</span>,
-          <span class="code">withStepwiseReducerBehavior</span>, and
-          <span class="code">withStepwiseController</span> from
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/stepwise/with-stepwise-resolve-behavior"
+              >withStepwiseResolveBehavior</a
+            ></span
+          >,
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/stepwise/with-stepwise-filter-behavior"
+              >withStepwiseFilterBehavior</a
+            ></span
+          >,
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/stepwise/with-stepwise-reducer-behavior"
+              >withStepwiseReducerBehavior</a
+            ></span
+          >, and
+          <span class="code"
+            ><a href="/docs/pipeline/controllers/with-stepwise-controller"
+              >withStepwiseController</a
+            ></span
+          >
+          from
           <span class="code"><sdux-package-name [package]="'addons'" /></span>.
         </li>
         <li>
           Add the three behaviors after
-          <span class="code">withArrayAppendMergeBehavior</span> in the third
-          <span class="code">provideFeatureCell()</span> argument. Add
-          <span class="code">withStepwiseController</span> to the fourth
-          argument.
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+              >withArrayAppendMergeBehavior</a
+            ></span
+          >
+          in the third
+          <span class="code"
+            ><a href="/docs/references/functions/provide-feature-cell"
+              >provideFeatureCell</a
+            >()</span
+          >
+          argument. Add
+          <span class="code"
+            ><a href="/docs/pipeline/controllers/with-stepwise-controller"
+              >withStepwiseController</a
+            ></span
+          >
+          to the fourth argument.
         </li>
         <li>
           Reload, settle the hydration source, and confirm a Stepwise Resolve

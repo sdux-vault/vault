@@ -60,8 +60,10 @@
       <div class="title">Shared vs. Local</div>
       <ul>
         <li>
-          Shared: finalized FeatureCell value identified by the same key on the
-          same origin—scheme, host, and port.
+          Shared: finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          value identified by the same key on the same origin—scheme, host, and
+          port.
         </li>
         <li>
           Local: selection, unsaved form values, pending confirmation, loading,
@@ -89,7 +91,10 @@
     <div class="callout callout-info">
       <div class="title">Environment Support Checklist</div>
       <ul>
-        <li>Both tabs use the same scheme, host, port, and FeatureCell key.</li>
+        <li>
+          Both tabs use the same scheme, host, port, and
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key.
+        </li>
         <li>
           The browser permits the required storage and messaging mechanism.
         </li>
@@ -281,10 +286,12 @@
       <div class="title">Troubleshooting</div>
       <p>
         If the second tab does not update, confirm both pages have the same
-        origin and FeatureCell key, allow the browser to open the new tab, and
-        verify both the behavior and controller are registered. Private-browsing
-        or restricted storage/messaging policies can prevent the demonstration.
-        After correcting the cause, reload both tabs to re-establish the initial
+        origin and
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a> key,
+        allow the browser to open the new tab, and verify both the behavior and
+        controller are registered. Private-browsing or restricted
+        storage/messaging policies can prevent the demonstration. After
+        correcting the cause, reload both tabs to re-establish the initial
         handshake and retry one committed update.
       </p>
     </div>
