@@ -288,24 +288,6 @@ cd sdux-tutorial;
       </ol>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Angular Now; SDuX Next</div>
-      <dl>
-        <dt><span class="code">&#64;Injectable()</span></dt>
-        <dd>
-          Angular makes the service injectable. This step introduces no SDuX
-          symbol yet.
-        </dd>
-        <dt><span class="code">ExampleService</span></dt>
-        <dd>
-          Names the feature boundary that later steps decorate, register, and
-          connect to one
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
-        </dd>
-      </dl>
-    </div>
-
-    <h4>Checkpoint: plain Angular service before SDuX integration</h4>
     <sdux-example-viewer-source [displayTabs]="false">
       <sdux-example-viewer-tab
         [label]="'Define the State for a Star Wars character'">
@@ -370,6 +352,26 @@ cd sdux-tutorial;
           <sdux-brand-name />.
         </li>
       </ol>
+    </div>
+    <h4>
+      Checkpoint: plain Angular service before <sdux-brand-name /> integration
+    </h4>
+    <div class="callout callout-learn-more">
+      <div class="title">Angular Now; <sdux-brand-name /> Next</div>
+      <dl>
+        <dt><span class="code">&#64;Injectable()</span></dt>
+        <dd>
+          Angular makes the service injectable. This step introduces no
+          <sdux-brand-name />
+          symbol yet.
+        </dd>
+        <dt><span class="code">ExampleService</span></dt>
+        <dd>
+          Names the feature boundary that later steps decorate, register, and
+          connect to one
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </dd>
+      </dl>
     </div>
 
     <h4>Focused change: plain Angular service</h4>
@@ -489,24 +491,6 @@ cd sdux-tutorial;
           declares the unique key, State type, initial value, behaviors, and
           controllers available to this feature.
         </li>
-        <li>
-          <span class="code"
-            >&#64;<a href="/docs/references/functions/feature-cell"
-              >FeatureCell</a
-            >()</span
-          >
-          associates the service with that same key, and
-          <span class="code"
-            ><a href="/docs/references/functions/inject-vault">injectVault</a
-            >()</span
-          >
-          gives the service its typed API.
-        </li>
-        <li>
-          <span class="code">initialize()</span> starts the registered
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          lifecycle. Configure fluent APIs before calling it.
-        </li>
       </ul>
     </div>
 
@@ -591,19 +575,26 @@ cd sdux-tutorial;
       State.
     </p>
 
-    <p>
-      <sdux-brand-name /> adds three pieces here: the
-      <span class="code">@<sdux-feature-cell />()</span> decorator to associate
-      the service with its key,
-      <span class="code"
-        ><a href="/docs/references/functions/inject-vault">injectVault</a
-        >()</span
-      >
-      to access the typed <sdux-feature-cell /> API, and
-      <span class="code">initialize()</span> to activate the
-      <sdux-feature-cell />
-      at runtime.
-    </p>
+    <p><sdux-brand-name /> adds three pieces here:</p>
+    <ul>
+      <li>
+        the
+        <span class="code">@<sdux-feature-cell />()</span> decorator to
+        associate the service with its key
+      </li>
+      <li>
+        <span class="code"
+          ><a href="/docs/references/functions/inject-vault">injectVault</a
+          >()</span
+        >
+        to access the typed <sdux-feature-cell /> API
+      </li>
+      <li>
+        <span class="code">initialize()</span> to activate the
+        <sdux-feature-cell />
+        at runtime
+      </li>
+    </ul>
 
     <p>
       After this step, the component will no longer need to know anything about
@@ -685,8 +676,11 @@ cd sdux-tutorial;
 
     <p>
       For <sdux-brand-name />, the important separation is simple: the component
-      reads display-ready State, and the service owns the <sdux-feature-cell />.
     </p>
+    <ol>
+      <li>The component reads display-ready State</li>
+      <li>The service owns the <sdux-feature-cell />.</li>
+    </ol>
 
     <p>
       In this example, the component reads the service's reactive State, derives
