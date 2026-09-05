@@ -103,6 +103,7 @@ describe('Directive: SourceOverflowDirective', () => {
     const pane = fixture.nativeElement.querySelector('pre') as HTMLElement;
     mockScrollHeight(pane, 800);
     IntersectionObserverStub.instance.trigger(true);
+    IntersectionObserverStub.instance.trigger(true);
 
     requestAnimationFrame(() => {
       expect(fixture.componentInstance.overflowChangeCount).toBe(1);
