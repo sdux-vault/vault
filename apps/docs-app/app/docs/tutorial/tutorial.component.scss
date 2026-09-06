@@ -189,6 +189,11 @@
     gap: global.$spacing-md;
     min-width: 0;
 
+    .next-chapter {
+      margin: global.$spacing-md 0;
+      font-size: global.$font-size-xl;
+    }
+
     .chapter-header {
       display: flex;
       flex-direction: column;

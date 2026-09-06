@@ -1,3 +1,23 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-3" aria-labelledby="chapter-3-title">
+  <h2>Chapter 3: Display Characters</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter turns a fixed read view into a user-selected read path. The
+      same service-owned <sdux-feature-cell /> now exposes a managed collection
+      that the component can present through a dropdown-driven selection flow.
+    </p>
+    <p>
+      The important shift is architectural, not mechanical: selection stays
+      local to the component, while Feature State remains owned by the service.
+      The result is a more interactive read experience without moving State
+      ownership out of the existing boundary.
+    </p>
+  </div>
+</header>
+
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">Add interaction without moving ownership.</h3>
@@ -39,13 +59,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-2-start-title">
-  <h2 class="section-title" id="chapter-2-start-title">
-    Chapter 2 Starting Point and Decision
+<section class="section" aria-labelledby="chapter-3-start-title">
+  <h2 class="section-title" id="chapter-3-start-title">
+    Chapter 3 Starting Point and Decision
   </h2>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 1 project. This chapter changes only
+      Start with the completed Chapter 2 project. This chapter changes only
       <span class="code">example.component.ts</span>,
       <span class="code">example.component.html</span>, and the component spec.
       Registration, bootstrap, seed data, and the service remain unchanged.
@@ -65,9 +85,9 @@
   </div>
 </section>
 
-<section class="section" id="step-11" aria-labelledby="step-11-title">
+<section class="section" id="chapter-3-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <div class="section-title" id="step-11-title">Step 11: Add a Dropdown</div>
+    <div class="section-title" id="step-1-title">Step 1: Add a Dropdown</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -301,34 +321,12 @@
         </li>
       </ul>
     </div>
-
-    <h4>Checkpoint: complete dropdown files</h4>
-    <sdux-example-viewer-source>
-      @for (file of files(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/apis/feature-cell-api/state-property"
-            >FeatureCell state</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-12" aria-labelledby="step-12-title">
+<section class="section" id="chapter-3-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <div class="section-title" id="step-12-title">
-      Step 12: Complete Dropdown Tutorial
-    </div>
+    <div class="section-title" id="step-2-title">Step 2: Chapter Round-up</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -355,7 +353,7 @@
       both an initial empty state and a selected-record view.
     </p>
 
-    <div class="callout callout-action">
+    <div class="callout callout-info">
       <div class="title">Run and Verify</div>
       <ol>
         <li>Return to the running Angular application.</li>
@@ -378,15 +376,15 @@
       </ol>
     </div>
 
-    <div class="callout callout-info">
-      <div class="title">Chapter 2 Checkpoint</div>
+    <div class="callout callout-action">
+      <div class="title">Chapter 3 Summary</div>
       <ol>
         <li>
           You should now be able to explain why the collection is shared Feature
           State
         </li>
         <li>
-          why the selected ID is local presentation state, and how the computed
+          Why the selected ID is local presentation state, and how the computed
           detail reacts to both.
         </li>
         <li>
@@ -398,50 +396,63 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-2-exit-title">
-  <h2 class="section-title" id="chapter-2-exit-title">
-    Chapter 2 Exit Checkpoint
-  </h2>
-  <div class="section-body">
-    <ul>
-      <li>
-        A known ID selects its record; an empty or unknown ID produces the empty
-        detail state.
-      </li>
-      <li>
-        The collection remains Feature State while selection remains
-        component-local.
-      </li>
-      <li>
-        Save this checkpoint for Chapter 3, which adds service-owned create and
-        update requests.
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed dropdown tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished dropdown example without these two steps?</h2>
-  </div>
-
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed dropdown tutorial, launch the live StackBlitz
-        project and inspect the final working implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+<section class="section" id="chapter-3-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">
+      Stackblitz & Downloadable Archive
     </div>
-  }
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
 
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of files(); track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished dropdown example without these two steps?</h2>
+      </div>
+
+      @if (stackblitz(); as stackblitz) {
+        <div class="tutorial-shortcut-launcher">
+          <p>
+            If you want the completed dropdown tutorial, launch the live
+            StackBlitz project and inspect the final working implementation
+            directly.
+          </p>
+          <sdux-stackblitz-language-example
+            [example]="stackblitz.example"
+            [lang]="stackblitz.language" />
+        </div>
+      }
+
+      <div class="tutorial-download">
+        <p>Download the complete chapter source code as a ZIP archive.</p>
+        <sdux-download [url]="downloadUrl"></sdux-download>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Create and Edit">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-4']">Chapter 4: Create and Edit</a>
+    </div>
   </div>
 </section>

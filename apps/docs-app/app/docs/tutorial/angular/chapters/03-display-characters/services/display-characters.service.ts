@@ -17,7 +17,8 @@ export class DisplayCharactersService {
       },
       steps: [
         { id: 1, label: 'Add a Dropdown' },
-        { id: 2, label: 'Complete Chapter' }
+        { id: 2, label: 'Chapter Round-up' },
+        { id: 3, label: 'Stackblitz & Downloadable Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

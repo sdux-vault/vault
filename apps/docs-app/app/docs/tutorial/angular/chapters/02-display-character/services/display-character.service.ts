@@ -29,7 +29,7 @@ export class DisplayCharacterService {
         { id: 8, label: 'Display Character State' },
         { id: 9, label: 'Start the Application' },
         { id: 10, label: 'Chapter Round-up' },
-        { id: 11, label: 'Stackblitz & Archive' }
+        { id: 11, label: 'Stackblitz & Downloadable Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

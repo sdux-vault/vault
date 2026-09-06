@@ -1,4 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
   BrandNameComponent,
@@ -24,7 +25,8 @@ import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/display-characters
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
-    SDuXDownloadComponent
+    SDuXDownloadComponent,
+    MatTooltipModule
   ],
   templateUrl: './display-characters.chapter.component.html'
 })

@@ -98,6 +98,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/03-display-characters/display-characters.chapter.component').then(
                 (m) => m.DisplayCharactersChapterComponent
               )
+          },
+          {
+            path: 'chapter-4',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/02-display-character/display-character.chapter.component').then(
+                (m) => m.DisplayCharacterChapterComponent
+              )
           }
         ]
       }

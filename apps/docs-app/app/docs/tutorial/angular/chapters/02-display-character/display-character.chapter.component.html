@@ -914,29 +914,12 @@ cd sdux-tutorial;
       the template renders.
     </p>
 
-    <div class="callout callout-action">
-      <div class="title">Chapter 2 Checkpoint</div>
-      <ol>
-        <li>
-          Compare your project with the complete-file tabs below. Treat them as
-          the expected state after Step 10, not as additional files to add
-          blindly.
-        </li>
-        <li>
-          Confirm the service test protects registration and initial snapshot
-          behavior, while the component test protects only the UI projection.
-        </li>
-        <li>
-          Keep this completed source for Chapter 2, where the component adds
-          local selection without changing service ownership.
-        </li>
-      </ol>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">What This Final Reference Includes</div>
+    <div class="callout callout-info">
+      <div class="title">Run and Verify</div>
 
       <ul>
+        <li>Return to the running Angular application.</li>
+        <li>Confirm the detail panel shows single character data.</li>
         <li>
           The constant and shape files define the initial character data and its
           contract.
@@ -956,15 +939,24 @@ cd sdux-tutorial;
       </ul>
     </div>
 
-    <h4>All source files</h4>
-    <sdux-example-viewer-source>
-      @for (file of displayCharacterSource; track file.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
+    <div class="callout callout-action">
+      <div class="title">Chapter 2 Summary</div>
+      <ol>
+        <li>
+          Compare your project with the complete-file tabs below. Treat them as
+          the expected state after Step 10, not as additional files to add
+          blindly.
+        </li>
+        <li>
+          Confirm the service test protects registration and initial snapshot
+          behavior, while the component test protects only the UI projection.
+        </li>
+        <li>
+          Keep this completed source for Chapter 2, where the component adds
+          local selection without changing service ownership.
+        </li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -976,6 +968,18 @@ cd sdux-tutorial;
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of displayCharacterSource; track file.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
   </div>
 
   <div
@@ -1002,6 +1006,15 @@ cd sdux-tutorial;
     <div class="tutorial-download">
       <p>Download the complete chapter source code as a ZIP archive.</p>
       <sdux-download [url]="downloadUrl"></sdux-download>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Display Characters">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-3']">Chapter 3: Display Characters</a>
     </div>
   </div>
 </section>
