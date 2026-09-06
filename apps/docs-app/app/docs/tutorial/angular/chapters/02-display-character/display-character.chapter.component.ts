@@ -6,11 +6,12 @@ import {
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
   PackageNameComponent,
-  VaultBrandNameComponent,
-  SDuXDownloadComponent
+  SDuXDownloadComponent,
+  VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
@@ -34,7 +35,10 @@ import { INITIAL_SERVICE } from '../../generated/initial-service.generated';
   ],
   templateUrl: './display-character.chapter.component.html'
 })
-export class DisplayCharacterChapterComponent {
+export class DisplayCharacterChapterComponent extends TutorialNavigationDirective {
+  constructor() {
+    super();
+  }
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DISPLAY_CHARACTER;

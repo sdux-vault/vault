@@ -19,11 +19,11 @@ import {
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ChapterShape } from '../shape/chapter.shape';
-import { AngularWelcomeService } from './chapters/00-welcome/services/welcome.service';
-import { DisplayCharacterChapterComponent } from './chapters/01-display-character/display-character.chapter.component';
-import { DisplayCharacterService } from './chapters/01-display-character/services/display-character.service';
-import { DisplayCharactersChapterComponent } from './chapters/02-display-characters/display-characters.chapter.component';
-import { DisplayCharactersService } from './chapters/02-display-characters/services/display-characters.service';
+import { AngularWelcomeService } from './chapters/01-welcome/services/welcome.service';
+import { DisplayCharacterChapterComponent } from './chapters/02-display-character/display-character.chapter.component';
+import { DisplayCharacterService } from './chapters/02-display-character/services/display-character.service';
+import { DisplayCharactersChapterComponent } from './chapters/03-display-characters/display-characters.chapter.component';
+import { DisplayCharactersService } from './chapters/03-display-characters/services/display-characters.service';
 import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
 import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
 import { AsyncInputChapterComponent } from './chapters/async-input/async-input.chapter.component';
@@ -148,16 +148,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     super();
 
     effect(() => {
-      const activeStepMatch = /^step-(\d+)$/.exec(this.activeStep());
-      const activeStepId = activeStepMatch
-        ? Number(activeStepMatch[1])
-        : Number.NaN;
-
-      if (Number.isNaN(activeStepId)) {
-        return;
-      }
-
-      const activeGroupId = this.getTutorialGroupIdForStepId(activeStepId);
+      const activeGroupId = this.getTutorialGroupIdForStepId(this.activeStep());
 
       if (activeGroupId === null) {
         return;
@@ -181,12 +172,12 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     });
   }
 
-  getStepId(groupIndex: number, stepIndex: number): number {
-    const completedSteps = this.chapters
-      .slice(0, groupIndex)
-      .reduce((count, group) => count + group.steps.length, 0);
+  getStepId(chapterIndex: number, stepIndex: number): string {
+    return `chapter-${chapterIndex + 1}-step-${stepIndex + 1}`;
+  }
 
-    return completedSteps + stepIndex + 1;
+  getStepNumber(stepIndex: number): number {
+    return stepIndex + 1;
   }
 
   getTutorialGroupAriaLabel(groupIndex: number, groupLabel: string): string {
@@ -198,7 +189,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     stepIndex: number,
     stepLabel: string
   ): string {
-    return `Go to Step ${this.getStepId(groupIndex, stepIndex)}: ${stepLabel}`;
+    return `Go to Chapter ${groupIndex + 1}, Step ${stepIndex + 1}: ${stepLabel}`;
   }
 
   isTutorialGroupExpanded(groupId: number): boolean {
@@ -241,18 +232,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     return `${isExpanded ? 'Collapse' : 'Expand'} ${tutorialTitle}`;
   }
 
-  private getTutorialGroupIdForStepId(stepId: number): number | null {
-    let completedSteps = 0;
+  private getTutorialGroupIdForStepId(stepId: string): number | null {
+    const stepMatch = /^chapter-(\d+)-step-(\d+)$/.exec(stepId);
 
-    for (const group of this.chapters) {
-      completedSteps += group.steps.length;
-
-      if (stepId <= completedSteps) {
-        return group.id;
-      }
-    }
-
-    return null;
+    return stepMatch ? Number(stepMatch[1]) : null;
   }
 
   private getTutorialGroupIdForFragment(
@@ -272,11 +255,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       return Number(chapterMatch[1]);
     }
 
-    const stepMatch = /^step-(\d+)$/.exec(fragment);
-
-    return stepMatch
-      ? this.getTutorialGroupIdForStepId(Number(stepMatch[1]))
-      : null;
+    return this.getTutorialGroupIdForStepId(fragment);
   }
 
   private setExpandedTutorialGroups(activeGroupId: number): void {

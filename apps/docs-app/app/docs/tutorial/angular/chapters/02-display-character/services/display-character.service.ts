@@ -9,9 +9,9 @@ export class DisplayCharacterService {
 
   chapters(): ChapterShape {
     return {
-      id: 0,
-      label: 'Foundation: Read State',
-      route: 'chapter-1',
+      id: 2,
+      label: 'Display Character',
+      route: 'chapter-2',
       metadata: {
         track: 'Core',
         prerequisite: 'None',
@@ -28,7 +28,8 @@ export class DisplayCharacterService {
         { id: 7, label: `Connect the service to ${this.#brandName.value}` },
         { id: 8, label: 'Display Character State' },
         { id: 9, label: 'Start the Application' },
-        { id: 10, label: 'Complete Initial Tutorial' }
+        { id: 10, label: 'Chapter Round-up' },
+        { id: 11, label: 'Stackblitz & Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

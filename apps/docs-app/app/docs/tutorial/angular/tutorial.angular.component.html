@@ -94,11 +94,11 @@
                       isActiveStep(getStepId(chapterIndex, stepIndex))
                     ">
                     <span class="tutorial-step-number">
-                      {{ getStepId(chapterIndex, stepIndex) }}.
+                      {{ getStepNumber(stepIndex) }}.
                     </span>
                     <a
                       [routerLink]="[]"
-                      [fragment]="'step-' + getStepId(chapterIndex, stepIndex)"
+                      [fragment]="getStepId(chapterIndex, stepIndex)"
                       [attr.aria-label]="
                         getStepAriaLabel(chapterIndex, stepIndex, step.label)
                       "

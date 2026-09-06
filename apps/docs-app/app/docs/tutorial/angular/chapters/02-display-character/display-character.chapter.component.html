@@ -40,9 +40,9 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-1-start-title">
-  <div class="section-title" id="chapter-1-start-title">
-    Chapter 1 Starting Point
+<section class="section" aria-labelledby="chapter-2-start-title">
+  <div class="section-title" id="chapter-2-start-title">
+    Chapter 2 Starting Point
   </div>
   <div class="section-body">
     <p>
@@ -96,7 +96,7 @@
   </div>
 </section>
 
-<section class="section" id="step-1" aria-labelledby="step-1-title">
+<section class="section" id="chapter-2-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-1-title">
       Step 1: Angular Project Setup
@@ -141,7 +141,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-2" aria-labelledby="step-2-title">
+<section class="section" id="chapter-2-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-2-title">
       Step 2: Install <sdux-brand-name />
@@ -228,7 +228,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-3" aria-labelledby="step-3-title">
+<section class="section" id="chapter-2-step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-3-title">
       Step 3: Define Feature State
@@ -308,7 +308,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-4" aria-labelledby="step-4-title">
+<section class="section" id="chapter-2-step-4" aria-labelledby="step-4-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-4-title">
       Step 4: Build the Angular Service
@@ -384,7 +384,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-5" aria-labelledby="step-5-title">
+<section class="section" id="chapter-2-step-5" aria-labelledby="step-5-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-5-title">
       Step 5: Initialize the <sdux-vault-brand-name />
@@ -444,7 +444,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-6" aria-labelledby="step-6-title">
+<section class="section" id="chapter-2-step-6" aria-labelledby="step-6-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-6-title">
       Step 6: Register the <sdux-feature-cell />
@@ -555,7 +555,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-7" aria-labelledby="step-7-title">
+<section class="section" id="chapter-2-step-7" aria-labelledby="step-7-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-7-title">
       Step 7: Connect the Service to <sdux-brand-name />
@@ -656,7 +656,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-8" aria-labelledby="step-8-title">
+<section class="section" id="chapter-2-step-8" aria-labelledby="step-8-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-8-title">
       Step 8: Display Character State
@@ -771,7 +771,7 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-9" aria-labelledby="step-9-title">
+<section class="section" id="chapter-2-step-9" aria-labelledby="step-9-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-9-title">
       Step 9: Start the Application
@@ -857,10 +857,10 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" id="step-10" aria-labelledby="step-10-title">
+<section class="section" id="chapter-2-step-10" aria-labelledby="step-10-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-10-title">
-      Step 10: Complete Initial Tutorial
+      Step 10: Chapter Round-up
     </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
@@ -938,7 +938,7 @@ cd sdux-tutorial;
       </ul>
     </div>
 
-    <h4>All the chapter 1 files</h4>
+    <h4>All source files</h4>
     <sdux-example-viewer-source>
       @for (file of displayCharacterSource; track file.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -950,51 +950,40 @@ cd sdux-tutorial;
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-1-exit-title">
-  <div class="section-title" id="chapter-1-exit-title">
-    Chapter 1 Exit Checkpoint
-  </div>
-  <div class="section-body">
-    <ul>
-      <li>
-        Registration, service connection, and initialization use the same
-        feature key.
-      </li>
-      <li>
-        The component renders committed State through the service without
-        injecting the
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
-      </li>
-      <li>
-        Save this checkpoint for Chapter 2, where only local selection and
-        presentation change.
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed initial tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <div>Want the finished initial example without all ten steps?</div>
-  </div>
-
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed single-character read example, launch the live
-        StackBlitz project and inspect the finished implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+<section class="section" id="chapter-2-step-11" aria-labelledby="step-11-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-11-title">
+      Chapter Stackblitz & Downloadable Archive
     </div>
-  }
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
 
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  <div
+    class="section-body tutorial-shortcut"
+    aria-label="Launch the completed initial tutorial example">
+    <div class="tutorial-shortcut-copy">
+      <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+      <div>Want the finished initial example without all the steps?</div>
+    </div>
+
+    @if (stackblitz(); as stackblitz) {
+      <div class="tutorial-shortcut-launcher">
+        <p>
+          If you want the completed single-character read example, launch the
+          live StackBlitz project and inspect the finished implementation
+          directly.
+        </p>
+        <sdux-stackblitz-language-example
+          [example]="stackblitz.example"
+          [lang]="stackblitz.language" />
+      </div>
+    }
+
+    <div class="tutorial-download">
+      <p>Download the complete chapter source code as a ZIP archive.</p>
+      <sdux-download [url]="downloadUrl"></sdux-download>
+    </div>
   </div>
 </section>

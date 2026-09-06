@@ -81,21 +81,21 @@ export const routes: Routes = [
           {
             path: 'welcome',
             loadComponent: () =>
-              import('./docs/tutorial/angular/chapters/00-welcome/angular-welcome.chapter.component').then(
+              import('./docs/tutorial/angular/chapters/01-welcome/angular-welcome.chapter.component').then(
                 (m) => m.AngularWelcomeChapterComponent
-              )
-          },
-          {
-            path: 'chapter-1',
-            loadComponent: () =>
-              import('./docs/tutorial/angular/chapters/01-display-character/display-character.chapter.component').then(
-                (m) => m.DisplayCharacterChapterComponent
               )
           },
           {
             path: 'chapter-2',
             loadComponent: () =>
-              import('./docs/tutorial/angular/chapters/02-display-characters/display-characters.chapter.component').then(
+              import('./docs/tutorial/angular/chapters/02-display-character/display-character.chapter.component').then(
+                (m) => m.DisplayCharacterChapterComponent
+              )
+          },
+          {
+            path: 'chapter-3',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/03-display-characters/display-characters.chapter.component').then(
                 (m) => m.DisplayCharactersChapterComponent
               )
           }

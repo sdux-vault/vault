@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Directive()
 export abstract class TutorialNavigationDirective implements AfterViewInit {
-  readonly activeStep = signal('step-1');
+  readonly activeStep = signal('chapter-1-step-1');
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -65,11 +65,11 @@ export abstract class TutorialNavigationDirective implements AfterViewInit {
     });
   }
 
-  isActiveStep(stepId: number): boolean {
-    return this.activeStep() === `step-${stepId}`;
+  isActiveStep(stepId: string): boolean {
+    return this.activeStep() === stepId;
   }
 
-  isAriaStep(stepId: number): 'step' | null {
+  isAriaStep(stepId: string): 'step' | null {
     return this.isActiveStep(stepId) ? 'step' : null;
   }
 }
