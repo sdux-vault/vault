@@ -10,46 +10,49 @@
       <div class="tutorial-chapters-title">Chapters</div>
 
       <div class="tutorial-steps-container">
-        @for (group of chapters; track group.id; let groupIndex = $index) {
+        @for (
+          chapter of chapters;
+          track chapter.id;
+          let chapterIndex = $index
+        ) {
           <section
             class="tutorial-group"
-            [attr.aria-labelledby]="'tutorial-group-' + group.id">
+            [attr.aria-labelledby]="'tutorial-group-' + chapter.id">
             <div class="tutorial-steps-heading">
               <div
                 class="tutorial-steps-title"
-                [id]="'tutorial-group-' + group.id">
+                [id]="'tutorial-group-' + chapter.id">
                 <a
-                  [routerLink]="[]"
-                  [fragment]="group.fragment"
+                  [routerLink]="['./', chapter.route]"
                   [attr.aria-label]="
-                    getTutorialGroupAriaLabel(groupIndex, group.label)
+                    getTutorialGroupAriaLabel(chapterIndex, chapter.label)
                   ">
-                  {{ groupIndex + 1 }}.
-                  {{ group.label }}
+                  {{ chapterIndex + 1 }}.
+                  {{ chapter.label }}
                 </a>
               </div>
 
               <button
                 type="button"
                 class="tutorial-group-chevron"
-                [attr.aria-controls]="'tutorial-step-list-' + group.id"
-                [attr.aria-expanded]="isTutorialGroupExpanded(group.id)"
+                [attr.aria-controls]="'tutorial-step-list-' + chapter.id"
+                [attr.aria-expanded]="isTutorialGroupExpanded(chapter.id)"
                 [matTooltip]="
                   getTutorialGroupToggleAriaLabel(
-                    group.label,
-                    isTutorialGroupExpanded(group.id)
+                    chapter.label,
+                    isTutorialGroupExpanded(chapter.id)
                   )
                 "
                 [attr.aria-label]="
                   getTutorialGroupToggleAriaLabel(
-                    group.label,
-                    isTutorialGroupExpanded(group.id)
+                    chapter.label,
+                    isTutorialGroupExpanded(chapter.id)
                   )
                 "
-                (click)="toggleTutorialGroup(group.id)">
+                (click)="toggleTutorialGroup(chapter.id)">
                 <mat-icon aria-hidden="true">
                   {{
-                    isTutorialGroupExpanded(group.id)
+                    isTutorialGroupExpanded(chapter.id)
                       ? 'keyboard_arrow_down'
                       : 'keyboard_arrow_right'
                   }}
@@ -57,48 +60,50 @@
               </button>
             </div>
 
-            @if (isTutorialGroupExpanded(group.id)) {
-              <div class="chapter-meta-group">
-                <div class="chapter-meta">
-                  <strong>
-                    {{ group.metadata?.track }}
-                  </strong>
+            @if (isTutorialGroupExpanded(chapter.id)) {
+              @if (chapter.metadata) {
+                <div class="chapter-meta-group">
+                  <div class="chapter-meta">
+                    <strong>
+                      {{ chapter.metadata.track }}
+                    </strong>
+                  </div>
+                  <div class="chapter-meta">
+                    Prerequisite:
+                    {{ chapter.metadata.prerequisite }}
+                  </div>
+                  <div class="chapter-meta">
+                    <span class="difficulty">
+                      {{ chapter.metadata.tier }}
+                    </span>
+                    ({{ chapter.metadata.estimatedTime }})
+                  </div>
                 </div>
-                <div class="chapter-meta">
-                  Prerequisite:
-                  {{ group.metadata?.prerequisite }}
-                </div>
-                <div class="chapter-meta">
-                  <span class="difficulty">
-                    {{ group.metadata?.tier }}
-                  </span>
-                  ({{ group.metadata?.estimatedTime }})
-                </div>
-              </div>
+              }
               <div
                 class="tutorial-step-list"
-                [id]="'tutorial-step-list-' + group.id">
+                [id]="'tutorial-step-list-' + chapter.id">
                 @for (
-                  step of group.steps;
+                  step of chapter.steps;
                   track step.id;
                   let stepIndex = $index
                 ) {
                   <div
                     class="tutorial-step-item"
                     [class.tutorial-step-active]="
-                      isActiveStep(getStepId(groupIndex, stepIndex))
+                      isActiveStep(getStepId(chapterIndex, stepIndex))
                     ">
                     <span class="tutorial-step-number">
-                      {{ getStepId(groupIndex, stepIndex) }}.
+                      {{ getStepId(chapterIndex, stepIndex) }}.
                     </span>
                     <a
                       [routerLink]="[]"
-                      [fragment]="'step-' + getStepId(groupIndex, stepIndex)"
+                      [fragment]="'step-' + getStepId(chapterIndex, stepIndex)"
                       [attr.aria-label]="
-                        getStepAriaLabel(groupIndex, stepIndex, step.label)
+                        getStepAriaLabel(chapterIndex, stepIndex, step.label)
                       "
                       [attr.aria-current]="
-                        isAriaStep(getStepId(groupIndex, stepIndex))
+                        isAriaStep(getStepId(chapterIndex, stepIndex))
                       ">
                       <span class="tutorial-step-label">{{ step.label }}</span>
                     </a>
@@ -110,8 +115,12 @@
         }
       </div>
     </nav>
-
     <main class="tutorial-content">
+      <router-outlet></router-outlet>
+      <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
+    </main>
+
+    <!-- <main class="tutorial-content">
       <div class="header">
         <h2><sdux-brand-name [tm]="true" /> Tutorial</h2>
       </div>
@@ -1301,7 +1310,6 @@
           </ul>
         </div>
       </section>
-      <sdux-pipeline-related-topics></sdux-pipeline-related-topics>
-    </main>
+    </main> -->
   </div>
 </div>

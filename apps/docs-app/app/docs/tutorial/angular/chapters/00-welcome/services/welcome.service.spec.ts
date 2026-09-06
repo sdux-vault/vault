@@ -1,0 +1,43 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { sduxTestingModule } from '@sdux-vault/ui/web-components';
+import { AngularWelcomeService } from './welcome.service';
+
+describe('Service: AngularWelcome', () => {
+  let service: AngularWelcomeService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [sduxTestingModule],
+      providers: [provideZonelessChangeDetection(), AngularWelcomeService]
+    });
+
+    service = TestBed.inject(AngularWelcomeService);
+  });
+
+  it('returns the chapter metadata for the display-character chapter', () => {
+    expect(service.chapters()).toEqual({
+      id: 1,
+      label: 'Foundation: Read State',
+      fragment: 'top',
+      metadata: {
+        track: 'Core',
+        prerequisite: 'None',
+        tier: '★',
+        estimatedTime: '60-90 minutes'
+      },
+      steps: [
+        { id: 1, label: 'Angular Project Setup' },
+        { id: 2, label: `Install Mock BN` },
+        { id: 3, label: 'Define Feature State' },
+        { id: 4, label: 'Build the Service' },
+        { id: 5, label: `Initialize the Mock VBN` },
+        { id: 6, label: `Register the Mock FC` },
+        { id: 7, label: `Connect the service to Mock BN` },
+        { id: 8, label: 'Display Character State' },
+        { id: 9, label: 'Start the Application' },
+        { id: 10, label: 'Complete Initial Tutorial' }
+      ]
+    });
+  });
+});

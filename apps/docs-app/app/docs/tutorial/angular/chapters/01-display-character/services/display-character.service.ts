@@ -9,9 +9,9 @@ export class DisplayCharacterService {
 
   chapters(): ChapterShape {
     return {
-      id: 1,
+      id: 0,
       label: 'Foundation: Read State',
-      fragment: 'top',
+      route: 'chapter-1',
       metadata: {
         track: 'Core',
         prerequisite: 'None',

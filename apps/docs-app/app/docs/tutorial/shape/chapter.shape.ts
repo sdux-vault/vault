@@ -4,7 +4,8 @@ import { ChapterStepShape } from './chapter-step.shape';
 export interface ChapterShape {
   id: number;
   label: string;
-  fragment: string;
+  fragment?: string;
+  route?: string;
   steps: readonly ChapterStepShape[];
   metadata?: ChapterMetadataShape;
 }

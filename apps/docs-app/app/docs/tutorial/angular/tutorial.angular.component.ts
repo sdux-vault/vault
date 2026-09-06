@@ -19,6 +19,7 @@ import {
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ChapterShape } from '../shape/chapter.shape';
+import { AngularWelcomeService } from './chapters/00-welcome/services/welcome.service';
 import { DisplayCharacterChapterComponent } from './chapters/01-display-character/display-character.chapter.component';
 import { DisplayCharacterService } from './chapters/01-display-character/services/display-character.service';
 import { DisplayCharactersChapterComponent } from './chapters/02-display-characters/display-characters.chapter.component';
@@ -91,8 +92,9 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   } as const;
 
   readonly #route = inject(ActivatedRoute);
-  readonly #displayCharactersService = inject(DisplayCharactersService);
+  readonly #angularWelcomeService = inject(AngularWelcomeService);
   readonly #displayCharacterService = inject(DisplayCharacterService);
+  readonly #displayCharactersService = inject(DisplayCharactersService);
   readonly #addEditCharactersService = inject(AddEditCharactersService);
   readonly #asyncInputService = inject(AsyncInputService);
   readonly #deleteCharactersService = inject(DeleteCharactersService);
@@ -139,6 +141,8 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     13: false,
     14: false
   });
+
+  readonly chapters = this.#getChapters();
 
   constructor() {
     super();
@@ -313,20 +317,26 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     }
   }
 
-  readonly chapters: readonly ChapterShape[] = [
-    this.#displayCharacterService.chapters(),
-    this.#displayCharactersService.chapters(),
-    this.#addEditCharactersService.chapters(),
-    this.#deleteCharactersService.chapters(),
-    this.#lifeCycleService.chapters(),
-    this.#filtersAndReducersService.chapters(),
-    this.#errorsService.chapters(),
-    this.#asyncInputService.chapters(),
-    this.#delayService.chapters(),
-    this.#encryptAndPersistService.chapters(),
-    this.#stateIntrospectionService.chapters(),
-    this.#tabSyncService.chapters(),
-    this.#distinctUntilChangedService.chapters(),
-    this.#stepwiseService.chapters()
-  ];
+  #getChapters(): readonly ChapterShape[] {
+    return [
+      this.#angularWelcomeService.chapters(),
+      this.#displayCharacterService.chapters(),
+      this.#displayCharactersService.chapters(),
+      this.#addEditCharactersService.chapters(),
+      this.#deleteCharactersService.chapters(),
+      this.#lifeCycleService.chapters(),
+      this.#filtersAndReducersService.chapters(),
+      this.#errorsService.chapters(),
+      this.#asyncInputService.chapters(),
+      this.#delayService.chapters(),
+      this.#encryptAndPersistService.chapters(),
+      this.#stateIntrospectionService.chapters(),
+      this.#tabSyncService.chapters(),
+      this.#distinctUntilChangedService.chapters(),
+      this.#stepwiseService.chapters()
+    ].map((chapter: ChapterShape, index: number) => {
+      chapter.id = index + 1;
+      return chapter;
+    });
+  }
 }

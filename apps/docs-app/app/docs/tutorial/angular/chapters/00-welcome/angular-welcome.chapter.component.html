@@ -1,0 +1,282 @@
+<div class="header">
+  <h2><sdux-brand-name [tm]="true" /> Tutorial</h2>
+</div>
+<header class="docs-header">
+  <p>
+    This is a guided Angular tutorial for building one complete feature with
+    <sdux-brand-name /> from the ground up. You will move step by step from
+    project setup, to Feature State definition, to registration and
+    initialization, and finally to a working UI that reads, selects, creates,
+    updates, deletes, filters, and derives managed State.
+  </p>
+
+  <p class="lead">
+    By the end of the tutorial, you will have a typed
+    <sdux-feature-cell />, an Angular service that owns the Feature boundary, a
+    component that binds to reactive State, and a complete character workflow
+    that can render, select, create, update, delete, filter, sort, and derive
+    display-ready values from a managed collection.
+  </p>
+
+  <div class="callout callout-info">
+    <div class="title">Business Use Case</div>
+
+    <ul>
+      <li>
+        A product team needs a simple detail view that presents one record from
+        a managed collection without exposing state-management mechanics in the
+        component.
+      </li>
+      <li>
+        The feature must keep domain ownership in a service so UI code can stay
+        focused on display logic, template binding, and user interaction.
+      </li>
+      <li>
+        The same structure should scale from a read-only detail screen to later
+        workflows such as editing, validation, loading states, and testing
+        without changing the core boundary.
+      </li>
+    </ul>
+  </div>
+</header>
+
+<section class="section" id="step-1" aria-labelledby="step1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">Before You Begin</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This tutorial is written for Angular developers who already know
+      standalone components, dependency injection, services, reactive forms,
+      Signals, and basic RxJS.
+    </p>
+    <p>
+      <em> No previous <sdux-brand-name /> experience is required. </em>
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Environment and Time</div>
+      <ul>
+        <li>
+          The checked-in tutorial baseline uses
+          <ul>
+            <li>Node.js {{ verifiedEnvironment.node }}</li>
+            <li>npm {{ verifiedEnvironment.npm }}</li>
+            <li>Angular {{ verifiedEnvironment.angular }}</li>
+            <li>
+              <sdux-package-name [package]="'angular'"></sdux-package-name>
+              {{ verifiedEnvironment.sduxAngular }}
+            </li>
+            <li>
+              <sdux-package-name [package]="'addons'"></sdux-package-name>
+              {{ verifiedEnvironment.sduxAddons }}
+            </li>
+          </ul>
+        </li>
+        <li>
+          The StackBlitz manifests use the latest published SDuX packages; use
+          versions compatible with the checked-in library baseline when
+          reproducing the tutorial locally.
+        </li>
+        <li>
+          Chapter Composition
+          <ul>
+            <li>
+              Complete Chapters 1–7 for the core read, write, lifecycle,
+              transformation, and error-management path.
+            </li>
+            <li>
+              Chapters 8–14 are focused optional labs that you should adopt only
+              when their requirements match your application.
+            </li>
+            <li>
+              Allow roughly 60–90 minutes for Chapter 1 and 20–45 minutes for
+              each later chapter. Complex add-on labs may take longer if you
+              explore every failure path.
+            </li>
+            <li>
+              Chapters 10 and 12 demonstrate Pro capabilities. Their chapter
+              introductions explain evaluation and production licensing before
+              you configure them.
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Choose a Starting Path</div>
+      <ol>
+        <li>
+          For the full build, start at Step 1 and keep using the same Angular
+          project. Step numbers are cumulative across chapters.
+        </li>
+        <li>
+          To start later, download the completed source from the preceding
+          chapter, replace your tutorial project with that checkpoint, install
+          its dependencies, and then begin the next chapter.
+        </li>
+        <li>
+          Use each chapter's StackBlitz project to compare behavior or recover
+          from a mismatch. The complete-file tabs show the checkpoint after that
+          step; the action list identifies what is new.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Add-on Labs Are Choices, Not a Checklist</div>
+      <p>
+        The complete tutorial makes many SDuX capabilities visible in one
+        teaching application. A production feature rarely needs all of them. Use
+        the decision guidance in each chapter to select the smallest set that
+        satisfies your real state, timing, persistence, synchronization, and
+        approval requirements.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      The <sdux-brand-name /> Mental Model
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>Keep this ownership path in mind throughout the tutorial.</p>
+    <ul>
+      <li>Angular UI events call a feature service.</li>
+      <li>
+        The service is the only application layer that configures and updates
+        its
+        <sdux-feature-cell />.
+      </li>
+      <li>
+        The pipeline resolves and shapes a candidate before committing a new
+        immutable snapshot.
+      </li>
+      <li>
+        The component then reads that snapshot and derives presentation state
+        for the template.
+      </li>
+    </ul>
+
+    <sdux-example-viewer-source
+      [displayCopyPaste]="false"
+      [displayTabs]="false">
+      <sdux-example-viewer-tab [label]="'Mental Model'">
+        <pre class="code-inline"><code>Angular UI action
+  → feature service method
+  → FeatureCell request
+  → FeatureCell pipeline execution
+  → committed StateSnapshot
+  → component Signal or Observable
+  → template</code></pre>
+      </sdux-example-viewer-tab>
+    </sdux-example-viewer-source>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Three Different Kinds of Setup</div>
+      <ul>
+        <li>
+          <strong>Structural registration:</strong>
+          <ul>
+            <li>
+              <span class="code"
+                ><a href="/docs/references/functions/provide-vault"
+                  >provideVault</a
+                >()</span
+              >
+              creates the application runtime
+            </li>
+            <li>
+              <span class="code"
+                ><a href="/docs/references/functions/provide-feature-cell"
+                  >provideFeatureCell</a
+                >()</span
+              >
+              registers a feature key, initial value, behaviors, and
+              controllers.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Service connection and configuration:</strong> the
+          <span class="code"
+            >&#64;<a href="/docs/references/functions/feature-cell"
+              >FeatureCell</a
+            >()</span
+          >
+          decorator,
+          <span class="code"
+            ><a href="/docs/references/functions/inject-vault">injectVault</a
+            >()</span
+          >, and fluent methods bind one Angular service to that registration
+          before <span class="code">initialize()</span> activates it.
+        </li>
+        <li>
+          <strong>State requests:</strong>
+          <span class="code">mergeState()</span>,
+          <span class="code">replaceState()</span>, lifecycle methods, and
+          asynchronous sources submit work after activation.
+        </li>
+      </ul>
+    </div>
+
+    <dl>
+      <dt><strong>Candidate</strong></dt>
+      <dd>The value currently moving through the pipeline.</dd>
+      <dt><strong>Committed State</strong></dt>
+      <dd>The last finalized value available to consumers.</dd>
+      <dt><strong>StateSnapshot</strong></dt>
+      <dd>
+        The value together with loading, error, and value-presence metadata.
+      </dd>
+      <dt><strong>Behavior</strong></dt>
+      <dd>A capability attached to a specific pipeline stage.</dd>
+      <dt><strong>Controller</strong></dt>
+      <dd>
+        A capability that coordinates execution, such as timing, cross-tab
+        initialization, or a pending decision.
+      </dd>
+    </dl>
+
+    <p>
+      Persistence, synchronization, timing, and policy controllers are optional
+      branches. Add them only when a production requirement needs that
+      capability; they are not required for the core
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      path.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">
+      <sdux-brand-name /> in 5 Minutes
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <section class="diagram-section">
+    <div class="section-body">
+      <p>
+        This optional five-minute video introduces <sdux-brand-name /> and
+        provides context for the tutorial. You can continue directly to Angular
+        Project Setup without watching it.
+      </p>
+      <sdux-video videoId="m7ClyWSh754" [tooltip]="'Pipeline Overview'" />
+    </div>
+  </section>
+</section>
