@@ -30,8 +30,8 @@ export const TutorialSourceGroupsConstants = (projectRoot) => {
       'STAR_WARS_COMPLETE_CHARACTER_MANAGEMENT',
       'complete-character-management'
     ],
-    ['STAR_WARS_DISPLAY_CHARACTER', 'display-character'],
-    ['STAR_WARS_DISPLAY_CHARACTERS', 'display-characters'],
+    ['STAR_WARS_DISPLAY_CHARACTER', '02-display-character'],
+    ['STAR_WARS_DISPLAY_CHARACTERS', '03-display-characters'],
     ['STAR_WARS_ADD_EDIT_CHARACTERS', 'add-edit-characters'],
     ['STAR_WARS_DELETE_CHARACTERS', 'delete-characters'],
     ['STAR_WARS_LIFECYCLE_CHARACTERS', 'lifecycle'],

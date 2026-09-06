@@ -12,8 +12,8 @@ import path from 'node:path';
  */
 export const AngularTutorialExamplesConstants = (projectRoot) =>
   [
-    ['display-character', 'display-character-example'],
-    ['display-characters', 'display-characters-example'],
+    ['02-display-character', 'display-character-example'],
+    ['03-display-characters', 'display-characters-example'],
     ['add-edit-characters', 'add-edit-characters-example'],
     ['delete-characters', 'delete-characters-example'],
     ['lifecycle', 'lifecycle-tutorial-example'],
