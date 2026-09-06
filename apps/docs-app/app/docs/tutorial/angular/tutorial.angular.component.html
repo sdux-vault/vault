@@ -26,7 +26,8 @@
                   [routerLink]="['./', chapter.route]"
                   [attr.aria-label]="
                     getTutorialGroupAriaLabel(chapterIndex, chapter.label)
-                  ">
+                  "
+                  (click)="selectTutorialChapter(chapter.id)">
                   {{ chapterIndex + 1 }}.
                   {{ chapter.label }}
                 </a>

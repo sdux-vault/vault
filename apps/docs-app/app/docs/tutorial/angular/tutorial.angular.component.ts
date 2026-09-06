@@ -9,7 +9,12 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterModule
+} from '@angular/router';
 import {
   BrandNameComponent,
   FeatureCellBrandNameComponent,
@@ -92,6 +97,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
   } as const;
 
   readonly #route = inject(ActivatedRoute);
+  readonly #router = inject(Router);
   readonly #angularWelcomeService = inject(AngularWelcomeService);
   readonly #displayCharacterService = inject(DisplayCharacterService);
   readonly #displayCharactersService = inject(DisplayCharactersService);
@@ -142,13 +148,17 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     14: false
   });
 
+  readonly #activeRouteChapterId = signal<number | null>(null);
+
   readonly chapters = this.#getChapters();
 
   constructor() {
     super();
 
     effect(() => {
-      const activeGroupId = this.getTutorialGroupIdForStepId(this.activeStep());
+      const activeGroupId =
+        this.#activeRouteChapterId() ??
+        this.getTutorialGroupIdForStepId(this.activeStep());
 
       if (activeGroupId === null) {
         return;
@@ -169,6 +179,25 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
 
       this.setExpandedTutorialGroups(targetGroupId);
       this.setExpandedChapters(targetGroupId);
+    });
+
+    const updateExpandedChapterFromRoute = (): void => {
+      const routePath = this.#route.firstChild?.snapshot?.url?.[0]?.path;
+      const activeChapter = this.chapters.find(
+        (chapter) => chapter.route === routePath
+      );
+
+      if (activeChapter) {
+        this.#activeRouteChapterId.set(activeChapter.id);
+      }
+    };
+
+    updateExpandedChapterFromRoute();
+
+    this.#router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        updateExpandedChapterFromRoute();
+      }
     });
   }
 
@@ -214,6 +243,11 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       return;
     }
 
+    this.setExpandedTutorialGroups(groupId);
+    this.setExpandedChapters(groupId);
+  }
+
+  selectTutorialChapter(groupId: number): void {
     this.setExpandedTutorialGroups(groupId);
     this.setExpandedChapters(groupId);
   }
