@@ -7,7 +7,7 @@ export class DisplayCharactersService {
   chapters(): ChapterShape {
     return {
       id: 2,
-      label: 'Selection: Display Records',
+      label: 'Display Records',
       fragment: 'chapter-2',
       metadata: {
         track: 'Core',

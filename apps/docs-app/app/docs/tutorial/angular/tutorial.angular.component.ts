@@ -21,6 +21,8 @@ import { TutorialNavigationDirective } from '../directive/tutorial-navigation.di
 import { ChapterShape } from '../shape/chapter.shape';
 import { DisplayCharacterChapterComponent } from './chapters/01-display-character/display-character.chapter.component';
 import { DisplayCharacterService } from './chapters/01-display-character/services/display-character.service';
+import { DisplayCharactersChapterComponent } from './chapters/02-display-characters/display-characters.chapter.component';
+import { DisplayCharactersService } from './chapters/02-display-characters/services/display-characters.service';
 import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
 import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
 import { AsyncInputChapterComponent } from './chapters/async-input/async-input.chapter.component';
@@ -29,8 +31,6 @@ import { DelayChapterComponent } from './chapters/delay/delay.chapter.component'
 import { DelayService } from './chapters/delay/services/delay.service';
 import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
 import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
-import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
-import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
 import { DistinctUntilChangedChapterComponent } from './chapters/distinct-until-changed/distinct-until-changed.chapter.component';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
 import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persist/encrypt-and-persist.chapter.component';

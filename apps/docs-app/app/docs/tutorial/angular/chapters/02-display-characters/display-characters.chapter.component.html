@@ -50,16 +50,6 @@
       <span class="code">example.component.html</span>, and the component spec.
       Registration, bootstrap, seed data, and the service remain unchanged.
     </p>
-    <div class="callout callout-info">
-      <div class="title">Keep Selection Local When</div>
-      <p>
-        The selected ID describes only what this component is displaying.
-        Promote selection to shared Feature State only when another consumer, a
-        route, persistence, or cross-tab behavior must observe the same
-        selection. Local state is the smaller and safer choice for this
-        master-detail view.
-      </p>
-    </div>
     <div class="callout callout-action">
       <div class="title">Confirm the Starting Checkpoint</div>
       <ol>
@@ -77,7 +67,7 @@
 
 <section class="section" id="step-11" aria-labelledby="step-11-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-11-title">Step 11: Add a Dropdown</h2>
+    <div class="section-title" id="step-11-title">Step 11: Add a Dropdown</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -95,17 +85,23 @@
     <p>
       Assume the Angular mechanics are already familiar. Here, keep Feature
       State in the service, keep selection state in the component, and derive
-      the displayed record from the latest service-owned collection. To do that,
-      replace the single displayed-character computed Signal with a read-only
+      the displayed record from the latest service-owned collection.
+    </p>
+    <p>
+      Replace the single displayed-character computed Signal with a read-only
       character collection, a
       <span class="code">selectedCharacterId</span> Signal, a computed lookup
-      for the selected record, and a small selection handler. In the template,
-      add a <span class="code">select</span> element that lists the registered
-      characters and keep the detail panel bound to computed controller state
-      instead of reaching into <sdux-brand-name /> directly. The matching
-      verification belongs in this same step: the updated component spec should
-      prove the controller starts empty, accepts a valid selection, ignores
-      unknown ids, and renders the selected record without moving
+      for the selected record, and a small selection handler.
+    </p>
+    <p>
+      In the template, add a <span class="code">select</span> element that lists
+      the registered characters and keep the detail panel bound to computed
+      controller state instead of reaching into <sdux-brand-name /> directly.
+    </p>
+    <p>
+      The matching verification belongs in this same step: the updated component
+      spec should prove the controller starts empty, accepts a valid selection,
+      ignores unknown ids, and renders the selected record without moving
       <sdux-brand-name /> ownership out of the service.
     </p>
 
@@ -119,51 +115,169 @@
         template renders the empty state.
       </p>
     </div>
-
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
-      <ol>
-        <li>
-          In <span class="code">example.component.ts</span>, replace the
-          single-record computed value with
-          <span class="code">characters</span>, a computed read of
-          <span class="code">this.#exampleService.state.value() ?? []</span>.
-        </li>
-        <li>
-          Add <span class="code">selectedCharacterId</span> as a local Signal
-          initialized to <span class="code">null</span>. Add
-          <span class="code">selectedCharacter</span> as a computed lookup that
-          returns the matching collection record or
-          <span class="code">null</span>.
-        </li>
-        <li>
-          Add <span class="code">selectCharacter(value: string)</span>. Convert
-          the dropdown value with <span class="code">Number(value)</span>, set
-          the Signal only when that ID exists in
-          <span class="code">characters()</span>, and otherwise leave the
-          current local selection unchanged.
-        </li>
-        <li>
-          In <span class="code">example.component.html</span>, render one option
-          per <span class="code">characters()</span> entry and pass the selected
-          value to <span class="code">selectCharacter()</span>. Render the
-          details panel only when <span class="code">selectedCharacter()</span>
-          returns a record; otherwise render the empty guidance.
-        </li>
-        <li>
-          Give the picker a visible <span class="code">label</span> associated
-          by <span class="code">for</span> and <span class="code">id</span>.
-          Include a disabled empty option, and disable the picker when the
-          collection is empty so pointer and keyboard users receive the same
-          contract.
-        </li>
-        <li>
-          Start with no selection, choose Leia, and confirm the detail panel
-          shows Leia. Submit an unknown value in the component spec and confirm
-          no record is manufactured and Feature State remains unchanged.
-        </li>
-      </ol>
     </div>
+    <ol>
+      <li>
+        In <span class="code">example.component.ts</span>, replace the
+        single-record computed value with <span class="code">characters</span>,
+        a computed read of
+        <span class="code">this.#exampleService.state.value() ?? []</span>.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'New Computed Value'">
+            <pre
+              class="code-inline"><code class="language-ts">{{`readonly characters = computed&lt;readonly StarWarsCharacter[]&gt;(
+    () =&gt; this.#exampleService.state.value() ?? []
+);`}}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>
+        Add <span class="code">selectedCharacterId</span> as a local Signal
+        initialized to <span class="code">null</span>.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'selectedCharacterId'">
+            <pre
+              class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacterId = signal&lt;number | null&gt;(null);
+`}}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>
+        Add
+        <span class="code">selectedCharacter</span> as a computed lookup that
+        returns the matching collection record or
+        <span class="code">null</span>.
+
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'selectedCharacter'">
+            <pre
+              class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacter = computed(() =&gt; {
+  const selectedId = this.selectedCharacterId();
+  return this.characters().find(({ id }) =&gt; id === selectedId) ?? null;
+});`}}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>
+        Add <span class="code">selectCharacter(value: string)</span>. Convert
+        the dropdown value with <span class="code">Number(value)</span>, set the
+        Signal only when that ID exists in
+        <span class="code">characters()</span>, and otherwise leave the current
+        local selection unchanged.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'selectCharacter'">
+            <pre
+              class="code-inline"><code class="language-ts">{{`protected selectCharacter(value: string): void {
+  const character =
+    this.characters().find((character) => character.id === Number(value)) ??
+    null;
+
+  if (!character) {
+    return;
+  }
+
+  this.selectedCharacterId.set(character.id);
+}`}}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>
+        In <span class="code">example.component.html</span>, render one option
+        per <span class="code">characters()</span> entry and pass the selected
+        value to <span class="code">selectCharacter()</span>.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'selectCharacter'">
+            <pre
+              class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-top"&gt;
+  &lt;div class="field selection"&gt;
+    &lt;label for="character-selection"&gt;
+      Character (&#123;&#123; characters().length &#125;&#125; total)
+    &lt;/label&gt;
+    &lt;select
+      &#35;characterSelection
+      id="character-selection"
+      [disabled]="characters().length === 0"
+      (change)="selectCharacter(characterSelection.value)"&gt;
+      &lt;option
+        value=""
+        disabled
+        [selected]="selectedCharacterId() === null"&gt;
+        Select a character
+      &lt;/option&gt;
+      &#64;for (character of characters(); track character.id) &#123;
+        &lt;option
+          [value]="character.id"
+          [selected]="character.id === selectedCharacterId()"&gt;
+          &#123;&#123;
+            character.fullName ??
+              character.name + ' ' + character.lastName
+          &#125;&#125;
+        &lt;/option&gt;
+      &#125;
+    &lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;`}}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>
+        Render the details panel only when
+        <span class="code">selectedCharacter()</span>
+        returns a record; otherwise render the empty guidance.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'selectCharacter'">
+            <pre
+              class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-bottom"&gt;
+  &lt;section
+    class="panel character-details"
+    aria-labelledby="details-title"&gt;
+    &lt;div class="header"&gt;
+      &lt;h3 id="details-title"&gt;Character details&lt;/h3&gt;
+    &lt;/div&gt;
+
+    &#64;if (selectedCharacter(); as character) &#123;
+      &lt;dl&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Full name&lt;/dt&gt;
+          &lt;dd&gt;
+            &#123;&#123; character.fullName &#125;&#125;
+          &lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;First name&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.name &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Last name&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.lastName &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Identifier&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.id &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Faction&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.faction &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt class="force-sensitive"&gt;Force-sensitive&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.forceSensitiveDisplay &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+      &lt;/dl&gt;
+    &#125; &#64;else &#123;
+      &lt;div class="empty-state"&gt;
+        &lt;h4&gt;No character selected&lt;/h4&gt;
+        &lt;p&gt;Choose a character from the list.&lt;/p&gt;
+      &lt;/div&gt;
+    &#125;
+  &lt;/section&gt;
+&lt;/div&gt;`}}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+    </ol>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -212,9 +326,9 @@
 
 <section class="section" id="step-12" aria-labelledby="step-12-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-12-title">
+    <div class="section-title" id="step-12-title">
       Step 12: Complete Dropdown Tutorial
-    </h2>
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -224,9 +338,12 @@
     <p>
       The dropdown tutorial is complete once the page starts with no selected
       character, lists the registered collection in the picker, and updates the
-      detail panel when the selection changes. The <sdux-brand-name /> boundary
-      has not moved: the service still owns the <sdux-feature-cell /> and the
-      component still owns only UI selection state.
+      detail panel when the selection changes.
+    </p>
+    <p>
+      The <sdux-brand-name /> boundary has not moved: the service still owns the
+      <sdux-feature-cell /> and the component still owns only UI selection
+      state.
     </p>
 
     <p>
@@ -263,31 +380,20 @@
 
     <div class="callout callout-info">
       <div class="title">Chapter 2 Checkpoint</div>
-      <p>
-        You should now be able to explain why the collection is shared Feature
-        State, why the selected ID is local presentation state, and how the
-        computed detail reacts to both. Chapter 3 keeps that boundary and adds
-        service-owned create and update requests.
-      </p>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Dropdown Flow Summary</div>
-
-      <ul>
+      <ol>
         <li>
-          The component now reads the full collection instead of assuming the
-          first item is always the displayed record.
+          You should now be able to explain why the collection is shared Feature
+          State
         </li>
         <li>
-          The selected character is derived from a local UI Signal and the
-          latest reactive collection State.
+          why the selected ID is local presentation state, and how the computed
+          detail reacts to both.
         </li>
         <li>
-          The template now supports user-directed selection on top of the same
-          service-owned State.
+          Chapter 3 keeps that boundary and adds service-owned create and update
+          requests.
         </li>
-      </ul>
+      </ol>
     </div>
   </div>
 </section>

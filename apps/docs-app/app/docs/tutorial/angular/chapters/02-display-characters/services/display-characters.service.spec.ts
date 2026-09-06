@@ -18,7 +18,7 @@ describe('Service: DisplayCharactersService', () => {
   it('returns the chapter metadata for the display-characters tutorial', () => {
     expect(service.chapters()).toEqual({
       id: 2,
-      label: 'Selection: Display Records',
+      label: 'Display Records',
       fragment: 'chapter-2',
       metadata: {
         track: 'Core',
