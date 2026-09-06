@@ -1,4 +1,24 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-4" aria-labelledby="chapter-4-title">
+  <h2>Chapter 4: Add/Edit Characters</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter introduces mutation by adding merge configuration, create
+      behavior, and update behavior to the same
+      <sdux-feature-cell /> boundary. The workflow expands from reading data to
+      saving new and edited records through the service.
+    </p>
+    <p>
+      Keep mutation policy inside the <sdux-brand-name /> pipeline and committed
+      Feature State inside the service, while the component owns only local
+      form, mode, and feedback state. That separation makes the add/edit flow
+      extensible instead of ad hoc.
+    </p>
+  </div>
+</header>
+
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">Choose merge semantics before implementing create.</h3>
@@ -46,9 +66,9 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-3-start-title">
-  <h2 class="section-title" id="chapter-3-start-title">
-    Chapter 3 Starting Point and Change Map
+<section class="section" aria-labelledby="chapter-4-start-title">
+  <h2 class="section-title" id="chapter-4-start-title">
+    Chapter 4 Starting Point and Change Map
   </h2>
   <div class="section-body">
     <p>
@@ -88,11 +108,11 @@
   </div>
 </section>
 
-<section class="section" id="step-13" aria-labelledby="step-13-title">
+<section class="section" id="chapter-4-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-13-title">
-      Step 13: Configure Array Append Merge
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Configure Array Merge Behavior
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -125,42 +145,49 @@
 
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
-      <ol>
-        <li>
-          Install the
-          <sdux-package-name [package]="'addons'" /> package.
-        </li>
-        <li>Open <span class="code">app.config.ts</span>.</li>
-        <li>
-          Import
-          <span class="code"
-            ><a
-              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
-              >withArrayAppendMergeBehavior</a
-            ></span
-          >
-          from <sdux-package-name [package]="'addons'" />.
-        </li>
-        <li>
-          Pass
-          <span class="code"
-            >[<a
-              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
-              >withArrayAppendMergeBehavior</a
-            >]</span
-          >
-          as the behavior list for
-          <span class="code">provide<sdux-feature-cell />()</span>.
-        </li>
-      </ol>
     </div>
+    <ol>
+      <li>
+        Install the
+        <sdux-package-name [package]="'addons'" /> package.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+            <pre
+              class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>Open <span class="code">app.config.ts</span></li>
 
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
-        <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
+      <li>
+        Import
+        <span class="code"
+          ><a
+            href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+            >withArrayAppendMergeBehavior</a
+          ></span
+        >
+        from <sdux-package-name [package]="'addons'" />.
+      </li>
+      <li>
+        Pass
+        <span class="code"
+          >[<a
+            href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+            >withArrayAppendMergeBehavior</a
+          >]</span
+        >
+        as the behavior list for
+        <span class="code">provide<sdux-feature-cell />()</span>.
+
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'app.config.ts'">
+            <pre
+              class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+    </ol>
 
     <div class="callout callout-learn-more">
       <div class="title">Why This Behavior Is Required</div>
@@ -192,14 +219,6 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'app.config.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
-
     <div class="callout callout-warning">
       <div class="title">Avoid Manual Array Merging</div>
 
@@ -219,26 +238,14 @@
         instead of forcing application code to reimplement it by hand.
       </p>
     </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-
-      <ul>
-        <li>
-          <a href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
-            >withArrayAppendMergeBehavior</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-14" aria-labelledby="step-14-title">
+<section class="section" id="chapter-4-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-14-title">
-      Step 14: Add the Add/Edit Service Slice
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Add the Add/Edit Service Slice
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -264,42 +271,47 @@
       logic across the component and template.
     </p>
 
-    <div class="callout callout-info">
-      <div class="title">Implement in This Order</div>
-      <ol>
-        <li>
-          Add <span class="code">example.character-domain.ts</span> for the
-          draft type, next-ID rule, and character factory.
-        </li>
-        <li>
-          Add service methods that translate create/update intent into the
-          correct
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          request.
-        </li>
-        <li>
-          Add <span class="code">example.character-editor.ts</span> for pure
-          form validation, normalization, and feedback helpers.
-        </li>
-        <li>
-          Add component mode/form state and delegate valid saves to the service.
-        </li>
-      </ol>
-    </div>
-
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
-      <ol>
-        <li>
-          Update <span class="code">example.service.ts</span> to add the create
-          and update methods.
-        </li>
-        <li>
-          Keep the service as the only place that calls
-          <sdux-brand-name /> mutation APIs.
-        </li>
-      </ol>
     </div>
+
+    <ol>
+      <li>
+        Add the <span class="code">example.character-domain.ts</span>
+        file to the project.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'example.character-domain.ts'">
+            <pre
+              class="code-inline"><code class="language-ts">{{ characterDomainFile().source }}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+
+        <div class="callout callout-info">
+          <div class="title">Supporting Domain File</div>
+          <p>
+            The
+            <span class="code">example.character-domain.ts</span> maintains the
+            draft type, next-ID helper, and character factory used by this
+            add/edit slice.
+          </p>
+          <p>
+            This file is intentionally separate so the service stays minimal and
+            the chapter stays focused on the state boundary instead of helper
+            logic.
+          </p>
+        </div>
+      </li>
+      <li>
+        Update <span class="code">example.service.ts</span> to add the
+        createCharacter and updateCharacter methods.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'example.service.ts'">
+            <pre
+              class="code-inline"><code class="language-ts">{{ serviceFile().source }}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+    </ol>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -324,36 +336,14 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-info">
-      <div class="title">Supporting Domain File</div>
-      <p>
-        Create
-        <span class="code">example.character-domain.ts</span> to hold the draft
-        type, next-ID helper, and character factory used by this add/edit slice.
-      </p>
-      <p>
-        Keep this file separate so the service stays minimal and the chapter
-        stays focused on the state boundary instead of helper logic.
-      </p>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-15" aria-labelledby="step-15-title">
+<section class="section" id="chapter-4-step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-15-title">
-      Step 15: Complete Add/Edit Chapter
-    </h2>
+    <div class="section-title" id="step-3-title">
+      Step 3: Update the Component and Html for Add/Edit
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -383,35 +373,53 @@
 
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
-      <ol>
-        <li>
-          Update <span class="code">example.component.ts</span> to add the form,
-          editor mode, feedback state, and save/cancel flows.
-        </li>
-        <li>
-          Update <span class="code">example.component.html</span> to add the
-          editor panel, the add action, and the empty-state guidance for create
-          mode.
-        </li>
-      </ol>
     </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Run and Verify</div>
-      <ol>
-        <li>
-          Return to the running Angular application and verify that you can add
-          a character, select it, edit it, and see the detail panel react to the
-          saved State.
-        </li>
-        <li>
-          Submit an invalid draft and confirm validation prevents a
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          request. Cancel both create and edit modes and confirm committed State
-          remains unchanged.
-        </li>
-      </ol>
-    </div>
+    <ol>
+      <li>
+        Add the <span class="code">example.character-editor.ts</span> file to
+        the project.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'example.character-editor.ts'">
+            <pre
+              class="code-inline"><code class="language-ts">{{ characterEditorFile().source }}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+        <div class="callout callout-info">
+          <div class="title">Supporting Editor File</div>
+          <p>
+            Create
+            <span class="code">example.character-editor.ts</span> to hold the
+            shared validation, normalization, and feedback rules for the
+            add/edit flow.
+          </p>
+          <p>
+            Keep this file separate so the component stays minimal and the
+            chapter stays focused on the state boundary instead of helper logic.
+          </p>
+        </div>
+      </li>
+      <li>
+        Update <span class="code">example.component.ts</span> to add the form,
+        editor mode, feedback state, and save/cancel flows.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'example.component.ts'">
+            <pre
+              class="code-inline"><code class="language-ts">{{ componentFile().source }}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+      <li>
+        Update <span class="code">example.component.html</span> to add the
+        editor panel, the add action, and the empty-state guidance for create
+        mode.
+        <sdux-example-viewer-source [displayTabs]="false">
+          <sdux-example-viewer-tab [label]="'example.component.html'">
+            <pre
+              class="code-inline"><code class="language-ts">{{ htmlFile().source }}</code></pre>
+          </sdux-example-viewer-tab>
+        </sdux-example-viewer-source>
+      </li>
+    </ol>
 
     <div class="callout callout-warning">
       <div class="title">Returned Object Is Not Commit Confirmation</div>
@@ -473,7 +481,7 @@
     </div>
 
     <div class="callout callout-learn-more">
-      <div class="title">Add/Edit Flow Summary</div>
+      <div class="title">What to Look For</div>
 
       <ul>
         <li>
@@ -494,76 +502,116 @@
         </li>
       </ul>
     </div>
+  </div>
+</section>
 
+<section class="section" id="chapter-4-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">Step 4: Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Add & Edit Characters</em> chapter is complete once characters can
+      be added and edited successfully.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Return to the running Angular application and verify that you can add
+          a character, select it, edit it, and see the detail panel react to the
+          saved State.
+        </li>
+        <li>
+          Submit an invalid draft and confirm validation prevents a
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          request. Cancel both create and edit modes and confirm committed State
+          remains unchanged.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 4 Summary</div>
+      <ol>
+        <li>
+          Create appends one identity; update replaces the matching identity
+          without disturbing other records.
+        </li>
+        <li>
+          Invalid or canceled work sends no
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          request and leaves committed State unchanged.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 4, which adds explicit, confirmable
+          deletion.
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-4-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
+      @for (file of allFiles(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
-
-    <div class="callout callout-info">
-      <div class="title">Supporting Editor File</div>
-      <p>
-        Create
-        <span class="code">example.character-editor.ts</span> to hold the shared
-        validation, normalization, and feedback rules for the add/edit flow.
-      </p>
-      <p>
-        Keep this file separate so the component stays minimal and the chapter
-        stays focused on the state boundary instead of helper logic.
-      </p>
-    </div>
   </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-3-exit-title">
-  <h2 class="section-title" id="chapter-3-exit-title">
-    Chapter 3 Exit Checkpoint
-  </h2>
   <div class="section-body">
-    <ul>
-      <li>
-        Create appends one identity; update replaces the matching identity
-        without disturbing other records.
-      </li>
-      <li>
-        Invalid or canceled work sends no
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        request and leaves committed State unchanged.
-      </li>
-      <li>
-        Save this checkpoint for Chapter 4, which adds explicit, confirmable
-        deletion.
-      </li>
-    </ul>
-  </div>
-</section>
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished add/edit example without these three steps?</h2>
+      </div>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed add/edit tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished add/edit example without these three steps?</h2>
-  </div>
+      @if (stackblitz(); as stackblitz) {
+        <div class="tutorial-shortcut-launcher">
+          <p>
+            If you want the completed add/edit example, launch the live
+            StackBlitz project and inspect the finished implementation directly.
+          </p>
+          <sdux-stackblitz-language-example
+            [example]="stackblitz.example"
+            [lang]="stackblitz.language" />
+        </div>
+      }
 
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed add/edit example, launch the live StackBlitz
-        project and inspect the finished implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+      <div class="tutorial-download">
+        <p>Download the complete chapter source code as a ZIP archive.</p>
+        <sdux-download [url]="downloadUrl"></sdux-download>
+      </div>
     </div>
-  }
-
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Delete Characters">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-5']">Chapter 5: Delete Characters</a>
+    </div>
   </div>
 </section>

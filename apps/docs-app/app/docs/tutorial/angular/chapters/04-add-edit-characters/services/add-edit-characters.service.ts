@@ -6,19 +6,21 @@ import { ChapterShape } from '../../../../shape/chapter.shape';
 export class AddEditCharactersService {
   chapters(): ChapterShape {
     return {
-      id: 3,
-      label: 'Create and Edit',
-      fragment: 'chapter-3',
+      id: 4,
+      label: 'Add/Edit Characters',
+      route: 'chapter-4',
       metadata: {
         track: 'Core',
-        prerequisite: 'Chapter 2',
+        prerequisite: 'Chapter 3',
         tier: '★',
         estimatedTime: '20–30 min'
       },
       steps: [
-        { id: 1, label: 'Configure Merge Behavior' },
-        { id: 2, label: 'Add/Edit Capabilities' },
-        { id: 3, label: 'Complete Add/Edit Tutorial' }
+        { id: 1, label: 'Configure Array Merge Behavior' },
+        { id: 2, label: 'Add/Edit Service' },
+        { id: 3, label: 'Add/Edit Component' },
+        { id: 4, label: 'Chapter Round-up' },
+        { id: 5, label: 'Stackblitz & Downloadable Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

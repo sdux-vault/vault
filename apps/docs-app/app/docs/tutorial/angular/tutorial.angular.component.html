@@ -51,12 +51,13 @@
                   )
                 "
                 (click)="toggleTutorialGroup(chapter.id)">
-                <mat-icon aria-hidden="true">
-                  {{
+                <mat-icon
+                  aria-hidden="true"
+                  [fontIcon]="
                     isTutorialGroupExpanded(chapter.id)
                       ? 'keyboard_arrow_down'
                       : 'keyboard_arrow_right'
-                  }}
+                  ">
                 </mat-icon>
               </button>
             </div>

@@ -36,9 +36,6 @@ import { INITIAL_SERVICE } from '../../generated/initial-service.generated';
   templateUrl: './display-character.chapter.component.html'
 })
 export class DisplayCharacterChapterComponent extends TutorialNavigationDirective {
-  constructor() {
-    super();
-  }
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DISPLAY_CHARACTER;

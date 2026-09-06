@@ -42,8 +42,4 @@ export class AngularWelcomeChapterComponent extends TutorialNavigationDirective 
     sduxAngular: 'latest',
     sduxAddons: 'latest'
   } as const;
-
-  constructor() {
-    super();
-  }
 }

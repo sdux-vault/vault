@@ -15,44 +15,24 @@ import {
   Router,
   RouterModule
 } from '@angular/router';
-import {
-  BrandNameComponent,
-  FeatureCellBrandNameComponent,
-  PackageNameComponent,
-  SDuXVideoComponent
-} from '@sdux-vault/ui/web-components';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ChapterShape } from '../shape/chapter.shape';
 import { AngularWelcomeService } from './chapters/01-welcome/services/welcome.service';
-import { DisplayCharacterChapterComponent } from './chapters/02-display-character/display-character.chapter.component';
 import { DisplayCharacterService } from './chapters/02-display-character/services/display-character.service';
-import { DisplayCharactersChapterComponent } from './chapters/03-display-characters/display-characters.chapter.component';
 import { DisplayCharactersService } from './chapters/03-display-characters/services/display-characters.service';
-import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
-import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
-import { AsyncInputChapterComponent } from './chapters/async-input/async-input.chapter.component';
+import { AddEditCharactersService } from './chapters/04-add-edit-characters/services/add-edit-characters.service';
 import { AsyncInputService } from './chapters/async-input/services/async-input.service';
-import { DelayChapterComponent } from './chapters/delay/delay.chapter.component';
 import { DelayService } from './chapters/delay/services/delay.service';
-import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
 import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
-import { DistinctUntilChangedChapterComponent } from './chapters/distinct-until-changed/distinct-until-changed.chapter.component';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
-import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persist/encrypt-and-persist.chapter.component';
 import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
-import { ErrorsChapterComponent } from './chapters/errors/errors.chapter.component';
 import { ErrorsService } from './chapters/errors/services/errors.service';
-import { FiltersAndReducersChapterComponent } from './chapters/filters-and-reducers/filters-and-reducers.chapter.component';
 import { FiltersAndReducersService } from './chapters/filters-and-reducers/services/filters-and-reducers.service';
-import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapter.component';
 import { LifecycleService } from './chapters/lifecycle/services/lifecycle.service';
 import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
-import { StateIntrospectionChapterComponent } from './chapters/state-introspection/state-introspection.chapter.component';
 import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
-import { StepwiseChapterComponent } from './chapters/stepwise/stepwise.chapter.component';
 import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';
-import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.component';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -61,25 +41,7 @@ import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.co
     MatIconModule,
     MatTooltipModule,
     RouterModule,
-    BrandNameComponent,
-    PipelineRelatedTopicComponent,
-    SDuXVideoComponent,
-    FeatureCellBrandNameComponent,
-    DisplayCharactersChapterComponent,
-    DisplayCharacterChapterComponent,
-    AddEditCharactersChapterComponent,
-    AsyncInputChapterComponent,
-    DeleteCharactersChapterComponent,
-    LifecycleChapterComponent,
-    FiltersAndReducersChapterComponent,
-    ErrorsChapterComponent,
-    DelayChapterComponent,
-    EncryptAndPersistChapterComponent,
-    StateIntrospectionChapterComponent,
-    TabSyncChapterComponent,
-    DistinctUntilChangedChapterComponent,
-    StepwiseChapterComponent,
-    PackageNameComponent
+    PipelineRelatedTopicComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],

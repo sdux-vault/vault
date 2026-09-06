@@ -47,8 +47,53 @@ describe('Component: AddEditCharactersChapterComponent', () => {
     });
   });
 
-  it('returns the generated service files for the chapter example', () => {
-    expect(component.serviceFiles()).toEqual([
+  it('returns the generated character domain file for the chapter example', () => {
+    expect(component.characterDomainFile()).toEqual({
+      type: 'characterDomain',
+      fileName: 'example.character-domain.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns the generated service file for the chapter example', () => {
+    expect(component.serviceFile()).toEqual({
+      type: 'service',
+      fileName: 'example.service.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns the generated character editor file for the chapter example', () => {
+    expect(component.characterEditorFile()).toEqual({
+      type: 'characterEditor',
+      fileName: 'example.character-editor.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns the generated component file for the chapter example', () => {
+    expect(component.componentFile()).toEqual({
+      type: 'component',
+      fileName: 'example.component.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns the generated html file for the chapter example', () => {
+    expect(component.htmlFile()).toEqual({
+      type: 'html',
+      fileName: 'example.component.html',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns all files for the chapter example', () => {
+    expect(component.allFiles()).toEqual([
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as unknown as string
+      },
       {
         type: 'service',
         fileName: 'example.service.ts',
@@ -68,12 +113,7 @@ describe('Component: AddEditCharactersChapterComponent', () => {
         type: 'characterDomainSpec',
         fileName: 'example.character-domain.spec.ts',
         source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
-
-  it('returns the generated component files for the chapter example', () => {
-    expect(component.componentFiles()).toEqual([
+      },
       {
         type: 'component',
         fileName: 'example.component.ts',

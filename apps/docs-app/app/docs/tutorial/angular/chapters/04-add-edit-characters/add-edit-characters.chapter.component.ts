@@ -10,10 +10,11 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../generated/add-edit-characters.generated';
+import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../generated/04-add-edit-characters.generated';
 
 @Component({
   selector: 'sdux-add-edit-characters-chapter',
@@ -30,12 +31,12 @@ import { STAR_WARS_ADD_EDIT_CHARACTERS } from '../../generated/add-edit-characte
   ],
   templateUrl: './add-edit-characters.chapter.component.html'
 })
-export class AddEditCharactersChapterComponent {
+export class AddEditCharactersChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_ADD_EDIT_CHARACTERS;
   readonly downloadUrl =
-    '/assets/tutorial/sdux-add-edit-characters.tutorial.zip';
+    '/assets/tutorial/sdux-04-add-edit-characters.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('add-edit-characters')!;
@@ -53,7 +54,46 @@ export class AddEditCharactersChapterComponent {
     );
   });
 
-  readonly serviceFiles = computed(() => [
+  readonly characterDomainFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.CharacterDomain
+    );
+  });
+
+  readonly serviceFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Service
+    );
+  });
+
+  readonly characterEditorFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.CharacterEditor
+    );
+  });
+
+  readonly componentFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Component
+    );
+  });
+
+  readonly htmlFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Html
+    );
+  });
+
+  readonly allFiles = computed(() => [
+    this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.AppConfig
+    ),
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.Service
@@ -69,10 +109,7 @@ export class AddEditCharactersChapterComponent {
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.CharacterDomainSpec
-    )
-  ]);
-
-  readonly componentFiles = computed(() => [
+    ),
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.Component
