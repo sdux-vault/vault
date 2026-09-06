@@ -15,7 +15,7 @@ import { TutorialNavigationDirective } from '../../../directive/tutorial-navigat
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISPLAY_CHARACTER } from '../../generated/display-character.generated';
+import { STAR_WARS_DISPLAY_CHARACTER } from '../../generated/02-display-character.generated';
 import { INITIAL_APP_CONFIG } from '../../generated/initial-app-config.generated';
 import { INITIAL_SERVICE } from '../../generated/initial-service.generated';
 
@@ -42,7 +42,8 @@ export class DisplayCharacterChapterComponent extends TutorialNavigationDirectiv
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DISPLAY_CHARACTER;
-  readonly downloadUrl = '/assets/tutorial/sdux-display-character.tutorial.zip';
+  readonly downloadUrl =
+    '/assets/tutorial/sdux-02-display-character.tutorial.zip';
 
   readonly displayCharacterSource = this.#characters;
 

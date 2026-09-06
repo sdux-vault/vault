@@ -13,7 +13,7 @@ import { StackblitzExampleService } from '../../../../stack-blitz/services/stack
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/display-characters.generated';
+import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/03-display-characters.generated';
 
 @Component({
   selector: 'sdux-display-characters-chapter',
@@ -35,7 +35,7 @@ export class DisplayCharactersChapterComponent {
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DISPLAY_CHARACTERS;
   readonly downloadUrl =
-    '/assets/tutorial/sdux-display-characters.tutorial.zip';
+    '/assets/tutorial/sdux-03-display-characters.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('display-characters')!;
