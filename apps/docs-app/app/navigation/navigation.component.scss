@@ -7,6 +7,7 @@
 $parent-menu-indent: global.$spacing-sm;
 $child-menu-indent: global.$spacing-md;
 $grandchild-menu-indent: global.$spacing-lg;
+$great-grandchild-menu-indent: global.$spacing-xl;
 $navigation-item-height: global.$navigation-item-height;
 $font-size: global.$font-size-sm;
 $debug-parent-border-2: 0px;
@@ -156,6 +157,11 @@ $debug-child-border-2: 0px;
                 border: $debug-child-border-2 solid blue;
                 padding-inline-start: $child-menu-indent;
               }
+
+              .grandchild-expansion-item {
+                border: $debug-child-border-2 solid lime;
+                padding-inline-start: $grandchild-menu-indent;
+              }
             }
 
             .expansion-sub-menu {
@@ -170,6 +176,12 @@ $debug-child-border-2: 0px;
                 padding-inline-start: $grandchild-menu-indent;
                 color: var(--sdux-text-default);
                 border: $debug-child-border-2 solid orange;
+              }
+
+              .grandchild-sub-item {
+                padding-inline-start: $great-grandchild-menu-indent;
+                color: var(--sdux-text-default);
+                border: $debug-child-border-2 solid teal;
               }
             }
 

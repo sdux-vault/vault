@@ -3,24 +3,24 @@ AUTO-GENERATED DOCUMENTATION COMPONENT
 Tools/documentation/menu-generator
 -->
 <nav aria-labelledby="types-section-label">
-  <mat-expansion-panel class="nav-expansion grandparent">
+  <mat-expansion-panel class="nav-expansion">
     <mat-expansion-panel-header>
       <span class="menu-content child-expansion-item">API Reference</span>
     </mat-expansion-panel-header>
 
-    <div class="sub-menu">
+    <div class="expansion-sub-menu">
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Abstracts</span>
+          <span class="menu-content grandchild-expansion-item">Abstracts</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/abstracts/abstract-active-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >AbstractActiveController</span
             ></a
           >
@@ -29,7 +29,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/abstracts/abstract-error-callback-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >AbstractErrorCallbackBehavior</span
             ></a
           >
@@ -38,7 +38,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/abstracts/abstract-error-transform-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >AbstractErrorTransformBehavior</span
             ></a
           >
@@ -47,30 +47,34 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/abstracts/licensing-abstract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">LicensingAbstract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >LicensingAbstract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/abstracts/tap-abstract-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">TapAbstractBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >TapAbstractBehavior</span
+            ></a
           >
         </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Behaviors</span>
+          <span class="menu-content grandchild-expansion-item">Behaviors</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/behaviors/with-aes256encrypt-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withAes256EncryptBehavior</span
             ></a
           >
@@ -79,7 +83,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-array-append-merge-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withArrayAppendMergeBehavior</span
             ></a
           >
@@ -88,7 +92,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-array-by-id-merge-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withArrayByIdMergeBehavior</span
             ></a
           >
@@ -97,7 +101,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-array-merge-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withArrayMergeBehavior</span
             ></a
           >
@@ -106,7 +110,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-array-push-merge-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withArrayPushMergeBehavior</span
             ></a
           >
@@ -115,7 +119,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-cookie-storage-persist-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCookieStoragePersistBehavior</span
             ></a
           >
@@ -124,7 +128,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-after-tap-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreAfterTapBehavior</span
             ></a
           >
@@ -133,7 +137,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-before-tap-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreBeforeTapBehavior</span
             ></a
           >
@@ -142,7 +146,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-emit-state-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreEmitStateBehavior</span
             ></a
           >
@@ -151,14 +155,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-error-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withCoreErrorBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withCoreErrorBehavior</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/behaviors/with-core-error-callback-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreErrorCallbackBehavior</span
             ></a
           >
@@ -167,7 +173,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-filter-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreFilterBehavior</span
             ></a
           >
@@ -176,7 +182,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-from-observable-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreFromObservableBehavior</span
             ></a
           >
@@ -185,7 +191,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-from-promise-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreFromPromiseBehavior</span
             ></a
           >
@@ -194,7 +200,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-from-stream-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreFromStreamBehavior</span
             ></a
           >
@@ -203,7 +209,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-observable-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreObservableBehavior</span
             ></a
           >
@@ -212,7 +218,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-promise-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCorePromiseBehavior</span
             ></a
           >
@@ -221,7 +227,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-reducer-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withCoreReducerBehavior</span
             ></a
           >
@@ -230,21 +236,25 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-core-state-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withCoreStateBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withCoreStateBehavior</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/behaviors/with-core-value-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withCoreValueBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withCoreValueBehavior</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/behaviors/with-distinct-until-changed"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withDistinctUntilChanged</span
             ></a
           >
@@ -253,7 +263,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-global-error-pause-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withGlobalErrorPauseBehavior</span
             ></a
           >
@@ -262,7 +272,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-http-resource-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withHttpResourceBehavior</span
             ></a
           >
@@ -271,7 +281,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-local-storage-persist-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withLocalStoragePersistBehavior</span
             ></a
           >
@@ -280,14 +290,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-lookup-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withLookupBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withLookupBehavior</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/behaviors/with-object-deep-merge-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withObjectDeepMergeBehavior</span
             ></a
           >
@@ -296,7 +308,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-object-shallow-merge-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withObjectShallowMergeBehavior</span
             ></a
           >
@@ -305,14 +317,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-query-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withQueryBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withQueryBehavior</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/behaviors/with-session-storage-persist-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withSessionStoragePersistBehavior</span
             ></a
           >
@@ -321,7 +335,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-state-cache-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withStateCacheBehavior</span
             ></a
           >
@@ -330,7 +344,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-stepwise-filter-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withStepwiseFilterBehavior</span
             ></a
           >
@@ -339,7 +353,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-stepwise-reducer-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withStepwiseReducerBehavior</span
             ></a
           >
@@ -348,7 +362,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-stepwise-resolve-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withStepwiseResolveBehavior</span
             ></a
           >
@@ -357,7 +371,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-tab-sync-state-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withTabSyncStateBehavior</span
             ></a
           >
@@ -366,30 +380,34 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Classes</span>
+          <span class="menu-content grandchild-expansion-item">Classes</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/classes/event-bus-instance"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventBusInstance</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >EventBusInstance</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/classes/feature-cell-class"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FeatureCellClass</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FeatureCellClass</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/classes/svelte-feature-cell-adapter"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >SvelteFeatureCellAdapter</span
             ></a
           >
@@ -398,7 +416,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/classes/vault-encryption-integrity-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultEncryptionIntegrityError</span
             ></a
           >
@@ -407,28 +425,32 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/classes/vault-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultError</span></a
+            ><span class="menu-content grandchild-sub-item">VaultError</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/classes/vault-license-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultLicenseError</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultLicenseError</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/classes/vault-usage-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultUsageError</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultUsageError</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/classes/vault-usage-promise-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultUsagePromiseError</span
             ></a
           >
@@ -437,7 +459,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/classes/vault-usage-promise-factory-required-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultUsagePromiseFactoryRequiredError</span
             ></a
           >
@@ -446,95 +468,113 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Config</span>
+          <span class="menu-content grandchild-expansion-item">Config</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/config/array-by-id-merge-config"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ArrayByIdMergeConfig</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ArrayByIdMergeConfig</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/config/feature-cell-config"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FeatureCellConfig</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FeatureCellConfig</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/config/insight-config"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">InsightConfig</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >InsightConfig</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/config/merge-config"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">MergeConfig</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >MergeConfig</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/config/object-deep-merge-config"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ObjectDeepMergeConfig</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ObjectDeepMergeConfig</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/config/vault-config"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultConfig</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultConfig</span
+            ></a
           >
         </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Constants</span>
+          <span class="menu-content grandchild-expansion-item">Constants</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/const/behavior_meta"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BEHAVIOR_META</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BEHAVIOR_META</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/behavior-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/cache-ttl"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">CacheTTL</span></a
+            ><span class="menu-content grandchild-sub-item">CacheTTL</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/controller_meta"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">CONTROLLER_META</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >CONTROLLER_META</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/controller-message-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerMessageTypes</span
             ></a
           >
@@ -543,28 +583,34 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/controller-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/controller-votes"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerVotes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerVotes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/crypto-platform"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">cryptoPlatform</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >cryptoPlatform</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/debug-widget-event-instant-scope-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventInstantScopeTypes</span
             ></a
           >
@@ -573,7 +619,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/debug-widget-event-source-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventSourceTypes</span
             ></a
           >
@@ -582,7 +628,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/debug-widget-event-trace-phase-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventTracePhaseTypes</span
             ></a
           >
@@ -591,7 +637,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/debug-widget-latency-category-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetLatencyCategoryTypes</span
             ></a
           >
@@ -600,21 +646,23 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/decision-outcome-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DecisionOutcomeTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DecisionOutcomeTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/dev-mode"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DevMode</span></a
+            ><span class="menu-content grandchild-sub-item">DevMode</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/devtools_aggregate_key_constant"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DEVTOOLS_AGGREGATE_KEY_CONSTANT</span
             ></a
           >
@@ -623,7 +671,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/devtools_logging_key_constant"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DEVTOOLS_LOGGING_KEY_CONSTANT</span
             ></a
           >
@@ -632,105 +680,125 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/event-boundary-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventBoundaryTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >EventBoundaryTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/event-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventTypes</span></a
+            ><span class="menu-content grandchild-sub-item">EventTypes</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/is-test-env"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isTestEnv</span></a
+            ><span class="menu-content grandchild-sub-item">isTestEnv</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/log-level-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">LogLevelTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >LogLevelTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/operation-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">OperationTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >OperationTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/pipeline-stages"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">PipelineStages</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >PipelineStages</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/resolve-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ResolveTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ResolveTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/state-emit-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">StateEmitTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >StateEmitTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault_clear_state"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VAULT_CLEAR_STATE</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VAULT_CLEAR_STATE</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault_continue"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VAULT_CONTINUE</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VAULT_CONTINUE</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault_noop"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VAULT_NOOP</span></a
+            ><span class="menu-content grandchild-sub-item">VAULT_NOOP</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault_stop"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VAULT_STOP</span></a
+            ><span class="menu-content grandchild-sub-item">VAULT_STOP</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault-error-kind-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorKindTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorKindTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault-error-name-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorNameTypes</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorNameTypes</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/const/vault-error-usage-kind-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultErrorUsageKindTypes</span
             ></a
           >
@@ -739,7 +807,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/vault-license-payload-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultLicensePayloadTypes</span
             ></a
           >
@@ -748,7 +816,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/vault-registration-license-status-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultRegistrationLicenseStatusTypes</span
             ></a
           >
@@ -757,30 +825,34 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Contexts</span>
+          <span class="menu-content grandchild-expansion-item">Contexts</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/contexts/behavior-class-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorClassContext</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorClassContext</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contexts/behavior-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorContext</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorContext</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contexts/controller-class-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerClassContext</span
             ></a
           >
@@ -789,14 +861,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contexts/controller-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerContext</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerContext</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contexts/feature-cell-extension-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >FeatureCellExtensionContext</span
             ></a
           >
@@ -805,7 +879,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contexts/licensable-class-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >LicensableClassContext</span
             ></a
           >
@@ -814,7 +888,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contexts/tab-sync-behavior-class-context"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >TabSyncBehaviorClassContext</span
             ></a
           >
@@ -823,16 +897,16 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Contracts</span>
+          <span class="menu-content grandchild-expansion-item">Contracts</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/contracts/after-tap-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >AfterTapBehaviorContract</span
             ></a
           >
@@ -841,7 +915,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/before-tap-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >BeforeTapBehaviorContract</span
             ></a
           >
@@ -850,28 +924,34 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/behavior-class-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorClassContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorClassContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/cell-builder-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">CellBuilderContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >CellBuilderContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/controller-class-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerClassContract</span
             ></a
           >
@@ -880,14 +960,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/controller-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/core-emit-state-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >CoreEmitStateBehaviorContract</span
             ></a
           >
@@ -896,7 +978,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/core-error-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >CoreErrorBehaviorContract</span
             ></a
           >
@@ -905,7 +987,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/core-state-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >CoreStateBehaviorContract</span
             ></a
           >
@@ -914,7 +996,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/debug-widget-engine-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEngineContract</span
             ></a
           >
@@ -923,7 +1005,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/dev-pipeline-observer-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DevPipelineObserverBehaviorContract</span
             ></a
           >
@@ -932,7 +1014,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/encrypt-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >EncryptBehaviorContract</span
             ></a
           >
@@ -941,7 +1023,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/error-callback-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ErrorCallbackBehaviorContract</span
             ></a
           >
@@ -950,7 +1032,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/error-transform-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ErrorTransformBehaviorContract</span
             ></a
           >
@@ -959,14 +1041,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/event-bus-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventBusContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >EventBusContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/filter-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >FilterBehaviorContract</span
             ></a
           >
@@ -975,7 +1059,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/interceptor-behavior-class-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >InterceptorBehaviorClassContract</span
             ></a
           >
@@ -984,7 +1068,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/interceptor-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >InterceptorBehaviorContract</span
             ></a
           >
@@ -993,14 +1077,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/merge-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">MergeBehaviorContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >MergeBehaviorContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/operator-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >OperatorBehaviorContract</span
             ></a
           >
@@ -1009,7 +1095,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/operators-behavior-class-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >OperatorsBehaviorClassContract</span
             ></a
           >
@@ -1018,7 +1104,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/persist-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >PersistBehaviorContract</span
             ></a
           >
@@ -1027,7 +1113,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/reduce-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ReduceBehaviorContract</span
             ></a
           >
@@ -1036,7 +1122,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/resolve-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ResolveBehaviorContract</span
             ></a
           >
@@ -1045,7 +1131,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/stepwise-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >StepwiseBehaviorContract</span
             ></a
           >
@@ -1054,7 +1140,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/vault-error-service-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultErrorServiceContract</span
             ></a
           >
@@ -1063,14 +1149,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/vault-monitor-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultMonitorContract</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultMonitorContract</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/contracts/vault-private-error-service-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultPrivateErrorServiceContract</span
             ></a
           >
@@ -1079,23 +1167,27 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Controllers</span>
+          <span class="menu-content grandchild-expansion-item"
+            >Controllers</span
+          >
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/controllers/with-delay-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withDelayController</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withDelayController</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/controllers/with-max-failures-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withMaxFailuresController</span
             ></a
           >
@@ -1104,7 +1196,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/controllers/with-replay-global-error-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withReplayGlobalErrorController</span
             ></a
           >
@@ -1113,7 +1205,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/controllers/with-stepwise-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withStepwiseController</span
             ></a
           >
@@ -1122,14 +1214,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/controllers/with-tab-sync-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">withTabSyncController</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >withTabSyncController</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/controllers/with-throttle-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >withThrottleController</span
             ></a
           >
@@ -1138,46 +1232,52 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Decorators</span>
+          <span class="menu-content grandchild-expansion-item">Decorators</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/decorators/feature-cell"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FeatureCell</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FeatureCell</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/decorators/vault-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultBehavior</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultBehavior</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/decorators/vault-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultController</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultController</span
+            ></a
           >
         </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Functions</span>
+          <span class="menu-content grandchild-expansion-item">Functions</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/functions/create-angular-feature-cell-token"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >createAngularFeatureCellToken</span
             ></a
           >
@@ -1186,84 +1286,104 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/functions/create-debug-dump"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">createDebugDump</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >createDebugDump</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/create-vault-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">createVaultError</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >createVaultError</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/define-behavior-key"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">defineBehaviorKey</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >defineBehaviorKey</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/define-controller-key"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">defineControllerKey</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >defineControllerKey</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/define-vault-key"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">defineVaultKey</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >defineVaultKey</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/download-ai-assist-file"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">downloadAiAssistFile</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >downloadAiAssistFile</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/download-debug-dump"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">downloadDebugDump</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >downloadDebugDump</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/download-trace-dump"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">downloadTraceDump</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >downloadTraceDump</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/event-bus"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventBus</span></a
+            ><span class="menu-content grandchild-sub-item">EventBus</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/export-trace"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">exportTrace</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >exportTrace</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/feature-cell"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FeatureCell</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FeatureCell</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/get-angular-feature-cell-token"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >getAngularFeatureCellToken</span
             ></a
           >
@@ -1272,154 +1392,184 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/functions/get-vault-log-level"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">getVaultLogLevel</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >getVaultLogLevel</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/inject-vault"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">injectVault</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >injectVault</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-deferred-factory"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isDeferredFactory</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isDeferredFactory</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-defined"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isDefined</span></a
+            ><span class="menu-content grandchild-sub-item">isDefined</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-function"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isFunction</span></a
+            ><span class="menu-content grandchild-sub-item">isFunction</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-http-resource-ref"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isHttpResourceRef</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isHttpResourceRef</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-null"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isNull</span></a
+            ><span class="menu-content grandchild-sub-item">isNull</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-nullish"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isNullish</span></a
+            ><span class="menu-content grandchild-sub-item">isNullish</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-object"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isObject</span></a
+            ><span class="menu-content grandchild-sub-item">isObject</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/isolate-value"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isolateValue</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isolateValue</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-promise"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isPromise</span></a
+            ><span class="menu-content grandchild-sub-item">isPromise</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-state-input-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isStateInputShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isStateInputShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-undefined"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isUndefined</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isUndefined</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-vault-clear-state"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isVaultClearState</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isVaultClearState</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-vault-continue"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isVaultContinue</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isVaultContinue</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/is-vault-noop"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">isVaultNoop</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >isVaultNoop</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/provide-feature-cell"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">provideFeatureCell</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >provideFeatureCell</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/provide-vault"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">provideVault</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >provideVault</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/provide-vault-testing"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">provideVaultTesting</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >provideVaultTesting</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/register-version"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">registerVersion</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >registerVersion</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/report-github-issue"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">reportGithubIssue</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >reportGithubIssue</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/reset-angular-feature-cell-token-dev-mode"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >resetAngularFeatureCellTokenDevMode</span
             ></a
           >
@@ -1428,128 +1578,150 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/functions/safe-stringify"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">safeStringify</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >safeStringify</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/set-vault-log-level"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">setVaultLogLevel</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >setVaultLogLevel</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/validate-behavior-key"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">validateBehaviorKey</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >validateBehaviorKey</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/validate-controller-key"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">validateControllerKey</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >validateControllerKey</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">Vault</span></a
+            ><span class="menu-content grandchild-sub-item">Vault</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault-debug"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">vaultDebug</span></a
+            ><span class="menu-content grandchild-sub-item">vaultDebug</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">vaultError</span></a
+            ><span class="menu-content grandchild-sub-item">vaultError</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault-error-service"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorService</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorService</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault-log"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">vaultLog</span></a
+            ><span class="menu-content grandchild-sub-item">vaultLog</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault-testing"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultTesting</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultTesting</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/functions/vault-warn"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">vaultWarn</span></a
+            ><span class="menu-content grandchild-sub-item">vaultWarn</span></a
           >
         </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Options</span>
+          <span class="menu-content grandchild-expansion-item">Options</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/options/aes256behavior-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">AES256BehaviorOptions</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >AES256BehaviorOptions</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/options/array-by-id-merge-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ArrayByIdMergeOptions</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ArrayByIdMergeOptions</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/options/from-stream-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FromStreamOptions</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FromStreamOptions</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/options/lookup-behavior-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">LookupBehaviorOptions</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >LookupBehaviorOptions</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/options/query-behavior-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">QueryBehaviorOptions</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >QueryBehaviorOptions</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/options/state-cache-behavior-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >StateCacheBehaviorOptions</span
             ></a
           >
@@ -1558,7 +1730,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/options/stepwise-behavior-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >StepwiseBehaviorOptions</span
             ></a
           >
@@ -1567,7 +1739,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/options/with-delay-controller-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >WithDelayControllerOptions</span
             ></a
           >
@@ -1576,7 +1748,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/options/with-max-failure-controller-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >WithMaxFailureControllerOptions</span
             ></a
           >
@@ -1585,7 +1757,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/options/with-throttle-controller-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >WithThrottleControllerOptions</span
             ></a
           >
@@ -1594,16 +1766,16 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Services</span>
+          <span class="menu-content grandchild-expansion-item">Services</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/services/vault-error-service-class"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultErrorServiceClass</span
             ></a
           >
@@ -1612,23 +1784,25 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Shapes</span>
+          <span class="menu-content grandchild-expansion-item">Shapes</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/shapes/behavior-meta-base-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorMetaBaseShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorMetaBaseShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/controller-attempt-message-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerAttemptMessageShape</span
             ></a
           >
@@ -1637,7 +1811,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/controller-decision-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerDecisionShape</span
             ></a
           >
@@ -1646,7 +1820,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/controller-fail-message-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerFailMessageShape</span
             ></a
           >
@@ -1655,7 +1829,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/controller-finalize-message-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerFinalizeMessageShape</span
             ></a
           >
@@ -1664,14 +1838,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/controller-meta-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerMetaShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerMetaShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/controller-success-message-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerSuccessMessageShape</span
             ></a
           >
@@ -1680,21 +1856,25 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/debug-widget-dump-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DebugWidgetDumpShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DebugWidgetDumpShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/debug-widget-event-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DebugWidgetEventShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DebugWidgetEventShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/debug-widget-event-stat-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventStatShape</span
             ></a
           >
@@ -1703,7 +1883,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/debug-widget-license-summary-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetLicenseSummaryShape</span
             ></a
           >
@@ -1712,7 +1892,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/debug-widget-long-tasks-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetLongTasksShape</span
             ></a
           >
@@ -1721,7 +1901,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/debug-widget-registry-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetRegistryShape</span
             ></a
           >
@@ -1730,7 +1910,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/debug-widget-trace-event-args-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetTraceEventArgsShape</span
             ></a
           >
@@ -1739,7 +1919,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/debug-widget-trace-event-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetTraceEventShape</span
             ></a
           >
@@ -1748,42 +1928,50 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/event-candidate-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventCandidateShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >EventCandidateShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/event-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventShape</span></a
+            ><span class="menu-content grandchild-sub-item">EventShape</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/feature-cell-base-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FeatureCellBaseShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FeatureCellBaseShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/feature-cell-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FeatureCellShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FeatureCellShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/http-resource-ref-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">HttpResourceRefShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >HttpResourceRefShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/non-resolve-behavior-meta-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >NonResolveBehaviorMetaShape</span
             ></a
           >
@@ -1792,7 +1980,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/resolve-behavior-meta-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ResolveBehaviorMetaShape</span
             ></a
           >
@@ -1801,14 +1989,14 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/s-du-x-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">SDuXShape</span></a
+            ><span class="menu-content grandchild-sub-item">SDuXShape</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/serialized-feature-cell-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >SerializedFeatureCellShape</span
             ></a
           >
@@ -1817,7 +2005,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/state-emit-snapshot-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >StateEmitSnapshotShape</span
             ></a
           >
@@ -1826,21 +2014,25 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/state-input-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">StateInputShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >StateInputShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/state-snapshot-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">StateSnapshotShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >StateSnapshotShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/stepwise-behavior-decision-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >StepwiseBehaviorDecisionShape</span
             ></a
           >
@@ -1849,14 +2041,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/vault-error-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/vault-license-payload-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultLicensePayloadShape</span
             ></a
           >
@@ -1865,14 +2059,16 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/vault-licensing-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultLicensingShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultLicensingShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/shapes/vault-registration-entity-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultRegistrationEntityShape</span
             ></a
           >
@@ -1881,7 +2077,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/vault-registration-fluent-api-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultRegistrationFluentApiShape</span
             ></a
           >
@@ -1890,7 +2086,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/vault-registration-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultRegistrationShape</span
             ></a
           >
@@ -1899,51 +2095,61 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">Types</span>
+          <span class="menu-content grandchild-expansion-item">Types</span>
         </mat-expansion-panel-header>
 
-        <div class="submenu">
+        <div class="expansion-sub-menu">
           <a
             mat-list-item
             routerLink="/docs/references/types/behavior-extension"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorExtension</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorExtension</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/behavior-ext-function"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorExtFunction</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorExtFunction</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/behavior-meta-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorMetaShape</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorMetaShape</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/behavior-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">BehaviorType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >BehaviorType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/cache-ttl-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">CacheTTLType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >CacheTTLType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/controller-message-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >ControllerMessageShape</span
             ></a
           >
@@ -1952,42 +2158,52 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/controller-message-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerMessageType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerMessageType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/controller-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/controller-vote"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ControllerVote</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ControllerVote</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/core-emit-state-callback"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">CoreEmitStateCallback</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >CoreEmitStateCallback</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/core-emit-state-result"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">CoreEmitStateResult</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >CoreEmitStateResult</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/debug-widget-event-instant-scope-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventInstantScopeType</span
             ></a
           >
@@ -1996,7 +2212,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/debug-widget-event-source-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventSourceType</span
             ></a
           >
@@ -2005,7 +2221,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/debug-widget-event-trace-phase-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetEventTracePhaseType</span
             ></a
           >
@@ -2014,7 +2230,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/debug-widget-latency-category-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >DebugWidgetLatencyCategoryType</span
             ></a
           >
@@ -2023,175 +2239,219 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/decision-outcome-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DecisionOutcomeType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DecisionOutcomeType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/deferred-factory"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DeferredFactory</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DeferredFactory</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/deferred-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DeferredType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DeferredType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/distinct-comparison"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">DistinctComparison</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >DistinctComparison</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/event-boundary-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventBoundaryType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >EventBoundaryType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/event-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">EventType</span></a
+            ><span class="menu-content grandchild-sub-item">EventType</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/filter-function"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FilterFunction</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >FilterFunction</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/final-state"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">FinalState</span></a
+            ><span class="menu-content grandchild-sub-item">FinalState</span></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/interceptor-state-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">InterceptorStateType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >InterceptorStateType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/log-level-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">LogLevelType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >LogLevelType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/operation-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">OperationType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >OperationType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/pipeline-persist-value"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">PipelinePersistValue</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >PipelinePersistValue</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/pipeline-stage"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">PipelineStage</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >PipelineStage</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/pipeline-upstream-value"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">PipelineUpstreamValue</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >PipelineUpstreamValue</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/pipeline-value"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">PipelineValue</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >PipelineValue</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/reducer-function"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ReducerFunction</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ReducerFunction</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/resolve-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">ResolveType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >ResolveType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/state-emit-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">StateEmitType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >StateEmitType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/state-input-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">StateInputType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >StateInputType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/stepwise-function"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">StepwiseFunction</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >StepwiseFunction</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/tap-callback"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">TapCallback</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >TapCallback</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/vault-error-callback"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorCallback</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorCallback</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/vault-error-kind-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorKindType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorKindType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/vault-error-name-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item">VaultErrorNameType</span></a
+            ><span class="menu-content grandchild-sub-item"
+              >VaultErrorNameType</span
+            ></a
           >
           <a
             mat-list-item
             routerLink="/docs/references/types/vault-error-usage-kind-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultErrorUsageKindType</span
             ></a
           >
@@ -2200,7 +2460,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/vault-license-payload-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultLicensePayloadType</span
             ></a
           >
@@ -2209,7 +2469,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/vault-registration-license-status-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content sub-item"
+            ><span class="menu-content grandchild-sub-item"
               >VaultRegistrationLicenseStatusType</span
             ></a
           >

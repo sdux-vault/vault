@@ -10,28 +10,30 @@
 
     <sdux-references-subnavigation />
 
-    <a
-      mat-list-item
-      routerLink="/docs/diagrams"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Diagrams</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/diagrams"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Diagrams</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/welcome/testing"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Testing {{ brandName }}</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/welcome/testing"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Testing {{ brandName }}</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/videos"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Videos</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/videos"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Videos</span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

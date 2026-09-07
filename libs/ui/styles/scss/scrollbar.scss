@@ -1,8 +1,8 @@
 @use 'global' as global;
 
 * {
-  /* Ensure scrollbars are rendered in overlay mode on supported browsers */
-  scrollbar-gutter: stable;
+  /* Reserve scrollbar space only when scrolling is needed. */
+  scrollbar-gutter: auto;
 }
 
 /* Chrome, Edge, Safari (WebKit-based) */

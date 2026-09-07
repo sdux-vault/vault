@@ -162,17 +162,17 @@ export class ${componentName}{
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(
           (entry) =>
-            `<a mat-list-item routerLink="${this.toRouterLink(entry)}" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content sub-item">${entry.name}</span></a>`
+            `<a mat-list-item routerLink="${this.toRouterLink(entry)}" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content grandchild-sub-item">${entry.name}</span></a>`
         )
         .join('\n');
 
       return `
     <mat-expansion-panel class="nav-expansion" [expanded]="false">
       <mat-expansion-panel-header>
-          <span class="menu-content child-expansion-item">${label}</span>
+          <span class="menu-content grandchild-expansion-item">${label}</span>
       </mat-expansion-panel-header>
 
-      <div class="submenu">
+      <div class="expansion-sub-menu">
         ${links}
       </div>
     </mat-expansion-panel>`;
@@ -207,12 +207,12 @@ AUTO-GENERATED DOCUMENTATION COMPONENT
 Tools/documentation/menu-generator
 -->
 <nav aria-labelledby="types-section-label">
-  <mat-expansion-panel class="nav-expansion grandparent">
+  <mat-expansion-panel class="nav-expansion">
     <mat-expansion-panel-header>
       <span class="menu-content child-expansion-item">API Reference</span>
     </mat-expansion-panel-header>
 
-    <div class="sub-menu">
+    <div class="expansion-sub-menu">
       ${this.buildSection('Abstracts', groups.abstracts)}
       ${this.buildSection('Behaviors', groups.behaviors)}
       ${this.buildSection('Classes', groups.classes)}
