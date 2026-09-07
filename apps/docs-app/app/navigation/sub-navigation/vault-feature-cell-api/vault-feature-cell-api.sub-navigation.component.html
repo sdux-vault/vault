@@ -6,7 +6,7 @@
     [routerLinkActiveOptions]="{ exact: true }"
     [expanded]="forceExpanded() || vaultFeatureCellApiRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Vault Creation API</span>
+      <span class="menu-content parent-expansion-item">Vault Creation API</span>
     </mat-expansion-panel-header>
 
     <a
@@ -35,9 +35,7 @@
       [expanded]="forceExpanded() || vaultFeatureCellApiOverviewRla.isActive">
       <mat-expansion-panel-header>
         <div class="menu-icon">
-          <span class="sub-menu-content sub-item sub-header"
-            >FeatureCell Api</span
-          >
+          <span class="menu-content child-expansion-item">FeatureCell Api</span>
         </div>
       </mat-expansion-panel-header>
 
@@ -220,7 +218,7 @@
           routerLinkActive="active"
           aria-label="useReactiveState method documentation"
           (click)="closeSidenav()">
-          <div class="menu-icon menu-content">
+          <div class="menu-icon menu-content sub-item">
             useReactiveState
             <img
               src="assets/brand/vue/vue-icon.svg"
@@ -234,7 +232,7 @@
           routerLinkActive="active"
           aria-label="useSyncExternalStore method documentation"
           (click)="closeSidenav()">
-          <div class="menu-icon menu-content">
+          <div class="menu-icon menu-content sub-item">
             useSyncExternalStore
             <img
               src="assets/brand/react/react-icon.svg"
@@ -256,7 +254,7 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >Angular
           <img
             src="assets/brand/angular/angular-icon.png"
@@ -273,7 +271,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
         <a
           mat-list-item
@@ -281,7 +279,7 @@
           aria-label="provideVault documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">provideVault </span>
+          <span class="menu-icon menu-content sub-item">provideVault </span>
         </a>
 
         <a
@@ -290,7 +288,9 @@
           aria-label="provideFeatureCell documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">provideFeatureCell </span>
+          <span class="menu-icon menu-content sub-item"
+            >provideFeatureCell
+          </span>
         </a>
 
         <a
@@ -299,7 +299,7 @@
           aria-label="&#64;FeatureCell decorator documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">&#64;FeatureCell </span>
+          <span class="menu-icon menu-content sub-item">&#64;FeatureCell </span>
         </a>
 
         <a
@@ -308,14 +308,14 @@
           aria-label="injectVault injector documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">injectVault</span>
+          <span class="menu-icon menu-content sub-item">injectVault</span>
         </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >React
           <img
             src="assets/brand/react/react-icon.svg"
@@ -332,14 +332,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >Svelte
           <img
             src="assets/brand/svelte/svelte-icon.svg"
@@ -356,14 +356,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >Vue
           <img src="assets/brand/vue/vue-icon.svg" class="image-15" alt="Vue" />
         </span>
@@ -377,7 +377,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
       </div>
     </mat-expansion-panel>

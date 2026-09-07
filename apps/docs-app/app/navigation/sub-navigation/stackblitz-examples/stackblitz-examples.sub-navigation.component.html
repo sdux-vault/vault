@@ -5,12 +5,14 @@
 <nav aria-label="StackBlitz Examples">
   <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">StackBlitz Examples</span>
+      <span class="menu-content parent-expansion-item"
+        >StackBlitz Examples</span
+      >
     </mat-expansion-panel-header>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Angular</span>
+        <span class="menu-content child-expansion-item">Angular</span>
       </mat-expansion-panel-header>
 
       <a
@@ -18,195 +20,195 @@
         routerLink="/examples/angular/add-edit-characters"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Add Edit Characters</div>
+        <div class="menu-content sub-item">Add Edit Characters</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/array-append-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append Merge</div>
+        <div class="menu-content sub-item">Array Append Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/array-by-id-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array By Id Merge</div>
+        <div class="menu-content sub-item">Array By Id Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/async-input-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Async Input Tutorial</div>
+        <div class="menu-content sub-item">Async Input Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Basic Filter Reducer</div>
+        <div class="menu-content sub-item">Basic Filter Reducer</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/comparison"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Comparison</div>
+        <div class="menu-content sub-item">Comparison</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/debugger"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Debugger</div>
+        <div class="menu-content sub-item">Debugger</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/delay-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Delay Tutorial</div>
+        <div class="menu-content sub-item">Delay Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/delete-characters"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Delete Characters</div>
+        <div class="menu-content sub-item">Delete Characters</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/display-character"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Display Character</div>
+        <div class="menu-content sub-item">Display Character</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/display-characters"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Display Characters</div>
+        <div class="menu-content sub-item">Display Characters</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/distinct-until-changed-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Distinct Until Changed Tutorial</div>
+        <div class="menu-content sub-item">Distinct Until Changed Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/encrypt-and-persist-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Encrypt And Persist Tutorial</div>
+        <div class="menu-content sub-item">Encrypt And Persist Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/errors-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Errors Tutorial</div>
+        <div class="menu-content sub-item">Errors Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/filters-and-reducers-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Filters And Reducers Tutorial</div>
+        <div class="menu-content sub-item">Filters And Reducers Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/http-resource"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Http Resource</div>
+        <div class="menu-content sub-item">Http Resource</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/hydrate-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Hydrate State</div>
+        <div class="menu-content sub-item">Hydrate State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/initial-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Initial State</div>
+        <div class="menu-content sub-item">Initial State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/interceptor-delay"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Interceptor Delay</div>
+        <div class="menu-content sub-item">Interceptor Delay</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/lifecycle-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Lifecycle Tutorial</div>
+        <div class="menu-content sub-item">Lifecycle Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/observable"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Observable</div>
+        <div class="menu-content sub-item">Observable</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/state-introspection-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">State Introspection Tutorial</div>
+        <div class="menu-content sub-item">State Introspection Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/stepwise-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Stepwise Tutorial</div>
+        <div class="menu-content sub-item">Stepwise Tutorial</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/tab-sync"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Tab Sync</div>
+        <div class="menu-content sub-item">Tab Sync</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/angular/tab-sync-tutorial"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Tab Sync Tutorial</div>
+        <div class="menu-content sub-item">Tab Sync Tutorial</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Bun</span>
+        <span class="menu-content child-expansion-item">Bun</span>
       </mat-expansion-panel-header>
 
       <a
@@ -214,27 +216,27 @@
         routerLink="/examples/bun/http-resource"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Http Resource</div>
+        <div class="menu-content sub-item">Http Resource</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/bun/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/bun/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Deno</span>
+        <span class="menu-content child-expansion-item">Deno</span>
       </mat-expansion-panel-header>
 
       <a
@@ -242,27 +244,27 @@
         routerLink="/examples/deno/array-append"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append</div>
+        <div class="menu-content sub-item">Array Append</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/deno/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/deno/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Nodejs</span>
+        <span class="menu-content child-expansion-item">Nodejs</span>
       </mat-expansion-panel-header>
 
       <a
@@ -270,27 +272,27 @@
         routerLink="/examples/nodejs/array-append"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append</div>
+        <div class="menu-content sub-item">Array Append</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/nodejs/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/nodejs/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">React</span>
+        <span class="menu-content child-expansion-item">React</span>
       </mat-expansion-panel-header>
 
       <a
@@ -298,90 +300,90 @@
         routerLink="/examples/react/array-append-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append Merge</div>
+        <div class="menu-content sub-item">Array Append Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/array-by-id-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array By Id Merge</div>
+        <div class="menu-content sub-item">Array By Id Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Basic Filter Reducer</div>
+        <div class="menu-content sub-item">Basic Filter Reducer</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/comparison"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Comparison</div>
+        <div class="menu-content sub-item">Comparison</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/debugger"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Debugger</div>
+        <div class="menu-content sub-item">Debugger</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/hydrate-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Hydrate State</div>
+        <div class="menu-content sub-item">Hydrate State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/initial-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Initial State</div>
+        <div class="menu-content sub-item">Initial State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/interceptor-delay"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Interceptor Delay</div>
+        <div class="menu-content sub-item">Interceptor Delay</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/observable"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Observable</div>
+        <div class="menu-content sub-item">Observable</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/react/tab-sync"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Tab Sync</div>
+        <div class="menu-content sub-item">Tab Sync</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Svelte</span>
+        <span class="menu-content child-expansion-item">Svelte</span>
       </mat-expansion-panel-header>
 
       <a
@@ -389,90 +391,90 @@
         routerLink="/examples/svelte/array-append-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append Merge</div>
+        <div class="menu-content sub-item">Array Append Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/array-by-id-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array By Id Merge</div>
+        <div class="menu-content sub-item">Array By Id Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Basic Filter Reducer</div>
+        <div class="menu-content sub-item">Basic Filter Reducer</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/comparison"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Comparison</div>
+        <div class="menu-content sub-item">Comparison</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/debugger"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Debugger</div>
+        <div class="menu-content sub-item">Debugger</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/hydrate-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Hydrate State</div>
+        <div class="menu-content sub-item">Hydrate State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/initial-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Initial State</div>
+        <div class="menu-content sub-item">Initial State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/interceptor-delay"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Interceptor Delay</div>
+        <div class="menu-content sub-item">Interceptor Delay</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/observable"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Observable</div>
+        <div class="menu-content sub-item">Observable</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/svelte/tab-sync"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Tab Sync</div>
+        <div class="menu-content sub-item">Tab Sync</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Vanillajs</span>
+        <span class="menu-content child-expansion-item">Vanillajs</span>
       </mat-expansion-panel-header>
 
       <a
@@ -480,27 +482,27 @@
         routerLink="/examples/vanillajs/array-append"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append</div>
+        <div class="menu-content sub-item">Array Append</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vanillajs/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vanillajs/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Vue</span>
+        <span class="menu-content child-expansion-item">Vue</span>
       </mat-expansion-panel-header>
 
       <a
@@ -508,90 +510,90 @@
         routerLink="/examples/vue/array-append-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append Merge</div>
+        <div class="menu-content sub-item">Array Append Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/array-by-id-merge"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array By Id Merge</div>
+        <div class="menu-content sub-item">Array By Id Merge</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Basic Filter Reducer</div>
+        <div class="menu-content sub-item">Basic Filter Reducer</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/comparison"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Comparison</div>
+        <div class="menu-content sub-item">Comparison</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/debugger"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Debugger</div>
+        <div class="menu-content sub-item">Debugger</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/hydrate-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Hydrate State</div>
+        <div class="menu-content sub-item">Hydrate State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/initial-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Initial State</div>
+        <div class="menu-content sub-item">Initial State</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/interceptor-delay"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Interceptor Delay</div>
+        <div class="menu-content sub-item">Interceptor Delay</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/observable"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Observable</div>
+        <div class="menu-content sub-item">Observable</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/vue/tab-sync"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Tab Sync</div>
+        <div class="menu-content sub-item">Tab Sync</div>
       </a>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Typescript</span>
+        <span class="menu-content child-expansion-item">Typescript</span>
       </mat-expansion-panel-header>
 
       <a
@@ -599,21 +601,21 @@
         routerLink="/examples/typescript/array-append"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Array Append</div>
+        <div class="menu-content sub-item">Array Append</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/typescript/promise"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Promise</div>
+        <div class="menu-content sub-item">Promise</div>
       </a>
       <a
         mat-list-item
         routerLink="/examples/typescript/replace"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Replace</div>
+        <div class="menu-content sub-item">Replace</div>
       </a>
     </mat-expansion-panel>
   </mat-expansion-panel>

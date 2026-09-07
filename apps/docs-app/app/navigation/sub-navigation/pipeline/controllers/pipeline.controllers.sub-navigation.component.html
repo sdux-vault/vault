@@ -5,7 +5,9 @@
     #controllerRla="routerLinkActive"
     [expanded]="forceExpanded() || controllerRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Pipeline Controllers</span>
+      <span class="menu-content parent-expansion-item"
+        >Pipeline Controllers</span
+      >
     </mat-expansion-panel-header>
 
     <mat-expansion-panel
@@ -14,7 +16,7 @@
       #controllerArchitectureRla="routerLinkActive"
       [expanded]="forceExpanded() || controllerArchitectureRla.isActive">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header"
+        <span class="menu-content child-expansion-item"
           >Architecture Overview</span
         >
       </mat-expansion-panel-header>
@@ -65,7 +67,7 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Errors</span>
+        <span class="menu-content child-expansion-item">Errors</span>
       </mat-expansion-panel-header>
       <div class="sub-menu">
         <a
@@ -99,7 +101,7 @@
       routerLink="/docs/pipeline/controllers/with-tab-sync-controller"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-icon menu-content">
+      <div class="menu-icon menu-content sub-item">
         Tab Sync
         <sdux-image
           class="logo"

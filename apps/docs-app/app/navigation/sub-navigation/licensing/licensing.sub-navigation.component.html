@@ -5,7 +5,7 @@
     #licensingRla="routerLinkActive"
     [expanded]="forceExpanded() || licensingRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Licensing</span>
+      <span class="menu-content parent-expansion-item">Licensing</span>
     </mat-expansion-panel-header>
 
     <a
@@ -13,7 +13,7 @@
       routerLink="/sdux/vault"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-icon menu-content">
+      <div class="menu-icon menu-content sub-item">
         <sdux-image
           class="logo"
           image="brand/sdux/sdux-vault-logo.svg"
@@ -44,7 +44,7 @@
       aria-label="Licensing"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-content">{{ brandName }} License</div>
+      <div class="menu-content sub-item">{{ brandName }} License</div>
     </a>
 
     <a
@@ -53,7 +53,7 @@
       aria-label="Trademark Usage & Brand Policy"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-content">{{ brandName }} Trademark Usage</div>
+      <div class="menu-content sub-item">{{ brandName }} Trademark Usage</div>
     </a>
   </mat-expansion-panel>
 </nav>

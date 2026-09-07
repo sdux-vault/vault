@@ -5,7 +5,7 @@
     #migrationRla="routerLinkActive"
     [expanded]="forceExpanded() || migrationRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Migration</span>
+      <span class="menu-content parent-expansion-item">Migration</span>
     </mat-expansion-panel-header>
 
     <a
@@ -13,12 +13,14 @@
       routerLink="/builder"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-icon menu-content">Pipeline Builder <sdux-new /></div>
+      <div class="menu-icon menu-content sub-item">
+        Pipeline Builder <sdux-new />
+      </div>
     </a>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Bridges</span>
+        <span class="menu-content child-expansion-item">Bridges</span>
       </mat-expansion-panel-header>
 
       <div class="sub-menu">
@@ -118,7 +120,7 @@
           routerLinkActive="active"
           aria-label="useSyncExternalStore method documentation"
           (click)="closeSidenav()">
-          <div class="menu-icon menu-content">
+          <div class="menu-icon menu-content sub-item">
             useSyncExternalStore
             <img
               src="assets/brand/react/react-icon.svg"
@@ -196,7 +198,7 @@
       fragment="store-setup"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-content">Store Setup</div>
+      <div class="menu-content sub-item">Store Setup</div>
     </a>
 
     <a
@@ -205,7 +207,7 @@
       routerLinkActive="active"
       aria-label="useSyncExternalStore method documentation"
       (click)="closeSidenav()">
-      <div class="menu-icon menu-content">
+      <div class="menu-icon menu-content sub-item">
         useSyncExternalStore
         <img src="assets/brand/react/react-icon.svg" height="15" alt="React" />
       </div>

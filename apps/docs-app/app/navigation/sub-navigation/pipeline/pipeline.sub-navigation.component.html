@@ -6,7 +6,7 @@
     [routerLinkActiveOptions]="{ exact: true }"
     [expanded]="forceExpanded() || pipelineRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Pipeline</span>
+      <span class="menu-content parent-expansion-item">Pipeline</span>
     </mat-expansion-panel-header>
 
     <a
@@ -22,7 +22,7 @@
       routerLink="docs/pipeline/pipeline-architecture"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <span class="menu-content"
+      <span class="menu-content sub-item"
         ><sdux-brand-name /> Pipeline Architecture
       </span>
     </a>
@@ -32,7 +32,9 @@
       routerLink="builder"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <div class="menu-icon menu-content">Pipeline Builder <sdux-new /></div>
+      <div class="menu-icon menu-content sub-item">
+        Pipeline Builder <sdux-new />
+      </div>
     </a>
   </mat-expansion-panel>
 </nav>

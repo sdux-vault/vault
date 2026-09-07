@@ -5,7 +5,7 @@
     #gettingStartedRla="routerLinkActive"
     [expanded]="forceExpanded() || gettingStartedRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Getting Started</span>
+      <span class="menu-content parent-expansion-item">Getting Started</span>
     </mat-expansion-panel-header>
 
     <div class="sub-menu">
@@ -14,7 +14,7 @@
         routerLink="/docs/welcome/getting-started"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Start Here</div>
+        <div class="menu-content sub-item">Start Here</div>
       </a>
 
       <a
@@ -22,7 +22,7 @@
         routerLink="/docs/welcome/core-concepts"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Core Concepts</div>
+        <div class="menu-content sub-item">Core Concepts</div>
       </a>
 
       <a
@@ -30,7 +30,7 @@
         routerLink="/docs/welcome/what-is-sdux"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">
+        <div class="menu-content sub-item">
           What is <sdux-brand-name [tm]="false" />?
         </div>
       </a>
@@ -39,7 +39,7 @@
         routerLink="/docs/welcome/supported-languages"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">
+        <div class="menu-content sub-item">
           <sdux-brand-name [tm]="false" /> Supported Languages
         </div>
       </a>
@@ -49,7 +49,7 @@
         routerLink="/docs/welcome/sdux-redux-similarities"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">
+        <div class="menu-content sub-item">
           <sdux-brand-name [tm]="false" /> / Redux Similarities
         </div>
       </a>
@@ -59,7 +59,7 @@
         routerLink="/docs/welcome/how-to-define-your-state"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">How to Define Your State</div>
+        <div class="menu-content sub-item">How to Define Your State</div>
       </a>
 
       <a
@@ -67,7 +67,7 @@
         routerLink="/docs/welcome/best-practices"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Best Practices</div>
+        <div class="menu-content sub-item">Best Practices</div>
       </a>
     </div>
   </mat-expansion-panel>

@@ -169,7 +169,7 @@ export class ${componentName}{
       return `
     <mat-expansion-panel class="nav-expansion" [expanded]="false">
       <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">${label}</span>
+          <span class="menu-content child-expansion-item">${label}</span>
       </mat-expansion-panel-header>
 
       <div class="submenu">
@@ -209,7 +209,7 @@ Tools/documentation/menu-generator
 <nav aria-labelledby="types-section-label">
   <mat-expansion-panel class="nav-expansion grandparent">
     <mat-expansion-panel-header>
-      <span class="sub-menu-content sub-item sub-header">API Reference</span>
+      <span class="menu-content child-expansion-item">API Reference</span>
     </mat-expansion-panel-header>
 
     <div class="sub-menu">

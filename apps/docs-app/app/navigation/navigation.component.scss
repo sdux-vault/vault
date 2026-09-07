@@ -4,16 +4,13 @@
    SDuX Sidenav Container
    ====================================================== */
 
-$root-menu-indent: 0px;
 $parent-menu-indent: global.$spacing-sm;
 $child-menu-indent: global.$spacing-md;
 $grandchild-menu-indent: global.$spacing-lg;
 $navigation-item-height: global.$navigation-item-height;
 $font-size: global.$font-size-sm;
-$debug-root-border: 0px;
-$debug-child-border: 0px;
-$debug-parent-border-2: 1px;
-$debug-child-border-2: 1px;
+$debug-parent-border-2: 0px;
+$debug-child-border-2: 0px;
 
 .sdux-sidenav-container {
   width: 100%;
@@ -68,37 +65,6 @@ $debug-child-border-2: 1px;
           background-color 0.25s ease,
           color 0.25s ease;
 
-        /*
-        .menu-content-container {
-          height: $navigation-item-height;
-
-          .menu-content {
-            // root menu item no sub-navigation
-            padding-inline-start: $root-menu-indent;
-            border: $debug-root-border solid red;
-            font-size: $font-size;
-            font-weight: global.$font-weight-semibold;
-            color: var(--sdux-text-default);
-
-            .logo {
-              height: 25px;
-            }
-
-            .type {
-              font-size: global.$font-size-xs;
-            }
-
-            /*
-            &.sub-item {
-              border: $debug-root-border solid blue;
-              padding-inline-start: $parent-menu-indent;
-              font-weight: global.$font-weight-medium;
-              color: var(--sdux-text-default);
-            }
-          }
-        }
-              */
-
         a.mat-mdc-list-item {
           // padding-inline-start: $parent-menu-indent;
           padding: 0;
@@ -129,6 +95,27 @@ $debug-child-border-2: 1px;
               transparent
             );
             border-radius: 0;
+          }
+        }
+
+        .menu-content-container {
+          height: $navigation-item-height;
+
+          .menu-content {
+            // root menu item no sub-navigation
+            padding-inline-start: $parent-menu-indent;
+            border: $debug-parent-border-2 solid purple;
+            font-size: $font-size;
+            font-weight: global.$font-weight-semibold;
+            color: var(--sdux-text-default);
+
+            .logo {
+              height: 25px;
+            }
+
+            .type {
+              font-size: global.$font-size-xs;
+            }
           }
         }
 

@@ -14,7 +14,7 @@
       #behaviorArchitectureRla="routerLinkActive"
       [expanded]="forceExpanded() || behaviorArchitectureRla.isActive">
       <mat-expansion-panel-header>
-        <!-- <span class="sub-menu-content sub-item sub-header"
+        <!-- <span class="menu-content child-expansion-item"
           >Architecture Overview</span
         > -->
         <span class="menu-content child-expansion-item"
@@ -187,19 +187,21 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/behaviors/filters"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Filters</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/behaviors/filters"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Filters</span>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Initialize</span>
+        <span class="menu-content child-expansion-item">Initialize</span>
       </mat-expansion-panel-header>
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/initialize"
@@ -248,9 +250,9 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Interceptors</span>
+        <span class="menu-content child-expansion-item">Interceptors</span>
       </mat-expansion-panel-header>
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/interceptors"
@@ -280,10 +282,10 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Merge</span>
+        <span class="menu-content child-expansion-item">Merge</span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/merge"
@@ -345,10 +347,10 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Operators</span>
+        <span class="menu-content child-expansion-item">Operators</span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/operators"
@@ -370,7 +372,7 @@
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <div class="menu-icon">
-          <span class="sub-menu-content sub-item sub-header">Persist</span>
+          <span class="menu-content child-expansion-item">Persist</span>
           <sdux-image
             class="logo"
             image="brand/sdux/sdux-vault-logo.svg"
@@ -378,7 +380,7 @@
         </div>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/persist"
@@ -419,27 +421,29 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/controllers/policy"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Policy (Controllers)</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/controllers/policy"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Policy (Controllers)</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/behaviors/reducers"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Reducers</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/behaviors/reducers"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Reducers</span>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Resolve</span>
+        <span class="menu-content child-expansion-item">Resolve</span>
       </mat-expansion-panel-header>
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/resolve"
@@ -454,7 +458,7 @@
           routerLink="/docs/pipeline/addons/resolve/with-core-from-deferred-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content"
+          <span class="menu-content sub-item"
             >fromDeferred Bridge <sdux-deprecated
           /></span>
         </a>
@@ -464,7 +468,7 @@
           routerLink="/docs/pipeline/addons/resolve/with-core-from-observable-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content"
+          <span class="menu-content sub-item"
             >fromObservable Bridge <sdux-deprecated
           /></span>
         </a>
@@ -474,7 +478,7 @@
           routerLink="/docs/pipeline/addons/resolve/with-core-from-promise-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content"
+          <span class="menu-content sub-item"
             >fromPromise Bridge <sdux-deprecated
           /></span>
         </a>
@@ -492,7 +496,7 @@
           routerLink="/docs/pipeline/addons/resolve/with-http-resource-behavior"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content"
+          <span class="menu-icon menu-content sub-item"
             >HttpResource Resolve
             <img
               src="assets/brand/angular/angular-icon.png"
@@ -527,17 +531,21 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/behaviors/deprecated/selectors"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Selectors <sdux-deprecated /> </span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/behaviors/deprecated/selectors"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item"
+          >Selectors <sdux-deprecated />
+        </span>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">State</span>
+        <span class="menu-content child-expansion-item">State</span>
       </mat-expansion-panel-header>
 
       <div class="sub-menu">
@@ -570,7 +578,7 @@
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Stepwise</span>
+        <span class="menu-content child-expansion-item">Stepwise</span>
       </mat-expansion-panel-header>
       <div class="sub-menu">
         <a
@@ -607,26 +615,28 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/behaviors/tab-sync"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-icon menu-content">
-        Tab Sync
-        <sdux-image
-          class="logo"
-          image="brand/sdux/sdux-vault-logo.svg"
-          height="20"></sdux-image>
-      </div>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/behaviors/tab-sync"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-icon menu-content sub-item">
+          Tab Sync
+          <sdux-image
+            class="logo"
+            image="brand/sdux/sdux-vault-logo.svg"
+            height="20"></sdux-image>
+        </div>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Taps</span>
+        <span class="menu-content child-expansion-item">Taps</span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/taps"

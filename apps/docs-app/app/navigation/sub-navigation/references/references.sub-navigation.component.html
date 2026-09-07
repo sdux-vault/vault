@@ -5,13 +5,13 @@ Tools/documentation/menu-generator
 <nav aria-labelledby="types-section-label">
   <mat-expansion-panel class="nav-expansion grandparent">
     <mat-expansion-panel-header>
-      <span class="sub-menu-content sub-item sub-header">API Reference</span>
+      <span class="menu-content child-expansion-item">API Reference</span>
     </mat-expansion-panel-header>
 
     <div class="sub-menu">
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Abstracts</span>
+          <span class="menu-content child-expansion-item">Abstracts</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -61,7 +61,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Behaviors</span>
+          <span class="menu-content child-expansion-item">Behaviors</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -115,7 +115,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-cookie-storage-persist-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >withCookieStoragePersistBehavior</span
             ></a
           >
@@ -271,7 +271,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-local-storage-persist-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >withLocalStoragePersistBehavior</span
             ></a
           >
@@ -312,7 +312,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/behaviors/with-session-storage-persist-behavior"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >withSessionStoragePersistBehavior</span
             ></a
           >
@@ -366,7 +366,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Classes</span>
+          <span class="menu-content child-expansion-item">Classes</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -437,7 +437,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/classes/vault-usage-promise-factory-required-error"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >VaultUsagePromiseFactoryRequiredError</span
             ></a
           >
@@ -446,7 +446,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Config</span>
+          <span class="menu-content child-expansion-item">Config</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -497,7 +497,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Constants</span>
+          <span class="menu-content child-expansion-item">Constants</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -564,7 +564,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/debug-widget-event-instant-scope-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >DebugWidgetEventInstantScopeTypes</span
             ></a
           >
@@ -582,7 +582,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/debug-widget-event-trace-phase-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >DebugWidgetEventTracePhaseTypes</span
             ></a
           >
@@ -591,7 +591,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/debug-widget-latency-category-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >DebugWidgetLatencyCategoryTypes</span
             ></a
           >
@@ -614,7 +614,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/devtools_aggregate_key_constant"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >DEVTOOLS_AGGREGATE_KEY_CONSTANT</span
             ></a
           >
@@ -748,7 +748,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/const/vault-registration-license-status-types"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >VaultRegistrationLicenseStatusTypes</span
             ></a
           >
@@ -757,7 +757,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Contexts</span>
+          <span class="menu-content child-expansion-item">Contexts</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -823,7 +823,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Contracts</span>
+          <span class="menu-content child-expansion-item">Contracts</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -923,7 +923,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/dev-pipeline-observer-behavior-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >DevPipelineObserverBehaviorContract</span
             ></a
           >
@@ -975,7 +975,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/interceptor-behavior-class-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >InterceptorBehaviorClassContract</span
             ></a
           >
@@ -1070,7 +1070,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/contracts/vault-private-error-service-contract"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >VaultPrivateErrorServiceContract</span
             ></a
           >
@@ -1079,7 +1079,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Controllers</span>
+          <span class="menu-content child-expansion-item">Controllers</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1104,7 +1104,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/controllers/with-replay-global-error-controller"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >withReplayGlobalErrorController</span
             ></a
           >
@@ -1138,7 +1138,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Decorators</span>
+          <span class="menu-content child-expansion-item">Decorators</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1168,7 +1168,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Functions</span>
+          <span class="menu-content child-expansion-item">Functions</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1419,7 +1419,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/functions/reset-angular-feature-cell-token-dev-mode"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >resetAngularFeatureCellTokenDevMode</span
             ></a
           >
@@ -1505,7 +1505,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Options</span>
+          <span class="menu-content child-expansion-item">Options</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1576,7 +1576,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/options/with-max-failure-controller-options"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >WithMaxFailureControllerOptions</span
             ></a
           >
@@ -1594,7 +1594,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Services</span>
+          <span class="menu-content child-expansion-item">Services</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1612,7 +1612,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Shapes</span>
+          <span class="menu-content child-expansion-item">Shapes</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1881,7 +1881,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/shapes/vault-registration-fluent-api-shape"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >VaultRegistrationFluentApiShape</span
             ></a
           >
@@ -1899,7 +1899,7 @@ Tools/documentation/menu-generator
 
       <mat-expansion-panel class="nav-expansion" [expanded]="false">
         <mat-expansion-panel-header>
-          <span class="sub-menu-content sub-item sub-header">Types</span>
+          <span class="menu-content child-expansion-item">Types</span>
         </mat-expansion-panel-header>
 
         <div class="submenu">
@@ -1987,7 +1987,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/debug-widget-event-instant-scope-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >DebugWidgetEventInstantScopeType</span
             ></a
           >
@@ -2209,7 +2209,7 @@ Tools/documentation/menu-generator
             routerLink="/docs/references/types/vault-registration-license-status-type"
             routerLinkActive="active"
             (click)="closeSidenav()"
-            ><span class="menu-content"
+            ><span class="menu-content sub-item"
               >VaultRegistrationLicenseStatusType</span
             ></a
           >
