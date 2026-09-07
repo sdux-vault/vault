@@ -4,18 +4,20 @@
       <span class="menu-content parent-expansion-item">Tutorial</span>
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/tutorial/angular"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content menu-icon"
-        >Angular
-        <img
-          src="assets/brand/angular/angular-icon.png"
-          class="image-15"
-          alt="Angular" />
-      </span>
-    </a>
+    <div class="expansion-sub-menu">
+      <a
+        mat-list-item
+        routerLink="/tutorial/angular"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-icon menu-content sub-item"
+          >Angular
+          <img
+            src="assets/brand/angular/angular-icon.png"
+            class="image-15"
+            alt="Angular" />
+        </span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

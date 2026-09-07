@@ -368,14 +368,19 @@ cd sdux-tutorial;
           Add the initial Angular service code to establish the service boundary
           before connecting it to
           <sdux-brand-name />.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.service.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ initialServiceSource() }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
-    <h4>
-      Checkpoint: plain Angular service before <sdux-brand-name /> integration
-    </h4>
     <div class="callout callout-learn-more">
       <div class="title">Angular Now; <sdux-brand-name /> Next</div>
+      <p><sdux-brand-name /> does not alter the angular service injection.</p>
       <dl>
         <dt><span class="code">&#64;Injectable()</span></dt>
         <dd>
@@ -391,14 +396,6 @@ cd sdux-tutorial;
         </dd>
       </dl>
     </div>
-
-    <h4>Focused change: plain Angular service</h4>
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'example.service.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ initialServiceSource() }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
   </div>
 </section>
 
@@ -435,17 +432,17 @@ cd sdux-tutorial;
           >
           to the <span class="code">providers</span> without a configuration
           object to apply the default runtime configuration.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab
+              [label]="'Add provideVault() to app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ initialAppConfigSource() }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
-
-    <h4>Focused change: Vault registration</h4>
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'Add provideVault() to app.config.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ initialAppConfigSource() }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
 
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>

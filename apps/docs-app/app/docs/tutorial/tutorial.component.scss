@@ -110,20 +110,7 @@
         }
 
         .tutorial-group-chevron {
-          @include global.sdux-icon-button(1.40625rem);
-
-          flex-shrink: 0;
-          min-width: 1.40625rem;
-          margin-top: calc(
-            (global.$font-size-lg * global.$line-height - 1.40625rem) / 2
-          );
-
-          img {
-            display: block;
-            flex: 0 0 global.$font-size-md;
-            width: global.$font-size-md;
-            height: global.$font-size-md;
-          }
+          @include global.sdux-icon-button(global.$font-size-lg);
         }
 
         .tutorial-step-list {
