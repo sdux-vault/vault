@@ -39,6 +39,14 @@ describe('Component: DeleteCharactersChapterComponent', () => {
     );
   });
 
+  it('returns the appConfig files for the chapter example', () => {
+    expect(component.appConfigFile()).toEqual({
+      type: 'appConfig',
+      fileName: 'app.config.ts',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
   it('returns the generated service files for the chapter example', () => {
     expect(component.serviceFiles()).toEqual([
       {
@@ -70,6 +78,69 @@ describe('Component: DeleteCharactersChapterComponent', () => {
         type: 'html',
         fileName: 'example.component.html',
         source: jasmine.any(String) as unknown as string
+      }
+    ]);
+  });
+
+  it('returns the generated html file for the chapter example', () => {
+    expect(component.htmlFile()).toEqual({
+      type: 'html',
+      fileName: 'example.component.html',
+      source: jasmine.any(String) as unknown as string
+    });
+  });
+
+  it('returns all files for the chapter example', () => {
+    expect(component.allFilesSource).toEqual([
+      {
+        type: 'component',
+        fileName: 'example.component.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'service',
+        fileName: 'example.service.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'html',
+        fileName: 'example.component.html',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'scss',
+        fileName: 'example.component.scss',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'main',
+        fileName: 'main.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'constant',
+        fileName: 'star-wars-character.constant.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'shape',
+        fileName: 'star-wars-character.shape.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'componentSpec',
+        fileName: 'example.component.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'serviceSpec',
+        fileName: 'example.service.spec.ts',
+        source: jasmine.any(String) as any
       }
     ]);
   });

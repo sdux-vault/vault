@@ -105,6 +105,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/04-add-edit-characters/add-edit-characters.chapter.component').then(
                 (m) => m.AddEditCharactersChapterComponent
               )
+          },
+          {
+            path: 'chapter-5',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/05-delete-characters/delete-characters.chapter.component').then(
+                (m) => m.DeleteCharactersChapterComponent
+              )
           }
         ]
       }

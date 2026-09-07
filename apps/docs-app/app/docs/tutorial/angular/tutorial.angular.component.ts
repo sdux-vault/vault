@@ -22,9 +22,9 @@ import { AngularWelcomeService } from './chapters/01-welcome/services/welcome.se
 import { DisplayCharacterService } from './chapters/02-display-character/services/display-character.service';
 import { DisplayCharactersService } from './chapters/03-display-characters/services/display-characters.service';
 import { AddEditCharactersService } from './chapters/04-add-edit-characters/services/add-edit-characters.service';
+import { DeleteCharactersService } from './chapters/05-delete-characters/services/delete-characters.service';
 import { AsyncInputService } from './chapters/async-input/services/async-input.service';
 import { DelayService } from './chapters/delay/services/delay.service';
-import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
 import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
 import { ErrorsService } from './chapters/errors/services/errors.service';

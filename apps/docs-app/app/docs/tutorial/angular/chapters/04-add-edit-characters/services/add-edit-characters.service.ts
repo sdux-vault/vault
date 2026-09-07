@@ -16,7 +16,7 @@ export class AddEditCharactersService {
         estimatedTime: '20–30 min'
       },
       steps: [
-        { id: 1, label: 'Configure Array Merge Behavior' },
+        { id: 1, label: 'Configure Array Append Merge Behavior' },
         { id: 2, label: 'Add/Edit Service' },
         { id: 3, label: 'Add/Edit Component' },
         { id: 4, label: 'Chapter Round-up' },

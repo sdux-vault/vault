@@ -1,16 +1,32 @@
 @use 'global' as global;
 
+:host ::ng-deep .mat-mdc-tab-header {
+  background-color: inherit !important;
+}
+
+:host ::ng-deep .mdc-tab {
+  background-color: inherit !important;
+}
+
 .example-viewer-source {
   --sdux-example-viewer-source-max-height: 640px;
+
+  :host ::ng-deep .mat-mdc-tab-header {
+    background-color: inherit !important;
+  }
+
+  :host ::ng-deep .mdc-tab {
+    background-color: inherit !important;
+  }
 
   height: auto;
   // background-color: var(--sdux-surface-elevated);
   color: var(--sdux-text-black);
+  margin-bottom: global.$spacing-sm;
 
   &.tabs {
     min-height: 300px;
-    border: 1px solid black;
-    border-top: 1px solid global.$sdux-primary-base;
+    border: 1px solid global.$sdux-primary-base;
 
     .source-row {
       min-height: 300px;

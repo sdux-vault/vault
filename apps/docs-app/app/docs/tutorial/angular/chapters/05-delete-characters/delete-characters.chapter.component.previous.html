@@ -1,3 +1,23 @@
+<div class="header" id="chapter-5" aria-labelledby="chapter-5-title">
+  <h2>Chapter 5: Delete Characters</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter adds delete behavior without moving collection ownership,
+      delete rules, or confirmation logic into the template. The workflow now
+      supports destructive updates through the same service-owned
+      <sdux-feature-cell /> boundary.
+    </p>
+    <p>
+      Keep the same split in place: the service is still the only place that
+      updates committed Feature State, while the component owns local selection,
+      confirmation, editor, and feedback state. Keeping that line clear makes
+      delete behavior easier to follow and easier to maintain.
+    </p>
+  </div>
+</header>
+
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">
@@ -42,13 +62,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-4-start-title">
-  <h2 class="section-title" id="chapter-4-start-title">
-    Chapter 4 Starting Point and Change Map
+<section class="section" aria-labelledby="chapter-5-start-title">
+  <h2 class="section-title" id="chapter-5-start-title">
+    Chapter 5 Starting Point and Change Map
   </h2>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 3 project. Add one service removal
+      Start with the completed Chapter 4 project. Add one service removal
       method, then add component-local pending-delete state,
       request/cancel/confirm handlers, confirmation markup, and focused tests.
       The registered append merge remains available for create; deletion submits
@@ -68,11 +88,11 @@
   </div>
 </section>
 
-<section class="section" id="step-16" aria-labelledby="step-16-title">
+<section class="section" id="chapter-5-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-16-title">
-      Step 16: Add Delete Capabilities
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Add the Delete Service Slice
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -106,6 +126,15 @@
         <li>
           Open <span class="code">example.service.ts</span> and add a
           <span class="code">removeCharacter()</span> method.
+
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+            <sdux-example-viewer-tab [label]="file.fileName">
+              <pre
+                class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+            </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Keep the service as the only place that calls the destructive
@@ -140,23 +169,14 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
   </div>
 </section>
 
-<section class="section" id="step-17" aria-labelledby="step-17-title">
+<section class="section" id="chapter-5-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-17-title">
-      Step 17: Complete Delete Tutorial
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Update the Component and Html for Delete
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -189,13 +209,122 @@
           Update <span class="code">example.component.ts</span> to add the
           delete-candidate Signal plus the request, cancel, and confirm delete
           methods.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+            <sdux-example-viewer-tab [label]="file.fileName">
+              <pre
+                class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+            </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Update <span class="code">example.component.html</span> to add the
           confirmation panel and the delete action button.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (htmlFile(); as file) {
+            <sdux-example-viewer-tab [label]="file.fileName">
+              <pre
+                class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+            </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Unknown or Stale IDs</div>
+      <p>
+        <span class="code">removeCharacter()</span> always submits a
+        <span class="code">replaceState()</span> factory. When the ID is absent,
+        the factory filters the latest collection into an equivalent new array;
+        the example does not treat that as an error or create a record. The
+        service spec verifies the resulting value, not an emission-count
+        guarantee. In a multi-writer application, revalidate the pending record
+        at confirmation time. Any success feedback shown for a stale ID is a
+        tutorial limitation, not an authoritative server acknowledgment; report
+        the stale deletion instead of claiming success.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Delete Outcome Contract</div>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Action</th>
+            <th scope="col">
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              request
+            </th>
+            <th scope="col">Expected result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cancel delete</td>
+            <td>No request</td>
+            <td>
+              Clears only the component's delete candidate. The collection and
+              selection remain unchanged.
+            </td>
+          </tr>
+          <tr>
+            <td>Confirm a known ID</td>
+            <td><span class="code">replaceState()</span></td>
+            <td>
+              Removes the matching record, clears selection and the form, and
+              returns the editor to create mode. Every nonmatching record is
+              retained.
+            </td>
+          </tr>
+          <tr>
+            <td>Confirm a stale ID</td>
+            <td><span class="code">replaceState()</span></td>
+            <td>
+              Leaves the collection equivalent. This tutorial makes no promise
+              about subscriber emission for equivalent array values.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          Cancel preserves the record; confirm removes only that identity and
+          clears stale local selection.
+        </li>
+        <li>
+          The component coordinates confirmation while the service owns
+          replacement.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 5 and reload it after testing
+          terminal destruction.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-5-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">Step 5: Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Delete Characters</em> chapter is complete once characters can be
+      deleted successfully.
+    </p>
 
     <div class="callout callout-learn-more">
       <div class="title">Run and Verify</div>
@@ -213,44 +342,9 @@
       </ol>
     </div>
 
-    <div class="callout callout-info">
-      <div class="title">Unknown or Stale IDs</div>
-      <p>
-        <span class="code">removeCharacter()</span> always submits a
-        <span class="code">replaceState()</span> factory. When the ID is absent,
-        the factory filters the latest collection into an equivalent new array;
-        the example does not treat that as an error or create a record. The
-        service spec verifies the resulting value, not an emission-count
-        guarantee. In a multi-writer application, revalidate the pending record
-        at confirmation time. Any success feedback shown for a stale ID is a
-        tutorial limitation, not an authoritative server acknowledgment; report
-        the stale deletion instead of claiming success.
-      </p>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Delete Outcome Contract</div>
-      <ul>
-        <li>
-          Cancel clears only the component's delete candidate; collection and
-          selection remain unchanged.
-        </li>
-        <li>
-          Confirm removes the matching record, clears selection, clears the
-          form, and returns the editor to create mode. Every nonmatching record
-          is retained.
-        </li>
-        <li>
-          A stale ID produces an equivalent collection. This tutorial makes no
-          promise about subscriber emission for equivalent array values.
-        </li>
-      </ul>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Delete Flow Summary</div>
-
-      <ul>
+    <div class="callout callout-action">
+      <div class="title">Chapter 5 Summary</div>
+      <ol>
         <li>
           The component now owns a delete-confirmation state in addition to its
           existing selection and editor state.
@@ -263,64 +357,68 @@
           The service now supports full create, update, and delete operations
           through the same <sdux-feature-cell /> boundary.
         </li>
-      </ul>
+      </ol>
     </div>
+  </div>
+</section>
 
+<section class="section" id="chapter-5-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
+      @for (file of allFilesSource; track file?.type) {
+      <sdux-example-viewer-tab [label]="file.fileName">
+        <pre
+          class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+      </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
   </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-4-exit-title">
-  <h2 class="section-title" id="chapter-4-exit-title">
-    Chapter 4 Exit Checkpoint
-  </h2>
   <div class="section-body">
-    <ul>
-      <li>
-        Cancel preserves the record; confirm removes only that identity and
-        clears stale local selection.
-      </li>
-      <li>
-        The component coordinates confirmation while the service owns
-        replacement.
-      </li>
-      <li>
-        Save this checkpoint for Chapter 5 and reload it after testing terminal
-        destruction.
-      </li>
-    </ul>
-  </div>
-</section>
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <div class="tutorial-shortcut-copy">
+          <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+          <h2>Want the finished delete example without these two steps?</h2>
+        </div>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed delete tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished delete example without these two steps?</h2>
-  </div>
+        @if (stackblitz(); as stackblitz) {
+        <div class="tutorial-shortcut-launcher">
+          <p>
+            If you want the completed delete example, launch the live StackBlitz
+            project and inspect the finished implementation directly.
+          </p>
+          <sdux-stackblitz-language-example
+            [example]="stackblitz.example"
+            [lang]="stackblitz.language" />
+        </div>
+        }
 
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed delete tutorial, launch the live StackBlitz
-        project and inspect the finished implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
     </div>
-  }
-
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+    <div class="section-body">
+      <div
+        class="next-chapter"
+        matTooltip="Navigate to the next chapter: Delete Characters">
+        <strong>Next Up: </strong>
+        <a [routerLink]="['../chapter-5']">Chapter 5: Delete Characters</a>
+      </div>
+    </div>
   </div>
 </section>

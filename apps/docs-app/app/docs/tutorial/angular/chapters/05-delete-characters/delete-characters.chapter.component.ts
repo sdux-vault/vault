@@ -5,14 +5,16 @@ import {
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
+  PackageNameComponent,
   SDuXDownloadComponent
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DELETE_CHARACTERS } from '../../generated/delete-characters.generated';
+import { STAR_WARS_DELETE_CHARACTERS } from '../../generated/05-delete-characters.generated';
 
 @Component({
   selector: 'sdux-delete-characters-chapter',
@@ -24,15 +26,18 @@ import { STAR_WARS_DELETE_CHARACTERS } from '../../generated/delete-characters.g
     ExampleViewerSourceComponent,
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
-    SDuXDownloadComponent
+    SDuXDownloadComponent,
+    PackageNameComponent
   ],
   templateUrl: './delete-characters.chapter.component.html'
 })
-export class DeleteCharactersChapterComponent {
+export class DeleteCharactersChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DELETE_CHARACTERS;
   readonly downloadUrl = '/assets/tutorial/sdux-delete-characters.tutorial.zip';
+
+  readonly allFilesSource = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delete-characters')!;
@@ -41,6 +46,13 @@ export class DeleteCharactersChapterComponent {
       example,
       language: example.languages.find((lang) => lang.key === 'angular')!
     };
+  });
+
+  readonly appConfigFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.AppConfig
+    );
   });
 
   readonly serviceFiles = computed(() => [
@@ -65,4 +77,11 @@ export class DeleteCharactersChapterComponent {
     ),
     this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html)
   ]);
+
+  readonly htmlFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Html
+    );
+  });
 }
