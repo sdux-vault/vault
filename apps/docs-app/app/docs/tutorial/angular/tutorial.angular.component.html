@@ -51,14 +51,14 @@
                   )
                 "
                 (click)="toggleTutorialGroup(chapter.id)">
-                <mat-icon
+                <img
                   aria-hidden="true"
-                  [fontIcon]="
+                  alt=""
+                  [src]="
                     isTutorialGroupExpanded(chapter.id)
-                      ? 'keyboard_arrow_down'
-                      : 'keyboard_arrow_right'
-                  ">
-                </mat-icon>
+                      ? 'assets/icons/keyboard-arrow-down.svg'
+                      : 'assets/icons/keyboard-arrow-right.svg'
+                  " />
               </button>
             </div>
 

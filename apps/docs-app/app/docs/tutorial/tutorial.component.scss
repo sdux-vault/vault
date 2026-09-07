@@ -118,8 +118,11 @@
             (global.$font-size-lg * global.$line-height - 1.40625rem) / 2
           );
 
-          mat-icon {
-            font-size: global.$font-size-md;
+          img {
+            display: block;
+            flex: 0 0 global.$font-size-md;
+            width: global.$font-size-md;
+            height: global.$font-size-md;
           }
         }
 

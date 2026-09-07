@@ -556,6 +556,12 @@ $sdux-code-font:
     height: 100%;
     line-height: 1;
     font-size: $font-size-lg;
+    color: currentColor;
+  }
+
+  /* External SVG images do not inherit color, so tint them to match the icon color. */
+  img {
+    filter: brightness(0) invert(1);
   }
 
   &:hover {
