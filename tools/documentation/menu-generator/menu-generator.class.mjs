@@ -162,16 +162,14 @@ export class ${componentName}{
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(
           (entry) =>
-            `<a mat-list-item routerLink="${this.toRouterLink(entry)}" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content">${entry.name}</span></a>`
+            `<a mat-list-item routerLink="${this.toRouterLink(entry)}" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content sub-item">${entry.name}</span></a>`
         )
         .join('\n');
 
       return `
     <mat-expansion-panel class="nav-expansion" [expanded]="false">
       <mat-expansion-panel-header>
-        <div class="menu-icon">
           <span class="sub-menu-content sub-item sub-header">${label}</span>
-        </div>
       </mat-expansion-panel-header>
 
       <div class="submenu">

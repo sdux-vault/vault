@@ -246,8 +246,10 @@ $spacing-3xl: 4rem; // 64px (optional future-proofing)
 * Layout 
 */
 $toolbar-height: 64px;
-$sidenav-width: 250px;
 $footer-height: 60px;
+$sidenav-width: 250px;
+$navigation-item-height: 42px;
+$navigation-item-minheight: 36px;
 
 // ────────────────────────────────
 // Typography

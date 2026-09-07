@@ -40,7 +40,9 @@
           routerLink="/docs/welcome/testing"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">Testing <sdux-brand-name /> </span>
+          <span class="menu-content sub-item"
+            >Testing <sdux-brand-name />
+          </span>
         </a>
       </div>
     </mat-expansion-panel>
@@ -58,7 +60,7 @@
       routerLink="/docs/pipeline/controllers/with-delay-controller"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <span class="menu-content">Delay</span>
+      <span class="menu-content sub-item">Delay</span>
     </a>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
@@ -71,7 +73,7 @@
           routerLink="/docs/pipeline/controllers/with-max-failures-controller"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">Max Failures</span>
+          <span class="menu-content sub-item">Max Failures</span>
         </a>
 
         <a
@@ -111,7 +113,7 @@
       routerLink="/docs/pipeline/controllers/with-throttle-controller"
       routerLinkActive="active"
       (click)="closeSidenav()">
-      <span class="menu-content">Throttle</span>
+      <span class="menu-content sub-item">Throttle</span>
     </a>
   </mat-expansion-panel>
 </nav>
