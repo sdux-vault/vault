@@ -503,6 +503,14 @@ cd sdux-tutorial;
         <li>
           Create
           <span class="code">star-wars-character.constant.ts</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (registeredAppConfigSource()[1]; as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>Open <span class="code">app.config.ts</span>.</li>
         <li>
@@ -530,19 +538,18 @@ cd sdux-tutorial;
         <li>
           Assign the <span class="code">star-wars-character</span> key and
           provide the initial character collection.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (registeredAppConfigSource()[0]; as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
-
-    <h4>Checkpoint: registered FeatureCell configuration</h4>
-    <sdux-example-viewer-source>
-      @for (file of registeredAppConfigSource(); track file.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
   </div>
 </section>
 
@@ -613,17 +620,17 @@ cd sdux-tutorial;
           Expose the reactive <span class="code">state</span> property from the
           service.
         </li>
-        <li>Call <span class="code">initialize()</span> in the constructor.</li>
+        <li>
+          Call <span class="code">initialize()</span> in the constructor.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.service.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ registeredFeatureCellService().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
       </ol>
     </div>
-
-    <h4>Focused change: FeatureCell-connected service</h4>
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'example.service.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ registeredFeatureCellService().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
   </div>
 </section>
 
@@ -667,14 +674,38 @@ cd sdux-tutorial;
           Create
           <span class="code">example.component.ts</span> in the same directory
           as the State definition.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (initialComponentAndHtmlFiles()[0]; as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Create <span class="code">example.component.html</span> in the same
           directory.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (initialComponentAndHtmlFiles()[1]; as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Create <span class="code">example.component.scss</span> in the same
           directory.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (initialComponentAndHtmlFiles()[2]; as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
@@ -717,16 +748,6 @@ cd sdux-tutorial;
         </li>
       </ul>
     </div>
-
-    <h4>Checkpoint: first reactive component, template, and styles</h4>
-    <sdux-example-viewer-source>
-      @for (file of initialComponentAndHtmlFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
 
     <div class="callout callout-warning">
       <div class="title">About the Stylesheet</div>
@@ -771,6 +792,12 @@ cd sdux-tutorial;
         <li>
           Pass <span class="code">ExampleComponent</span> as the root component
           in <span class="code">bootstrapApplication()</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'main.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ mainSourceFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
         <li>Run <span class="code">npm start</span>.</li>
         <li>
@@ -817,14 +844,6 @@ cd sdux-tutorial;
         </li>
       </ul>
     </div>
-
-    <h4>Focused change: application bootstrap</h4>
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'main.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ mainSourceFile().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
   </div>
 </section>
 
@@ -957,7 +976,7 @@ cd sdux-tutorial;
   <div class="section-body">
     <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of displayCharacterSource; track file.type) {
+      @for (file of allFilesSource; track file.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file.source }}</code></pre>

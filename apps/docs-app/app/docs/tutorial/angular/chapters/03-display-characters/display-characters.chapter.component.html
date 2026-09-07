@@ -138,59 +138,58 @@
     </div>
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
-    </div>
-    <ol>
-      <li>
-        In <span class="code">example.component.ts</span>, replace the
-        single-record computed value with <span class="code">characters</span>,
-        a computed read of
-        <span class="code">this.#exampleService.state.value() ?? []</span>.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'New Computed Value'">
-            <pre
-              class="code-inline"><code class="language-ts">{{`readonly characters = computed&lt;readonly StarWarsCharacter[]&gt;(
+      <ol>
+        <li>
+          In <span class="code">example.component.ts</span>, replace the
+          single-record computed value with
+          <span class="code">characters</span>, a computed read of
+          <span class="code">this.#exampleService.state.value() ?? []</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'New Computed Value'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`readonly characters = computed&lt;readonly StarWarsCharacter[]&gt;(
     () =&gt; this.#exampleService.state.value() ?? []
 );`}}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>
-        Add <span class="code">selectedCharacterId</span> as a local Signal
-        initialized to <span class="code">null</span>.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'selectedCharacterId'">
-            <pre
-              class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacterId = signal&lt;number | null&gt;(null);
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add <span class="code">selectedCharacterId</span> as a local Signal
+          initialized to <span class="code">null</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectedCharacterId'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacterId = signal&lt;number | null&gt;(null);
 `}}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>
-        Add
-        <span class="code">selectedCharacter</span> as a computed lookup that
-        returns the matching collection record or
-        <span class="code">null</span>.
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add
+          <span class="code">selectedCharacter</span> as a computed lookup that
+          returns the matching collection record or
+          <span class="code">null</span>.
 
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'selectedCharacter'">
-            <pre
-              class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacter = computed(() =&gt; {
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectedCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacter = computed(() =&gt; {
   const selectedId = this.selectedCharacterId();
   return this.characters().find(({ id }) =&gt; id === selectedId) ?? null;
 });`}}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>
-        Add <span class="code">selectCharacter(value: string)</span>. Convert
-        the dropdown value with <span class="code">Number(value)</span>, set the
-        Signal only when that ID exists in
-        <span class="code">characters()</span>, and otherwise leave the current
-        local selection unchanged.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'selectCharacter'">
-            <pre
-              class="code-inline"><code class="language-ts">{{`protected selectCharacter(value: string): void {
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add <span class="code">selectCharacter(value: string)</span>. Convert
+          the dropdown value with <span class="code">Number(value)</span>, set
+          the Signal only when that ID exists in
+          <span class="code">characters()</span>, and otherwise leave the
+          current local selection unchanged.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`protected selectCharacter(value: string): void {
   const character =
     this.characters().find((character) => character.id === Number(value)) ??
     null;
@@ -201,17 +200,17 @@
 
   this.selectedCharacterId.set(character.id);
 }`}}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>
-        In <span class="code">example.component.html</span>, render one option
-        per <span class="code">characters()</span> entry and pass the selected
-        value to <span class="code">selectCharacter()</span>.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'selectCharacter'">
-            <pre
-              class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-top"&gt;
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, render one option
+          per <span class="code">characters()</span> entry and pass the selected
+          value to <span class="code">selectCharacter()</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-top"&gt;
   &lt;div class="field selection"&gt;
     &lt;label for="character-selection"&gt;
       Character (&#123;&#123; characters().length &#125;&#125; total)
@@ -240,17 +239,17 @@
     &lt;/select&gt;
   &lt;/div&gt;
 &lt;/div&gt;`}}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>
-        Render the details panel only when
-        <span class="code">selectedCharacter()</span>
-        returns a record; otherwise render the empty guidance.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'selectCharacter'">
-            <pre
-              class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-bottom"&gt;
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Render the details panel only when
+          <span class="code">selectedCharacter()</span>
+          returns a record; otherwise render the empty guidance.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-bottom"&gt;
   &lt;section
     class="panel character-details"
     aria-labelledby="details-title"&gt;
@@ -295,10 +294,11 @@
     &#125;
   &lt;/section&gt;
 &lt;/div&gt;`}}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-    </ol>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -410,7 +410,7 @@
   <div class="section-body">
     <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of files(); track file?.type) {
+      @for (file of allFilesSource; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>

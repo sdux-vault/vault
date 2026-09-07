@@ -88,56 +88,56 @@ describe('Component: AddEditCharactersChapterComponent', () => {
   });
 
   it('returns all files for the chapter example', () => {
-    expect(component.allFiles()).toEqual([
+    expect(component.allFilesSource).toEqual([
       {
-        type: 'appConfig',
-        fileName: 'app.config.ts',
-        source: jasmine.any(String) as unknown as string
+        type: 'component',
+        fileName: 'example.component.ts',
+        source: jasmine.any(String) as any
       },
       {
         type: 'service',
         fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'serviceSpec',
-        fileName: 'example.service.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomain',
-        fileName: 'example.character-domain.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomainSpec',
-        fileName: 'example.character-domain.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'component',
-        fileName: 'example.component.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'componentSpec',
-        fileName: 'example.component.spec.ts',
-        source: jasmine.any(String) as unknown as string
+        source: jasmine.any(String) as any
       },
       {
         type: 'html',
         fileName: 'example.component.html',
-        source: jasmine.any(String) as unknown as string
+        source: jasmine.any(String) as any
       },
       {
-        type: 'characterEditor',
-        fileName: 'example.character-editor.ts',
-        source: jasmine.any(String) as unknown as string
+        type: 'scss',
+        fileName: 'example.component.scss',
+        source: jasmine.any(String) as any
       },
       {
-        type: 'characterEditorSpec',
-        fileName: 'example.character-editor.spec.ts',
-        source: jasmine.any(String) as unknown as string
+        type: 'main',
+        fileName: 'main.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'constant',
+        fileName: 'star-wars-character.constant.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'shape',
+        fileName: 'star-wars-character.shape.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'componentSpec',
+        fileName: 'example.component.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'serviceSpec',
+        fileName: 'example.service.spec.ts',
+        source: jasmine.any(String) as any
       }
     ]);
   });

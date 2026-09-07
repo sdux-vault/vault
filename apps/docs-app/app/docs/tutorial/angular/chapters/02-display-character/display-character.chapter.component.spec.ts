@@ -101,7 +101,7 @@ describe('Component: DisplayCharacterChapterComponent', () => {
   });
 
   it('returns the generated component, html, and spec files for the chapter example', () => {
-    expect(component.displayCharacterSource).toEqual([
+    expect(component.allFilesSource).toEqual([
       {
         type: 'component',
         fileName: 'example.component.ts',

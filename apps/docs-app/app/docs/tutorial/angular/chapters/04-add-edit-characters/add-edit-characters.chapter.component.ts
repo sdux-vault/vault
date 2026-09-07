@@ -38,6 +38,8 @@ export class AddEditCharactersChapterComponent extends TutorialNavigationDirecti
   readonly downloadUrl =
     '/assets/tutorial/sdux-04-add-edit-characters.tutorial.zip';
 
+  readonly allFilesSource = this.#characters;
+
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('add-edit-characters')!;
 
@@ -88,44 +90,4 @@ export class AddEditCharactersChapterComponent extends TutorialNavigationDirecti
       ExampleFileTypes.Html
     );
   });
-
-  readonly allFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.AppConfig
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ServiceSpec
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterDomain
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterDomainSpec
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ComponentSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterEditor
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterEditorSpec
-    )
-  ]);
 }

@@ -145,49 +145,49 @@
 
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Install the
+          <sdux-package-name [package]="'addons'" /> package.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre
+                class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>Open <span class="code">app.config.ts</span></li>
+
+        <li>
+          Import
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+              >withArrayAppendMergeBehavior</a
+            ></span
+          >
+          from <sdux-package-name [package]="'addons'" />.
+        </li>
+        <li>
+          Pass
+          <span class="code"
+            >[<a
+              href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+              >withArrayAppendMergeBehavior</a
+            >]</span
+          >
+          as the behavior list for
+          <span class="code">provide<sdux-feature-cell />()</span>.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
     </div>
-    <ol>
-      <li>
-        Install the
-        <sdux-package-name [package]="'addons'" /> package.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
-            <pre
-              class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>Open <span class="code">app.config.ts</span></li>
-
-      <li>
-        Import
-        <span class="code"
-          ><a
-            href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
-            >withArrayAppendMergeBehavior</a
-          ></span
-        >
-        from <sdux-package-name [package]="'addons'" />.
-      </li>
-      <li>
-        Pass
-        <span class="code"
-          >[<a
-            href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
-            >withArrayAppendMergeBehavior</a
-          >]</span
-        >
-        as the behavior list for
-        <span class="code">provide<sdux-feature-cell />()</span>.
-
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'app.config.ts'">
-            <pre
-              class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-    </ol>
 
     <div class="callout callout-learn-more">
       <div class="title">Why This Behavior Is Required</div>
@@ -273,45 +273,44 @@
 
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
+
+      <ol>
+        <li>
+          Add the <span class="code">example.character-domain.ts</span>
+          file to the project.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.character-domain.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ characterDomainFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update <span class="code">example.service.ts</span> to add the
+          createCharacter and updateCharacter methods.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.service.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ serviceFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
     </div>
 
-    <ol>
-      <li>
-        Add the <span class="code">example.character-domain.ts</span>
-        file to the project.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'example.character-domain.ts'">
-            <pre
-              class="code-inline"><code class="language-ts">{{ characterDomainFile().source }}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-
-        <div class="callout callout-info">
-          <div class="title">Supporting Domain File</div>
-          <p>
-            The
-            <span class="code">example.character-domain.ts</span> maintains the
-            draft type, next-ID helper, and character factory used by this
-            add/edit slice.
-          </p>
-          <p>
-            This file is intentionally separate so the service stays minimal and
-            the chapter stays focused on the state boundary instead of helper
-            logic.
-          </p>
-        </div>
-      </li>
-      <li>
-        Update <span class="code">example.service.ts</span> to add the
-        createCharacter and updateCharacter methods.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'example.service.ts'">
-            <pre
-              class="code-inline"><code class="language-ts">{{ serviceFile().source }}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-    </ol>
+    <div class="callout callout-warning">
+      <div class="title">Supporting Domain File</div>
+      <p>
+        The
+        <span class="code">example.character-domain.ts</span> maintains the
+        draft type, next-ID helper, and character factory used by this add/edit
+        slice.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -373,54 +372,53 @@
 
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Add the <span class="code">example.character-editor.ts</span> file to
+          the project.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.character-editor.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ characterEditorFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update <span class="code">example.component.ts</span> to add the form,
+          editor mode, feedback state, and save/cancel flows.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.component.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ componentFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> to add the
+          editor panel, the add action, and the empty-state guidance for create
+          mode.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'example.component.html'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ htmlFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
     </div>
-    <ol>
-      <li>
-        Add the <span class="code">example.character-editor.ts</span> file to
-        the project.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'example.character-editor.ts'">
-            <pre
-              class="code-inline"><code class="language-ts">{{ characterEditorFile().source }}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-        <div class="callout callout-info">
-          <div class="title">Supporting Editor File</div>
-          <p>
-            Create
-            <span class="code">example.character-editor.ts</span> to hold the
-            shared validation, normalization, and feedback rules for the
-            add/edit flow.
-          </p>
-          <p>
-            Keep this file separate so the component stays minimal and the
-            chapter stays focused on the state boundary instead of helper logic.
-          </p>
-        </div>
-      </li>
-      <li>
-        Update <span class="code">example.component.ts</span> to add the form,
-        editor mode, feedback state, and save/cancel flows.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'example.component.ts'">
-            <pre
-              class="code-inline"><code class="language-ts">{{ componentFile().source }}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-      <li>
-        Update <span class="code">example.component.html</span> to add the
-        editor panel, the add action, and the empty-state guidance for create
-        mode.
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab [label]="'example.component.html'">
-            <pre
-              class="code-inline"><code class="language-ts">{{ htmlFile().source }}</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
-      </li>
-    </ol>
 
+    <div class="callout callout-warning">
+      <div class="title">Supporting Editor File</div>
+      <p>
+        Create
+        <span class="code">example.character-editor.ts</span> to hold the shared
+        validation, normalization, and feedback rules for the add/edit flow.
+      </p>
+      <p>
+        Keep this file separate so the component stays minimal and the chapter
+        stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
     <div class="callout callout-warning">
       <div class="title">Returned Object Is Not Commit Confirmation</div>
       <p>
@@ -570,7 +568,7 @@
   <div class="section-body">
     <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of allFiles(); track file?.type) {
+      @for (file of allFilesSource; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>

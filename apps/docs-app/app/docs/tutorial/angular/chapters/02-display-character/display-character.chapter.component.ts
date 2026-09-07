@@ -42,7 +42,7 @@ export class DisplayCharacterChapterComponent extends TutorialNavigationDirectiv
   readonly downloadUrl =
     '/assets/tutorial/sdux-02-display-character.tutorial.zip';
 
-  readonly displayCharacterSource = this.#characters;
+  readonly allFilesSource = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('display-character')!;
