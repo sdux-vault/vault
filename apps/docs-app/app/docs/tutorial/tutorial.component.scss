@@ -110,7 +110,7 @@
         }
 
         .tutorial-group-chevron {
-          @include global.sdux-icon-button(global.$font-size-lg);
+          @include global.sdux-icon-button(24px);
         }
 
         .tutorial-step-list {

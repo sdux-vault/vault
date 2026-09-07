@@ -484,10 +484,6 @@ $sdux-code-font:
   gap: $spacing-xs;
   font-weight: $font-weight-semibold;
 
-  .mat-icon {
-    transform: scale(0.75);
-  }
-
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -498,6 +494,7 @@ $sdux-code-font:
   }
 
   .mat-icon {
+    transform: scale(0.75);
     width: $button-icon-size !important;
     height: $button-icon-size !important;
     position: relative;
@@ -553,6 +550,8 @@ $sdux-code-font:
     display: flex;
     align-items: center;
     justify-content: center;
+
+    transform: scale(1.25);
 
     width: 100%;
     height: 100%;

@@ -232,15 +232,17 @@ cd sdux-tutorial;
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
       <ol>
-        <li>Install the <sdux-package-name [package]="'angular'" /> package</li>
+        <li>
+          Install the <sdux-package-name [package]="'angular'" /> package
 
-        <sdux-example-viewer-source [displayTabs]="false">
-          <sdux-example-viewer-tab
-            [label]="'Install the @sdux-vault/angular package'">
-            <pre
-              class="code-inline"><code class="language-ts">npm install @sdux-vault/angular</code></pre>
-          </sdux-example-viewer-tab>
-        </sdux-example-viewer-source>
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab
+              [label]="'Install the @sdux-vault/angular package'">
+              <pre
+                class="code-inline"><code class="language-ts">npm install @sdux-vault/angular</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
       </ol>
     </div>
   </div>
@@ -302,17 +304,16 @@ cd sdux-tutorial;
         <li>
           Create a new file named:
           <span class="code">star-wars-character.shape.ts</span>
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab
+              [label]="'Define the State for a Star Wars character'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ starWarsCharacterFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
-
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab
-        [label]="'Define the State for a Star Wars character'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ starWarsCharacterFile().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
   </div>
   <div class="callout callout-warning">
     <div class="title">Global Store vs. <sdux-feature-cell /></div>
@@ -443,19 +444,6 @@ cd sdux-tutorial;
         </li>
       </ol>
     </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-
-      <ul>
-        <li>
-          <a href="/docs/pipeline/apis/angular/provide-vault">provideVault()</a>
-        </li>
-        <li>
-          <a href="/docs/references/config/vault-config">VaultConfig</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -555,18 +543,6 @@ cd sdux-tutorial;
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-
-      <ul>
-        <li>
-          <a href="/docs/references/functions/provide-feature-cell"
-            >provide<sdux-feature-cell
-          /></a>
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -648,26 +624,6 @@ cd sdux-tutorial;
           class="code-inline"><code class="language-ts">{{ registeredFeatureCellService().source }}</code></pre>
       </sdux-example-viewer-tab>
     </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-
-      <ul>
-        <li>
-          <a href="/docs/pipeline/apis/angular/at-feature-cell"
-            >&#64;<sdux-feature-cell
-          /></a>
-        </li>
-        <li>
-          <a href="/docs/references/functions/inject-vault">injectVault</a>
-        </li>
-        <li>
-          <a href="/docs/references/shapes/state-snapshot-shape"
-            >StateSnapshotShape</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -953,6 +909,37 @@ cd sdux-tutorial;
           local selection without changing service ownership.
         </li>
       </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+
+      <ul>
+        <li>
+          <a href="/docs/pipeline/apis/angular/provide-vault">provideVault()</a>
+        </li>
+        <li>
+          <a href="/docs/references/config/vault-config">VaultConfig</a>
+        </li>
+        <li>
+          <a href="/docs/references/functions/provide-feature-cell"
+            >provide<sdux-feature-cell
+          /></a>
+        </li>
+        <li>
+          <a href="/docs/pipeline/apis/angular/at-feature-cell"
+            >&#64;<sdux-feature-cell
+          /></a>
+        </li>
+        <li>
+          <a href="/docs/references/functions/inject-vault">injectVault</a>
+        </li>
+        <li>
+          <a href="/docs/references/shapes/state-snapshot-shape"
+            >StateSnapshotShape</a
+          >
+        </li>
+      </ul>
     </div>
   </div>
 </section>
