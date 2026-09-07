@@ -22,6 +22,7 @@
   height: auto;
   // background-color: var(--sdux-surface-elevated);
   color: var(--sdux-text-black);
+  margin-top: global.$spacing-sm;
   margin-bottom: global.$spacing-sm;
 
   &.tabs {

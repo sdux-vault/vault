@@ -1,3 +1,4 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
 <div class="header" id="chapter-5" aria-labelledby="chapter-5-title">
   <h2>Chapter 5: Delete Characters</h2>
 </div>
@@ -36,10 +37,11 @@
     <p>
       The component coordinates selection, confirmation, and feedback, but it
       never edits the committed collection directly. The service owns the
-      destructive policy and routes a new collection through
-      <span class="code">replaceState()</span>, so the operation remains
-      observable, immutable, and consistent with the rest of the Feature State
-      lifecycle.
+      destructive policy and submits the target identity through
+      <span class="code">mergeState()</span> with
+      <span class="code">isDelete: true</span>. Array By ID Merge applies the
+      identifier-based removal while keeping the operation consistent with the
+      rest of the Feature State lifecycle.
     </p>
   </div>
 
@@ -71,9 +73,12 @@
       Start with the completed Chapter 4 project. Add one service removal
       method, then add component-local pending-delete state,
       request/cancel/confirm handlers, confirmation markup, and focused tests.
-      The registered append merge remains available for create; deletion submits
-      a complete next collection through
-      <span class="code">replaceState()</span>.
+      Register Array By ID Merge for the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>, then
+      use <span class="code">mergeState()</span> for create and update
+      operations. Deletion submits the target identity with
+      <span class="code">isDelete: true</span> so the active behavior removes
+      the matching record.
     </p>
     <div class="callout callout-warning">
       <div class="title">What “Destructive” Means Here</div>
@@ -101,13 +106,15 @@
   <div class="section-body">
     <p>
       Before the service can delete a character correctly, the registered
-      <sdux-feature-cell /> needs index-style merge semantics. In the previous
-      chapter, it used append-style merge semantics for adding new characters.
+      <sdux-feature-cell /> needs identifier-based array merge semantics. In the
+      previous chapter, it used append-style merge semantics for adding new
+      characters.
     </p>
 
     <p>
-      Now we need to switch to index-style merge semantics to handle deletions
-      correctly.
+      Now we need to switch to <em>Array By ID Merge</em> so matching records
+      can be updated, new records can be appended, and delete requests can
+      remove records by identifier.
     </p>
 
     <p>
@@ -119,8 +126,8 @@
         ></span
       >
       in <span class="code">app.config.ts</span>. This makes
-      <span class="code">mergeState()</span> use an index-style merge to delete,
-      add and edit a character.
+      <span class="code">mergeState()</span> compare records by their identifier
+      during the Merge stage.
     </p>
 
     <div class="callout callout-action">
@@ -174,12 +181,12 @@
 
       <ul>
         <li>
-          <span class="code">mergeState()</span> is the right API for adding a
-          new record to an existing collection.
+          <span class="code">mergeState()</span> submits the incoming records
+          and merge configuration to the active Array By ID Merge behavior.
         </li>
         <li>
-          Without array-by-id merge behavior, the incoming one-item array would
-          replace the entire current collection.
+          The behavior updates an existing record when its identifier matches
+          and appends incoming records with new identifiers.
         </li>
         <li>
           With
@@ -188,14 +195,13 @@
               href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
               >withArrayByIdMergeBehavior</a
             ></span
-          >, that same one-item array is appended immutably to the committed
-          collection.
+          >, setting <span class="code">isDelete</span> on a merge request
+          removes the matching record from the collection.
         </li>
         <li>
-          This keeps add and edit distinct: create uses
-          <span class="code">mergeState()</span> to append, while update will
-          use <span class="code">replaceState()</span> to swap one existing
-          character by identity.
+          This keeps identifier matching and collection changes in the Merge
+          stage instead of requiring the service to manually find, replace,
+          append, or remove records.
         </li>
       </ul>
     </div>
@@ -206,16 +212,18 @@
         You could build the next collection manually with a spread expression
         such as
         <span class="code">[...currentCharacters, newCharacter]</span>, but that
-        is the wrong approach for this tutorial.
+        only covers appending. It does not provide the identifier-based update
+        and deletion rules required by this tutorial.
       </p>
 
       <p>
         The spread operator itself does not mutate the array. The anti-pattern
-        is pushing merge policy into the service instead of configuring it in
-        the <sdux-brand-name /> pipeline. In <sdux-brand-name />, append
-        behavior belongs to the Merge stage so
-        <span class="code">mergeState()</span> can apply that rule consistently
-        instead of forcing application code to reimplement it by hand.
+        is pushing identifier-based merge policy into the service instead of
+        configuring it in the <sdux-brand-name /> pipeline. Register Array By ID
+        Merge for the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, then
+        let <span class="code">mergeState()</span> apply matching, appending,
+        and <span class="code">isDelete</span> rules consistently.
       </p>
     </div>
   </div>
@@ -236,8 +244,9 @@
       This is the point where the tutorial adds delete behavior. The service
       still owns the <sdux-feature-cell />, the component still owns temporary
       UI state, and the managed collection still flows through the same
-      pipeline. The new part is the write path: you are now removing a selected
-      record while keeping Feature ownership in the same place.
+      pipeline. The new part is the delete write path: the service now submits a
+      selected identity through <span class="code">mergeState()</span> while
+      keeping Feature ownership in the same place.
     </p>
 
     <p>
@@ -245,12 +254,12 @@
       service, keep confirmation state in the component, and route the removal
       through a normal Feature update instead of an ad hoc mutable array
       operation. To do that, add a
-      <span class="code">removeCharacter()</span> method that filters the
-      current collection through <span class="code">replaceState()</span>, and
-      keep the confirmation flow in a local delete-candidate Signal. The
-      important constraint does not change: the component coordinates the
-      destructive action, but it still does not mutate committed Feature State
-      directly.
+      <span class="code">removeCharacter()</span> method that submits the target
+      identity through <span class="code">mergeState()</span> with
+      <span class="code">isDelete: true</span>, and keep the confirmation flow
+      in a local delete-candidate Signal. The important constraint does not
+      change: the component coordinates the destructive action, but it still
+      does not mutate committed Feature State directly.
     </p>
 
     <div class="callout callout-action">
@@ -270,12 +279,29 @@
           </sdux-example-viewer-source>
         </li>
         <li>
+          Add the <span class="code">withArrayMergeId</span> to the
+          initialization chain.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre class="code-inline"><code class="language-ts">{{ 
+                  `this.#vault?.withArrayMergeId?.({ idKey: 'id' }).initialize();` 
+                  }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          The <span class="code">updateCharacter()</span> uses
+          <span class="code">mergeState()</span> so Array By ID Merge replaces
+          the matching character by identifier.
+        </li>
+        <li>
           Keep the service as the only place that calls the destructive
           <sdux-brand-name /> update API.
         </li>
         <li>
-          Filter the latest collection by identity so unknown IDs leave the
-          visible State unchanged.
+          Submit the target identity with
+          <span class="code">isDelete: true</span>
+          so unknown IDs leave the visible State equivalent.
         </li>
       </ol>
     </div>
@@ -288,9 +314,9 @@
           Delete remains a service-owned write path just like add and edit.
         </li>
         <li>
-          <span class="code">replaceState()</span> is the right operation for
-          removal because the next collection is derived from the current
-          committed collection.
+          <span class="code">mergeState()</span> with
+          <span class="code">isDelete: true</span> is the right operation for
+          removal because Array By ID Merge applies the identity-based rule.
         </li>
         <li>
           The removal rule is identity-based, so one matching record is removed
@@ -298,7 +324,7 @@
         </li>
         <li>
           The component will request deletion, but the service still owns the
-          actual <sdux-feature-cell /> mutation.
+          <sdux-feature-cell /> mutation and supplies the delete configuration.
         </li>
       </ul>
     </div>
@@ -369,15 +395,16 @@
     <div class="callout callout-warning">
       <div class="title">Unknown or Stale IDs</div>
       <p>
-        <span class="code">removeCharacter()</span> always submits a
-        <span class="code">replaceState()</span> factory. When the ID is absent,
-        the factory filters the latest collection into an equivalent new array;
-        the example does not treat that as an error or create a record. The
-        service spec verifies the resulting value, not an emission-count
-        guarantee. In a multi-writer application, revalidate the pending record
-        at confirmation time. Any success feedback shown for a stale ID is a
-        tutorial limitation, not an authoritative server acknowledgment; report
-        the stale deletion instead of claiming success.
+        <span class="code">removeCharacter()</span> submits the target identity
+        through <span class="code">mergeState()</span> with
+        <span class="code">isDelete: true</span>. When the ID is absent, Array
+        By ID Merge leaves the collection equivalent; the example does not treat
+        that as an error or create a record. The service spec verifies the
+        resulting value, not an emission-count guarantee. In a multi-writer
+        application, revalidate the pending record at confirmation time. Any
+        success feedback shown for a stale ID is a tutorial limitation, not an
+        authoritative server acknowledgment; report the stale deletion instead
+        of claiming success.
       </p>
     </div>
 
@@ -405,7 +432,10 @@
           </tr>
           <tr>
             <td>Confirm a known ID</td>
-            <td><span class="code">replaceState()</span></td>
+            <td>
+              <span class="code">mergeState()</span> with
+              <span class="code">isDelete: true</span>
+            </td>
             <td>
               Removes the matching record, clears selection and the form, and
               returns the editor to create mode. Every nonmatching record is
@@ -414,7 +444,10 @@
           </tr>
           <tr>
             <td>Confirm a stale ID</td>
-            <td><span class="code">replaceState()</span></td>
+            <td>
+              <span class="code">mergeState()</span> with
+              <span class="code">isDelete: true</span>
+            </td>
             <td>
               Leaves the collection equivalent. This tutorial makes no promise
               about subscriber emission for equivalent array values.
@@ -433,8 +466,8 @@
           clears stale local selection.
         </li>
         <li>
-          The component coordinates confirmation while the service owns
-          replacement.
+          The component coordinates confirmation while the service owns the
+          identifier-based merge request.
         </li>
         <li>
           Save this checkpoint for Chapter 5 and reload it after testing
@@ -493,6 +526,18 @@
       </ol>
     </div>
   </div>
+
+  <div class="callout callout-learn-more">
+    <div class="title">Explore the Docs</div>
+
+    <ul>
+      <li>
+        <a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+          >withArrayByIdMergeBehavior</a
+        >
+      </li>
+    </ul>
+  </div>
 </section>
 
 <section class="section" id="chapter-5-step-5" aria-labelledby="step-5-title">
@@ -546,13 +591,13 @@
         </div>
       </div>
     </div>
-    <div class="section-body">
-      <div
-        class="next-chapter"
-        matTooltip="Navigate to the next chapter: Delete Characters">
-        <strong>Next Up: </strong>
-        <a [routerLink]="['../chapter-5']">Chapter 5: Delete Characters</a>
-      </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Delete Characters">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-5']">Chapter 5: Delete Characters</a>
     </div>
   </div>
 </section>
