@@ -8,7 +8,7 @@ export class DelayService {
     return {
       id: 9,
       label: 'Delay',
-      fragment: 'chapter-9',
+      route: 'chapter-9',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',

@@ -8,7 +8,7 @@ export class ErrorsService {
     return {
       id: 7,
       label: 'Errors',
-      fragment: 'chapter-7',
+      route: 'chapter-7',
       metadata: {
         track: 'Core',
         prerequisite: 'Chapter 6',

@@ -12,7 +12,7 @@ describe('Service: Distinct Until Changed', () => {
     expect(TestBed.inject(DistinctUntilChangedService).chapters()).toEqual({
       id: 13,
       label: 'Distinct Until Changed',
-      fragment: 'chapter-13',
+      route: 'chapter-13',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',

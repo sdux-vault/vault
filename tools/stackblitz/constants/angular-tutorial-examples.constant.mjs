@@ -16,7 +16,7 @@ export const AngularTutorialExamplesConstants = (projectRoot) =>
     ['03-display-characters', 'display-characters-example'],
     ['04-add-edit-characters', 'add-edit-characters-example'],
     ['05-delete-characters', 'delete-characters-example'],
-    ['lifecycle', 'lifecycle-tutorial-example'],
+    ['06-lifecycle', 'lifecycle-tutorial-example'],
     ['filters-and-reducers', 'filters-and-reducers-tutorial-example'],
     ['errors', 'errors-tutorial-example'],
     ['async-input', 'async-input-tutorial-example'],

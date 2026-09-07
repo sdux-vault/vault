@@ -19,7 +19,7 @@ describe('Service: DeleteCharactersService', () => {
     expect(service.chapters()).toEqual({
       id: 4,
       label: 'Delete',
-      fragment: 'chapter-4',
+      route: 'chapter-4',
       metadata: {
         track: 'Core',
         prerequisite: 'Chapter 3',

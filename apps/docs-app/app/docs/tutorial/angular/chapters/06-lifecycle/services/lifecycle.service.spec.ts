@@ -19,7 +19,7 @@ describe('Service: LifeCycle', () => {
     expect(service.chapters()).toEqual({
       id: 5,
       label: 'Lifecycle',
-      fragment: 'chapter-5',
+      route: 'chapter-5',
       metadata: {
         track: 'Core',
         prerequisite: 'Chapter 4',

@@ -19,7 +19,7 @@ describe('Service: Filters and Reducers', () => {
     expect(service.chapters()).toEqual({
       id: 6,
       label: 'Filters and Reducers',
-      fragment: 'chapter-6',
+      route: 'chapter-6',
       metadata: {
         track: 'Core',
         prerequisite: 'Chapter 5',

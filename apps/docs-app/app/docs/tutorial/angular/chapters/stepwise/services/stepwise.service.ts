@@ -8,7 +8,7 @@ export class StepwiseService {
     return {
       id: 14,
       label: 'Stepwise',
-      fragment: 'chapter-14',
+      route: 'chapter-14',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',

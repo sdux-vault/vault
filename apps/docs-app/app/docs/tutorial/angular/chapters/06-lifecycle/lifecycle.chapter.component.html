@@ -1,4 +1,26 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="header" id="chapter-6" aria-labelledby="chapter-6-title">
+  <h2>Chapter 6: Lifecycle</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter shifts from record mutation to lifecycle control by
+      distinguishing persisted <span class="code">null</span>, runtime reset,
+      and permanent destruction of the <sdux-feature-cell />.
+    </p>
+    <p>
+      The service still owns every lifecycle API, while the component responds
+      by clearing or disabling local UI state. That separation makes it clear
+      why
+      <span class="code">replaceState({{ '{' }} value: null {{ '}' }})</span>,
+      <span class="code">reset()</span>, and
+      <span class="code">destroy()</span> are related but not interchangeable.
+    </p>
+  </div>
+</header>
+
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">Distinguish clearing data from ending a feature.</h3>
@@ -46,13 +68,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-5-start-title">
-  <h2 class="section-title" id="chapter-5-start-title">
-    Chapter 5 Starting Point and Lifecycle Contract
-  </h2>
+<section class="section" aria-labelledby="chapter-6-start-title">
+  <div class="section-title" id="chapter-6-start-title">
+    Chapter 6 Starting Point and Lifecycle Contract
+  </div>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 4 project. This chapter changes the
+      Start with the completed Chapter 5 project. This chapter changes the
       service, component, template, and their specs. Record-level CRUD remains
       available until the
       <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
@@ -127,11 +149,11 @@
   </div>
 </section>
 
-<section class="section" id="step-18" aria-labelledby="step-18-title">
+<section class="section" id="chapter-6-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-18-title">
-      Step 18: Persist Null and Reset State
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Persist Null and Reset State
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -164,8 +186,18 @@
       <ol>
         <li>
           Open <span class="code">example.service.ts</span> and add
-          <span class="code">persistNullState()</span> plus
-          <span class="code">resetState()</span>.
+          <span class="code">persistNullState()</span>,
+          <span class="code">resetState()</span> and
+          <span class="code">destroyFeatureCell()</span>
+          .
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Use <span class="code">replaceState()</span> for the intentional
@@ -206,23 +238,14 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
   </div>
 </section>
 
-<section class="section" id="step-19" aria-labelledby="step-19-title">
+<section class="section" id="chapter-6-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-19-title">
-      Step 19: Finalize with destroy()
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Finalize with destroy()
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -256,22 +279,27 @@
         <li>
           Update <span class="code">example.component.ts</span> to add lifecycle
           action handlers for persist-null, reset, and destroy.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Update <span class="code">example.component.html</span> to add the
           lifecycle control bar, snapshot summary, and destroyed-state
           messaging.
-        </li>
-        <li>
-          Verify that the UI resets safely for
-          <span class="code">null</span> and <span class="code">reset()</span>,
-          then disables later interaction after
-          <span class="code">destroy()</span>.
-        </li>
-        <li>
-          Compare the rendered raw snapshot after each operation: intentional
-          <span class="code">null</span>, absent reset value, and the explicit
-          destroyed-state message must remain distinguishable.
+          <sdux-example-viewer-source>
+            @if (htmlFile(); as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
@@ -280,16 +308,63 @@
       <div class="title">Recovery Checkpoint</div>
       <p>
         After testing <span class="code">destroy()</span>, reload or replace
-        your project with the completed Chapter 5 checkpoint before starting
-        Chapter 6. Do not expect the destroyed instance to accept the next
+        your project with the completed Chapter 6 checkpoint before starting
+        Chapter 7. Do not expect the destroyed instance to accept the next
         chapter's requests.
       </p>
     </div>
 
     <div class="callout callout-learn-more">
-      <div class="title">Lifecycle Flow Summary</div>
-
+      <div class="title">What to Look for</div>
       <ul>
+        <li>
+          Committed null, runtime reset, and terminal destruction produce
+          different lifecycle outcomes.
+        </li>
+        <li>
+          The UI stops offering requests after destruction of the active
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          instance.
+        </li>
+        <li>
+          Start Chapter 7 from a fresh checkpoint rather than the destroyed
+          runtime instance.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-6-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">Step 3: Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Lifecycle</em> chapter is complete once the application is running
+      and you can successfully reset, replaceState with null and destroy the
+      <sdux-feature-cell />
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Verify that the UI resets safely for
+          <span class="code">null</span> and <span class="code">reset()</span>,
+          then disables later interaction after
+          <span class="code">destroy()</span>.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 6 Summary</div>
+      <ol>
         <li>
           The component now shows three lifecycle outcomes: intentional
           <span class="code">null</span> persistence, runtime reset, and
@@ -304,80 +379,83 @@
           After <span class="code">destroy()</span>, the UI stops offering the
           earlier CRUD interactions because the Feature lifecycle is complete.
         </li>
-      </ul>
+      </ol>
     </div>
+  </div>
 
+  <div class="callout callout-learn-more">
+    <div class="title">Explore the Docs</div>
+    <ul>
+      <li>
+        <a routerLink="/docs/pipeline/api/feature-cell-methods/reset"
+          >reset()</a
+        >
+      </li>
+      <li>
+        <a routerLink="/docs/pipeline/api/feature-cell-methods/destroy"
+          >destroy()</a
+        >
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="chapter-6-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
+      @for (file of allFilesSource; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
         </sdux-example-viewer-tab>
       }
     </sdux-example-viewer-source>
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/api/feature-cell-methods/reset"
-            >reset()</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/api/feature-cell-methods/destroy"
-            >destroy()</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-5-exit-title">
-  <h2 class="section-title" id="chapter-5-exit-title">
-    Chapter 5 Exit Checkpoint
-  </h2>
   <div class="section-body">
-    <ul>
-      <li>
-        Committed null, runtime reset, and terminal destruction produce
-        different lifecycle outcomes.
-      </li>
-      <li>
-        The UI stops offering requests after destruction of the active
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        instance.
-      </li>
-      <li>
-        Start Chapter 6 from a fresh checkpoint rather than the destroyed
-        runtime instance.
-      </li>
-    </ul>
-  </div>
-</section>
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished lifecycle example without these two steps?</h2>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed lifecycle tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished lifecycle example without these two steps?</h2>
-  </div>
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              If you want the completed lifecycle example, launch the live
+              StackBlitz project and inspect the finished implementation
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
 
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed lifecycle example, launch the live StackBlitz
-        project and inspect the finished implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
     </div>
-  }
-
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Filters and Reducers">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-7']">Chapter 7: Filters and Reducers</a>
+    </div>
   </div>
 </section>

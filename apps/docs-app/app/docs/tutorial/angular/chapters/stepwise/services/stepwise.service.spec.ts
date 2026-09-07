@@ -19,7 +19,7 @@ describe('Service: Stepwise Pipeline', () => {
     expect(service.chapters()).toEqual({
       id: 14,
       label: 'Stepwise',
-      fragment: 'chapter-14',
+      route: 'chapter-14',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',

@@ -8,7 +8,7 @@ export class TabSyncService {
     return {
       id: 12,
       label: 'Tab Sync',
-      fragment: 'chapter-12',
+      route: 'chapter-12',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',

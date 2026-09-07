@@ -19,7 +19,7 @@ describe('Service: DisplayCharactersService', () => {
     expect(service.chapters()).toEqual({
       id: 2,
       label: 'Display Records',
-      fragment: 'chapter-2',
+      route: 'chapter-2',
       metadata: {
         track: 'Core',
         prerequisite: 'Chapter 1',

@@ -19,7 +19,7 @@ describe('Service: DisplayCharacterService', () => {
     expect(service.chapters()).toEqual({
       id: 1,
       label: 'Foundation: Read State',
-      fragment: 'top',
+      route: 'top',
       metadata: {
         track: 'Core',
         prerequisite: 'None',

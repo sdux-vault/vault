@@ -12,7 +12,7 @@ import { StackblitzExampleService } from '../../../../stack-blitz/services/stack
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_LIFECYCLE_CHARACTERS } from '../../generated/lifecycle.generated';
+import { STAR_WARS_LIFECYCLE_CHARACTERS } from '../../generated/06-lifecycle.generated';
 
 @Component({
   selector: 'sdux-lifecycle-chapter',
@@ -33,6 +33,8 @@ export class LifecycleChapterComponent {
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_LIFECYCLE_CHARACTERS;
   readonly downloadUrl = '/assets/tutorial/sdux-lifecycle.tutorial.zip';
+
+  readonly allFilesSource = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('lifecycle-tutorial')!;
@@ -59,10 +61,16 @@ export class LifecycleChapterComponent {
       this.#characters,
       ExampleFileTypes.Component
     ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ComponentSpec
     )
   ]);
+
+  readonly htmlFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#characters,
+      ExampleFileTypes.Html
+    );
+  });
 }

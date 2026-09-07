@@ -19,7 +19,7 @@ describe('Service: State Introspection', () => {
     expect(service.chapters()).toEqual({
       id: 11,
       label: 'State Introspection',
-      fragment: 'chapter-11',
+      route: 'chapter-11',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',

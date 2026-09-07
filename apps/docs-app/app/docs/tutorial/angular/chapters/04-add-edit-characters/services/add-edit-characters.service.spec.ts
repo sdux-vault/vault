@@ -19,7 +19,7 @@ describe('Service: AddEditCharactersService', () => {
     expect(service.chapters()).toEqual({
       id: 3,
       label: 'Create and Edit',
-      fragment: 'chapter-3',
+      route: 'chapter-3',
       metadata: {
         track: 'Core',
         prerequisite: 'Chapter 2',

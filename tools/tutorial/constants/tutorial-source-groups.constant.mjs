@@ -34,7 +34,7 @@ export const TutorialSourceGroupsConstants = (projectRoot) => {
     ['STAR_WARS_DISPLAY_CHARACTERS', '03-display-characters'],
     ['STAR_WARS_ADD_EDIT_CHARACTERS', '04-add-edit-characters'],
     ['STAR_WARS_DELETE_CHARACTERS', '05-delete-characters'],
-    ['STAR_WARS_LIFECYCLE_CHARACTERS', 'lifecycle'],
+    ['STAR_WARS_LIFECYCLE_CHARACTERS', '06-lifecycle'],
     ['STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS', 'filters-and-reducers'],
     ['STAR_WARS_ERRORS_CHARACTERS', 'errors'],
     ['STAR_WARS_ASYNC_INPUT', 'async-input'],

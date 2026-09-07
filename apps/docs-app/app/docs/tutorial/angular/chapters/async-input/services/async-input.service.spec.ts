@@ -19,7 +19,7 @@ describe('Service: Async Input', () => {
     expect(service.chapters()).toEqual({
       id: 8,
       label: 'Async Input',
-      fragment: 'chapter-8',
+      route: 'chapter-8',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 7',

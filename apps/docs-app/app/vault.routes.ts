@@ -112,6 +112,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/05-delete-characters/delete-characters.chapter.component').then(
                 (m) => m.DeleteCharactersChapterComponent
               )
+          },
+          {
+            path: 'chapter-6',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/06-lifecycle/lifecycle.chapter.component').then(
+                (m) => m.LifecycleChapterComponent
+              )
           }
         ]
       }

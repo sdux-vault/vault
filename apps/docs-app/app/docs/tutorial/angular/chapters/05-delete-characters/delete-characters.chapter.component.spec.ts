@@ -73,11 +73,6 @@ describe('Component: DeleteCharactersChapterComponent', () => {
         type: 'componentSpec',
         fileName: 'example.component.spec.ts',
         source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'html',
-        fileName: 'example.component.html',
-        source: jasmine.any(String) as unknown as string
       }
     ]);
   });

@@ -19,7 +19,7 @@ describe('Service: Tab Sync', () => {
     expect(service.chapters()).toEqual({
       id: 12,
       label: 'Tab Sync',
-      fragment: 'chapter-12',
+      route: 'chapter-12',
       metadata: {
         track: 'Lab',
         prerequisite: 'Chapter 6',
