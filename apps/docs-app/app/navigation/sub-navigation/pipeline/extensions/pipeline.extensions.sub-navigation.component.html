@@ -11,39 +11,41 @@
       >
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/extensions"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item"
-        >What is {{ brandName }} Extensions?</span
-      >
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/extensions"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item"
+          >What is {{ brandName }} Extensions?</span
+        >
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/extensions/building-custom-controllers"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Building Custom Controllers</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/extensions/building-custom-controllers"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Building Custom Controllers</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/extensions/building-custom-behaviors"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Building Custom Behaviors</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/extensions/building-custom-behaviors"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Building Custom Behaviors</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/extensions/licensing-and-monetization"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Licensing & Monetization</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/extensions/licensing-and-monetization"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Licensing & Monetization</span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

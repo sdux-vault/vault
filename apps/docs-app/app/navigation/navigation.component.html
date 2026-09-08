@@ -124,21 +124,23 @@
               >
             </mat-expansion-panel-header>
 
-            <a
-              mat-list-item
-              routerLink="/docs/welcome/roadmap"
-              routerLinkActive="active"
-              (click)="closeSidenav()">
-              <div class="menu-content sub-item">Roadmap (Call for Help)</div>
-            </a>
+            <div class="sub-menu">
+              <a
+                mat-list-item
+                routerLink="/docs/welcome/roadmap"
+                routerLinkActive="active"
+                (click)="closeSidenav()">
+                <div class="menu-content sub-item">Roadmap (Call for Help)</div>
+              </a>
 
-            <a
-              mat-list-item
-              routerLink="/docs/welcome/contributors"
-              routerLinkActive="active"
-              (click)="closeSidenav()">
-              <div class="menu-content sub-item">Contributors</div>
-            </a>
+              <a
+                mat-list-item
+                routerLink="/docs/welcome/contributors"
+                routerLinkActive="active"
+                (click)="closeSidenav()">
+                <div class="menu-content sub-item">Contributors</div>
+              </a>
+            </div>
           </mat-expansion-panel>
         </nav>
 

@@ -9,32 +9,34 @@
       <span class="menu-content parent-expansion-item">Pipeline</span>
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="docs/pipeline"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Overview</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="docs/pipeline"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Overview</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="docs/pipeline/pipeline-architecture"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item"
-        ><sdux-brand-name /> Pipeline Architecture
-      </span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="docs/pipeline/pipeline-architecture"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item"
+          ><sdux-brand-name /> Pipeline Architecture
+        </span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="builder"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-icon menu-content sub-item">
-        Pipeline Builder <sdux-new />
-      </div>
-    </a>
+      <a
+        mat-list-item
+        routerLink="builder"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-icon menu-content sub-item">
+          Pipeline Builder <sdux-new />
+        </div>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>
