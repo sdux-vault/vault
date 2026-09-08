@@ -6,19 +6,20 @@ import { ChapterShape } from '../../../../shape/chapter.shape';
 export class TabSyncService {
   chapters(): ChapterShape {
     return {
-      id: 12,
+      id: 13,
       label: 'Tab Sync',
-      route: 'chapter-12',
+      route: 'chapter-13',
       metadata: {
         track: 'Lab',
-        prerequisite: 'Chapter 6',
+        prerequisite: 'Chapter 7',
         tier: '★★',
         estimatedTime: '20–30 min'
       },
       steps: [
         { id: 1, label: 'Configure Tab Sync' },
         { id: 2, label: 'View Tab Sync' },
-        { id: 3, label: 'Complete Tab Sync Tutorial' }
+        { id: 3, label: 'Chapter Round-up' },
+        { id: 4, label: 'Stackblitz & Downloadable Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

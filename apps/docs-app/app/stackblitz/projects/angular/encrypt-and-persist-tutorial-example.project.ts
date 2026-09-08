@@ -110,6 +110,8 @@ export const appConfig: ApplicationConfig = {
      * Initializes Vault with its default runtime configuration. This provider
      * must appear before FeatureCell providers so they can use the established
      * application-scoped runtime.
+     * devMode enables development mode for the Vault runtime.
+     * bypassLicensing allows bypassing the licensing checks for development purposes.
      */
     provideVault({
       devMode: true,

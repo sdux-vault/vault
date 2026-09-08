@@ -4,7 +4,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import {
   withTabSyncController,
@@ -28,8 +28,13 @@ export const appConfig: ApplicationConfig = {
      * Initializes Vault with its default runtime configuration. This provider
      * must appear before FeatureCell providers so they can use the established
      * application-scoped runtime.
+     * devMode enables development mode for the Vault runtime.
+     * bypassLicensing allows bypassing the licensing checks for development purposes.
      */
-    provideVault(),
+    provideVault({
+      devMode: true,
+      bypassLicensing: true
+    }),
 
     /**
      * Registers the character service and its FeatureCell descriptor with
@@ -45,12 +50,12 @@ export const appConfig: ApplicationConfig = {
       },
       [
         /**
-         * `provideFeatureCell()` accepts an optional behaviors array as its third argument.
-         * Registering `withArrayAppendMergeBehavior` here changes the Merge stage so
-         * `mergeState()` appends the incoming one-item character array to the current
-         * collection instead of replacing the entire FeatureCell value.
+         * Registers identifier-based array merging for this FeatureCell. During
+         * the Merge stage, matching character identifiers are updated, new
+         * identifiers are appended, and merge requests configured for deletion
+         * remove the matching records from the committed collection.
          */
-        withArrayAppendMergeBehavior,
+        withArrayByIdMergeBehavior,
 
         /**
          * Extends this FeatureCell's State behavior with opt-in browser-tab

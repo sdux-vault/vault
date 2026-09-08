@@ -41,7 +41,7 @@ export const TutorialSourceGroupsConstants = (projectRoot) => {
     ['STAR_WARS_DELAY_FILES', '10-delay'],
     ['STAR_WARS_ENCRYPT_AND_PERSIST_FILES', '11-encrypt-and-persist'],
     ['STAR_WARS_STATE_INTROSPECTION_FILES', '12-state-introspection'],
-    ['STAR_WARS_TAB_SYNC_FILES', 'tab-sync'],
+    ['STAR_WARS_TAB_SYNC_FILES', '13-tab-sync'],
     ['STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES', 'distinct-until-changed'],
     ['STAR_WARS_STEPWISE_FILES', 'stepwise']
   ].map(([exportName, directoryName]) => ({

@@ -740,30 +740,6 @@
   </div>
 </section>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed state introspection tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <div>Want the finished state introspection example?</div>
-  </div>
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        Launch the live StackBlitz project to inspect the completed state
-        introspection configuration and interactive example directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
-    </div>
-  }
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
-  </div>
-</section>
-
 <section class="section" id="chapter-12-step-7" aria-labelledby="step-7-title">
   <div class="section-title-navigation">
     <div class="section-title" id="step-7-title">Step 7: Chapter Round-up</div>

@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+  BrandNameComponent,
   ExampleViewerSourceComponent,
   ExampleViewerTabComponent,
   FeatureCellBrandNameComponent,
@@ -9,13 +10,14 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import {
   ExampleFileType,
   ExampleFileTypes
 } from '../../../types/example-file.type';
-import { STAR_WARS_TAB_SYNC_FILES } from '../../generated/tab-sync.generated';
+import { STAR_WARS_TAB_SYNC_FILES } from '../../generated/13-tab-sync.generated';
 
 @Component({
   selector: 'sdux-tab-sync-chapter',
@@ -27,15 +29,18 @@ import { STAR_WARS_TAB_SYNC_FILES } from '../../generated/tab-sync.generated';
     ExampleViewerTabComponent,
     StackblitzLanguageExampleComponent,
     SDuXDownloadComponent,
-    PackageNameComponent
+    PackageNameComponent,
+    BrandNameComponent
   ],
   templateUrl: './tab-sync.chapter.component.html'
 })
-export class TabSyncChapterComponent {
+export class TabSyncChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #files = STAR_WARS_TAB_SYNC_FILES;
-  readonly downloadUrl = '/assets/tutorial/sdux-tab-sync.tutorial.zip';
+  readonly downloadUrl = '/assets/tutorial/sdux-13-tab-sync.tutorial.zip';
+
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('tab-sync-tutorial')!;
@@ -51,19 +56,14 @@ export class TabSyncChapterComponent {
   );
 
   readonly componentFiles = computed(() =>
-    this.#getFiles(ExampleFileTypes.Component, ExampleFileTypes.Html)
+    this.#getFiles(ExampleFileTypes.Component, ExampleFileTypes.ComponentSpec)
   );
 
-  readonly chapterFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.AppConfig,
-      ExampleFileTypes.Service,
-      ExampleFileTypes.Component,
-      ExampleFileTypes.Html,
-      ExampleFileTypes.ServiceSpec,
-      ExampleFileTypes.ComponentSpec
-    )
+  readonly serviceFiles = computed(() =>
+    this.#getFiles(ExampleFileTypes.Service, ExampleFileTypes.ServiceSpec)
   );
+
+  readonly htmlFiles = computed(() => this.#getFiles(ExampleFileTypes.Html));
 
   #getFiles(...types: readonly ExampleFileType[]) {
     return types.map((type) =>

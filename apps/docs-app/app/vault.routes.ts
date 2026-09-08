@@ -161,6 +161,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/12-state-introspection/state-introspection.chapter.component').then(
                 (m) => m.StateIntrospectionChapterComponent
               )
+          },
+          {
+            path: 'chapter-13',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/13-tab-sync/tab-sync.chapter.component').then(
+                (m) => m.TabSyncChapterComponent
+              )
           }
         ]
       }

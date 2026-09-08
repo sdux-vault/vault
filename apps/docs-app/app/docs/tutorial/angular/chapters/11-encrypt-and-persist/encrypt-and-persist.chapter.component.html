@@ -198,6 +198,23 @@
             </sdux-example-viewer-tab>
           </sdux-example-viewer-source>
         </li>
+        <li>
+          Encryption and Persistence behaviors are Pro features and require a
+          valid Pro license for production use. To explore them locally without
+          a license, add the
+          <span class="code">devMode</span> and
+          <span class="code">bypassingLicensing</span> attributes to the
+          <span class="code">provideVault</span> configuration.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">provideVault(&#123;
+  devMode: true,
+  bypassingLicensing: true 
+&#125;)</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
       </ol>
     </div>
     <div class="callout callout-learn-more">
