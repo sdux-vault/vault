@@ -17,12 +17,12 @@ describe('Service: Async Input', () => {
 
   it('returns the chapter metadata for the async input tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 8,
+      id: 9,
       label: 'Async Input',
-      route: 'chapter-8',
+      route: 'chapter-9',
       metadata: {
         track: 'Lab',
-        prerequisite: 'Chapter 7',
+        prerequisite: 'Chapter 8',
         tier: '★★',
         estimatedTime: '20–30 min'
       },
@@ -31,7 +31,8 @@ describe('Service: Async Input', () => {
         { id: 2, label: 'Resolve a Promise' },
         { id: 3, label: 'Resolve an Observable' },
         { id: 4, label: 'Resolve an HTTP Resource' },
-        { id: 5, label: 'Complete Async Input Tutorial' }
+        { id: 5, label: 'Chapter Round-up' },
+        { id: 6, label: 'Stackblitz & Downloadable Archive' }
       ]
     });
   });

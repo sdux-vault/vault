@@ -4,7 +4,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
@@ -41,12 +41,12 @@ export const appConfig: ApplicationConfig = {
       },
       [
         /**
-         * `provideFeatureCell()` accepts an optional behaviors array as its third argument.
-         * Registering `withArrayAppendMergeBehavior` here changes the Merge stage so
-         * `mergeState()` appends the incoming one-item character array to the current
-         * collection instead of replacing the entire FeatureCell value.
+         * Registers identifier-based array merging for this FeatureCell. During
+         * the Merge stage, matching character identifiers are updated, new
+         * identifiers are appended, and merge requests configured for deletion
+         * remove the matching records from the committed collection.
          */
-        withArrayAppendMergeBehavior
+        withArrayByIdMergeBehavior
       ]
     )
   ]

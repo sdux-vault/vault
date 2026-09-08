@@ -133,6 +133,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/08-errors/errors.chapter.component').then(
                 (m) => m.ErrorsChapterComponent
               )
+          },
+          {
+            path: 'chapter-9',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/09-async-input/async-input.chapter.component').then(
+                (m) => m.AsyncInputChapterComponent
+              )
           }
         ]
       }

@@ -1,4 +1,25 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-9" aria-labelledby="chapter-9-title">
+  <h2>Chapter 9: Async Input</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter introduces asynchronous inputs without changing the
+      service-owned <sdux-feature-cell /> boundary. You will hydrate initial
+      State and then resolve Promise, Observable, and Angular HTTP Resource
+      inputs through the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline.
+    </p>
+    <p>
+      The component owns only the controls and presentation state, while the
+      service owns source registration and state updates. The active loading and
+      error State in the template makes each asynchronous lifecycle visible as
+      you work through the examples.
+    </p>
+  </div>
+</header>
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">
@@ -47,15 +68,15 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-8-start-title">
-  <h2 class="section-title" id="chapter-8-start-title">
-    Chapter 8 Starting Point and Input Guide
-  </h2>
+<section class="section" aria-labelledby="chapter-9-start-title">
+  <div class="section-title" id="chapter-9-start-title">
+    Chapter 9 Starting Point and Input Guide
+  </div>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 7 project. This capability lab adds
-      source helpers and updates configuration, service, component, template,
-      and tests. All four inputs converge on the same
+      Start with the completed Chapter 8 project. This lab adds source helpers
+      and updates configuration, service, component, template, and tests. All
+      four inputs converge on the same
       <a href="/docs/references/functions/feature-cell">FeatureCell</a>
       snapshot; what differs is when the source begins and whether the request
       merges or replaces State.
@@ -165,11 +186,11 @@
   </div>
 </section>
 
-<section class="section" id="step-26" aria-labelledby="step-26-title">
+<section class="section" id="chapter-9-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-26-title">
-      Step 26: Hydrate Initial State
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Hydrate Initial State
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -234,6 +255,14 @@
           creates one pending Promise;
           <span class="code">getResolve()</span> and
           <span class="code">getReject()</span> return one-use controls.
+          <sdux-example-viewer-source>
+            @for (file of hydrationFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.service.ts</span>, import
@@ -242,6 +271,14 @@
           <span class="code"
             >this.#vault.hydrate(() =&gt; exampleHydrate.getPromise())</span
           >.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.component.ts</span>, import the helper;
@@ -249,6 +286,25 @@
           <span class="code">resolveHydration()</span>, and
           <span class="code">rejectHydration()</span>; then bind the existing
           Resolve and Reject controls to those methods as shown below.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Reload the example. Confirm loading remains visible until you choose
@@ -292,38 +348,12 @@
         </li>
       </ul>
     </div>
-
-    <h4>Focused change: hydration helper</h4>
-    <sdux-example-viewer-source>
-      @for (file of hydrationFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/apis/feature-cell-api/hydrate-method"
-            >hydrate()</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/execution-guarantee"
-            >Pipeline Execution</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-27" aria-labelledby="step-27-title">
+<section class="section" id="chapter-9-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-27-title">Step 27: Resolve a Promise</h2>
+    <div class="section-title" id="step-2-title">Step 2: Resolve a Promise</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -378,6 +408,14 @@
           Create <span class="code">example.promise.ts</span> from the
           checkpoint. Preserve its single pending Promise and one-use Resolve
           and Reject controls; do not move that state into the component.
+          <sdux-example-viewer-source>
+            @for (file of promiseFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.service.ts</span>, import
@@ -387,6 +425,14 @@
           <span class="code">() =&gt; deferredPromise</span> as the
           <span class="code">value</span> submitted to
           <span class="code">mergeState()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.component.ts</span>, add
@@ -395,6 +441,25 @@
           <span class="code">resolvePromise()</span>, and
           <span class="code">rejectPromise()</span>. The Fetch method delegates
           to the service; only the teaching controls call the helper.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Click Fetch, then Resolve. Confirm loading is true while pending and
@@ -433,41 +498,14 @@
         </li>
       </ul>
     </div>
-
-    <h4>Focused change: Promise helper</h4>
-    <sdux-example-viewer-source>
-      @for (file of promiseFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/resolve/core-promise"
-            >Promise Resolve Behavior</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/apis/feature-cell-api/merge-state-method"
-            >mergeState()</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-28" aria-labelledby="step-28-title">
+<section class="section" id="chapter-9-step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-28-title">
-      Step 28: Resolve an Observable
-    </h2>
+    <div class="section-title" id="step-3-title">
+      Step 3: Resolve an Observable
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -522,6 +560,14 @@
           checkpoint. Its <span class="code">ReplaySubject(1)</span> owns the
           active source, while <span class="code">getEmit()</span> and
           <span class="code">getError()</span> settle and release it.
+          <sdux-example-viewer-source>
+            @for (file of observableFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.service.ts</span>, import
@@ -529,6 +575,14 @@
           <span class="code">addByObservable()</span>, passing
           <span class="code">exampleObservable.getObservable()</span> directly
           to <span class="code">mergeState()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.component.ts</span>, add
@@ -537,6 +591,25 @@
           <span class="code">emitObservable()</span>, and
           <span class="code">errorObservable()</span>. Do not subscribe in the
           component.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Click Add, then Emit. Confirm loading ends and Ezra and Hera are
@@ -574,41 +647,14 @@
         </li>
       </ul>
     </div>
-
-    <h4>Focused change: Observable helper</h4>
-    <sdux-example-viewer-source>
-      @for (file of observableFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/resolve/core-observable"
-            >Observable Resolve Behavior</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/apis/feature-cell-api/merge-state-method"
-            >mergeState()</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-29" aria-labelledby="step-29-title">
+<section class="section" id="chapter-9-step-4" aria-labelledby="step-4-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-29-title">
-      Step 29: Resolve an HTTP Resource
-    </h2>
+    <div class="section-title" id="step-4-title">
+      Step 4: Resolve an HTTP Resource
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -664,6 +710,14 @@
           checkpoint. Keep the endpoint, selected-character metadata, and
           <span class="code">parseStarWarsCharacters()</span> together at the
           transport boundary.
+          <sdux-example-viewer-source>
+            @for (file of httpResourceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.service.ts</span>, inject
@@ -672,11 +726,38 @@
           <span class="code">fetchWithHttpResource()</span>. Pass the resource
           returned by <span class="code">getResource(this.#injector)</span> to
           <span class="code">replaceState()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.component.ts</span>, add
           <span class="code">fetchWithHttpResource()</span> and delegate to the
           service. Keep the resource itself out of the component.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Click Replace with httpResource. On success, confirm Lando Calrissian
@@ -730,41 +811,12 @@
         </li>
       </ul>
     </div>
-
-    <h4>Focused change: HTTP Resource adapter</h4>
-    <sdux-example-viewer-source>
-      @for (file of httpResourceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/resolve/http-resource"
-            >HTTP Resource Resolve Behavior</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/apis/feature-cell-api/replace-state-method"
-            >replaceState()</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-30" aria-labelledby="step-30-title">
+<section class="section" id="chapter-9-step-5" aria-labelledby="step-5-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-30-title">
-      Step 30: Complete Async Input Tutorial
-    </h2>
+    <div class="section-title" id="step-5-title">Step 5: Chapter Round-up</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -788,44 +840,34 @@
       the shared Filter, Reducer, and commit pipeline.
     </p>
 
-    <div class="callout callout-action">
+    <div class="callout callout-learn-more">
       <div class="title">Run and Verify</div>
       <ol>
         <li>
           Reload and resolve hydration. Confirm initialization commits four
           characters because the filter removes BB-8 before reducers add display
-          fields and sort the collection.
+          fields and sort the collection. Reject hydration and confirm the
+          deferred result controls initialization rather than the configured
+          initial value.
         </li>
         <li>
           Run the Promise success and rejection paths. Confirm success appends
           Ahsoka and Din, while rejection preserves the committed collection.
+          Watch <span class="code">state.isLoading()</span> and Error State
+          while the Promise is pending and after it settles.
         </li>
         <li>
           Run the Observable success and error paths. Confirm success appends
           Ezra and Hera, while an error preserves the committed collection.
+          Watch <span class="code">state.isLoading()</span> and Error State
+          while the Observable is pending and after it settles.
         </li>
         <li>
           Run the HTTP Resource path. Confirm a valid response replaces the
           collection with Lando and Han; treat normalized failure with the old
           collection preserved as the documented external-endpoint recovery.
-        </li>
-      </ol>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">What to Look For</div>
-      <ul>
-        <li>
-          Resolve and reject hydration to see that the deferred result controls
-          initialization rather than the configured initial value.
-        </li>
-        <li>
-          Resolve and reject the Promise and Observable inputs while watching
-          <span class="code">state.isLoading()</span> and Error State.
-        </li>
-        <li>
-          Run the HTTP Resource request and confirm that its parsed result uses
-          the same downstream Filter, Reducer, and commit pipeline.
+          Confirm the parsed result uses the same downstream Filter, Reducer,
+          and commit pipeline.
         </li>
         <li>
           Across all four inputs, the component supplies teaching controls, the
@@ -835,17 +877,12 @@
           <a href="/docs/references/functions/feature-cell">FeatureCell</a> owns
           resolution, loading, errors, and committed State.
         </li>
-        <li>
-          Explain why hydration participates in initialization, why Promise and
-          Observable use <span class="code">mergeState()</span> here, and why
-          the HTTP Resource uses <span class="code">replaceState()</span>.
-        </li>
-      </ul>
+      </ol>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Async Input Summary</div>
-      <ul>
+    <div class="callout callout-action">
+      <div class="title">Chapter 9 Summary</div>
+      <ol>
         <li>
           <span class="code">hydrate()</span> supplies authoritative initial
           State during initialization.
@@ -862,73 +899,109 @@
           All four inputs preserve the service-owned boundary and converge on
           the same pipeline and reactive State APIs.
         </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/hydrate-method"
+            >hydrate()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/resolve/core-promise"
+            >Promise Resolve Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/resolve/core-observable"
+            >Observable Resolve Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/resolve/http-resource"
+            >HTTP Resource Resolve Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/execution-guarantee"
+            >Pipeline Execution</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/merge-state-method"
+            >mergeState()</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/replace-state-method"
+            >replaceState()</a
+          >
+        </li>
       </ul>
     </div>
-
-    <details class="tutorial-checkpoint">
-      <summary>Complete Async Input files</summary>
-      <p>
-        Use this reference after completing the focused source changes. Start
-        with implementation tabs and open specs only to validate a contract.
-      </p>
-      <sdux-example-viewer-source>
-        @for (file of componentFiles(); track file?.type) {
-          <sdux-example-viewer-tab [label]="file.fileName">
-            <pre
-              class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-          </sdux-example-viewer-tab>
-        }
-      </sdux-example-viewer-source>
-    </details>
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-8-exit-title">
-  <h2 class="section-title" id="chapter-8-exit-title">
-    Chapter 8 Exit Checkpoint
-  </h2>
-  <div class="section-body">
-    <ul>
-      <li>
-        All four inputs share
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        loading and error State.
-      </li>
-      <li>
-        You can explain which sources merge, replace, or participate in
-        initialization.
-      </li>
-      <li>
-        Settle every controlled source, then save this checkpoint for the Delay
-        lab.
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed async input tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished async input example without these five steps?</h2>
-  </div>
-
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        Launch the completed tutorial in StackBlitz to inspect the completed
-        hydration, Promise, Observable, and HTTP Resource implementation
-        directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+<section class="section" id="chapter-9-step-6" aria-labelledby="step-6-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-6-title">
+      Stackblitz & Downloadable Archive
     </div>
-  }
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
 
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allFilesSource; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished async input example without these five steps?</h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the completed async example in StackBlitz to inspect the
+              completed hydration, Promise, Observable, and HTTP Resource
+              implementation directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Delay Input">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-10']">Chapter 10: Delay Input</a>
+    </div>
   </div>
 </section>

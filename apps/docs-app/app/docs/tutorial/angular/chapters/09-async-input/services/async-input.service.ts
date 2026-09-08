@@ -6,12 +6,12 @@ import { ChapterShape } from '../../../../shape/chapter.shape';
 export class AsyncInputService {
   chapters(): ChapterShape {
     return {
-      id: 8,
+      id: 9,
       label: 'Async Input',
-      route: 'chapter-8',
+      route: 'chapter-9',
       metadata: {
         track: 'Lab',
-        prerequisite: 'Chapter 7',
+        prerequisite: 'Chapter 8',
         tier: '★★',
         estimatedTime: '20–30 min'
       },
@@ -20,7 +20,8 @@ export class AsyncInputService {
         { id: 2, label: 'Resolve a Promise' },
         { id: 3, label: 'Resolve an Observable' },
         { id: 4, label: 'Resolve an HTTP Resource' },
-        { id: 5, label: 'Complete Async Input Tutorial' }
+        { id: 5, label: 'Chapter Round-up' },
+        { id: 6, label: 'Stackblitz & Downloadable Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

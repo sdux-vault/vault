@@ -44,7 +44,27 @@ describe('Component: AsyncInputChapterComponent', () => {
 
   it('returns the hydration teaching files', () => {
     expect(component.hydrationFiles()).toEqual([
-      file('hydrate', 'example.hydrate.ts')
+      file('hydrate', 'example.hydrate.ts'),
+      file('hydrateSpec', 'example.hydrate.spec.ts')
+    ]);
+  });
+
+  it('returns the service teaching files', () => {
+    expect(component.serviceFiles()).toEqual([
+      file('service', 'example.service.ts'),
+      file('serviceSpec', 'example.service.spec.ts')
+    ]);
+  });
+
+  it('returns the Promise teaching files', () => {
+    expect(component.promiseFiles()).toEqual([
+      file('promise', 'example.promise.ts')
+    ]);
+  });
+
+  it('returns the Observable teaching files', () => {
+    expect(component.observableFiles()).toEqual([
+      file('observable', 'example.observable.ts')
     ]);
   });
 
@@ -66,21 +86,46 @@ describe('Component: AsyncInputChapterComponent', () => {
     ]);
   });
 
+  it('returns the HTML teaching files', () => {
+    expect(component.htmlFiles()).toEqual([
+      file('html', 'example.component.html')
+    ]);
+  });
+
   it('returns the complete async input source files', () => {
     expect(component.componentFiles()).toEqual([
-      file('httpResource', 'example.http-resource.ts'),
-      file('httpResourceSpec', 'example.http-resource.spec.ts'),
-      file('observable', 'example.observable.ts'),
-      file('observableSpec', 'example.observable.spec.ts'),
-      file('promise', 'example.promise.ts'),
-      file('promiseSpec', 'example.promise.spec.ts'),
-      file('hydrate', 'example.hydrate.ts'),
-      file('hydrateSpec', 'example.hydrate.spec.ts'),
-      file('service', 'example.service.ts'),
-      file('serviceSpec', 'example.service.spec.ts'),
       file('component', 'example.component.ts'),
-      file('componentSpec', 'example.component.spec.ts'),
-      file('html', 'example.component.html')
+      file('componentSpec', 'example.component.spec.ts')
+    ]);
+  });
+
+  it('returns the all source files', () => {
+    expect(component.allFilesSource).toEqual([
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('component', 'example.component.ts'),
+      file('componentSpec', 'example.component.spec.ts')
     ]);
   });
 });
