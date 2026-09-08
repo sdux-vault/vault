@@ -1,4 +1,23 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-7" aria-labelledby="chapter-7-title">
+  <h2>Chapter 7: Filters and Reducers</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter focuses on pipeline shaping by introducing one filter and
+      three reducers. The service refines incoming candidates after Resolve and
+      derives display-ready values before the UI renders the committed State.
+    </p>
+    <p>
+      The service registers the filter and reducers, and the component renders
+      the committed display-ready State. That separation makes it clear why
+      filtering, sorting, and display derivation belong in the pipeline instead
+      of inside the template.
+    </p>
+  </div>
+</header>
+
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">Centralize cross-view data rules once.</h3>
@@ -42,9 +61,9 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-6-start-title">
-  <h2 class="section-title" id="chapter-6-start-title">
-    Chapter 6 Starting Point and Stage Map
+<section class="section" aria-labelledby="chapter-7-start-title">
+  <h2 class="section-title" id="chapter-7-start-title">
+    Chapter 7 Starting Point and Stage Map
   </h2>
   <div class="section-body">
     <p>
@@ -82,11 +101,11 @@
   </div>
 </section>
 
-<section class="section" id="step-20" aria-labelledby="step-20-title">
+<section class="section" id="chapter-7-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-20-title">
-      Step 20: Add the Filter Stage
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Add the Filter Stage
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -103,7 +122,10 @@
     <p>
       That execution order matters. The filter stage runs after Resolve and
       before Reducers, so the candidate collection is refined before any reducer
-      logic runs. In this example, the pure
+      logic runs.
+    </p>
+    <p>
+      In this example, the pure
       <span class="code">removeUnknownLastNameFilter</span> removes any
       candidate character whose last name is exactly
       <span class="code">unknown</span>, so the collection is cleaned before
@@ -117,10 +139,26 @@
           Open <span class="code">example.filter.ts</span> and add the pure
           filter that removes characters whose last name is
           <span class="code">unknown</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of filterFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Open <span class="code">example.service.ts</span> and register that
           filter with <span class="code">this.#vault.filters()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
@@ -152,39 +190,14 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source>
-      @for (file of filterFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/complete-pipeline-spec"
-            >Pipeline Architecture</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/apis/feature-cell-api/filters-method"
-            >filters()</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-21" aria-labelledby="step-21-title">
+<section class="section" id="chapter-7-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-21-title">
-      Step 21: Register Ordered Reducers
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Register Ordered Reducers
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -200,11 +213,19 @@
 
     <p>
       The order is intentional and matches the pipeline documentation: reducers
-      run after filters. The first reducer delegates to a pure helper that
-      derives <span class="code">forceSensitiveDisplay</span>. The second uses a
-      factory function,
+      run after filters.
+    </p>
+    <p>
+      The first reducer delegates to a pure helper that derives
+      <span class="code">forceSensitiveDisplay</span>.
+    </p>
+    <p>
+      The second uses a factory function,
       <span class="code">withCharactersSortedByLastName()</span>, to return a
-      configured reducer. The third delegates again to
+      configured reducer.
+    </p>
+    <p>
+      The third delegates again to
       <span class="code">deriveFullName</span> so the committed snapshot carries
       a display-ready full name without pushing string composition into the
       template.
@@ -226,13 +247,33 @@
       <ol>
         <li>
           Open <span class="code">example.character-domain.ts</span> and use the
-          existing filter and reducer helpers for force-sensitive labels,
-          last-name sorting, and full-name derivation.
+          existing reducer helpers for force-sensitive (<span class="code"
+            >deriveForceSensitiveDisplay</span
+          >) labels, last-name sorting (<span class="code"
+            >withCharactersSortedByLastName</span
+          >), and full-name (<span class="code">deriveFullName</span>)
+          derivation.
+          <sdux-example-viewer-source>
+            @for (file of characterDomain(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Register those reducers in
           <span class="code">example.service.ts</span>
           in the exact order they should run.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
@@ -307,34 +348,14 @@
         an explicit service or Resolve boundary before applying domain shaping.
       </p>
     </div>
-
-    <sdux-example-viewer-source>
-      @for (file of reducerFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/apis/feature-cell-api/reducers-method"
-            >reducers()</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-22" aria-labelledby="step-22-title">
+<section class="section" id="chapter-7-step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-22-title">
-      Step 22: Complete Filters and Reducers Chapter
-    </h2>
+    <div class="section-title" id="step-3-title">
+      Step 3: Update the Component and HTML
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -365,12 +386,70 @@
           Update <span class="code">example.component.ts</span> to keep the same
           component/service boundary while exposing the filter and reducer
           source views.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Update <span class="code">example.component.html</span> so the details
           panel reads reducer-derived fields and the page shows filter and
           reducer source text areas.
+          <sdux-example-viewer-source>
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look for</div>
+      <ul>
+        <li>
+          The filter passes four eligible records to three ordered, immutable
+          reducers.
+        </li>
+        <li>
+          The template consumes sorted and derived committed fields instead of
+          recreating rules.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 8, which turns one filter into a
+          controlled failure source.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-7-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">Step 4: Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Filters and Reducers</em> chapter is complete once the application
+      is running and can confirm the characters are successfully filtered and
+      reduced.
+      <sdux-feature-cell />
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
         <li>
           Verify that the displayed source views and reducer-driven UI values
           match the committed state.
@@ -384,10 +463,9 @@
       </ol>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Filters and Reducers Summary</div>
-
-      <ul>
+    <div class="callout callout-action">
+      <div class="title">Chapter 7 Summary</div>
+      <ol>
         <li>
           The template now renders reducer-derived
           <span class="code">fullName</span> and
@@ -403,11 +481,46 @@
           CRUD mutations, while preserving the same service-owned
           <sdux-feature-cell /> boundary.
         </li>
-      </ul>
+      </ol>
     </div>
 
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/complete-pipeline-spec"
+            >Pipeline Architecture</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/filters-method"
+            >filters()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/reducers-method"
+            >reducers()</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-7-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
+      @for (file of allFilesSource; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
@@ -415,53 +528,42 @@
       }
     </sdux-example-viewer-source>
   </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-6-exit-title">
-  <h2 class="section-title" id="chapter-6-exit-title">
-    Chapter 6 Exit Checkpoint
-  </h2>
   <div class="section-body">
-    <ul>
-      <li>
-        The teaching filter passes four eligible records to three ordered,
-        immutable reducers.
-      </li>
-      <li>
-        The template consumes sorted and derived committed fields instead of
-        recreating rules.
-      </li>
-      <li>
-        Save this checkpoint for Chapter 7, which turns one filter into a
-        controlled failure source.
-      </li>
-    </ul>
-  </div>
-</section>
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>
+          Want the finished filters and reducers example without these three
+          steps?
+        </h2>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed filters and reducers tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>
-      Want the finished filters and reducers example without these three steps?
-    </h2>
-  </div>
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              If you want the completed filters and reducers example, launch the
+              live StackBlitz project and inspect the finished implementation
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
 
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed filters and reducers example, launch the live
-        StackBlitz project and inspect the finished implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
     </div>
-  }
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+  <div class="section-body">
+    <div class="next-chapter" matTooltip="Navigate to the next chapter: Errors">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-8']">Chapter 8: Errors</a>
+    </div>
   </div>
 </section>

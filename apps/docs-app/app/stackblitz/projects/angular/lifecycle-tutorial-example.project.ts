@@ -3621,9 +3621,12 @@ export class ExampleService {
   readonly state = this.#vault.state;
 
   /**
-   * Initializes the FeatureCell with identifier-based array merge behavior for the delete tutorial slice.
+   * Initializes the FeatureCell for the lifecycletutorial slice.
    */
   constructor() {
+    /**
+     * Initializes identifier-based array merge behavior.
+     */
     this.#vault?.withArrayMergeId?.({ idKey: 'id' }).initialize();
   }
 

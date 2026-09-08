@@ -119,6 +119,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/06-lifecycle/lifecycle.chapter.component').then(
                 (m) => m.LifecycleChapterComponent
               )
+          },
+          {
+            path: 'chapter-7',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/07-filters-and-reducers/filters-and-reducers.chapter.component').then(
+                (m) => m.FiltersAndReducersChapterComponent
+              )
           }
         ]
       }

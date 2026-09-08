@@ -24,12 +24,12 @@ import { DisplayCharactersService } from './chapters/03-display-characters/servi
 import { AddEditCharactersService } from './chapters/04-add-edit-characters/services/add-edit-characters.service';
 import { DeleteCharactersService } from './chapters/05-delete-characters/services/delete-characters.service';
 import { LifecycleService } from './chapters/06-lifecycle/services/lifecycle.service';
+import { FiltersAndReducersService } from './chapters/07-filters-and-reducers/services/filters-and-reducers.service';
 import { AsyncInputService } from './chapters/async-input/services/async-input.service';
 import { DelayService } from './chapters/delay/services/delay.service';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
 import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
 import { ErrorsService } from './chapters/errors/services/errors.service';
-import { FiltersAndReducersService } from './chapters/filters-and-reducers/services/filters-and-reducers.service';
 import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
 import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
 import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';

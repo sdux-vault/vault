@@ -39,8 +39,8 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     );
   });
 
-  it('returns the filter-stage files for the chapter example', () => {
-    expect(component.filterFiles()).toEqual([
+  it('returns the service files for the chapter example', () => {
+    expect(component.serviceFiles()).toEqual([
       {
         type: 'service',
         fileName: 'example.service.ts',
@@ -50,7 +50,12 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
         type: 'serviceSpec',
         fileName: 'example.service.spec.ts',
         source: jasmine.any(String) as unknown as string
-      },
+      }
+    ]);
+  });
+
+  it('returns the filter files for the chapter example', () => {
+    expect(component.filterFiles()).toEqual([
       {
         type: 'filter',
         fileName: 'example.filter.ts',
@@ -59,13 +64,8 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     ]);
   });
 
-  it('returns the reducer-stage files for the chapter example', () => {
-    expect(component.reducerFiles()).toEqual([
-      {
-        type: 'service',
-        fileName: 'example.service.ts',
-        source: jasmine.any(String) as unknown as string
-      },
+  it('returns the character domain files for the chapter example', () => {
+    expect(component.characterDomain()).toEqual([
       {
         type: 'characterDomain',
         fileName: 'example.character-domain.ts',
@@ -90,20 +90,15 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
         type: 'componentSpec',
         fileName: 'example.component.spec.ts',
         source: jasmine.any(String) as unknown as string
-      },
+      }
+    ]);
+  });
+
+  it('returns the generated html files for the chapter example', () => {
+    expect(component.htmlFiles()).toEqual([
       {
         type: 'html',
         fileName: 'example.component.html',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterEditor',
-        fileName: 'example.character-editor.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterEditorSpec',
-        fileName: 'example.character-editor.spec.ts',
         source: jasmine.any(String) as unknown as string
       }
     ]);

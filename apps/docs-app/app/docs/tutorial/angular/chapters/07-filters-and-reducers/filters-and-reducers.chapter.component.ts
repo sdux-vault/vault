@@ -8,10 +8,11 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/filters-and-reducers.generated';
+import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/07-filters-and-reducers.generated';
 
 @Component({
   selector: 'sdux-filters-and-reducers-chapter',
@@ -26,12 +27,14 @@ import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/filte
   ],
   templateUrl: './filters-and-reducers.chapter.component.html'
 })
-export class FiltersAndReducersChapterComponent {
+export class FiltersAndReducersChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS;
   readonly downloadUrl =
     '/assets/tutorial/sdux-filters-and-reducers.tutorial.zip';
+
+  readonly allFilesSource = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample(
@@ -44,7 +47,7 @@ export class FiltersAndReducersChapterComponent {
     };
   });
 
-  readonly filterFiles = computed(() => [
+  readonly serviceFiles = computed(() => [
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.Service
@@ -52,15 +55,14 @@ export class FiltersAndReducersChapterComponent {
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ServiceSpec
-    ),
+    )
+  ]);
+
+  readonly filterFiles = computed(() => [
     this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Filter)
   ]);
 
-  readonly reducerFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Service
-    ),
+  readonly characterDomain = computed(() => [
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.CharacterDomain
@@ -79,15 +81,10 @@ export class FiltersAndReducersChapterComponent {
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ComponentSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterEditor
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.CharacterEditorSpec
     )
+  ]);
+
+  readonly htmlFiles = computed(() => [
+    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html)
   ]);
 }
