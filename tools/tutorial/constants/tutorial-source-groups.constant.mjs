@@ -43,7 +43,7 @@ export const TutorialSourceGroupsConstants = (projectRoot) => {
     ['STAR_WARS_STATE_INTROSPECTION_FILES', '12-state-introspection'],
     ['STAR_WARS_TAB_SYNC_FILES', '13-tab-sync'],
     ['STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES', '14-distinct-until-changed'],
-    ['STAR_WARS_STEPWISE_FILES', 'stepwise']
+    ['STAR_WARS_STEPWISE_FILES', '15-stepwise']
   ].map(([exportName, directoryName]) => ({
     exportName,
     sourceDirectory: path.join(angularTutorialExamplesDirectory, directoryName),

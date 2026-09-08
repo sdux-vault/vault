@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  withArrayAppendMergeBehavior,
+  withArrayByIdMergeBehavior,
   withStepwiseController,
   withStepwiseFilterBehavior,
   withStepwiseReducerBehavior,
@@ -77,7 +77,7 @@ describe('ExampleComponent', () => {
           ExampleService,
           { key, initialState: initialCharacters },
           [
-            withArrayAppendMergeBehavior,
+            withArrayByIdMergeBehavior,
             withStepwiseResolveBehavior,
             withStepwiseFilterBehavior,
             withStepwiseReducerBehavior

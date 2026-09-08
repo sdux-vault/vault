@@ -17,12 +17,12 @@ describe('Service: Stepwise Pipeline', () => {
 
   it('returns the chapter metadata for the stepwise tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 14,
+      id: 15,
       label: 'Stepwise',
-      route: 'chapter-14',
+      route: 'chapter-15',
       metadata: {
         track: 'Lab',
-        prerequisite: 'Chapter 6',
+        prerequisite: 'Chapter 7',
         tier: '★★★★',
         estimatedTime: '30-45 min'
       },
@@ -31,7 +31,8 @@ describe('Service: Stepwise Pipeline', () => {
         { id: 2, label: 'Configure Stepwise Resolve' },
         { id: 3, label: 'Configure Stepwise Filter' },
         { id: 4, label: 'Configure Stepwise Reducer' },
-        { id: 5, label: 'Complete Stepwise Tutorial' }
+        { id: 5, label: 'Chapter Round-up' },
+        { id: 6, label: 'Stackblitz & Downloadable Archive' }
       ]
     });
   });

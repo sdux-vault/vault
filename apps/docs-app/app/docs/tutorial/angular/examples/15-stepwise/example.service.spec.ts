@@ -1,7 +1,8 @@
 import type { FactoryProvider } from '@angular/core';
 import { provideZonelessChangeDetection, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import {
-  withArrayAppendMergeBehavior,
+  withArrayByIdMergeBehavior,
   withStepwiseController,
   withStepwiseFilterBehavior,
   withStepwiseReducerBehavior,
@@ -9,11 +10,10 @@ import {
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
-import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { exampleHydrate } from './example.hydrate';
 import { ExampleService } from './example.service';
 import type { StarWarsCharacter } from './star-wars-character.shape';
-import { of } from 'rxjs';
 
 describe('ExampleService', () => {
   const key = 'star-wars-character';
@@ -86,7 +86,7 @@ describe('ExampleService', () => {
           ExampleService,
           { key, initialState },
           [
-            withArrayAppendMergeBehavior,
+            withArrayByIdMergeBehavior,
             withStepwiseResolveBehavior,
             withStepwiseFilterBehavior,
             withStepwiseReducerBehavior
@@ -197,7 +197,17 @@ describe('ExampleService', () => {
     await acceptStepwiseAndSettle(service);
 
     expect(service.state.value()).toEqual([]);
-    expect(service.restoreInitialCharacters()).toBeNull();
+    expect(service.restoreInitialCharacters()).toEqual(
+      Object({
+        id: 3,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Missing Character'
+      })
+    );
   });
 
   it('should capture an empty baseline when a valued snapshot has no value', async () => {

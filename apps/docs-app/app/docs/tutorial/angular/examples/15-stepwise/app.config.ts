@@ -5,7 +5,7 @@ import {
   provideZonelessChangeDetection
 } from '@angular/core';
 import {
-  withArrayAppendMergeBehavior,
+  withArrayByIdMergeBehavior,
   withStepwiseController,
   withStepwiseFilterBehavior,
   withStepwiseReducerBehavior,
@@ -47,12 +47,12 @@ export const appConfig: ApplicationConfig = {
       },
       [
         /**
-         * Preserves the example's collection-oriented merge behavior so a newly
-         * created character can be appended to the existing FeatureCell State.
-         * The behavior runs during the pipeline's Merge stage and keeps the
-         * service focused on describing the update rather than combining arrays.
+         * Registers identifier-based array merging for this FeatureCell. During
+         * the Merge stage, matching character identifiers are updated, new
+         * identifiers are appended, and merge requests configured for deletion
+         * remove the matching records from the committed collection.
          */
-        withArrayAppendMergeBehavior,
+        withArrayByIdMergeBehavior,
 
         /**
          * Adds an approval boundary after the Resolve stage. The service exposes

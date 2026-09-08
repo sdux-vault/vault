@@ -175,6 +175,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/14-distinct-until-changed/distinct-until-changed.chapter.component').then(
                 (m) => m.DistinctUntilChangedChapterComponent
               )
+          },
+          {
+            path: 'chapter-15',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/15-stepwise/stepwise.chapter.component').then(
+                (m) => m.StepwiseChapterComponent
+              )
           }
         ]
       }

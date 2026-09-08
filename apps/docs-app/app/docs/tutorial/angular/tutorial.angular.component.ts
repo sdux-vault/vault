@@ -32,7 +32,7 @@ import { EncryptAndPersistService } from './chapters/11-encrypt-and-persist/serv
 import { StateIntrospectionService } from './chapters/12-state-introspection/services/state-introspection.service';
 import { TabSyncService } from './chapters/13-tab-sync/services/tab-sync.service';
 import { DistinctUntilChangedService } from './chapters/14-distinct-until-changed/services/distinct-until-changed.service';
-import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
+import { StepwiseService } from './chapters/15-stepwise/services/stepwise.service';
 
 @Component({
   selector: 'sdux-angular-tutorial',
