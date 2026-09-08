@@ -25,6 +25,11 @@
     padding-left: global.$spacing-md;
   }
 
+  > ul,
+  > ol {
+    margin-top: global.$spacing-xs;
+  }
+
   // p {
   //   margin: global.$spacing-xs 0 0;
   // }
