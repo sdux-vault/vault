@@ -11,7 +11,7 @@ import { StackblitzExampleService } from '../../../../stack-blitz/services/stack
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_STATE_INTROSPECTION } from '../../generated/state-introspection.generated';
+import { STAR_WARS_STATE_INTROSPECTION_FILES } from '../../generated/state-introspection.generated';
 
 @Component({
   selector: 'sdux-state-introspection-chapter',
@@ -29,7 +29,7 @@ import { STAR_WARS_STATE_INTROSPECTION } from '../../generated/state-introspecti
 export class StateIntrospectionChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #files = STAR_WARS_STATE_INTROSPECTION;
+  readonly #files = STAR_WARS_STATE_INTROSPECTION_FILES;
   readonly downloadUrl =
     '/assets/tutorial/sdux-state-introspection.tutorial.zip';
 

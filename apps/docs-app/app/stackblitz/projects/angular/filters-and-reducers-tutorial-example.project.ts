@@ -1051,10 +1051,7 @@ export class ExampleCharacterEditor {
         role="alert">
         <div>
           <h3 id="delete-confirmation-title">
-            Delete
-            {{
-              character.fullName ?? character.name + ' ' + character.lastName
-            }}?
+            Delete {{ character.fullName }}?
           </h3>
           <p>This action removes the character from the current collection.</p>
         </div>

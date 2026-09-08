@@ -14,7 +14,7 @@ import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import type { ExampleFileType } from '../../../types/example-file.type';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DELAY } from '../../generated/10-delay.generated';
+import { STAR_WARS_DELAY_FILES } from '../../generated/10-delay.generated';
 
 @Component({
   selector: 'sdux-delay-chapter',
@@ -33,10 +33,10 @@ import { STAR_WARS_DELAY } from '../../generated/10-delay.generated';
 export class DelayChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_DELAY;
+  readonly #files = STAR_WARS_DELAY_FILES;
   readonly downloadUrl = '/assets/tutorial/sdux-10-delay.tutorial.zip';
 
-  readonly allSourceFiles = this.#characters;
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delay-tutorial')!;
@@ -66,7 +66,7 @@ export class DelayChapterComponent extends TutorialNavigationDirective {
 
   #getFiles(...types: readonly ExampleFileType[]) {
     return types.map((type) =>
-      this.#exampleFileService.getFile(this.#characters, type)
+      this.#exampleFileService.getFile(this.#files, type)
     );
   }
 }

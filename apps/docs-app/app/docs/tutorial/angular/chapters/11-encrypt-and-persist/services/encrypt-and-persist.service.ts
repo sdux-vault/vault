@@ -6,12 +6,12 @@ import { ChapterShape } from '../../../../shape/chapter.shape';
 export class EncryptAndPersistService {
   chapters(): ChapterShape {
     return {
-      id: 10,
+      id: 11,
       label: 'Encrypt and Persist',
-      route: 'chapter-10',
+      route: 'chapter-11',
       metadata: {
         track: 'Lab',
-        prerequisite: 'Chapter 6',
+        prerequisite: 'Chapter 7',
         tier: '★★★',
         estimatedTime: '30–45 min'
       },
@@ -19,7 +19,8 @@ export class EncryptAndPersistService {
         { id: 1, label: 'Configure Encrypt and Persist Behaviors' },
         { id: 2, label: 'Encrypt Feature State' },
         { id: 3, label: 'Persist Feature State' },
-        { id: 4, label: 'Complete Encrypt and Persist Tutorial' }
+        { id: 4, label: 'Chapter Round-up' },
+        { id: 5, label: 'Stackblitz & Downloadable Archive' }
       ] satisfies ChapterStepShape[]
     };
   }

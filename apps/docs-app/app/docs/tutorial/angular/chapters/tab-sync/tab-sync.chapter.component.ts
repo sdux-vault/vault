@@ -15,7 +15,7 @@ import {
   ExampleFileType,
   ExampleFileTypes
 } from '../../../types/example-file.type';
-import { STAR_WARS_TAB_SYNC } from '../../generated/tab-sync.generated';
+import { STAR_WARS_TAB_SYNC_FILES } from '../../generated/tab-sync.generated';
 
 @Component({
   selector: 'sdux-tab-sync-chapter',
@@ -34,7 +34,7 @@ import { STAR_WARS_TAB_SYNC } from '../../generated/tab-sync.generated';
 export class TabSyncChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #files = STAR_WARS_TAB_SYNC;
+  readonly #files = STAR_WARS_TAB_SYNC_FILES;
   readonly downloadUrl = '/assets/tutorial/sdux-tab-sync.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {

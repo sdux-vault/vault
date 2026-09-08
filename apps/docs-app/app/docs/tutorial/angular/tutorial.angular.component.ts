@@ -28,8 +28,8 @@ import { FiltersAndReducersService } from './chapters/07-filters-and-reducers/se
 import { ErrorsService } from './chapters/08-errors/services/errors.service';
 import { AsyncInputService } from './chapters/09-async-input/services/async-input.service';
 import { DelayService } from './chapters/10-delay/services/delay.service';
+import { EncryptAndPersistService } from './chapters/11-encrypt-and-persist/services/encrypt-and-persist.service';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
-import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
 import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
 import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
 import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';

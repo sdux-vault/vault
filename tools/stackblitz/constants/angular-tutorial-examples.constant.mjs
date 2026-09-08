@@ -21,7 +21,7 @@ export const AngularTutorialExamplesConstants = (projectRoot) =>
     ['08-errors', 'errors-tutorial-example'],
     ['09-async-input', 'async-input-tutorial-example'],
     ['10-delay', 'delay-tutorial-example'],
-    ['encrypt-and-persist', 'encrypt-and-persist-tutorial-example'],
+    ['11-encrypt-and-persist', 'encrypt-and-persist-tutorial-example'],
     ['state-introspection', 'state-introspection-tutorial-example'],
     ['tab-sync', 'tab-sync-tutorial-example'],
     ['stepwise', 'stepwise-tutorial-example'],

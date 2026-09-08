@@ -11,7 +11,7 @@ import { StackblitzExampleService } from '../../../../stack-blitz/services/stack
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISTINCT_UNTIL_CHANGED } from '../../generated/distinct-until-changed.generated';
+import { STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES } from '../../generated/distinct-until-changed.generated';
 
 @Component({
   selector: 'sdux-distinct-until-changed-chapter',
@@ -29,7 +29,7 @@ import { STAR_WARS_DISTINCT_UNTIL_CHANGED } from '../../generated/distinct-until
 export class DistinctUntilChangedChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #files = STAR_WARS_DISTINCT_UNTIL_CHANGED;
+  readonly #files = STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES;
   readonly downloadUrl =
     '/assets/tutorial/sdux-distinct-until-changed.tutorial.zip';
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {

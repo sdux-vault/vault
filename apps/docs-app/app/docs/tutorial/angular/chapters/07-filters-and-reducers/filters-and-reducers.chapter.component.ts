@@ -12,7 +12,7 @@ import { TutorialNavigationDirective } from '../../../directive/tutorial-navigat
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/07-filters-and-reducers.generated';
+import { STAR_WARS_FILTER_AND_REDUCER_FILES } from '../../generated/07-filters-and-reducers.generated';
 
 @Component({
   selector: 'sdux-filters-and-reducers-chapter',
@@ -30,11 +30,11 @@ import { STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS } from '../../generated/07-fi
 export class FiltersAndReducersChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS;
+  readonly #files = STAR_WARS_FILTER_AND_REDUCER_FILES;
   readonly downloadUrl =
     '/assets/tutorial/sdux-07-filters-and-reducers.tutorial.zip';
 
-  readonly allSourceFiles = this.#characters;
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample(
@@ -48,43 +48,34 @@ export class FiltersAndReducersChapterComponent extends TutorialNavigationDirect
   });
 
   readonly serviceFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ServiceSpec
-    )
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.ServiceSpec)
   ]);
 
   readonly filterFiles = computed(() => [
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Filter)
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Filter)
   ]);
 
   readonly characterDomain = computed(() => [
     this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.CharacterDomain
     ),
     this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.CharacterDomainSpec
     )
   ]);
 
   readonly componentFiles = computed(() => [
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
     this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.ComponentSpec
     )
   ]);
 
   readonly htmlFiles = computed(() => [
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html)
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html)
   ]);
 }

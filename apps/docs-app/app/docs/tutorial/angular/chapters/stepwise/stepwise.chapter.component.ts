@@ -14,7 +14,7 @@ import {
   ExampleFileType,
   ExampleFileTypes
 } from '../../../types/example-file.type';
-import { STAR_WARS_STEPWISE } from '../../generated/stepwise.generated';
+import { STAR_WARS_STEPWISE_FILES } from '../../generated/stepwise.generated';
 
 @Component({
   selector: 'sdux-stepwise-chapter',
@@ -32,7 +32,7 @@ import { STAR_WARS_STEPWISE } from '../../generated/stepwise.generated';
 export class StepwiseChapterComponent {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #files = STAR_WARS_STEPWISE;
+  readonly #files = STAR_WARS_STEPWISE_FILES;
   readonly downloadUrl = '/assets/tutorial/sdux-stepwise.tutorial.zip';
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {

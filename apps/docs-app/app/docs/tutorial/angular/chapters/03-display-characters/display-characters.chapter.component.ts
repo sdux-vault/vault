@@ -14,7 +14,7 @@ import { TutorialNavigationDirective } from '../../../directive/tutorial-navigat
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/03-display-characters.generated';
+import { STAR_WARS_DISPLAY_CHARACTERS_FILES } from '../../generated/03-display-characters.generated';
 
 @Component({
   selector: 'sdux-display-characters-chapter',
@@ -34,11 +34,11 @@ import { STAR_WARS_DISPLAY_CHARACTERS } from '../../generated/03-display-charact
 export class DisplayCharactersChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_DISPLAY_CHARACTERS;
+  readonly #files = STAR_WARS_DISPLAY_CHARACTERS_FILES;
   readonly downloadUrl =
     '/assets/tutorial/sdux-03-display-characters.tutorial.zip';
 
-  readonly allSourceFiles = this.#characters;
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('display-characters')!;
@@ -50,13 +50,10 @@ export class DisplayCharactersChapterComponent extends TutorialNavigationDirecti
   });
 
   readonly files = computed(() => [
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html),
     this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
-    this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.ComponentSpec
     )
   ]);

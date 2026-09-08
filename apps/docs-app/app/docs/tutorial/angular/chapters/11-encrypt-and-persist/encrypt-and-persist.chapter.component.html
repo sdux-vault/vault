@@ -1,4 +1,23 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-11" aria-labelledby="chapter-11-title">
+  <h2>Chapter 11: Encrypt and Persist</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter moves finalized Feature State through AES-256 encryption and
+      tab-scoped session persistence while keeping the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      working with plain in-memory values.
+    </p>
+    <p>
+      You will also see how the static teaching salt supports repeatable
+      decryption, why persisted State takes priority over
+      <span class="code">initialState</span>, and why session storage survives
+      reloads only within the current browser tab.
+    </p>
+  </div>
+</header>
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">
@@ -48,13 +67,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-10-start-title">
-  <h2 class="section-title" id="chapter-10-start-title">
-    Chapter 10 Starting Point, License, and Threat Model
-  </h2>
+<section class="section" aria-labelledby="chapter-11-start-title">
+  <div class="section-title" id="chapter-11-start-title">
+    Chapter 11 Starting Point, License, and Threat Model
+  </div>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 9 project. Encryption and persistence are
+      Start with the completed Chapter 7 project. Encryption and persistence are
       Pro capabilities. This example enables development evaluation with
       <span class="code">devMode: true</span> and
       <span class="code">bypassLicensing: true</span>; production use requires a
@@ -92,11 +111,11 @@
   </div>
 </section>
 
-<section class="section" id="step-34" aria-labelledby="step-34-title">
+<section class="section" id="chapter-11-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-34-title">
-      Step 34: Configure Encrypt and Persist Behaviors
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Configure Encrypt and Persist Behaviors
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -138,6 +157,12 @@
           Install the
           <span class="code"><sdux-package-name [package]="'addons'" /></span>
           package.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre
+                class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
         <li>Open <span class="code">app.config.ts</span>.</li>
         <li>
@@ -166,15 +191,15 @@
             >()</span
           >. Declaration order does not override the behaviors' fixed pipeline
           stages.
+          <sdux-example-viewer-source>
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
-        <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -191,43 +216,14 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source>
-      <sdux-example-viewer-tab [label]="'app.config.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/encrypt">Encrypt Behaviors</a>
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/addons/encrypt/with-aes256-encrypt-behavior"
-            >withAes256EncryptBehavior</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/pipeline/addons/persist">Persist Behaviors</a>
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/addons/persist/with-session-storage-persist-behavior"
-            >withSessionStoragePersistBehavior</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-35" aria-labelledby="step-35-title">
+<section class="section" id="chapter-11-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-35-title">
-      Step 35: Encrypt Feature State
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Encrypt Feature State
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -260,6 +256,14 @@
           <span class="code">initialize()</span>, call
           <span class="code">setAes256Secret()</span> with the tutorial secret,
           that salt, and <span class="code">250_000</span> PBKDF2 iterations.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Treat <span class="code">aes256Secret</span> as PBKDF2 input key
@@ -301,13 +305,6 @@
       </ul>
     </div>
 
-    <sdux-example-viewer-source>
-      <sdux-example-viewer-tab [label]="'example.service.ts'">
-        <pre
-          class="code-inline"><code class="language-ts">{{ serviceFiles().source }}</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
-
     <div class="callout callout-warning">
       <div class="title">Pro Feature</div>
       <p>
@@ -316,29 +313,14 @@
         guidance.
       </p>
     </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/behaviors/encrypt">Encrypt Behaviors</a>
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/addons/encrypt/with-aes256-encrypt-behavior"
-            >withAes256EncryptBehavior</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-36" aria-labelledby="step-36-title">
+<section class="section" id="chapter-11-step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-36-title">
-      Step 36: Persist Feature State
-    </h2>
+    <div class="section-title" id="step-3-title">
+      Step 3: Persist Feature State
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -370,6 +352,56 @@
       when no persisted value is available. This makes the persistence boundary
       explicit instead of silently mixing two sources of truth.
     </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Update the <span class="code">example.component.ts</span> to add the
+          <span class="code">#observeStateStream</span> method and the
+          <span class="code">encryptedState</span> signal to enable capturing
+          the encrypted state.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> to add UI
+          to view the encrypted state.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-html">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Persisted state is handled through the <sdux-brand-name /> pipeline.
+          Once registered in the <sdux-feature-cell /> there is nothing more to
+          configure.
+        </li>
+        <li>Make a character change and inspect the persisted output.</li>
+        <li>
+          Open the browser developer tools Application or Storage panel, select
+          Session Storage, and find the namespaced key exported as
+          <span class="code">EXAMPLE_ENCRYPTED_STORAGE_KEY</span> in
+          <span class="code">example.service.ts</span>. Confirm the stored value
+          is an encrypted envelope rather than plain character JSON.
+        </li>
+        <li>
+          Refresh the page in the same tab and verify that the collection is
+          restored.
+        </li>
+      </ol>
+    </div>
+
     <div class="callout callout-info">
       <div class="title">Persistence Outcomes in This Example</div>
       <ul>
@@ -390,6 +422,7 @@
         </li>
       </ul>
     </div>
+
     <div class="callout callout-warning">
       <div class="title">Recovery Scope</div>
       <p>
@@ -403,28 +436,7 @@
         all origin storage, silently accept, or partially parse damaged data.
       </p>
     </div>
-    <div class="callout callout-action">
-      <div class="title">Make the Change</div>
-      <ol>
-        <li>
-          Persisted state is handled through the <sdux-brand-name /> pipeline.
-          Once registered in the <sdux-feature-cell /> there is nothing more to
-          configure.
-        </li>
-        <li>Make a character change and inspect the persisted output.</li>
-        <li>
-          Open the browser developer tools Application or Storage panel, select
-          Session Storage, and find the namespaced key exported as
-          <span class="code">EXAMPLE_ENCRYPTED_STORAGE_KEY</span> in
-          <span class="code">example.service.ts</span>. Confirm the stored value
-          is an encrypted envelope rather than plain character JSON.
-        </li>
-        <li>
-          Refresh the page in the same tab and verify that the collection is
-          restored.
-        </li>
-      </ol>
-    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -442,14 +454,6 @@
         </li>
       </ul>
     </div>
-    <sdux-example-viewer-source [displayTabs]="true">
-      @for (file of componentFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
     <div class="callout callout-warning">
       <div class="title">Pro Feature</div>
       <p>
@@ -458,9 +462,61 @@
         guidance.
       </p>
     </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-11-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">Step 4: Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      You now have a complete persistence boundary: pipeline stages compute and
+      validate plain Feature State, AES-256 encrypts the finalized value, and
+      session storage preserves it for reloads in the current tab.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Refresh the page and confirm the session-scoped collection is
+          restored.
+        </li>
+        <li>
+          Close the tab, open the example again, and confirm that the tab-scoped
+          value is gone.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 11 Summary</div>
+      <ul>
+        <li>Encrypt and Persist behaviors run at the persistence boundary.</li>
+        <li>
+          The stable salt and client-visible secret are teaching configuration,
+          not a production key-management design.
+        </li>
+      </ul>
+    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">Explore the Docs</div>
       <ul>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/encrypt">Encrypt Behaviors</a>
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/addons/encrypt/with-aes256-encrypt-behavior"
+            >withAes256EncryptBehavior</a
+          >
+        </li>
         <li>
           <a routerLink="/docs/pipeline/addons/persist">Persist Behaviors</a>
         </li>
@@ -475,46 +531,20 @@
   </div>
 </section>
 
-<section class="section" id="step-37" aria-labelledby="step-37-title">
+<section class="section" id="chapter-11-step-5" aria-labelledby="step-5-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-37-title">
-      Step 37: Complete Encrypt and Persist Tutorial
-    </h2>
+    <div class="section-title" id="step-5-title">
+      Stackblitz & Downloadable Archive
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
   </div>
+
   <div class="section-body">
-    <p>
-      You now have a complete persistence boundary: pipeline stages compute and
-      validate plain Feature State, AES-256 encrypts the finalized value, and
-      session storage preserves it for reloads in the current tab.
-    </p>
-    <div class="callout callout-action">
-      <div class="title">Run and Verify</div>
-      <ol>
-        <li>
-          Refresh the page and confirm the session-scoped collection is
-          restored.
-        </li>
-        <li>
-          Close the tab, open the example again, and confirm that the tab-scoped
-          value is gone.
-        </li>
-      </ol>
-    </div>
-    <div class="callout callout-learn-more">
-      <div class="title">Tutorial Summary</div>
-      <ul>
-        <li>Encrypt and Persist behaviors run at the persistence boundary.</li>
-        <li>
-          The stable salt and client-visible secret are teaching configuration,
-          not a production key-management design.
-        </li>
-      </ul>
-    </div>
+    <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of chapterFiles(); track file?.type) {
+      @for (file of allSourceFiles; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
@@ -522,52 +552,43 @@
       }
     </sdux-example-viewer-source>
   </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-10-exit-title">
-  <h2 class="section-title" id="chapter-10-exit-title">
-    Chapter 10 Exit Checkpoint
-  </h2>
   <div class="section-body">
-    <ul>
-      <li>
-        The
-        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-        exposes plain State while Session Storage contains an encrypted
-        envelope.
-      </li>
-      <li>
-        A same-tab reload restores the documented value without implying XSS
-        protection.
-      </li>
-      <li>
-        Remove teaching secrets and evaluation bypass assumptions from
-        production adaptations.
-      </li>
-    </ul>
-  </div>
-</section>
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished encrypt and persist example?</h2>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed encrypt and persist tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished encrypt and persist example?</h2>
-  </div>
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        Launch the live StackBlitz project and inspect the completed
-        implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed
+              encrypt and persist configuration and interactive example
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
     </div>
-  }
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Encrypt and Persist Input">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-11']"
+        >Chapter 11: Encrypt and Persist Input</a
+      >
+    </div>
   </div>
 </section>

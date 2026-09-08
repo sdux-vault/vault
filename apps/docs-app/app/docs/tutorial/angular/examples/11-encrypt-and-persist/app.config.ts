@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import {
   withAes256EncryptBehavior,
-  withArrayAppendMergeBehavior,
+  withArrayByIdMergeBehavior,
   withSessionStoragePersistBehavior
 } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
@@ -17,8 +17,10 @@ import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
  * Bootstraps Angular's browser services and initializes the application-scoped
  * Vault runtime before registering the Star Wars character FeatureCell.
  * `provideFeatureCell()` associates the Angular service with a unique Feature
- * key and an empty initial State, preparing that boundary for the service
- * integration added in the next tutorial step.
+ * key and the tutorial's initial character State, then adds array merging,
+ * AES-256-GCM encryption, and sessionStorage persistence to the pipeline.
+ * Together, the encryption and persistence behaviors restore encrypted State
+ * within the browser tab while keeping the service as the FeatureCell boundary.
  */
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -48,13 +50,29 @@ export const appConfig: ApplicationConfig = {
       },
       [
         /**
-         * `provideFeatureCell()` accepts an optional behaviors array as its third argument.
-         * Registering `withArrayAppendMergeBehavior` here changes the Merge stage so
-         * `mergeState()` appends the incoming one-item character array to the current
-         * collection instead of replacing the entire FeatureCell value.
+         * Registers identifier-based array merging for this FeatureCell. During
+         * the Merge stage, matching character identifiers are updated, new
+         * identifiers are appended, and merge requests configured for deletion
+         * remove the matching records from the committed collection.
          */
-        withArrayAppendMergeBehavior,
+        withArrayByIdMergeBehavior,
+
+        /**
+         * Encrypts persisted FeatureCell values with AES-256-GCM and decrypts
+         * them when State is restored. The service supplies the secret, stable
+         * salt, and key-derivation iterations through `setAes256Secret()`
+         * before initialization, so this behavior protects the value written
+         * by the persistence stage rather than changing the in-memory State.
+         */
         withAes256EncryptBehavior,
+
+        /**
+         * Persists the FeatureCell's State in browser sessionStorage and loads
+         * it during restoration. The stored value lasts for the current browser
+         * tab, while the companion encryption behavior ensures the persisted
+         * representation is encrypted before it is written and decrypted when
+         * it is read back.
+         */
         withSessionStoragePersistBehavior
       ]
     )

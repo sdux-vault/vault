@@ -147,6 +147,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/10-delay/delay.chapter.component').then(
                 (m) => m.DelayChapterComponent
               )
+          },
+          {
+            path: 'chapter-11',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/11-encrypt-and-persist/encrypt-and-persist.chapter.component').then(
+                (m) => m.EncryptAndPersistChapterComponent
+              )
           }
         ]
       }

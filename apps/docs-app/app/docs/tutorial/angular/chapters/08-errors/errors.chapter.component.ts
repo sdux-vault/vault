@@ -12,7 +12,7 @@ import { TutorialNavigationDirective } from '../../../directive/tutorial-navigat
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_ERRORS_CHARACTERS } from '../../generated/08-errors.generated';
+import { STAR_WARS_ERROR_FILES } from '../../generated/08-errors.generated';
 
 @Component({
   selector: 'sdux-errors-chapter',
@@ -30,10 +30,10 @@ import { STAR_WARS_ERRORS_CHARACTERS } from '../../generated/08-errors.generated
 export class ErrorsChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_ERRORS_CHARACTERS;
+  readonly #files = STAR_WARS_ERROR_FILES;
   readonly downloadUrl = '/assets/tutorial/sdux-08-errors.tutorial.zip';
 
-  readonly allSourceFiles = this.#characters;
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('errors-tutorial')!;
@@ -46,34 +46,25 @@ export class ErrorsChapterComponent extends TutorialNavigationDirective {
 
   readonly appConfigFile = computed(() => {
     return this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.AppConfig
     );
   });
 
   readonly serviceFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ServiceSpec
-    )
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.ServiceSpec)
   ]);
 
   readonly componentFiles = computed(() => [
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
     this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.ComponentSpec
     )
   ]);
 
   readonly htmlFiles = computed(() => [
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html)
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html)
   ]);
 }

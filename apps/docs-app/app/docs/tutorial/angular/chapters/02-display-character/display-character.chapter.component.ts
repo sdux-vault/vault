@@ -15,7 +15,7 @@ import { TutorialNavigationDirective } from '../../../directive/tutorial-navigat
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISPLAY_CHARACTER } from '../../generated/02-display-character.generated';
+import { STAR_WARS_DISPLAY_CHARACTER_FILES } from '../../generated/02-display-character.generated';
 import { INITIAL_APP_CONFIG } from '../../generated/initial-app-config.generated';
 import { INITIAL_SERVICE } from '../../generated/initial-service.generated';
 
@@ -38,11 +38,11 @@ import { INITIAL_SERVICE } from '../../generated/initial-service.generated';
 export class DisplayCharacterChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_DISPLAY_CHARACTER;
+  readonly #files = STAR_WARS_DISPLAY_CHARACTER_FILES;
   readonly downloadUrl =
     '/assets/tutorial/sdux-02-display-character.tutorial.zip';
 
-  readonly allSourceFiles = this.#characters;
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('display-character')!;
@@ -54,15 +54,15 @@ export class DisplayCharacterChapterComponent extends TutorialNavigationDirectiv
   });
 
   readonly mainSourceFile = computed(() =>
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Main)
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Main)
   );
 
   readonly starWarsCharacterFile = computed(() =>
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Shape)
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Shape)
   );
 
   readonly registeredFeatureCellService = computed(() =>
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Service)
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service)
   );
 
   readonly initialServiceSource = computed(() => INITIAL_SERVICE);
@@ -70,25 +70,16 @@ export class DisplayCharacterChapterComponent extends TutorialNavigationDirectiv
   readonly initialAppConfigSource = computed(() => INITIAL_APP_CONFIG);
 
   readonly registeredAppConfigSource = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.AppConfig
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Constant
-    )
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.AppConfig),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Constant)
   ]);
 
   readonly initialComponentAndHtmlFiles = computed(() => [
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Scss),
     this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Scss),
-    this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.ComponentSpec
     )
   ]);

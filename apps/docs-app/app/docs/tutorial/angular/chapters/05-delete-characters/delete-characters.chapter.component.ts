@@ -14,7 +14,7 @@ import { TutorialNavigationDirective } from '../../../directive/tutorial-navigat
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DELETE_CHARACTERS } from '../../generated/05-delete-characters.generated';
+import { STAR_WARS_DELETE_CHARACTERS_FILES } from '../../generated/05-delete-characters.generated';
 
 @Component({
   selector: 'sdux-delete-characters-chapter',
@@ -34,11 +34,11 @@ import { STAR_WARS_DELETE_CHARACTERS } from '../../generated/05-delete-character
 export class DeleteCharactersChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #characters = STAR_WARS_DELETE_CHARACTERS;
+  readonly #files = STAR_WARS_DELETE_CHARACTERS_FILES;
   readonly downloadUrl =
     '/assets/tutorial/sdux-05-delete-characters.tutorial.zip';
 
-  readonly allSourceFiles = this.#characters;
+  readonly allSourceFiles = this.#files;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delete-characters')!;
@@ -51,37 +51,25 @@ export class DeleteCharactersChapterComponent extends TutorialNavigationDirectiv
 
   readonly appConfigFile = computed(() => {
     return this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.AppConfig
     );
   });
 
   readonly serviceFiles = computed(() => [
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Service
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.ServiceSpec
-    )
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service),
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.ServiceSpec)
   ]);
 
   readonly componentFiles = computed(() => [
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
     this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Component
-    ),
-    this.#exampleFileService.getFile(
-      this.#characters,
+      this.#files,
       ExampleFileTypes.ComponentSpec
     )
   ]);
 
   readonly htmlFile = computed(() => {
-    return this.#exampleFileService.getFile(
-      this.#characters,
-      ExampleFileTypes.Html
-    );
+    return this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html);
   });
 }
