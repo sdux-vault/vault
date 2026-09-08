@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Directive()
 export abstract class TutorialNavigationDirective implements AfterViewInit {
-  readonly activeStep = signal('chapter-1-step-1');
+  readonly activeStep = signal('1-step-1');
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
