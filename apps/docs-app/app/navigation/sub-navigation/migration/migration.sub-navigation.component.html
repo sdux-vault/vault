@@ -8,22 +8,24 @@
       <span class="menu-content parent-expansion-item">Migration</span>
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/builder"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-icon menu-content sub-item">
-        Pipeline Builder <sdux-new />
-      </div>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/builder"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-icon menu-content sub-item">
+          Pipeline Builder <sdux-new />
+        </div>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
         <span class="menu-content child-expansion-item">Bridges</span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/behaviors/taps/with-core-after-tap-behavior"
@@ -132,105 +134,110 @@
     </mat-expansion-panel>
 
     <!-- Phase 1: State -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="state"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">State</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="state"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">State</span>
+      </a>
 
-    <!-- Phase 2: Actions -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="actions"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Actions</span>
-    </a>
+      <!-- Phase 2: Actions -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="actions"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Actions</span>
+      </a>
 
-    <!-- Phase 3: Dispatch -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="dispatch"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Dispatch</span>
-    </a>
+      <!-- Phase 3: Dispatch -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="dispatch"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Dispatch</span>
+      </a>
 
-    <!-- Phase 4: Reducers -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="reducers"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Reducers</span>
-    </a>
+      <!-- Phase 4: Reducers -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="reducers"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Reducers</span>
+      </a>
 
-    <!-- Phase 5: Effects (optional depending on your doc plan) -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="effects"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Effects</span>
-    </a>
+      <!-- Phase 5: Effects (optional depending on your doc plan) -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="effects"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Effects</span>
+      </a>
 
-    <!-- Phase 6: Selectors -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="selectors"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Selectors</span>
-    </a>
+      <!-- Phase 6: Selectors -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="selectors"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Selectors</span>
+      </a>
 
-    <!-- Phase 7: Store Setup -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="store-setup"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-content sub-item">Store Setup</div>
-    </a>
+      <!-- Phase 7: Store Setup -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="store-setup"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content sub-item">Store Setup</div>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method"
-      routerLinkActive="active"
-      aria-label="useSyncExternalStore method documentation"
-      (click)="closeSidenav()">
-      <div class="menu-icon menu-content sub-item">
-        useSyncExternalStore
-        <img src="assets/brand/react/react-icon.svg" height="15" alt="React" />
-      </div>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/feature-cell-api/use-sync-external-store-method"
+        routerLinkActive="active"
+        aria-label="useSyncExternalStore method documentation"
+        (click)="closeSidenav()">
+        <div class="menu-icon menu-content sub-item">
+          useSyncExternalStore
+          <img
+            src="assets/brand/react/react-icon.svg"
+            height="15"
+            alt="React" />
+        </div>
+      </a>
 
-    <!-- Phase 8: Components -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="components"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Components</span>
-    </a>
+      <!-- Phase 8: Components -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="components"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Components</span>
+      </a>
 
-    <!-- Phase 9: Testing -->
-    <a
-      mat-list-item
-      routerLink="/docs/migration"
-      fragment="testing"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Testing </span>
-    </a>
+      <!-- Phase 9: Testing -->
+      <a
+        mat-list-item
+        routerLink="/docs/migration"
+        fragment="testing"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Testing </span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

@@ -9,23 +9,25 @@
       <span class="menu-content parent-expansion-item">Vault Creation API</span>
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/vault"
-      aria-label="Vault documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Vault</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/vault"
+        aria-label="Vault documentation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Vault</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/feature-cell"
-      aria-label="FeatureCell documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">FeatureCell</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/feature-cell"
+        aria-label="FeatureCell documentation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">FeatureCell</span>
+      </a>
+    </div>
 
     <mat-expansion-panel
       class="nav-expansion"
@@ -40,7 +42,7 @@
       </mat-expansion-panel-header>
 
       <!-- Complete API -->
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/feature-cell-api"
@@ -243,14 +245,16 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/cell-builder"
-      aria-label="CellBuilder documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">CellBuilder</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/cell-builder"
+        aria-label="CellBuilder documentation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">CellBuilder</span>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
@@ -263,7 +267,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/angular"
@@ -324,7 +328,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/react"
@@ -348,7 +352,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/svelte"
@@ -369,7 +373,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/vue"
