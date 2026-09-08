@@ -30,7 +30,7 @@ describe('Component: AsyncInputChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 8: Async Input',
+          title: 'Chapter 9: Async Input',
           id: 'async-input-tutorial',
           exampleName: 'async-input-tutorial-example',
           displayCopyIcon: false,

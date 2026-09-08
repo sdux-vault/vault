@@ -18,6 +18,16 @@ describe('Component: AngularWelcomeChapter', () => {
   });
 
   it('exposes the verifiedEnvironment', () => {
-    expect(component['verifiedEnvironment']).toEqual(Object({}));
+    expect(component['verifiedEnvironment']).toEqual(
+      Object({
+        verifiedOn: '2026-08-06',
+        verifiedOnLabel: 'August 6, 2026',
+        node: '24 or newer',
+        npm: '11 or newer',
+        angular: '21',
+        sduxAngular: 'latest',
+        sduxAddons: 'latest'
+      })
+    );
   });
 });

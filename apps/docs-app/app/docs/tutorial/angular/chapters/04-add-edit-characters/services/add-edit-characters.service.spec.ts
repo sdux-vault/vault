@@ -17,19 +17,21 @@ describe('Service: AddEditCharactersService', () => {
 
   it('returns the chapter metadata for the add-edit-characters tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 3,
-      label: 'Create and Edit',
-      route: 'chapter-3',
+      id: 4,
+      label: 'Add/Edit Characters',
+      route: 'chapter-4',
       metadata: {
         track: 'Core',
-        prerequisite: 'Chapter 2',
+        prerequisite: 'Chapter 3',
         tier: '★',
         estimatedTime: '20–30 min'
       },
       steps: [
-        { id: 1, label: 'Configure Merge Behavior' },
-        { id: 2, label: 'Add/Edit Capabilities' },
-        { id: 3, label: 'Complete Add/Edit Tutorial' }
+        { id: 1, label: 'Configure Array Append Merge Behavior' },
+        { id: 2, label: 'Add/Edit Service' },
+        { id: 3, label: 'Add/Edit Component' },
+        Object({ id: 4, label: 'Chapter Round-up' }),
+        Object({ id: 5, label: 'Stackblitz & Downloadable Archive' })
       ]
     });
   });

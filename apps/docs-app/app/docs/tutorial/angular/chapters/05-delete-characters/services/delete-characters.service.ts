@@ -7,7 +7,7 @@ export class DeleteCharactersService {
   chapters(): ChapterShape {
     return {
       id: 5,
-      label: 'Delete',
+      label: 'Delete Characters',
       route: 'chapter-5',
       metadata: {
         track: 'Core',

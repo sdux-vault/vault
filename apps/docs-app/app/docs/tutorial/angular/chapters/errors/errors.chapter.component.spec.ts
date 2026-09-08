@@ -27,7 +27,7 @@ describe('Component: ErrorsChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 7: Errors',
+          title: 'Chapter 8: Errors',
           id: 'errors-tutorial',
           exampleName: 'errors-tutorial-example',
           displayCopyIcon: false,

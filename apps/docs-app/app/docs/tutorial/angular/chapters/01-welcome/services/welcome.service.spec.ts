@@ -15,28 +15,15 @@ describe('Service: AngularWelcome', () => {
     service = TestBed.inject(AngularWelcomeService);
   });
 
-  it('returns the chapter metadata for the display-character chapter', () => {
+  it('returns the chapter metadata for the welcome chapter', () => {
     expect(service.chapters()).toEqual({
       id: 1,
-      label: 'Foundation: Read State',
-      route: 'top',
-      metadata: {
-        track: 'Core',
-        prerequisite: 'None',
-        tier: '★',
-        estimatedTime: '60-90 minutes'
-      },
+      label: 'Welcome',
+      route: 'welcome',
       steps: [
-        { id: 1, label: 'Angular Project Setup' },
-        { id: 2, label: `Install Mock BN` },
-        { id: 3, label: 'Define Feature State' },
-        { id: 4, label: 'Build the Service' },
-        { id: 5, label: `Initialize the Mock VBN` },
-        { id: 6, label: `Register the Mock FC` },
-        { id: 7, label: `Connect the service to Mock BN` },
-        { id: 8, label: 'Display Character State' },
-        { id: 9, label: 'Start the Application' },
-        { id: 10, label: 'Complete Initial Tutorial' }
+        { id: 1, label: 'Before You Begin' },
+        { id: 2, label: `The Mock BN Mental Model` },
+        Object({ id: 3, label: 'Mock BN in 5 Minutes' })
       ]
     });
   });

@@ -17,19 +17,21 @@ describe('Service: Filters and Reducers', () => {
 
   it('returns the chapter metadata for the filters-and-reducers tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 6,
+      id: 7,
       label: 'Filters and Reducers',
-      route: 'chapter-6',
+      route: 'chapter-7',
       metadata: {
         track: 'Core',
-        prerequisite: 'Chapter 5',
+        prerequisite: 'Chapter 6',
         tier: '★★',
         estimatedTime: '20–30 min'
       },
       steps: [
-        { id: 1, label: 'Add Filter Stage' },
-        { id: 2, label: 'Register Ordered Reducers' },
-        { id: 3, label: 'Complete Filter/Reducer Tutorial' }
+        Object({ id: 1, label: 'Add Ordered Filters' }),
+        Object({ id: 2, label: 'Add Ordered Reducers' }),
+        Object({ id: 3, label: 'Component Update' }),
+        Object({ id: 4, label: 'Chapter Round-up' }),
+        Object({ id: 5, label: 'Stackblitz & Downloadable Archive' })
       ]
     });
   });

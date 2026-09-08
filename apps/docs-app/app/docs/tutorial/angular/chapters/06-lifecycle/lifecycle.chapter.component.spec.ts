@@ -19,7 +19,7 @@ describe('Component: LifecycleChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-lifecycle.tutorial.zip'
+      '/assets/tutorial/sdux-06-lifecycle.tutorial.zip'
     );
   });
 
@@ -27,7 +27,7 @@ describe('Component: LifecycleChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 5: Lifecycle',
+          title: 'Chapter 6: Lifecycle',
           id: 'lifecycle-tutorial',
           exampleName: 'lifecycle-tutorial-example',
           displayCopyIcon: false,
@@ -127,6 +127,26 @@ describe('Component: LifecycleChapterComponent', () => {
       {
         type: 'serviceSpec',
         fileName: 'example.service.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterDomain',
+        fileName: 'example.character-domain.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterDomainSpec',
+        fileName: 'example.character-domain.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterEditor',
+        fileName: 'example.character-editor.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterEditorSpec',
+        fileName: 'example.character-editor.spec.ts',
         source: jasmine.any(String) as any
       }
     ]);

@@ -19,7 +19,7 @@ describe('Component: DisplayCharactersChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-display-characters.tutorial.zip'
+      '/assets/tutorial/sdux-03-display-characters.tutorial.zip'
     );
   });
 
@@ -27,7 +27,7 @@ describe('Component: DisplayCharactersChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 2: Display Characters',
+          title: 'Chapter 3: Display Characters',
           id: 'display-characters',
           exampleName: 'display-characters-example',
           displayCopyIcon: false,

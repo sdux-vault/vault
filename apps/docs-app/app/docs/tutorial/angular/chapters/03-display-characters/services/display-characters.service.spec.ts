@@ -17,18 +17,19 @@ describe('Service: DisplayCharactersService', () => {
 
   it('returns the chapter metadata for the display-characters tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 2,
-      label: 'Display Records',
-      route: 'chapter-2',
+      id: 3,
+      label: 'Display Characters',
+      route: 'chapter-3',
       metadata: {
         track: 'Core',
-        prerequisite: 'Chapter 1',
+        prerequisite: 'Chapter 2',
         tier: '★',
         estimatedTime: '20–30 min'
       },
       steps: [
         { id: 1, label: 'Add a Dropdown' },
-        { id: 2, label: 'Complete Dropdown Tutorial' }
+        { id: 2, label: 'Chapter Round-up' },
+        Object({ id: 3, label: 'Stackblitz & Downloadable Archive' })
       ]
     });
   });

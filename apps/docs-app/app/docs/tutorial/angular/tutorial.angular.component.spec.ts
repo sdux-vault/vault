@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
 import { of } from 'rxjs';
 import { TutorialAngularComponent } from './tutorial.angular.component';
@@ -16,7 +16,11 @@ describe('Component: TutorialAngularComponent', () => {
         provideZonelessChangeDetection(),
         {
           provide: ActivatedRoute,
-          useValue: { fragment: of(null) }
+          useValue: {
+            fragment: of(null),
+            paramMap: of(convertToParamMap({})),
+            snapshot: { data: {} }
+          }
         }
       ]
     }).compileComponents();

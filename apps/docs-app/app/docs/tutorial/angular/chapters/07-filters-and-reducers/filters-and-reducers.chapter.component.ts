@@ -32,7 +32,7 @@ export class FiltersAndReducersChapterComponent extends TutorialNavigationDirect
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS;
   readonly downloadUrl =
-    '/assets/tutorial/sdux-filters-and-reducers.tutorial.zip';
+    '/assets/tutorial/sdux-07-filters-and-reducers.tutorial.zip';
 
   readonly allFilesSource = this.#characters;
 

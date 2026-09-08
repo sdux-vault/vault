@@ -35,7 +35,8 @@ export class DeleteCharactersChapterComponent extends TutorialNavigationDirectiv
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_DELETE_CHARACTERS;
-  readonly downloadUrl = '/assets/tutorial/sdux-delete-characters.tutorial.zip';
+  readonly downloadUrl =
+    '/assets/tutorial/sdux-05-delete-characters.tutorial.zip';
 
   readonly allFilesSource = this.#characters;
 
@@ -74,8 +75,7 @@ export class DeleteCharactersChapterComponent extends TutorialNavigationDirectiv
     this.#exampleFileService.getFile(
       this.#characters,
       ExampleFileTypes.ComponentSpec
-    ),
-    this.#exampleFileService.getFile(this.#characters, ExampleFileTypes.Html)
+    )
   ]);
 
   readonly htmlFile = computed(() => {

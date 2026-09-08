@@ -10,8 +10,8 @@ $grandchild-menu-indent: global.$spacing-lg;
 $great-grandchild-menu-indent: global.$spacing-xl;
 $navigation-item-height: global.$navigation-item-height;
 $font-size: global.$font-size-sm;
-$debug-parent-border-2: 0px;
-$debug-child-border-2: 0px;
+$debug-parent-border: 0px;
+$debug-child-border: 0px;
 
 .sdux-sidenav-container {
   width: 100%;
@@ -67,7 +67,6 @@ $debug-child-border-2: 0px;
           color 0.25s ease;
 
         a.mat-mdc-list-item {
-          // padding-inline-start: $parent-menu-indent;
           padding: 0;
           transition: background-color 0.2s ease;
           border-radius: 0;
@@ -103,9 +102,8 @@ $debug-child-border-2: 0px;
           height: $navigation-item-height;
 
           .menu-content {
-            // root menu item no sub-navigation
             padding-inline-start: $parent-menu-indent;
-            border: $debug-parent-border-2 solid purple;
+            border: $debug-parent-border solid purple;
             font-size: $font-size;
             font-weight: global.$font-weight-semibold;
             color: var(--sdux-text-default);
@@ -127,7 +125,6 @@ $debug-child-border-2: 0px;
           }
 
           &.nav-expansion {
-            /* exception: override Material expansion panel defaults */
             background: var(--sidenav-bg) !important;
             color: var(--sidenav-text) !important;
             box-shadow: none !important;
@@ -143,10 +140,8 @@ $debug-child-border-2: 0px;
               height: $navigation-item-height;
 
               .parent-expansion-item {
-                // padding-left: 0 !important;
-                // padding-right: global.$spacing-sm !important;
                 padding-inline-start: $parent-menu-indent;
-                border: $debug-parent-border-2 solid red;
+                border: $debug-parent-border solid red;
 
                 &.menu-content {
                   font-weight: global.$font-weight-semibold;
@@ -154,59 +149,46 @@ $debug-child-border-2: 0px;
               }
 
               .child-expansion-item {
-                border: $debug-child-border-2 solid blue;
+                border: $debug-child-border solid blue;
                 padding-inline-start: $child-menu-indent;
               }
 
               .grandchild-expansion-item {
-                border: $debug-child-border-2 solid lime;
+                border: $debug-child-border solid lime;
                 padding-inline-start: $grandchild-menu-indent;
               }
             }
 
             .expansion-sub-menu {
-              border: $debug-child-border-2 solid green;
+              border: $debug-child-border solid green;
               padding: 0;
               // padding-inline-start: $child-menu-indent;
 
-              /* ===============================
-           Sub-item indentation
-           =============================== */
               .sub-item {
                 padding-inline-start: $grandchild-menu-indent;
                 color: var(--sdux-text-default);
-                border: $debug-child-border-2 solid orange;
+                border: $debug-child-border solid orange;
               }
 
               .grandchild-sub-item {
                 padding-inline-start: $great-grandchild-menu-indent;
                 color: var(--sdux-text-default);
-                border: $debug-child-border-2 solid teal;
+                border: $debug-child-border solid teal;
               }
             }
 
             .sub-menu {
-              border: $debug-child-border-2 solid green;
+              border: $debug-child-border solid green;
               padding: 0;
               // padding-inline-start: $child-menu-indent;
 
-              /* ===============================
-           Sub-item indentation
-           =============================== */
               .sub-item {
                 padding-inline-start: $child-menu-indent;
                 color: var(--sdux-text-default);
-                border: $debug-child-border-2 solid orange;
+                border: $debug-child-border solid orange;
               }
             }
           }
-
-          /*
-          .menu-content-container {
-            padding: global.$spacing-sm global.$spacing-sm;
-            border: $debug-child-border-2 solid orange;
-          }
-            */
         }
       }
     }
@@ -248,132 +230,6 @@ $debug-child-border-2: 0px;
   border-top: 1px solid global.$sdux-primary-base;
   padding: 0 !important; /* exception: override Material internal padding */
 }
-
-// .nav-expansion {
-//   /* exception: override Material expansion panel defaults */
-//   background: var(--sidenav-bg) !important;
-//   color: var(--sidenav-text) !important;
-//   box-shadow: none !important;
-//   border-radius: 0 !important;
-//   margin: 0;
-//   padding: 0;
-
-//   .mat-expansion-panel-header {
-//     border-radius: 0;
-//     padding-left: 0;
-//     padding-right: global.$spacing-sm;
-//     min-height: global.$navigation-item-minheight !important;
-//     height: $navigation-item-height;
-
-//     .parent-expansion-item {
-//       // padding-left: 0 !important;
-//       // padding-right: global.$spacing-sm !important;
-//       padding-inline-start: $parent-menu-indent;
-//       border: $debug-parent-border-2 solid red;
-//     }
-
-//     .child-expansion-item {
-//       border: $debug-child-border-2 solid blue;
-//       padding-inline-start: $child-menu-indent;
-//     }
-//   }
-
-//   .sub-menu {
-//     border: $debug-child-border-2 solid green;
-//     padding-inline-start: $child-menu-indent;
-//   }
-
-//   .menu-content-container {
-//     padding: global.$spacing-sm global.$spacing-sm;
-//     border: $debug-child-border-2 solid orange;
-//   }
-
-//   /*
-//   .mat-expansion-panel-header {
-//     border-radius: 0;
-//     padding-left: 0;
-//     padding-right: global.$spacing-sm;
-//     min-height: global.$navigation-item-minheight !important;
-//     height: $navigation-item-height;
-
-//     .mat-content {
-//       .nav-section-label {
-//         // root menu with sub navigation
-//         border: $debug-root-border solid aqua;
-//         padding-inline-start: $parent-menu-indent;
-//         font-size: $font-size;
-//         font-weight: global.$font-weight-semibold;
-//         color: var(--sdux-text-muted);
-
-//         .tiny-label {
-//           font-size: global.$font-size-xs;
-//         }
-//       }
-//     }
-
-//     &.mat-expanded {
-//       height: $navigation-item-height;
-//     }
-
-//     /*
-//     .sub-menu-content {
-//       padding-inline-start: $child-menu-indent !important;
-//       font-size: $font-size;
-//       font-weight: global.$font-weight-medium;
-//       border: 2px solid orange;
-//     }
-//   }
-//       */
-
-//   &.grandparent {
-//     .sub-menu {
-//       .sub-header {
-//         font-weight: global.$font-weight-medium;
-//       }
-
-//       a.mat-mdc-list-item {
-//         padding: 0;
-//         .menu-content {
-//           /* exception: override Material list-item padding */
-//           padding-inline-start: $grandchild-menu-indent !important;
-//           font-size: $font-size;
-//           font-weight: global.$font-weight-regular;
-//           color: var(--sdux-text-muted);
-//           border: $debug-root-border solid purple;
-//         }
-//       }
-//     }
-//   }
-// }
-
-/* Sub-items inside expansion panel */
-/*
-.nav-expansion .sub-menu a.mat-mdc-list-item {
-  padding: 0;
-  .menu-content {
-    padding-inline-start: $grandchild-menu-indent !important;
-    font-size: $font-size;
-    font-weight: global.$font-weight-regular;
-    color: var(--sdux-text-muted);
-    border: $debug-root-border solid pink;
-  }
-}
-*/
-
-/*
-.nav-expansion a.mat-mdc-list-item {
-  padding: 0 !important;
-
-  .menu-content {
-    // submenu item instide a parent expansion
-    padding-inline-start: $child-menu-indent !important;
-    font-size: $font-size;
-    font-weight: global.$font-weight-medium;
-    color: var(--sdux-text-default);
-    border: $debug-child-border solid lime;
-  }
-}
-*/
 
 .menu-icon {
   display: flex;

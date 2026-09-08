@@ -27,7 +27,7 @@ describe('Component: EncryptAndPersistChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 10: Encrypt and Persist',
+          title: 'Chapter 11: Encrypt and Persist',
           id: 'encrypt-and-persist-tutorial',
           exampleName: 'encrypt-and-persist-tutorial-example',
           displayCopyIcon: false,

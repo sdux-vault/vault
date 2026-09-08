@@ -11,7 +11,7 @@ export class LifecycleService {
       route: 'chapter-6',
       metadata: {
         track: 'Core',
-        prerequisite: 'Chapter 3',
+        prerequisite: 'Chapter 5',
         tier: '★',
         estimatedTime: '20–30 min'
       },

@@ -27,7 +27,7 @@ describe('Component: StepwiseChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 14: Stepwise Pipeline',
+          title: 'Chapter 15: Stepwise Pipeline',
           id: 'stepwise-tutorial',
           exampleName: 'stepwise-tutorial-example',
           displayCopyIcon: false,

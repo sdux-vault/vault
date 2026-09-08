@@ -16,7 +16,7 @@ export class FiltersAndReducersService {
         estimatedTime: '20–30 min'
       },
       steps: [
-        { id: 1, label: 'Add Ordered jjjFilters' },
+        { id: 1, label: 'Add Ordered Filters' },
         { id: 2, label: 'Add Ordered Reducers' },
         { id: 3, label: 'Component Update' },
         { id: 4, label: 'Chapter Round-up' },

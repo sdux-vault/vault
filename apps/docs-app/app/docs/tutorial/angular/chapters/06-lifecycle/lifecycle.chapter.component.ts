@@ -33,7 +33,7 @@ export class LifecycleChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_LIFECYCLE_CHARACTERS;
-  readonly downloadUrl = '/assets/tutorial/sdux-lifecycle.tutorial.zip';
+  readonly downloadUrl = '/assets/tutorial/sdux-06-lifecycle.tutorial.zip';
 
   readonly allFilesSource = this.#characters;
 

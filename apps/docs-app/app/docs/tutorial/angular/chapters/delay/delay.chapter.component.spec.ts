@@ -27,7 +27,7 @@ describe('Component: DelayChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 9: Delay Controller',
+          title: 'Chapter 10: Delay Controller',
           id: 'delay-tutorial',
           exampleName: 'delay-tutorial-example',
           displayCopyIcon: false,

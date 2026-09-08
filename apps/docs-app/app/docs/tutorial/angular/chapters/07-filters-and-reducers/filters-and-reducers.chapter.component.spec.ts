@@ -19,7 +19,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-filters-and-reducers.tutorial.zip'
+      '/assets/tutorial/sdux-07-filters-and-reducers.tutorial.zip'
     );
   });
 
@@ -27,7 +27,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 6: Filters and Reducers',
+          title: 'Chapter 7: Filters and Reducers',
           id: 'filters-and-reducers-tutorial',
           exampleName: 'filters-and-reducers-tutorial-example',
           displayCopyIcon: false,

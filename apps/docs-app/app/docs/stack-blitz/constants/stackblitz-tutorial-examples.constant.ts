@@ -11,7 +11,7 @@ export function createTutorialExampleGroups() {
         'Tutorial examples — explore finished tutorial implementations and launch them directly in StackBlitz.',
       examples: [
         {
-          title: 'Chapter 1: Display Character',
+          title: 'Chapter 2: Display Character',
           id: 'display-character',
           exampleName: 'display-character-example',
           displayCopyIcon: false,
@@ -19,7 +19,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 2: Display Characters',
+          title: 'Chapter 3: Display Characters',
           id: 'display-characters',
           exampleName: 'display-characters-example',
           displayCopyIcon: false,
@@ -27,7 +27,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 3: Add/Edit Characters',
+          title: 'Chapter 4: Add/Edit Characters',
           id: 'add-edit-characters',
           exampleName: 'add-edit-characters-example',
           displayCopyIcon: false,
@@ -35,7 +35,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 4: Delete Characters',
+          title: 'Chapter 5: Delete Characters',
           id: 'delete-characters',
           exampleName: 'delete-characters-example',
           displayCopyIcon: false,
@@ -43,7 +43,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 5: Lifecycle',
+          title: 'Chapter 6: Lifecycle',
           id: 'lifecycle-tutorial',
           exampleName: 'lifecycle-tutorial-example',
           displayCopyIcon: false,
@@ -51,7 +51,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 6: Filters and Reducers',
+          title: 'Chapter 7: Filters and Reducers',
           id: 'filters-and-reducers-tutorial',
           exampleName: 'filters-and-reducers-tutorial-example',
           displayCopyIcon: false,
@@ -59,7 +59,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 7: Errors',
+          title: 'Chapter 8: Errors',
           id: 'errors-tutorial',
           exampleName: 'errors-tutorial-example',
           displayCopyIcon: false,
@@ -67,7 +67,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 8: Async Input',
+          title: 'Chapter 9: Async Input',
           id: 'async-input-tutorial',
           exampleName: 'async-input-tutorial-example',
           displayCopyIcon: false,
@@ -75,7 +75,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 9: Delay Controller',
+          title: 'Chapter 10: Delay Controller',
           id: 'delay-tutorial',
           exampleName: 'delay-tutorial-example',
           displayCopyIcon: false,
@@ -83,7 +83,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 10: Encrypt and Persist',
+          title: 'Chapter 11: Encrypt and Persist',
           id: 'encrypt-and-persist-tutorial',
           exampleName: 'encrypt-and-persist-tutorial-example',
           displayCopyIcon: false,
@@ -91,7 +91,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 11: State Introspection',
+          title: 'Chapter 12: State Introspection',
           id: 'state-introspection-tutorial',
           exampleName: 'state-introspection-tutorial-example',
           displayCopyIcon: false,
@@ -99,7 +99,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 12: Tab Sync',
+          title: 'Chapter 13: Tab Sync',
           id: 'tab-sync-tutorial',
           exampleName: 'tab-sync-tutorial-example',
           displayCopyIcon: false,
@@ -107,7 +107,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 13: Distinct Until Changed',
+          title: 'Chapter 14: Distinct Until Changed',
           id: 'distinct-until-changed-tutorial',
           exampleName: 'distinct-until-changed-tutorial-example',
           displayCopyIcon: false,
@@ -115,7 +115,7 @@ export function createTutorialExampleGroups() {
           languages: [{ name: 'Angular', key: 'angular' }]
         },
         {
-          title: 'Chapter 14: Stepwise Pipeline',
+          title: 'Chapter 15: Stepwise Pipeline',
           id: 'stepwise-tutorial',
           exampleName: 'stepwise-tutorial-example',
           displayCopyIcon: false,

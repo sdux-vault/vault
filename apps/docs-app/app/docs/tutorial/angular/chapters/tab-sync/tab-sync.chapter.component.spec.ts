@@ -27,7 +27,7 @@ describe('Component: TabSyncChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 12: Tab Sync',
+          title: 'Chapter 13: Tab Sync',
           id: 'tab-sync-tutorial',
           exampleName: 'tab-sync-tutorial-example',
           displayCopyIcon: false,

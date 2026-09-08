@@ -19,7 +19,7 @@ describe('Component: AddEditCharactersChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-add-edit-characters.tutorial.zip'
+      '/assets/tutorial/sdux-04-add-edit-characters.tutorial.zip'
     );
   });
 
@@ -27,7 +27,7 @@ describe('Component: AddEditCharactersChapterComponent', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 3: Add/Edit Characters',
+          title: 'Chapter 4: Add/Edit Characters',
           id: 'add-edit-characters',
           exampleName: 'add-edit-characters-example',
           displayCopyIcon: false,
@@ -137,6 +137,26 @@ describe('Component: AddEditCharactersChapterComponent', () => {
       {
         type: 'serviceSpec',
         fileName: 'example.service.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterDomain',
+        fileName: 'example.character-domain.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterDomainSpec',
+        fileName: 'example.character-domain.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterEditor',
+        fileName: 'example.character-editor.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterEditorSpec',
+        fileName: 'example.character-editor.spec.ts',
         source: jasmine.any(String) as any
       }
     ]);
