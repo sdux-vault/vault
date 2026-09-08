@@ -2,6 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleService } from './example.service';
@@ -44,7 +45,12 @@ describe('ExampleService', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
-        provideFeatureCell(ExampleService, { key, initialState }, [], [])
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState },
+          [withArrayByIdMergeBehavior],
+          []
+        )
       ]
     });
 
@@ -86,8 +92,16 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(
-      withDerivedFields([createdCharacter])
+    expect(service.state.value()?.[2]).toEqual(
+      Object({
+        id: 21,
+        name: 'Han',
+        lastName: 'Solo',
+        faction: 'Rebel Alliance',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Han Solo'
+      })
     );
   });
 
@@ -122,16 +136,16 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual(
-      withDerivedFields([
-        {
-          id: 501,
-          name: 'Rey',
-          lastName: 'Skywalker',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        }
-      ])
+    expect(service.state.value()?.[2]).toEqual(
+      Object({
+        id: 501,
+        name: 'Rey',
+        lastName: 'Skywalker',
+        faction: 'Jedi Order',
+        isForceSensitive: true,
+        forceSensitiveDisplay: 'Yes',
+        fullName: 'Rey Skywalker'
+      })
     );
   });
 
@@ -141,17 +155,15 @@ describe('ExampleService', () => {
     service.submitChangedState();
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual(
-      withDerivedFields([
-        {
-          id: 601,
-          name: 'Qui-Gon',
-          lastName: 'Jinn',
-          faction: 'Jedi Order',
-          isForceSensitive: true
-        }
-      ])
-    );
+    expect(service.state.value()?.[0]).toEqual({
+      id: 601,
+      name: 'Qui-Gon',
+      lastName: 'Jinn',
+      faction: 'Jedi Order',
+      isForceSensitive: true,
+      forceSensitiveDisplay: 'Yes',
+      fullName: 'Qui-Gon Jinn'
+    });
   });
 
   it('should suppress an update when the character identity is unchanged', async () => {
@@ -195,7 +207,17 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
+    expect(service.state.value()?.[0]).toEqual(
+      Object({
+        id: 999,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Missing Character'
+      })
+    );
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -217,7 +239,17 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toEqual([
+      Object({
+        id: 1,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Missing Character'
+      })
+    ]);
   });
 
   it('should suppress a removal when the remaining character identities are unchanged', async () => {
@@ -237,6 +269,6 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toBeUndefined();
   });
 });

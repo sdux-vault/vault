@@ -168,6 +168,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/13-tab-sync/tab-sync.chapter.component').then(
                 (m) => m.TabSyncChapterComponent
               )
+          },
+          {
+            path: 'chapter-14',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/14-distinct-until-changed/distinct-until-changed.chapter.component').then(
+                (m) => m.DistinctUntilChangedChapterComponent
+              )
           }
         ]
       }

@@ -24,8 +24,8 @@ export const AngularTutorialExamplesConstants = (projectRoot) =>
     ['11-encrypt-and-persist', 'encrypt-and-persist-tutorial-example'],
     ['12-state-introspection', 'state-introspection-tutorial-example'],
     ['13-tab-sync', 'tab-sync-tutorial-example'],
-    ['stepwise', 'stepwise-tutorial-example'],
-    ['distinct-until-changed', 'distinct-until-changed-tutorial-example']
+    ['14-distinct-until-changed', 'distinct-until-changed-tutorial-example'],
+    ['stepwise', 'stepwise-tutorial-example']
   ].map(([directoryName, name]) => ({
     language: 'angular',
     directory: path.join(

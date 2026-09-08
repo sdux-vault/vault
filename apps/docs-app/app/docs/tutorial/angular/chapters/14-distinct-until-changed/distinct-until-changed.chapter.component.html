@@ -1,4 +1,21 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-14" aria-labelledby="chapter-14-title">
+  <h2>Chapter 14: Distinct Until Changed</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      You will configure an Operator-stage comparison that suppresses repeated
+      State candidates while allowing meaningful character changes to continue
+      through the pipeline.
+    </p>
+    <p>
+      The comparator defines the product meaning of “unchanged.” The lab makes
+      its deliberately narrow identity rule visible so you can recognize when a
+      production comparator must also consider edits, removals, or ordering.
+    </p>
+  </div>
+</header>
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">
@@ -44,13 +61,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-13-start-title">
-  <h2 class="section-title" id="chapter-13-start-title">
-    Chapter 13 Starting Point and Comparator Contract
-  </h2>
+<section class="section" aria-labelledby="chapter-14-start-title">
+  <div class="section-title" id="chapter-14-start-title">
+    Chapter 14 Starting Point and Comparator Contract
+  </div>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 12 project. This lab updates the service,
+      Start with the completed Chapter 7 project. This lab updates the service,
       component, template, and tests. The comparator receives the incoming
       candidate and previous value and returns whether the candidate should be
       treated as unchanged. An unchanged result suppresses downstream work.
@@ -77,11 +94,11 @@
   </div>
 </section>
 
-<section class="section" id="step-48" aria-labelledby="step-48-title">
+<section class="section" id="chapter-14-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-48-title">
-      Step 48: Configure Distinct Until Changed
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Configure Distinct Until Changed
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -111,6 +128,7 @@
         <li>Reordered IDs only: suppressed because order is ignored.</li>
       </ul>
     </div>
+
     <div class="callout callout-action">
       <div class="title">Make the Change</div>
       <ol>
@@ -118,10 +136,16 @@
           Install the
           <span class="code"><sdux-package-name [package]="'addons'" /></span>
           package.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre
+                class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
-        <li>Open <span class="code">example.service.ts</span>.</li>
         <li>
-          Import and register
+          Open <span class="code">example.service.ts</span>
+          then import and register
           <span class="code"
             ><a
               href="/docs/pipeline/addons/operators/with-distinct-until-changed"
@@ -129,6 +153,14 @@
             >()</span
           >
           through <span class="code">this.#vault.operators()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Review the identity comparison that accepts a candidate only when it
@@ -136,12 +168,6 @@
         </li>
       </ol>
     </div>
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
-        <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -189,38 +215,14 @@
         when the full structure is not required.
       </p>
     </div>
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/apis/feature-cell-api/operators-method"
-            >operators()</a
-          >
-        </li>
-        <li>
-          <a
-            routerLink="/docs/pipeline/behaviors/operators/distinct-until-changed"
-            >Distinct Until Changed</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-49" aria-labelledby="step-49-title">
+<section class="section" id="chapter-14-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-49-title">
-      Step 49: Submit Same and Changed State
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Update the Component and HTML
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -238,7 +240,78 @@
       updates State. After the cycle wraps, repeated identities are suppressed
       without relying on collection order.
     </p>
+
     <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Update the <span class="code">example.component.ts</span>
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span>
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Review the identity comparison that accepts a candidate only when it
+          introduces a new character ID.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Both buttons delegate to the service; they do not implement comparison
+          logic in the component.
+        </li>
+        <li>
+          Suppressed candidates do not continue to downstream filter or reducer
+          stages.
+        </li>
+        <li>
+          The comparison function is displayed solely to explain the service
+          configuration.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-14-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">Step 3: Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Your example is complete when the service registers the distinct operator,
+      repeated identities are suppressed before downstream stages, and new
+      identities continue to update
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> State.
+      The buttons and comparison textarea make that service-owned decision
+      visible without taking over the operator's work.
+    </p>
+
+    <div class="callout callout-learn-more">
       <div class="title">Run and Verify</div>
       <ol>
         <li>
@@ -260,54 +333,9 @@
         </li>
       </ol>
     </div>
-    <div class="callout callout-learn-more">
-      <div class="title">What to Look For</div>
-      <ul>
-        <li>
-          Both buttons delegate to the service; they do not implement comparison
-          logic in the component.
-        </li>
-        <li>
-          Suppressed candidates do not continue to downstream filter or reducer
-          stages.
-        </li>
-        <li>
-          The comparison function is displayed solely to explain the service
-          configuration.
-        </li>
-      </ul>
-    </div>
-    <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-  </div>
-</section>
 
-<section class="section" id="step-50" aria-labelledby="step-50-title">
-  <div class="section-title-navigation">
-    <h2 class="section-title" id="step-50-title">
-      Step 50: Complete Distinct Until Changed Tutorial
-    </h2>
-    <div class="section-top-link">
-      <a [routerLink]="[]" fragment="top">↑ top</a>
-    </div>
-  </div>
-  <div class="section-body">
-    <p>
-      Your example is complete when the service registers the distinct operator,
-      repeated identities are suppressed before downstream stages, and new
-      identities continue to update
-      <a href="/docs/references/functions/feature-cell">FeatureCell</a> State.
-      The buttons and comparison textarea make that service-owned decision
-      visible without taking over the operator's work.
-    </p>
-    <div class="callout callout-learn-more">
-      <div class="title">What to Look For</div>
+    <div class="callout callout-action">
+      <div class="title">Chapter 14 Summary</div>
       <ul>
         <li>
           Distinctness is defined by the configured comparison function, not
@@ -320,49 +348,84 @@
         </li>
       </ul>
     </div>
-  </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-13-exit-title">
-  <h2 class="section-title" id="chapter-13-exit-title">
-    Chapter 13 Exit Checkpoint
-  </h2>
-  <div class="section-body">
-    <ul>
-      <li>
-        You can state the comparator's boolean meaning and predict suppression.
-      </li>
-      <li>
-        You recognize that this identity-only rule can hide edits and removals.
-      </li>
-      <li>Reset to a deterministic collection before adding Stepwise gates.</li>
-    </ul>
-  </div>
-</section>
-
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed distinct until changed tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>
-      Want the finished distinct until changed example without these three
-      steps?
-    </h2>
-  </div>
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        Launch the live StackBlitz project to inspect the completed distinct
-        until changed configuration and interactive example directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/operators-method"
+            >operators()</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/behaviors/operators/distinct-until-changed"
+            >Distinct Until Changed</a
+          >
+        </li>
+      </ul>
     </div>
-  }
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+</section>
+
+<section class="section" id="chapter-14-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>
+          Want the finished distinct until changed example without these two
+          steps?
+        </h2>
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed
+              distinct until changed configuration and interactive example
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Stepwise">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-15']">Chapter 15: Stepwise</a>
+    </div>
   </div>
 </section>

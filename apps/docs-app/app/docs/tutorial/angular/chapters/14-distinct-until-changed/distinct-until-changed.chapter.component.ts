@@ -8,10 +8,11 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES } from '../../generated/distinct-until-changed.generated';
+import { STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES } from '../../generated/14-distinct-until-changed.generated';
 
 @Component({
   selector: 'sdux-distinct-until-changed-chapter',
@@ -26,12 +27,15 @@ import { STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES } from '../../generated/distinct
   ],
   templateUrl: './distinct-until-changed.chapter.component.html'
 })
-export class DistinctUntilChangedChapterComponent {
+export class DistinctUntilChangedChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #files = STAR_WARS_DISTINCT_UNTIL_CHANGED_FILES;
   readonly downloadUrl =
-    '/assets/tutorial/sdux-distinct-until-changed.tutorial.zip';
+    '/assets/tutorial/sdux-14-distinct-until-changed.tutorial.zip';
+
+  readonly allSourceFiles = this.#files;
+
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample(
       'distinct-until-changed-tutorial'
@@ -41,16 +45,21 @@ export class DistinctUntilChangedChapterComponent {
       language: example.languages.find((lang) => lang.key === 'angular')!
     };
   });
+
   readonly serviceFiles = computed(() => [
     this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Service),
     this.#exampleFileService.getFile(this.#files, ExampleFileTypes.ServiceSpec)
   ]);
+
   readonly componentFiles = computed(() => [
     this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Component),
-    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html),
     this.#exampleFileService.getFile(
       this.#files,
       ExampleFileTypes.ComponentSpec
     )
+  ]);
+
+  readonly htmlFiles = computed(() => [
+    this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html)
   ]);
 }
