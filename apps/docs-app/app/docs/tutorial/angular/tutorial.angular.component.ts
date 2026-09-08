@@ -167,6 +167,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     return `chapter-${chapterIndex + 1}-step-${stepIndex + 1}`;
   }
 
+  getChapterLink(chapterIndex: number): string {
+    return `./chapter-${chapterIndex + 1}`;
+  }
+
   getStepNumber(stepIndex: number): number {
     return stepIndex + 1;
   }

@@ -99,7 +99,7 @@
                       {{ getStepNumber(stepIndex) }}.
                     </span>
                     <a
-                      [routerLink]="[]"
+                      [routerLink]="[getChapterLink(chapterIndex)]"
                       [fragment]="getStepId(chapterIndex, stepIndex)"
                       [attr.aria-label]="
                         getStepAriaLabel(chapterIndex, stepIndex, step.label)

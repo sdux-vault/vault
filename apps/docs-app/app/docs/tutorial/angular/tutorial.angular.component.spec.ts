@@ -58,6 +58,7 @@ describe('Component: TutorialAngularComponent', () => {
 
   it('exposes step, number, aria-label, and expansion helpers', () => {
     expect(component.getStepId(0, 1)).toBe('chapter-1-step-2');
+    expect(component.getChapterLink(2)).toBe('./chapter-3');
     expect(component.getStepNumber(1)).toBe(2);
     expect(component.getTutorialGroupAriaLabel(1, 'Characters')).toBe(
       'Go to Tutorial 2: Characters'
