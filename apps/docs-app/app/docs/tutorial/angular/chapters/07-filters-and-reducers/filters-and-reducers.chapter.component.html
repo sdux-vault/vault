@@ -348,6 +348,20 @@
         an explicit service or Resolve boundary before applying domain shaping.
       </p>
     </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Domain File</div>
+      <p>
+        The
+        <span class="code">example.character-domain.ts</span> maintains the
+        draft type, next-ID helper, and character factory used by this add/edit
+        slice.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -465,7 +479,7 @@
 
     <div class="callout callout-action">
       <div class="title">Chapter 7 Summary</div>
-      <ol>
+      <ul>
         <li>
           The template now renders reducer-derived
           <span class="code">fullName</span> and
@@ -481,7 +495,7 @@
           CRUD mutations, while preserving the same service-owned
           <sdux-feature-cell /> boundary.
         </li>
-      </ol>
+      </ul>
     </div>
 
     <div class="callout callout-learn-more">

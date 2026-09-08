@@ -1,4 +1,22 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-10" aria-labelledby="chapter-10-title">
+  <h2>Chapter 10: Delay</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter adds a fixed pause before each pipeline attempt continues.
+      You will register and configure the Delay Controller, then observe that it
+      changes execution timing without changing the candidate State.
+    </p>
+    <p>
+      The service owns the <sdux-feature-cell /> configuration and the component
+      owns only the editor, feedback, and teaching display. An elapsed timer
+      makes the pause visible without implementing the controller behavior.
+    </p>
+  </div>
+</header>
+
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">
@@ -43,13 +61,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-9-start-title">
-  <h2 class="section-title" id="chapter-9-start-title">
-    Chapter 9 Starting Point and Timing Decision
-  </h2>
+<section class="section" aria-labelledby="chapter-10-start-title">
+  <div class="section-title" id="chapter-10-start-title">
+    Chapter 10 Starting Point and Timing Decision
+  </div>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 8 project. If your checkpoint does not
+      Start with the completed Chapter 7 project. If your checkpoint does not
       already include <sdux-package-name [package]="'addons'" />, install it
       once. This chapter changes <span class="code">app.config.ts</span>, the
       service, component, template, timing helper, and their tests.
@@ -76,11 +94,11 @@
   </div>
 </section>
 
-<section class="section" id="step-31" aria-labelledby="step-31-title">
+<section class="section" id="chapter-10-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-31-title">
-      Step 31: Configure the Delay Controller
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Configure the Delay Controller
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -125,20 +143,23 @@
           Install the
           <span class="code"><sdux-package-name [package]="'addons'" /></span>
           package.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre
+                class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
         </li>
-        <li>Open <span class="code">app.config.ts</span>.</li>
         <li>
-          Import
+          Open <span class="code">app.config.ts</span> and import
           <span class="code"
             ><a href="/docs/pipeline/controllers/with-delay-controller"
               >withDelayController</a
             ></span
           >
           from
-          <span class="code"><sdux-package-name [package]="'addons'" /></span>.
-        </li>
-        <li>
-          Add
+          <span class="code"><sdux-package-name [package]="'addons'" /></span>
+          and add
           <span class="code"
             ><a href="/docs/pipeline/controllers/with-delay-controller"
               >withDelayController</a
@@ -149,22 +170,31 @@
             ><a href="/docs/references/functions/provide-feature-cell"
               >provideFeatureCell</a
             >()</span
-          >.
+          >. .
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of appConfigFile(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Open <span class="code">example.service.ts</span> and configure
           <span class="code">withDelay()</span> with the delay option before
           calling <span class="code">initialize()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
     </div>
-
-    <sdux-example-viewer-source [displayTabs]="false">
-      <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
-        <pre
-          class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
-      </sdux-example-viewer-tab>
-    </sdux-example-viewer-source>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -186,34 +216,14 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source [displayTabs]="false">
-      @for (file of appConfigFile(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/controllers/with-delay-controller"
-            >withDelayController</a
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="step-32" aria-labelledby="step-32-title">
+<section class="section" id="chapter-10-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-32-title">
-      Step 32: Observe Delayed Execution
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Update the Component and HTML for Delay
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -249,16 +259,43 @@
       <div class="title">Make the Change</div>
       <ol>
         <li>
+          Add the <span class="code">example.elapsed-timer.ts</span> file.
+          <sdux-example-viewer-source>
+            @for (file of timingFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
           In <span class="code">example.component.ts</span>, subscribe to the
           service's <span class="code">state$</span> with lifecycle-safe
           cleanup. Start <span class="code">ExampleElapsedTimer</span> when a
           loading snapshot arrives and stop it when the request finalizes or
           errors.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           In <span class="code">example.component.html</span>, bind the fixed
           configured interval and the timer's live elapsed value. Keep both as
           presentation output; neither controls the pipeline.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Run the example and perform one collection update while watching the
@@ -274,7 +311,20 @@
       </ol>
     </div>
 
-    <div class="callout callout-info">
+    <div class="callout callout-warning">
+      <div class="title">Supporting Elapsed Timer File</div>
+      <p>
+        The
+        <span class="code">example.elapsed-timer.ts</span> contains the helper
+        logic for managing the elapsed timer process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
       <div class="title">Troubleshooting the Timer</div>
       <p>
         The elapsed value is display instrumentation, not the source of truth
@@ -283,27 +333,6 @@
         frame scheduling can make a visual timer imprecise without changing
         controller behavior.
       </p>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">What to Look For</div>
-      <ul>
-        <li>
-          Every update attempt is delayed; no attempt is debounced, collapsed,
-          or dropped.
-        </li>
-        <li>
-          The elapsed timer is presentation-only and does not determine when the
-          pipeline resumes.
-        </li>
-        <li>
-          The candidate continues through the configured pipeline unchanged
-          after the delay expires.
-        </li>
-        <li>
-          The timer stops when the pipeline finalizes or enters Error State.
-        </li>
-      </ul>
     </div>
 
     <div class="callout callout-info">
@@ -327,34 +356,32 @@ t≈1200    Request B becomes eligible for revote</code></pre>
       </p>
     </div>
 
-    <sdux-example-viewer-source>
-      @for (file of timingFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
     <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
+      <div class="title">What to Look For</div>
       <ul>
         <li>
-          <a
-            routerLink="/docs/pipeline/apis/feature-cell-api/state-stream-method"
-            >state$</a
-          >
+          Every update attempt is delayed; no attempt is debounced, collapsed,
+          or dropped.
+        </li>
+        <li>
+          The elapsed timer is presentation-only and does not determine when the
+          pipeline resumes.
+        </li>
+        <li>
+          The candidate continues through the configured pipeline unchanged
+          after the delay expires.
+        </li>
+        <li>
+          The timer stops when the pipeline finalizes or enters Error State.
         </li>
       </ul>
     </div>
   </div>
 </section>
 
-<section class="section" id="step-33" aria-labelledby="step-33-title">
+<section class="section" id="chapter-10-step-3" aria-labelledby="step-3-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-33-title">
-      Step 33: Complete Delay Tutorial
-    </h2>
+    <div class="section-title" id="step-3-title">Step 3: Chapter Round-up</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -362,7 +389,7 @@ t≈1200    Request B becomes eligible for revote</code></pre>
 
   <div class="section-body">
     <p>
-      The Delay Controller tutorial is complete when the example registers the
+      The Delay Controller chapter is complete when the example registers the
       controller, configures a fixed interval, and demonstrates that each update
       attempt pauses before the same candidate continues through the pipeline.
       The character collection still uses the service-owned
@@ -378,7 +405,7 @@ t≈1200    Request B becomes eligible for revote</code></pre>
       Delay Controller behavior.
     </p>
 
-    <div class="callout callout-action">
+    <div class="callout callout-learn-more">
       <div class="title">Run and Verify</div>
       <ol>
         <li>
@@ -398,8 +425,8 @@ t≈1200    Request B becomes eligible for revote</code></pre>
       </ol>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Delay Controller Summary</div>
+    <div class="callout callout-action">
+      <div class="title">Chapter 10 Summary</div>
       <ul>
         <li>
           <span class="code"
@@ -424,6 +451,37 @@ t≈1200    Request B becomes eligible for revote</code></pre>
       </ul>
     </div>
 
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/with-delay-controller"
+            >withDelayController</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/state-stream-method"
+            >state$</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chapter-10-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
       @for (file of allSourceFiles; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
@@ -433,52 +491,41 @@ t≈1200    Request B becomes eligible for revote</code></pre>
       }
     </sdux-example-viewer-source>
   </div>
-</section>
 
-<section class="section" aria-labelledby="chapter-9-exit-title">
-  <h2 class="section-title" id="chapter-9-exit-title">
-    Chapter 9 Exit Checkpoint
-  </h2>
   <div class="section-body">
-    <ul>
-      <li>
-        The controller delays an attempt while preserving its candidate and
-        stage order.
-      </li>
-      <li>
-        The elapsed timer observes timing but does not pause or release the
-        pipeline.
-      </li>
-      <li>
-        Continue to Chapter 10 only when browser persistence matches your
-        learning goal.
-      </li>
-    </ul>
-  </div>
-</section>
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished Delay Controller example?</h2>
 
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed delay tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished Delay Controller example?</h2>
-  </div>
-
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        Launch the live StackBlitz project to inspect the completed timing
-        configuration and interactive example directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed timing
+              configuration and interactive example directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
     </div>
-  }
-
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Encrypt and Persist Input">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-11']"
+        >Chapter 11: Encrypt and Persist Input</a
+      >
+    </div>
   </div>
 </section>

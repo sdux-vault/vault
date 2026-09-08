@@ -112,40 +112,39 @@
         application, including any persistence cleanup it requires.
       </p>
     </div>
-    <div class="callout callout-learn-more">
-      <div class="title">Lifecycle Operations at a Glance</div>
-      <table>
-        <caption>
-          Lifecycle operations and whether the current
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          remains usable
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Operation</th>
-            <th scope="col">Resulting value</th>
-            <th scope="col">Later request</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="code">replaceState(null)</span></td>
-            <td>Intentional null value</td>
-            <td>Allowed</td>
-          </tr>
-          <tr>
-            <td><span class="code">reset()</span></td>
-            <td>Neutral runtime snapshot</td>
-            <td>Allowed</td>
-          </tr>
-          <tr>
-            <td><span class="code">destroy()</span></td>
-            <td>Feature torn down</td>
-            <td>Requires recreation</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
+    <div class="table-title">Lifecycle Operations at a Glance</div>
+    <table>
+      <caption>
+        Lifecycle operations and whether the current
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        remains usable
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Operation</th>
+          <th scope="col">Resulting value</th>
+          <th scope="col">Later request</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="code">replaceState(null)</span></td>
+          <td>Intentional null value</td>
+          <td>Allowed</td>
+        </tr>
+        <tr>
+          <td><span class="code">reset()</span></td>
+          <td>Neutral runtime snapshot</td>
+          <td>Allowed</td>
+        </tr>
+        <tr>
+          <td><span class="code">destroy()</span></td>
+          <td>Feature torn down</td>
+          <td>Requires recreation</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -364,7 +363,7 @@
 
     <div class="callout callout-action">
       <div class="title">Chapter 6 Summary</div>
-      <ol>
+      <ul>
         <li>
           The component now shows three lifecycle outcomes: intentional
           <span class="code">null</span> persistence, runtime reset, and
@@ -379,7 +378,7 @@
           After <span class="code">destroy()</span>, the UI stops offering the
           earlier CRUD interactions because the Feature lifecycle is complete.
         </li>
-      </ol>
+      </ul>
     </div>
   </div>
 

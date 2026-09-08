@@ -140,6 +140,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/09-async-input/async-input.chapter.component').then(
                 (m) => m.AsyncInputChapterComponent
               )
+          },
+          {
+            path: 'chapter-10',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/10-delay/delay.chapter.component').then(
+                (m) => m.DelayChapterComponent
+              )
           }
         ]
       }

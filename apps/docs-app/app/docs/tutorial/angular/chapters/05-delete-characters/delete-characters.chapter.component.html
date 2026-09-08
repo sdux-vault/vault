@@ -408,54 +408,52 @@
       </p>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Delete Outcome Contract</div>
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Action</th>
-            <th scope="col">
-              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-              request
-            </th>
-            <th scope="col">Expected result</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Cancel delete</td>
-            <td>No request</td>
-            <td>
-              Clears only the component's delete candidate. The collection and
-              selection remain unchanged.
-            </td>
-          </tr>
-          <tr>
-            <td>Confirm a known ID</td>
-            <td>
-              <span class="code">mergeState()</span> with
-              <span class="code">isDelete: true</span>
-            </td>
-            <td>
-              Removes the matching record, clears selection and the form, and
-              returns the editor to create mode. Every nonmatching record is
-              retained.
-            </td>
-          </tr>
-          <tr>
-            <td>Confirm a stale ID</td>
-            <td>
-              <span class="code">mergeState()</span> with
-              <span class="code">isDelete: true</span>
-            </td>
-            <td>
-              Leaves the collection equivalent. This tutorial makes no promise
-              about subscriber emission for equivalent array values.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-title">Delete Outcome Contract</div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Action</th>
+          <th scope="col">
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            request
+          </th>
+          <th scope="col">Expected result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cancel delete</td>
+          <td>No request</td>
+          <td>
+            Clears only the component's delete candidate. The collection and
+            selection remain unchanged.
+          </td>
+        </tr>
+        <tr>
+          <td>Confirm a known ID</td>
+          <td>
+            <span class="code">mergeState()</span> with
+            <span class="code">isDelete: true</span>
+          </td>
+          <td>
+            Removes the matching record, clears selection and the form, and
+            returns the editor to create mode. Every nonmatching record is
+            retained.
+          </td>
+        </tr>
+        <tr>
+          <td>Confirm a stale ID</td>
+          <td>
+            <span class="code">mergeState()</span> with
+            <span class="code">isDelete: true</span>
+          </td>
+          <td>
+            Leaves the collection equivalent. This tutorial makes no promise
+            about subscriber emission for equivalent array values.
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -510,7 +508,7 @@
 
     <div class="callout callout-action">
       <div class="title">Chapter 5 Summary</div>
-      <ol>
+      <ul>
         <li>
           The component now owns a delete-confirmation state in addition to its
           existing selection and editor state.
@@ -523,7 +521,7 @@
           The service now supports full create, update, and delete operations
           through the same <sdux-feature-cell /> boundary.
         </li>
-      </ol>
+      </ul>
     </div>
   </div>
 

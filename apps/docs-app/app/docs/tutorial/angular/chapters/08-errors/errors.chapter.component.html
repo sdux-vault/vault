@@ -274,47 +274,42 @@
       </p>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Error Representations and Consumers</div>
-      <table>
-        <caption>
-          Error representations, their consumers, and safe production content
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Representation</th>
-            <th scope="col">Consumer</th>
-            <th scope="col">Safe content</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Raw exception</td>
-            <td>Normalization boundary</td>
-            <td>Do not render or transmit without redaction.</td>
-          </tr>
-          <tr>
-            <td>
-              <a href="/docs/references/shapes/vault-error-shape"
-                >VaultErrorShape</a
-              >
-            </td>
-            <td>Application error handling</td>
-            <td>Normalized classification and approved context.</td>
-          </tr>
-          <tr>
-            <td>UI message</td>
-            <td>User</td>
-            <td>Actionable, non-sensitive summary.</td>
-          </tr>
-          <tr>
-            <td>Telemetry payload</td>
-            <td>Operators</td>
-            <td>Error code, feature key, and request ID—not the candidate.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-title">Error Representations and Consumers</div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Representation</th>
+          <th scope="col">Consumer</th>
+          <th scope="col">Safe content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Raw exception</td>
+          <td>Normalization boundary</td>
+          <td>Do not render or transmit without redaction.</td>
+        </tr>
+        <tr>
+          <td>
+            <a href="/docs/references/shapes/vault-error-shape"
+              >VaultErrorShape</a
+            >
+          </td>
+          <td>Application error handling</td>
+          <td>Normalized classification and approved context.</td>
+        </tr>
+        <tr>
+          <td>UI message</td>
+          <td>User</td>
+          <td>Actionable, non-sensitive summary.</td>
+        </tr>
+        <tr>
+          <td>Telemetry payload</td>
+          <td>Operators</td>
+          <td>Error code, feature key, and request ID—not the candidate.</td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
@@ -399,7 +394,7 @@
 
     <div class="callout callout-action">
       <div class="title">Chapter 8 Summary</div>
-      <ol>
+      <ul>
         <li>
           The tutorial now demonstrates how one throwing filter can stop later
           candidate commitment without changing the component's CRUD calls.
@@ -412,7 +407,7 @@
           The <span class="code">errors()</span> fluent API provides a separate
           post-finalization observation surface for emitted error details.
         </li>
-      </ol>
+      </ul>
     </div>
 
     <div class="callout callout-learn-more">

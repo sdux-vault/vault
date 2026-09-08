@@ -14,10 +14,9 @@ describe('Service: Delay Controller', () => {
       },
       steps: [
         { id: 1, label: 'Configure Delay Controller' },
-        { id: 2, label: 'Observe Delayed Execution' },
-        { id: 3, label: 'Complete Delay Tutorial' },
-        { id: 4, label: 'Chapter Round-up' },
-        { id: 5, label: 'Stackblitz & Downloadable Archive' }
+        { id: 2, label: 'Delay Component' },
+        { id: 3, label: 'Chapter Round-up' },
+        { id: 4, label: 'Stackblitz & Downloadable Archive' }
       ]
     });
   });

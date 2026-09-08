@@ -115,74 +115,73 @@
         this lab.
       </p>
     </div>
-    <div class="callout callout-learn-more">
-      <div class="title">One Pipeline, Four Source Contracts</div>
-      <table>
-        <caption>
-          How each asynchronous source enters and settles the
-          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
-          pipeline
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Input</th>
-            <th scope="col">Request boundary</th>
-            <th scope="col">Successful result in this example</th>
-            <th scope="col">Failure result</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Hydration Promise</td>
-            <td><span class="code">initialize()</span></td>
-            <td>
-              Supplies the authoritative initial collection, then filters and
-              reduces it before the first commit.
-            </td>
-            <td>
-              Initialization ends in Error State; configured initial State is
-              not used as a fallback.
-            </td>
-          </tr>
-          <tr>
-            <td>Promise</td>
-            <td><span class="code">mergeState()</span></td>
-            <td>
-              Resolves once, removes Grogu through the existing filter, derives
-              display fields, and appends the retained characters.
-            </td>
-            <td>Preserves the committed collection and records the error.</td>
-          </tr>
-          <tr>
-            <td>Observable</td>
-            <td><span class="code">mergeState()</span></td>
-            <td>
-              Consumes the helper's first emission, removes R2-D2 through the
-              existing filter, derives display fields, and appends the retained
-              characters.
-            </td>
-            <td>Preserves the committed collection and records the error.</td>
-          </tr>
-          <tr>
-            <td>HTTP Resource</td>
-            <td><span class="code">replaceState()</span></td>
-            <td>
-              Parses Han, Yoda, and Lando; filtering removes Yoda, and the
-              resulting Lando/Han collection replaces the previous value.
-            </td>
-            <td>
-              Preserves the previous collection when transport, parsing, or
-              validation fails.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        These outcomes describe the checked-in teaching helpers. They do not
-        define cancellation, repeated-emission, or overlapping-request policy
-        for arbitrary sources.
-      </p>
-    </div>
+
+    <div class="table-title">One Pipeline, Four Source Contracts</div>
+    <table>
+      <caption>
+        How each asynchronous source enters and settles the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Input</th>
+          <th scope="col">Request boundary</th>
+          <th scope="col">Successful result in this example</th>
+          <th scope="col">Failure result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hydration Promise</td>
+          <td><span class="code">initialize()</span></td>
+          <td>
+            Supplies the authoritative initial collection, then filters and
+            reduces it before the first commit.
+          </td>
+          <td>
+            Initialization ends in Error State; configured initial State is not
+            used as a fallback.
+          </td>
+        </tr>
+        <tr>
+          <td>Promise</td>
+          <td><span class="code">mergeState()</span></td>
+          <td>
+            Resolves once, removes Grogu through the existing filter, derives
+            display fields, and appends the retained characters.
+          </td>
+          <td>Preserves the committed collection and records the error.</td>
+        </tr>
+        <tr>
+          <td>Observable</td>
+          <td><span class="code">mergeState()</span></td>
+          <td>
+            Consumes the helper's first emission, removes R2-D2 through the
+            existing filter, derives display fields, and appends the retained
+            characters.
+          </td>
+          <td>Preserves the committed collection and records the error.</td>
+        </tr>
+        <tr>
+          <td>HTTP Resource</td>
+          <td><span class="code">replaceState()</span></td>
+          <td>
+            Parses Han, Yoda, and Lando; filtering removes Yoda, and the
+            resulting Lando/Han collection replaces the previous value.
+          </td>
+          <td>
+            Preserves the previous collection when transport, parsing, or
+            validation fails.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      These outcomes describe the checked-in teaching helpers. They do not
+      define cancellation, repeated-emission, or overlapping-request policy for
+      arbitrary sources.
+    </p>
   </div>
 </section>
 
@@ -312,6 +311,19 @@
           collection; Reject must end loading and display Error State.
         </li>
       </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Hydrate File</div>
+      <p>
+        The
+        <span class="code">example.hydrate.ts</span> contains the helper logic
+        for managing the hydration process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -469,6 +481,19 @@
       </ol>
     </div>
 
+    <div class="callout callout-warning">
+      <div class="title">Supporting Promise File</div>
+      <p>
+        The
+        <span class="code">example.promise.ts</span> contains the helper logic
+        for managing the promise process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -617,6 +642,19 @@
           preserved.
         </li>
       </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Observable File</div>
+      <p>
+        The
+        <span class="code">example.observable.ts</span> contains the helper
+        logic for managing the observable process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
     </div>
 
     <div class="callout callout-learn-more">
@@ -780,6 +818,19 @@
       </p>
     </div>
 
+    <div class="callout callout-warning">
+      <div class="title">Supporting HTTP Resource File</div>
+      <p>
+        The
+        <span class="code">example.http-resource.ts</span> contains the helper
+        logic for managing the HTTP resource process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
     <div class="callout callout-learn-more">
       <div class="title">What to Look For</div>
       <ul>
@@ -882,7 +933,7 @@
 
     <div class="callout callout-action">
       <div class="title">Chapter 9 Summary</div>
-      <ol>
+      <ul>
         <li>
           <span class="code">hydrate()</span> supplies authoritative initial
           State during initialization.
@@ -899,7 +950,7 @@
           All four inputs preserve the service-owned boundary and converge on
           the same pipeline and reactive State APIs.
         </li>
-      </ol>
+      </ul>
     </div>
 
     <div class="callout callout-learn-more">
