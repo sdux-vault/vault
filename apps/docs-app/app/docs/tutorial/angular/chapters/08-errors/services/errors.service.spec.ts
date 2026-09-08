@@ -29,9 +29,8 @@ describe('Service: Errors', () => {
       steps: [
         { id: 1, label: 'Simulate Pipeline Errors' },
         { id: 2, label: 'Display Global Error State' },
-        { id: 3, label: 'Complete Errors Tutorial' },
-        { id: 4, label: 'Chapter Round-up' },
-        { id: 5, label: 'Stackblitz & Downloadable Archive' }
+        { id: 3, label: 'Chapter Round-up' },
+        { id: 4, label: 'Stackblitz & Downloadable Archive' }
       ]
     });
   });

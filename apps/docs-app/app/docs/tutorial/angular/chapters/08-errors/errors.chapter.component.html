@@ -136,10 +136,10 @@
       The existing pure
       <span class="code">removeUnknownLastNameFilter</span> still runs first.
       After that, the service adds a second inline filter that normally returns
-      the candidate unchanged. When the teaching flag is enabled, that inline
-      filter throws intentionally. Because every create, update, and delete
-      candidate flows through the same filter stage, all of those requests keep
-      failing until you explicitly disable the simulated error.
+      the candidate unchanged. When the deliberate error flag is enabled, that
+      inline filter throws intentionally. Because every create, update, and
+      delete candidate flows through the same filter stage, all of those
+      requests keep failing until you explicitly disable the simulated error.
     </p>
 
     <div class="callout callout-action">
@@ -149,6 +149,15 @@
           Open <span class="code">example.service.ts</span> and register the
           pure filter, the intentional throwing filter, and the
           <span class="code">this.#vault.errors()</span> callback.
+
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Keep the error callback observational only: capture the finalized
@@ -180,37 +189,14 @@
         </li>
       </ul>
     </div>
-
-    <sdux-example-viewer-source>
-      @for (file of serviceFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
-
-    <div class="callout callout-learn-more">
-      <div class="title">Explore the Docs</div>
-      <ul>
-        <li>
-          <a routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
-            >errors()</a
-          >
-        </li>
-        <li>
-          <a routerLink="/docs/global-error-handler">Global Error Handler</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<section class="section" id="chapter-8-step-24" aria-labelledby="step-24-title">
+<section class="section" id="chapter-8-step-2" aria-labelledby="step-2-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-24-title">
-      Step 24: Display Global Error State
-    </h2>
+    <div class="section-title" id="step-2-title">
+      Step 2: Display Global Error State
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -246,6 +232,15 @@
         <li>
           Open <span class="code">example.component.ts</span> and subscribe to
           the singleton global error stream.
+
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
         <li>
           Expose one action that clears the current global error and another
@@ -255,37 +250,17 @@
           Update <span class="code">example.component.html</span> so the page
           shows the global error banner, the Throw Error or Reset Error action,
           and the serialized <span class="code">errors()</span> emission.
+
+          <sdux-example-viewer-source>
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
         </li>
       </ol>
-    </div>
-
-    <div class="callout callout-learn-more">
-      <div class="title">What to Look For</div>
-
-      <ul>
-        <li>
-          <span class="code"
-            ><a href="/docs/references/functions/vault-error-service"
-              >VaultErrorService</a
-            ></span
-          >
-          is a singleton service, not a property of this chapter's
-          <sdux-feature-cell />.
-        </li>
-        <li>
-          Clicking <span class="code">Clear</span> acknowledges the current
-          global error, but it does not disable the simulated throwing filter.
-        </li>
-        <li>
-          Clicking <span class="code">Reset Error</span> disables the filter and
-          clears the global error without sending a new pipeline request.
-        </li>
-        <li>
-          The <span class="code">Error Emission</span> textarea is populated by
-          the <span class="code">errors()</span> callback, not by the global
-          error singleton.
-        </li>
-      </ul>
     </div>
 
     <div class="callout callout-warning">
@@ -320,10 +295,8 @@
           </tr>
           <tr>
             <td>
-              <span class="code"
-                ><a href="/docs/references/shapes/vault-error-shape"
-                  >VaultErrorShape</a
-                ></span
+              <a href="/docs/references/shapes/vault-error-shape"
+                >VaultErrorShape</a
               >
             </td>
             <td>Application error handling</td>
@@ -343,22 +316,42 @@
       </table>
     </div>
 
-    <sdux-example-viewer-source>
-      @for (file of componentFiles(); track file?.type) {
-        <sdux-example-viewer-tab [label]="file.fileName">
-          <pre
-            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
-        </sdux-example-viewer-tab>
-      }
-    </sdux-example-viewer-source>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          <a href="/docs/references/functions/vault-error-service"
+            >VaultErrorService</a
+          >
+          is a singleton service, not a property of this chapter's
+          <sdux-feature-cell />.
+        </li>
+        <li>
+          Clicking <span class="code">Clear</span> acknowledges the current
+          global error, but it does not disable the simulated throwing filter.
+        </li>
+        <li>
+          Clicking <span class="code">Reset Error</span> disables the filter and
+          clears the global error without sending a new pipeline request.
+        </li>
+        <li>
+          The <span class="code">Error Emission</span> textarea is populated by
+          the <span class="code">errors()</span> callback, not by the global
+          error singleton.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 9, which applies the same error model
+          to async inputs.
+        </li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<section class="section" id="chapter-8-step-25" aria-labelledby="step-25-title">
+<section class="section" id="chapter-8-step-3" aria-labelledby="step-4-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-25-title">
-      Step 25: Complete Errors Tutorial
-    </h2>
+    <div class="section-title" id="step-4-title">Step 4: Chapter Round-up</div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -380,7 +373,7 @@
       normal CRUD behavior without changing how the component requests work.
     </p>
 
-    <div class="callout callout-action">
+    <div class="callout callout-learn-more">
       <div class="title">Run and Verify</div>
       <ol>
         <li>
@@ -404,10 +397,9 @@
       </ol>
     </div>
 
-    <div class="callout callout-learn-more">
-      <div class="title">Errors Flow Summary</div>
-
-      <ul>
+    <div class="callout callout-action">
+      <div class="title">Chapter 8 Summary</div>
+      <ol>
         <li>
           The tutorial now demonstrates how one throwing filter can stop later
           candidate commitment without changing the component's CRUD calls.
@@ -420,55 +412,81 @@
           The <span class="code">errors()</span> fluent API provides a separate
           post-finalization observation surface for emitted error details.
         </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
+            >errors()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/global-error-handler">Global Error Handler</a>
+        </li>
       </ul>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-7-exit-title">
-  <h2 class="section-title" id="chapter-7-exit-title">
-    Chapter 7 Exit Checkpoint
-  </h2>
-  <div class="section-body">
-    <ul>
-      <li>
-        A teaching failure preserves the prior value and produces feature and
-        global error observations.
-      </li>
-      <li>
-        Clearing presentation does not remove the cause; disabling the filter
-        restores later requests.
-      </li>
-      <li>
-        Save this checkpoint for Chapter 8, which applies the same error model
-        to async inputs.
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section
-  class="tutorial-shortcut"
-  aria-label="Launch the completed errors tutorial example">
-  <div class="tutorial-shortcut-copy">
-    <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
-    <h2>Want the finished errors example without these three steps?</h2>
-  </div>
-
-  @if (stackblitz(); as stackblitz) {
-    <div class="tutorial-shortcut-launcher">
-      <p>
-        If you want the completed errors example, launch the live StackBlitz
-        project and inspect the finished implementation directly.
-      </p>
-      <sdux-stackblitz-language-example
-        [example]="stackblitz.example"
-        [lang]="stackblitz.language" />
+<section class="section" id="chapter-8-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
     </div>
-  }
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
 
-  <div class="tutorial-download">
-    <p>Download the complete chapter source code as a ZIP archive.</p>
-    <sdux-download [url]="downloadUrl"></sdux-download>
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allFilesSource; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished errors example without these two steps?</h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              If you want the completed errors example, launch the live
+              StackBlitz project and inspect the finished implementation
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Async Input">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-9']">Chapter 9: Async Input</a>
+    </div>
   </div>
 </section>
