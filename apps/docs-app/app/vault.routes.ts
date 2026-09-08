@@ -60,13 +60,6 @@ export const routes: Routes = [
     data: { category: 'tutorial' },
     children: [
       {
-        path: '',
-        loadComponent: () =>
-          import('./docs/tutorial/tutorial.component').then(
-            (m) => m.TutorialComponent
-          )
-      },
-      {
         path: 'angular',
         loadComponent: () =>
           import('./docs/tutorial/angular/tutorial.angular.component').then(
