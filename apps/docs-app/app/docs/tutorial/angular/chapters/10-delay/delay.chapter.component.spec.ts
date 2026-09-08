@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sduxTestingModule } from '@sdux-vault/ui/web-components';
-import { FiltersAndReducersChapterComponent } from './filters-and-reducers.chapter.component';
+import { DelayChapterComponent } from './delay.chapter.component';
 
-describe('Component: FiltersAndReducersChapterComponent', () => {
-  let fixture: ComponentFixture<FiltersAndReducersChapterComponent>;
-  let component: FiltersAndReducersChapterComponent;
+describe('Component: DelayChapterComponent', () => {
+  let fixture: ComponentFixture<DelayChapterComponent>;
+  let component: DelayChapterComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FiltersAndReducersChapterComponent, sduxTestingModule]
+      imports: [DelayChapterComponent, sduxTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FiltersAndReducersChapterComponent);
+    fixture = TestBed.createComponent(DelayChapterComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -19,17 +19,17 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-07-filters-and-reducers.tutorial.zip'
+      '/assets/tutorial/sdux-10-delay.tutorial.zip'
     );
   });
 
-  it('returns the angular StackBlitz metadata when the example includes an angular language', () => {
+  it('returns the angular StackBlitz metadata for the delay tutorial', () => {
     expect(component.stackblitz()).toEqual(
       Object({
         example: Object({
-          title: 'Chapter 7: Filters and Reducers',
-          id: 'filters-and-reducers-tutorial',
-          exampleName: 'filters-and-reducers-tutorial-example',
+          title: 'Chapter 10: Delay Controller',
+          id: 'delay-tutorial',
+          exampleName: 'delay-tutorial-example',
           displayCopyIcon: false,
           languages: [{ name: 'Angular', key: 'angular' }],
           description: jasmine.any(String) as unknown as string
@@ -39,7 +39,32 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     );
   });
 
-  it('returns the service files for the chapter example', () => {
+  it('returns the appConfig files', () => {
+    expect(component.appConfigFile()).toEqual([
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as unknown as string
+      }
+    ]);
+  });
+
+  it('returns the timing files', () => {
+    expect(component.timingFiles()).toEqual([
+      {
+        type: 'timer',
+        fileName: 'example.elapsed-timer.ts',
+        source: jasmine.any(String) as unknown as string
+      },
+      {
+        type: 'timerSpec',
+        fileName: 'example.elapsed-timer.spec.ts',
+        source: jasmine.any(String) as unknown as string
+      }
+    ]);
+  });
+
+  it('returns the service files', () => {
     expect(component.serviceFiles()).toEqual([
       {
         type: 'service',
@@ -54,32 +79,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     ]);
   });
 
-  it('returns the filter files for the chapter example', () => {
-    expect(component.filterFiles()).toEqual([
-      {
-        type: 'filter',
-        fileName: 'example.filter.ts',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
-
-  it('returns the character domain files for the chapter example', () => {
-    expect(component.characterDomain()).toEqual([
-      {
-        type: 'characterDomain',
-        fileName: 'example.character-domain.ts',
-        source: jasmine.any(String) as unknown as string
-      },
-      {
-        type: 'characterDomainSpec',
-        fileName: 'example.character-domain.spec.ts',
-        source: jasmine.any(String) as unknown as string
-      }
-    ]);
-  });
-
-  it('returns the generated component files for the chapter example', () => {
+  it('returns the component files', () => {
     expect(component.componentFiles()).toEqual([
       {
         type: 'component',
@@ -94,7 +94,7 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
     ]);
   });
 
-  it('returns the generated html files for the chapter example', () => {
+  it('returns the html files', () => {
     expect(component.htmlFiles()).toEqual([
       {
         type: 'html',
@@ -124,6 +124,11 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
       {
         type: 'filter',
         fileName: 'example.filter.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'timer',
+        fileName: 'example.elapsed-timer.ts',
         source: jasmine.any(String) as any
       },
       {
@@ -159,6 +164,11 @@ describe('Component: FiltersAndReducersChapterComponent', () => {
       {
         type: 'serviceSpec',
         fileName: 'example.service.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'timerSpec',
+        fileName: 'example.elapsed-timer.spec.ts',
         source: jasmine.any(String) as any
       },
       {

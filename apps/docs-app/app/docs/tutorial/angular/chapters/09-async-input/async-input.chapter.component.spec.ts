@@ -19,7 +19,7 @@ describe('Component: AsyncInputChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-async-input.tutorial.zip'
+      '/assets/tutorial/sdux-09-async-input.tutorial.zip'
     );
   });
 
@@ -105,7 +105,7 @@ describe('Component: AsyncInputChapterComponent', () => {
   });
 
   it('returns the all source files', () => {
-    expect(component.allFilesSource).toEqual([
+    expect(component.allSourceFiles).toEqual([
       file('component', 'example.component.ts'),
       file('service', 'example.service.ts'),
       file('html', 'example.component.html'),

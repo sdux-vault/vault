@@ -38,7 +38,7 @@ export const TutorialSourceGroupsConstants = (projectRoot) => {
     ['STAR_WARS_FILTERS_AND_REDUCERS_CHARACTERS', '07-filters-and-reducers'],
     ['STAR_WARS_ERRORS_CHARACTERS', '08-errors'],
     ['STAR_WARS_ASYNC_INPUT', '09-async-input'],
-    ['STAR_WARS_DELAY', 'delay'],
+    ['STAR_WARS_DELAY', '10-delay'],
     ['STAR_WARS_ENCRYPT_AND_PERSIST', 'encrypt-and-persist'],
     ['STAR_WARS_STATE_INTROSPECTION', 'state-introspection'],
     ['STAR_WARS_TAB_SYNC', 'tab-sync'],

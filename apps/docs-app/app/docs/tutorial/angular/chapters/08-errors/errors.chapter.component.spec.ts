@@ -88,7 +88,7 @@ describe('Component: ErrorsChapterComponent', () => {
   });
 
   it('returns all files for the chapter example', () => {
-    expect(component.allFilesSource).toEqual([
+    expect(component.allSourceFiles).toEqual([
       {
         type: 'component',
         fileName: 'example.component.ts',

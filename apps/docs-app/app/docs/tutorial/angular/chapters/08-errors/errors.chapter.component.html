@@ -444,7 +444,7 @@
   <div class="section-body">
     <p>All Chapter Source Files</p>
     <sdux-example-viewer-source>
-      @for (file of allFilesSource; track file?.type) {
+      @for (file of allSourceFiles; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>

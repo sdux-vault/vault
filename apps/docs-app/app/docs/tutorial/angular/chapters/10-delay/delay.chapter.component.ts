@@ -9,11 +9,12 @@ import {
 } from '@sdux-vault/ui/web-components';
 import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
 import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
 import { ExampleFileService } from '../../../services/example-file.service';
 import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
 import type { ExampleFileType } from '../../../types/example-file.type';
 import { ExampleFileTypes } from '../../../types/example-file.type';
-import { STAR_WARS_DELAY } from '../../generated/delay.generated';
+import { STAR_WARS_DELAY } from '../../generated/10-delay.generated';
 
 @Component({
   selector: 'sdux-delay-chapter',
@@ -29,11 +30,13 @@ import { STAR_WARS_DELAY } from '../../generated/delay.generated';
   ],
   templateUrl: './delay.chapter.component.html'
 })
-export class DelayChapterComponent {
+export class DelayChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
-  readonly #files = STAR_WARS_DELAY;
-  readonly downloadUrl = '/assets/tutorial/sdux-delay.tutorial.zip';
+  readonly #characters = STAR_WARS_DELAY;
+  readonly downloadUrl = '/assets/tutorial/sdux-10-delay.tutorial.zip';
+
+  readonly allSourceFiles = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delay-tutorial')!;
@@ -44,38 +47,26 @@ export class DelayChapterComponent {
     };
   });
 
-  readonly configurationFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.Timer,
-      ExampleFileTypes.AppConfig,
-      ExampleFileTypes.Service
-    )
+  readonly appConfigFile = computed(() =>
+    this.#getFiles(ExampleFileTypes.AppConfig)
   );
 
   readonly timingFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.Component,
-      ExampleFileTypes.ComponentSpec,
-      ExampleFileTypes.Html
-    )
+    this.#getFiles(ExampleFileTypes.Timer, ExampleFileTypes.TimerSpec)
   );
 
-  readonly completedFiles = computed(() =>
-    this.#getFiles(
-      ExampleFileTypes.Timer,
-      ExampleFileTypes.TimerSpec,
-      ExampleFileTypes.AppConfig,
-      ExampleFileTypes.Service,
-      ExampleFileTypes.ServiceSpec,
-      ExampleFileTypes.Component,
-      ExampleFileTypes.ComponentSpec,
-      ExampleFileTypes.Html
-    )
+  readonly serviceFiles = computed(() =>
+    this.#getFiles(ExampleFileTypes.Service, ExampleFileTypes.ServiceSpec)
   );
+
+  readonly componentFiles = computed(() =>
+    this.#getFiles(ExampleFileTypes.Component, ExampleFileTypes.ComponentSpec)
+  );
+  readonly htmlFiles = computed(() => this.#getFiles(ExampleFileTypes.Html));
 
   #getFiles(...types: readonly ExampleFileType[]) {
     return types.map((type) =>
-      this.#exampleFileService.getFile(this.#files, type)
+      this.#exampleFileService.getFile(this.#characters, type)
     );
   }
 }

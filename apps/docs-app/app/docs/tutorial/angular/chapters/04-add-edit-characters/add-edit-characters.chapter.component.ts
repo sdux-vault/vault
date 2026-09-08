@@ -38,7 +38,7 @@ export class AddEditCharactersChapterComponent extends TutorialNavigationDirecti
   readonly downloadUrl =
     '/assets/tutorial/sdux-04-add-edit-characters.tutorial.zip';
 
-  readonly allFilesSource = this.#characters;
+  readonly allSourceFiles = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('add-edit-characters')!;

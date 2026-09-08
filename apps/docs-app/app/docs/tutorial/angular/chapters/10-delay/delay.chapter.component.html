@@ -187,8 +187,8 @@
       </ul>
     </div>
 
-    <sdux-example-viewer-source>
-      @for (file of configurationFiles(); track file?.type) {
+    <sdux-example-viewer-source [displayTabs]="false">
+      @for (file of appConfigFile(); track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
@@ -425,7 +425,7 @@ t≈1200    Request B becomes eligible for revote</code></pre>
     </div>
 
     <sdux-example-viewer-source>
-      @for (file of completedFiles(); track file?.type) {
+      @for (file of allSourceFiles; track file?.type) {
         <sdux-example-viewer-tab [label]="file.fileName">
           <pre
             class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>

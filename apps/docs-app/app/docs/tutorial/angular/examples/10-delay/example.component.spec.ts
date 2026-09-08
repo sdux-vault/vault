@@ -1,5 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { StateEmitTypes } from '@sdux-vault/shared';
@@ -49,10 +50,14 @@ describe('ExampleComponent', () => {
       providers: [
         provideVaultTesting(),
         provideZonelessChangeDetection(),
-        provideFeatureCell(ExampleService, {
-          key,
-          initialState: initialCharacters
-        })
+        provideFeatureCell(
+          ExampleService,
+          {
+            key,
+            initialState: initialCharacters
+          },
+          [withArrayByIdMergeBehavior]
+        )
       ]
     }).compileComponents();
 

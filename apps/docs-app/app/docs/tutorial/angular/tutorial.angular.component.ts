@@ -27,7 +27,7 @@ import { LifecycleService } from './chapters/06-lifecycle/services/lifecycle.ser
 import { FiltersAndReducersService } from './chapters/07-filters-and-reducers/services/filters-and-reducers.service';
 import { ErrorsService } from './chapters/08-errors/services/errors.service';
 import { AsyncInputService } from './chapters/09-async-input/services/async-input.service';
-import { DelayService } from './chapters/delay/services/delay.service';
+import { DelayService } from './chapters/10-delay/services/delay.service';
 import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
 import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
 import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';

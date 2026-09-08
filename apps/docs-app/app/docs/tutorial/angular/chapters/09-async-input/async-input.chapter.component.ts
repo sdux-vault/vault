@@ -32,9 +32,9 @@ export class AsyncInputChapterComponent extends TutorialNavigationDirective {
   readonly #stackblitzService = inject(StackblitzExampleService);
   readonly #exampleFileService = inject(ExampleFileService);
   readonly #characters = STAR_WARS_ASYNC_INPUT;
-  readonly downloadUrl = '/assets/tutorial/sdux-async-input.tutorial.zip';
+  readonly downloadUrl = '/assets/tutorial/sdux-09-async-input.tutorial.zip';
 
-  readonly allFilesSource = this.#characters;
+  readonly allSourceFiles = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('async-input-tutorial')!;

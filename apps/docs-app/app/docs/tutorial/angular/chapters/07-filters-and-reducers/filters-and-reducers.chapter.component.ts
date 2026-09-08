@@ -34,7 +34,7 @@ export class FiltersAndReducersChapterComponent extends TutorialNavigationDirect
   readonly downloadUrl =
     '/assets/tutorial/sdux-07-filters-and-reducers.tutorial.zip';
 
-  readonly allFilesSource = this.#characters;
+  readonly allSourceFiles = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample(

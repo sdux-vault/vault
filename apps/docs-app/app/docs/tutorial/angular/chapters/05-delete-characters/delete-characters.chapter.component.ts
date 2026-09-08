@@ -38,7 +38,7 @@ export class DeleteCharactersChapterComponent extends TutorialNavigationDirectiv
   readonly downloadUrl =
     '/assets/tutorial/sdux-05-delete-characters.tutorial.zip';
 
-  readonly allFilesSource = this.#characters;
+  readonly allSourceFiles = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('delete-characters')!;

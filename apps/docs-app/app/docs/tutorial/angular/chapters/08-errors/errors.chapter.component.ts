@@ -33,7 +33,7 @@ export class ErrorsChapterComponent extends TutorialNavigationDirective {
   readonly #characters = STAR_WARS_ERRORS_CHARACTERS;
   readonly downloadUrl = '/assets/tutorial/sdux-08-errors.tutorial.zip';
 
-  readonly allFilesSource = this.#characters;
+  readonly allSourceFiles = this.#characters;
 
   readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
     const example = this.#stackblitzService.getExample('errors-tutorial')!;
