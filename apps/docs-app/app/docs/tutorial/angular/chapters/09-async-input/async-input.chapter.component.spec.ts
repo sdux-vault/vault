@@ -58,31 +58,36 @@ describe('Component: AsyncInputChapterComponent', () => {
 
   it('returns the Promise teaching files', () => {
     expect(component.promiseFiles()).toEqual([
-      file('promise', 'example.promise.ts')
+      file('promise', 'example.promise.ts'),
+      file('promiseSpec', 'example.promise.spec.ts')
     ]);
   });
 
   it('returns the Observable teaching files', () => {
     expect(component.observableFiles()).toEqual([
-      file('observable', 'example.observable.ts')
+      file('observable', 'example.observable.ts'),
+      file('observableSpec', 'example.observable.spec.ts')
     ]);
   });
 
   it('returns the Promise teaching files', () => {
     expect(component.promiseFiles()).toEqual([
-      file('promise', 'example.promise.ts')
+      file('promise', 'example.promise.ts'),
+      file('promiseSpec', 'example.promise.spec.ts')
     ]);
   });
 
   it('returns the Observable teaching files', () => {
     expect(component.observableFiles()).toEqual([
-      file('observable', 'example.observable.ts')
+      file('observable', 'example.observable.ts'),
+      file('observableSpec', 'example.observable.spec.ts')
     ]);
   });
 
   it('returns the HTTP Resource teaching files', () => {
     expect(component.httpResourceFiles()).toEqual([
-      file('httpResource', 'example.http-resource.ts')
+      file('httpResource', 'example.http-resource.ts'),
+      file('httpResourceSpec', 'example.http-resource.spec.ts')
     ]);
   });
 
@@ -102,30 +107,28 @@ describe('Component: AsyncInputChapterComponent', () => {
   it('returns the all source files', () => {
     expect(component.allFilesSource).toEqual([
       file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('component', 'example.component.ts'),
-      file('componentSpec', 'example.component.spec.ts')
+      file('service', 'example.service.ts'),
+      file('html', 'example.component.html'),
+      file('filter', 'example.filter.ts'),
+      file('hydrate', 'example.hydrate.ts'),
+      file('observable', 'example.observable.ts'),
+      file('promise', 'example.promise.ts'),
+      file('httpResource', 'example.http-resource.ts'),
+      file('scss', 'example.component.scss'),
+      file('main', 'main.ts'),
+      file('appConfig', 'app.config.ts'),
+      file('constant', 'star-wars-character.constant.ts'),
+      file('shape', 'star-wars-character.shape.ts'),
+      file('componentSpec', 'example.component.spec.ts'),
+      file('serviceSpec', 'example.service.spec.ts'),
+      file('observableSpec', 'example.observable.spec.ts'),
+      file('promiseSpec', 'example.promise.spec.ts'),
+      file('httpResourceSpec', 'example.http-resource.spec.ts'),
+      file('hydrateSpec', 'example.hydrate.spec.ts'),
+      file('characterDomain', 'example.character-domain.ts'),
+      file('characterDomainSpec', 'example.character-domain.spec.ts'),
+      file('characterEditor', 'example.character-editor.ts'),
+      file('characterEditorSpec', 'example.character-editor.spec.ts')
     ]);
   });
 });
