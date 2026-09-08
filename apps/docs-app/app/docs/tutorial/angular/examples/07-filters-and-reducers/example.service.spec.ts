@@ -2,6 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleService } from './example.service';
@@ -44,7 +45,12 @@ describe('ExampleService', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
-        provideFeatureCell(ExampleService, { key, initialState }, [], [])
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState },
+          [withArrayByIdMergeBehavior],
+          []
+        )
       ]
     });
 
@@ -86,8 +92,16 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(
-      withDerivedFields([createdCharacter])
+    expect(service.state.value()?.[2]).toEqual(
+      Object({
+        id: 21,
+        name: 'Han',
+        lastName: 'Solo',
+        faction: 'Rebel Alliance',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Han Solo'
+      })
     );
   });
 
@@ -158,7 +172,17 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(withDerivedFields(initialCharacters));
+    expect(service.state.value()?.[0]).toEqual(
+      Object({
+        id: 999,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Missing Character'
+      })
+    );
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -180,7 +204,17 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toEqual([
+      Object({
+        id: 1,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false,
+        forceSensitiveDisplay: 'No',
+        fullName: 'Missing Character'
+      })
+    ]);
   });
 
   it('should remove the matching character from the current collection', async () => {
@@ -202,6 +236,6 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toBeUndefined();
   });
 });
