@@ -132,6 +132,11 @@ $debug-child-border: 0px;
             margin: 0;
             padding: 0;
 
+            .mat-expansion-panel-body {
+              border-top: 1px solid global.$sdux-primary-base;
+              padding: 0 !important; /* exception: override Material internal padding */
+            }
+
             .mat-expansion-panel-header {
               border-radius: 0;
               padding-left: 0;
@@ -223,12 +228,6 @@ $debug-child-border: 0px;
       color: global.$sdux-text-white;
     }
   }
-}
-
-/* exception: mat-expansion-panel-body padding is not configurable via inputs */
-::ng-deep .mat-expansion-panel-body {
-  border-top: 1px solid global.$sdux-primary-base;
-  padding: 0 !important; /* exception: override Material internal padding */
 }
 
 .menu-icon {

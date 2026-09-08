@@ -60,6 +60,11 @@
       border-radius: global.$border-radius-md;
       background-color: var(--sdux-surface-bg);
 
+      @media (min-width: global.$breakpoint-md) {
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+
       .tutorial-steps-title {
         margin: 0;
         color: var(--sdux-text-default);
