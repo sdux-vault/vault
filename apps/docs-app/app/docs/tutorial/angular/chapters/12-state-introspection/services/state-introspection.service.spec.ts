@@ -17,12 +17,12 @@ describe('Service: State Introspection', () => {
 
   it('returns the chapter metadata for the state introspection tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 11,
+      id: 12,
       label: 'State Introspection',
-      route: 'chapter-11',
+      route: 'chapter-12',
       metadata: {
         track: 'Lab',
-        prerequisite: 'Chapter 6',
+        prerequisite: 'Chapter 7',
         tier: '★★',
         estimatedTime: '30–45 min'
       },
@@ -33,7 +33,8 @@ describe('Service: State Introspection', () => {
         { id: 4, label: 'Inspect After Taps' },
         { id: 5, label: 'Observe State Emission' },
         { id: 6, label: 'Capture Initial State' },
-        { id: 7, label: 'Complete State Introspection Tutorial' }
+        { id: 7, label: 'Chapter Round-up' },
+        { id: 8, label: 'Stackblitz & Downloadable Archive' }
       ]
     });
   });

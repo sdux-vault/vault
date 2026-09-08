@@ -154,6 +154,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/11-encrypt-and-persist/encrypt-and-persist.chapter.component').then(
                 (m) => m.EncryptAndPersistChapterComponent
               )
+          },
+          {
+            path: 'chapter-12',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/12-state-introspection/state-introspection.chapter.component').then(
+                (m) => m.StateIntrospectionChapterComponent
+              )
           }
         ]
       }
