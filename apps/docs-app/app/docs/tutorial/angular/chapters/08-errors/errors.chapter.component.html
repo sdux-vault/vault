@@ -1,4 +1,25 @@
 <!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-8" aria-labelledby="chapter-8-title">
+  <h2>Chapter 8: Errors</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter shifts from shaping successful candidates to observing what
+      happens when the pipeline rejects them. The same service-owned
+      <sdux-feature-cell /> now demonstrates a simulated filter failure, a
+      global error response, and a finalized
+      <span class="code">errors()</span> emission.
+    </p>
+    <p>
+      The service still owns the pipeline and the component still owns local UI
+      state, but now you also see the singleton global error service operate
+      independently from the feature itself. That separation makes it clear why
+      error observation belongs at both the application boundary and the fluent
+      API boundary.
+    </p>
+  </div>
+</header>
 <section class="section">
   <div class="section-body">
     <h3 class="fake-h4">
@@ -45,13 +66,13 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="chapter-7-start-title">
-  <h2 class="section-title" id="chapter-7-start-title">
-    Chapter 7 Starting Point and Failure Model
-  </h2>
+<section class="section" aria-labelledby="chapter-8-start-title">
+  <div class="section-title" id="chapter-8-start-title">
+    Chapter 8 Starting Point and Failure Model
+  </div>
   <div class="section-body">
     <p>
-      Start with the completed Chapter 6 project. This chapter changes the
+      Start with the completed Chapter 7 project. This chapter changes the
       service, component, template, and specs. Normal CRUD calls remain
       unchanged so the pipeline—not the component—demonstrates failure and
       recovery.
@@ -92,11 +113,11 @@
   </div>
 </section>
 
-<section class="section" id="step-23" aria-labelledby="step-23-title">
+<section class="section" id="chapter-8-step-1" aria-labelledby="step-1-title">
   <div class="section-title-navigation">
-    <h2 class="section-title" id="step-23-title">
-      Step 23: Simulate Pipeline Errors
-    </h2>
+    <div class="section-title" id="step-1-title">
+      Step 1: Simulate Pipeline Errors
+    </div>
     <div class="section-top-link">
       <a [routerLink]="[]" fragment="top">↑ top</a>
     </div>
@@ -185,7 +206,7 @@
   </div>
 </section>
 
-<section class="section" id="step-24" aria-labelledby="step-24-title">
+<section class="section" id="chapter-8-step-24" aria-labelledby="step-24-title">
   <div class="section-title-navigation">
     <h2 class="section-title" id="step-24-title">
       Step 24: Display Global Error State
@@ -333,7 +354,7 @@
   </div>
 </section>
 
-<section class="section" id="step-25" aria-labelledby="step-25-title">
+<section class="section" id="chapter-8-step-25" aria-labelledby="step-25-title">
   <div class="section-title-navigation">
     <h2 class="section-title" id="step-25-title">
       Step 25: Complete Errors Tutorial

@@ -51,6 +51,11 @@ export class ExampleService {
    * Initializes the FeatureCell for the errors tutorial slice.
    */
   constructor() {
+    /**
+     * Initializes identifier-based array merge behavior.
+     */
+    this.#vault?.withArrayMergeId?.({ idKey: 'id' });
+
     /*
      * `.filters()` registers `removeUnknownLastNameFilter` as a
      * `FilterFunction<readonly StarWarsCharacter[]>`.
@@ -199,8 +204,8 @@ export class ExampleService {
   }
 
   /**
-   * Builds a replacement character and maps it into the latest collection through `replaceState`.
-   * A matching ID is replaced while every other character retains its existing value.
+   * Builds a replacement character and submits it through `mergeState`.
+   * The configured array-by-ID merge behavior replaces a matching ID while every other character remains unchanged.
    * @param id - Identity of the character to replace.
    * @param changes - Complete editable fields that should accompany the preserved identity.
    * @returns The replacement character submitted to the FeatureCell.
@@ -211,29 +216,25 @@ export class ExampleService {
   ): StarWarsCharacter {
     const updatedCharacter = createCharacterState(id, changes);
 
-    this.#vault.replaceState({
-      value: () =>
-        this.#vault.state
-          .value()
-          ?.map((character) =>
-            character.id === id ? updatedCharacter : character
-          ) ?? []
+    this.#vault.mergeState({
+      value: [updatedCharacter]
     });
 
     return updatedCharacter;
   }
 
   /**
-   * Filters the requested identity from the latest collection through `replaceState`.
-   * An unknown ID leaves the visible collection unchanged.
+   * Submits the requested identity through `mergeState` with deletion enabled.
+   * The configured array-by-ID merge behavior removes the matching record, while an unknown ID leaves the collection equivalent.
    * @param id - Identity of the character to remove.
    * @returns Nothing; consumers observe the resulting collection through `characters`.
    */
   removeCharacter(id: number): void {
-    this.#vault.replaceState({
-      value: () =>
-        this.#vault.state.value()?.filter((character) => character.id !== id) ??
-        []
-    });
+    this.#vault.mergeState(
+      {
+        value: [{ id } as StarWarsCharacter]
+      },
+      { isDelete: true }
+    );
   }
 }

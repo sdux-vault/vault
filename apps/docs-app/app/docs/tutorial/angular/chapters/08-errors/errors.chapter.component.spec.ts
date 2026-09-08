@@ -19,7 +19,7 @@ describe('Component: ErrorsChapterComponent', () => {
 
   it('exposes the tutorial download URL', () => {
     expect(component.downloadUrl).toBe(
-      '/assets/tutorial/sdux-errors.tutorial.zip'
+      '/assets/tutorial/sdux-08-errors.tutorial.zip'
     );
   });
 
@@ -70,14 +70,99 @@ describe('Component: ErrorsChapterComponent', () => {
         source: jasmine.any(String) as unknown as string
       },
       {
+        type: 'componentSpec',
+        fileName: 'example.component.spec.ts',
+        source: jasmine.any(String) as unknown as string
+      }
+    ]);
+  });
+
+  it('returns the html files for the chapter example', () => {
+    expect(component.htmlFiles()).toEqual([
+      {
         type: 'html',
         fileName: 'example.component.html',
         source: jasmine.any(String) as unknown as string
+      }
+    ]);
+  });
+
+  it('returns all files for the chapter example', () => {
+    expect(component.allFilesSource).toEqual([
+      {
+        type: 'component',
+        fileName: 'example.component.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'service',
+        fileName: 'example.service.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'html',
+        fileName: 'example.component.html',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'filter',
+        fileName: 'example.filter.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'scss',
+        fileName: 'example.component.scss',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'main',
+        fileName: 'main.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'appConfig',
+        fileName: 'app.config.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'constant',
+        fileName: 'star-wars-character.constant.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'shape',
+        fileName: 'star-wars-character.shape.ts',
+        source: jasmine.any(String) as any
       },
       {
         type: 'componentSpec',
         fileName: 'example.component.spec.ts',
-        source: jasmine.any(String) as unknown as string
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'serviceSpec',
+        fileName: 'example.service.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterDomain',
+        fileName: 'example.character-domain.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterDomainSpec',
+        fileName: 'example.character-domain.spec.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterEditor',
+        fileName: 'example.character-editor.ts',
+        source: jasmine.any(String) as any
+      },
+      {
+        type: 'characterEditorSpec',
+        fileName: 'example.character-editor.spec.ts',
+        source: jasmine.any(String) as any
       }
     ]);
   });

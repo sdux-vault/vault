@@ -17,19 +17,21 @@ describe('Service: Errors', () => {
 
   it('returns the chapter metadata for the errors tutorial', () => {
     expect(service.chapters()).toEqual({
-      id: 7,
+      id: 8,
       label: 'Errors',
-      route: 'chapter-7',
+      route: 'chapter-8',
       metadata: {
         track: 'Core',
-        prerequisite: 'Chapter 6',
+        prerequisite: 'Chapter 7',
         tier: '★★',
         estimatedTime: '20–30 min'
       },
       steps: [
         { id: 1, label: 'Simulate Pipeline Errors' },
         { id: 2, label: 'Display Global Error State' },
-        { id: 3, label: 'Complete Errors Tutorial' }
+        { id: 3, label: 'Complete Errors Tutorial' },
+        { id: 4, label: 'Chapter Round-up' },
+        { id: 5, label: 'Stackblitz & Downloadable Archive' }
       ]
     });
   });

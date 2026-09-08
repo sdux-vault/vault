@@ -126,6 +126,13 @@ export const routes: Routes = [
               import('./docs/tutorial/angular/chapters/07-filters-and-reducers/filters-and-reducers.chapter.component').then(
                 (m) => m.FiltersAndReducersChapterComponent
               )
+          },
+          {
+            path: 'chapter-8',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/08-errors/errors.chapter.component').then(
+                (m) => m.ErrorsChapterComponent
+              )
           }
         ]
       }

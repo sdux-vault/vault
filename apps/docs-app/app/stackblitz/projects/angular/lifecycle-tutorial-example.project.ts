@@ -2439,6 +2439,7 @@ export class ExampleCharacterEditor {
 `,
     'src/example.component.spec.ts': `import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleComponent } from './example.component';
@@ -2474,10 +2475,14 @@ describe('ExampleComponent', () => {
       providers: [
         provideVaultTesting(),
         provideZonelessChangeDetection(),
-        provideFeatureCell(ExampleService, {
-          key,
-          initialState: initialCharacters
-        })
+        provideFeatureCell(
+          ExampleService,
+          {
+            key,
+            initialState: initialCharacters
+          },
+          [withArrayByIdMergeBehavior]
+        )
       ]
     }).compileComponents();
 
@@ -3371,6 +3376,7 @@ export class ExampleComponent {
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleService } from './example.service';
@@ -3404,7 +3410,12 @@ describe('ExampleService', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
-        provideFeatureCell(ExampleService, { key, initialState }, [], [])
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState },
+          [withArrayByIdMergeBehavior],
+          []
+        )
       ]
     });
 
@@ -3446,7 +3457,7 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([createdCharacter]);
+    expect(service.state.value()?.[2]).toEqual(createdCharacter);
   });
 
   it('should create the first character with id 1 when no value exists', async () => {
@@ -3515,7 +3526,15 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()?.[2]).toEqual(
+      Object({
+        id: 999,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false
+      })
+    );
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -3537,7 +3556,15 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toEqual([
+      Object({
+        id: 1,
+        name: 'Missing',
+        lastName: 'Character',
+        faction: 'Unaffiliated',
+        isForceSensitive: false
+      })
+    ]);
   });
 
   it('should remove the matching character from the current collection', async () => {
@@ -3557,7 +3584,7 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toBeUndefined();
   });
 
   it('should persist a null lifecycle value through replaceState', async () => {
