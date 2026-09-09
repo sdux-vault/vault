@@ -343,6 +343,15 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Svelte Reactivity Without a Second State Subscription — SDuX Blog',
       description:
         'Learn how @sdux-vault/svelte makes FeatureCell State reactive through Svelte effects without manual state$ subscription cleanup.'
+    },
+    {
+      link: '/blog/new-angular-tutorial-complete-feature',
+      display:
+        'A New Angular Tutorial for Building a Complete Feature with SDuX',
+      title:
+        'A New Angular Tutorial for Building a Complete Feature — SDuX Blog',
+      description:
+        'Explore the new Angular tutorial and learn how its chapters build a service-owned FeatureCell feature from setup through optional labs.'
     }
   ]
 };

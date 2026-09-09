@@ -364,5 +364,13 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 9,
     pillar: 'RC',
     active: true
+  },
+  {
+    slug: 'new-angular-tutorial-complete-feature',
+    title: 'A New Angular Tutorial for Building a Complete Feature with SDuX',
+    date: '2026-09-09',
+    readingTime: 8,
+    pillar: 'SP',
+    active: true
   }
 ];
