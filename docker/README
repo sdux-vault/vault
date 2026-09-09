@@ -21,7 +21,11 @@ sudo certbot certonly --standalone --expand \
   -d sduxvault.com \
   -d www.sduxvault.com \
   -d staging.sduxvault.com \
-  -d backup.sduxvault.com;
+  -d backup.sduxvault.com \
+  -d nextgenluminary.com \
+  -d www.nextgenluminary.com \
+  -d staging.nextgenluminary.com \
+  -d backup.nextgenluminary.com;
 
 sudo cp /etc/letsencrypt/live/sdux-vault.com/fullchain.pem /opt/bitnami/letsencrypt/certificates/sdux-vault.com.crt;
 sudo cp /etc/letsencrypt/live/sdux-vault.com/privkey.pem /opt/bitnami/letsencrypt/certificates/sdux-vault.com.key;
