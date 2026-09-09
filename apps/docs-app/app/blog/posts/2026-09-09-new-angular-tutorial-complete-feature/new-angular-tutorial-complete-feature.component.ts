@@ -23,9 +23,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     <sdux-blog-layout id="new-angular-tutorial-complete-feature">
       <header class="docs-header">
         <p class="lead">
-          The new Angular tutorial for <sdux-brand-name [tm]="true" /> is built
-          around a complete feature, not a pile of disconnected API samples. You
-          start with an empty Angular project and finish with a typed
+          The new
+          <a href="/tutorial/angular" target="new">Angular tutorial</a> for
+          <sdux-brand-name [tm]="true" /> is built around a complete feature,
+          not a pile of disconnected API samples. You start with an empty
+          Angular project and finish with a typed
           <sdux-feature-cell [tm]="true" />, a service-owned feature boundary,
           and a character workflow that can read, create, update, delete,
           filter, sort, and derive display-ready State.
@@ -97,35 +99,68 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             </thead>
             <tbody>
               <tr>
-                <td>Display a character</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-2" target="new"
+                    >Display a character</a
+                  >
+                </td>
                 <td>
                   Establish a service-owned FeatureCell and expose committed
                   State to the UI.
                 </td>
               </tr>
               <tr>
-                <td>Display characters</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-3" target="new"
+                    >Display characters</a
+                  >
+                </td>
                 <td>
                   Add selection without moving the collection or its ownership
                   into the component.
                 </td>
               </tr>
               <tr>
-                <td>Add, edit, and delete</td>
                 <td>
-                  Keep merge semantics, collection updates, and destructive
-                  changes inside the service-owned boundary.
+                  <a href="/tutorial/angular/chapter-4" target="new"
+                    >Add/Edit characters</a
+                  >
+                </td>
+                <td>
+                  Use <span class="code">withArrayAppendMergeBehavior</span> to
+                  append a new character or update an existing character while
+                  keeping collection updates inside the service-owned boundary.
                 </td>
               </tr>
               <tr>
-                <td>Lifecycle</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-5" target="new"
+                    >Delete characters</a
+                  >
+                </td>
+                <td>
+                  Use <span class="code">withArrayByIdMergeBehavior</span> to
+                  remove (add and edit) a character by identifier inside the
+                  service-owned boundary.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="/tutorial/angular/chapter-6" target="new"
+                    >Lifecycle</a
+                  >
+                </td>
                 <td>
                   Distinguish a persisted null value, a reusable reset, and
                   permanent FeatureCell destruction.
                 </td>
               </tr>
               <tr>
-                <td>Filters and reducers</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-7" target="new"
+                    >Filters and reducers</a
+                  >
+                </td>
                 <td>
                   Centralize filtering, sorting, labels, and display derivation
                   before the UI renders State.
@@ -221,52 +256,80 @@ export const appConfig: ApplicationConfig = &#123;
             </thead>
             <tbody>
               <tr>
-                <td>Errors</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-8" target="new">Errors</a>
+                </td>
                 <td>
                   Failure observation and error handling at the feature
                   boundary.
                 </td>
               </tr>
               <tr>
-                <td>Async input</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-9" target="new"
+                    >Async input</a
+                  >
+                </td>
                 <td>
                   Promise, Observable, and Angular HTTP Resource inputs through
                   the same feature boundary.
                 </td>
               </tr>
               <tr>
-                <td>Delay</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-10" target="new">Delay</a>
+                </td>
                 <td>
                   Timing policy for delayed state transitions when that
                   requirement fits the application.
                 </td>
               </tr>
               <tr>
-                <td>Encrypt and Persist</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-11" target="new"
+                    >Encrypt and Persist</a
+                  >
+                </td>
                 <td>
                   Encrypted, tab-scoped session persistence when that
                   requirement fits the application.
                 </td>
               </tr>
               <tr>
-                <td>State introspection</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-12" target="new"
+                    >State introspection</a
+                  >
+                </td>
                 <td>
                   Observation points for explaining a transition without giving
                   diagnostics authority over State.
                 </td>
               </tr>
               <tr>
-                <td>Tab Sync</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-13" target="new"
+                    >Tab Sync</a
+                  >
+                </td>
                 <td>Same-origin coordination across browser tabs.</td>
               </tr>
               <tr>
-                <td>Distinct Until Changed</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-14" target="new"
+                    >Distinct Until Changed</a
+                  >
+                </td>
                 <td>
                   Deliberate suppression of semantically redundant candidates.
                 </td>
               </tr>
               <tr>
-                <td>Stepwise</td>
+                <td>
+                  <a href="/tutorial/angular/chapter-15" target="new"
+                    >Stepwise</a
+                  >
+                </td>
                 <td>
                   Explicit human or policy decisions at a pipeline boundary,
                   treated as a comparison lab rather than a default.

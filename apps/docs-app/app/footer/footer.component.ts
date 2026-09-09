@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
@@ -31,6 +31,14 @@ export class FooterComponent {
 
   /** Whether the production enterprise build should omit the environment banner. */
   readonly isEnterprise = this.environment === EnvironmentTypes.Enterprise;
+
+  /** Whether the environment banner is currently visible. */
+  readonly isEnvironmentBannerVisible = signal(true);
+
+  /** Hides the environment banner for the current component instance. */
+  hideEnvironmentBanner(): void {
+    this.isEnvironmentBannerVisible.set(false);
+  }
 
   public isMobile = computed(() => {
     return this.#mobileService.isMobile();

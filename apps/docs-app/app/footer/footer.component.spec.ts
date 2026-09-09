@@ -85,4 +85,18 @@ describe('Component: Footer', () => {
       fixture.nativeElement.querySelector('.environment-banner')
     ).toBeNull();
   });
+
+  it('should hide the environment banner when dismissed', () => {
+    fixture.detectChanges();
+
+    const dismissButton: HTMLButtonElement =
+      fixture.nativeElement.querySelector('.environment-banner-dismiss');
+
+    dismissButton.click();
+    fixture.detectChanges();
+
+    expect(
+      fixture.nativeElement.querySelector('.environment-banner')
+    ).toBeNull();
+  });
 });

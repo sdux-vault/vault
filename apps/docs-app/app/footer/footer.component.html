@@ -1,10 +1,18 @@
-@if (!isEnterprise) {
+@if (!isEnterprise && isEnvironmentBannerVisible()) {
   <div class="environment-banner" role="status">
     @for (detail of environmentDetails; track detail.key) {
       <span class="environment-detail">
         <strong>{{ detail.key }}:</strong> {{ detail.value }}
       </span>
     }
+    <button
+      type="button"
+      class="environment-banner-dismiss"
+      aria-label="Hide environment banner"
+      title="Hide environment banner"
+      (click)="hideEnvironmentBanner()">
+      X
+    </button>
   </div>
 }
 
