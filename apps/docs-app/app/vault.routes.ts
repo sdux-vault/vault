@@ -72,6 +72,11 @@ export const routes: Routes = [
             pathMatch: 'full'
           },
           {
+            path: 'chapter-1',
+            redirectTo: 'welcome',
+            pathMatch: 'full'
+          },
+          {
             path: 'welcome',
             loadComponent: () =>
               import('./docs/tutorial/angular/chapters/01-welcome/angular-welcome.chapter.component').then(

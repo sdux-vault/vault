@@ -419,6 +419,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-08-20-svelte-reactivity-without-a-second-state-subscription/svelte-reactivity-without-a-second-state-subscription.component').then(
         (m) => m.BlogSvelteReactivityWithoutASecondStateSubscriptionComponent
       )
+  },
+  {
+    path: 'new-angular-tutorial-complete-feature',
+    data: {
+      category: 'blogs',
+      type: 'new-angular-tutorial-complete-feature'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-09-new-angular-tutorial-complete-feature/new-angular-tutorial-complete-feature.component').then(
+        (m) => m.BlogNewAngularTutorialCompleteFeatureComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

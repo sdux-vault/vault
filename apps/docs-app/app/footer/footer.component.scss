@@ -30,6 +30,18 @@ $info-height: 25px;
   overflow: auto;
 }
 
+.environment-banner-dismiss {
+  grid-row: 1 / -1;
+  align-self: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: bold;
+}
+
 .footer {
   position: relative;
   z-index: 0;
