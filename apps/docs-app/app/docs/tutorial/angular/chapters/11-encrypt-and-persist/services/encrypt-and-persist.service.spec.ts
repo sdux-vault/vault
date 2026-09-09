@@ -1,0 +1,38 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { sduxTestingModule } from '@sdux-vault/ui/web-components';
+import { EncryptAndPersistService } from './encrypt-and-persist.service';
+
+describe('Service: Encrypt and Persist', () => {
+  let service: EncryptAndPersistService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [sduxTestingModule],
+      providers: [provideZonelessChangeDetection(), EncryptAndPersistService]
+    });
+
+    service = TestBed.inject(EncryptAndPersistService);
+  });
+
+  it('returns the chapter metadata for the encrypt-and-persist tutorial', () => {
+    expect(service.chapters()).toEqual({
+      id: 11,
+      label: 'Encrypt and Persist',
+      route: 'chapter-11',
+      metadata: {
+        track: 'Lab',
+        prerequisite: 'Chapter 7',
+        tier: '★★★',
+        estimatedTime: '30–45 min'
+      },
+      steps: [
+        { id: 1, label: 'Configure Encrypt and Persist Behaviors' },
+        { id: 2, label: 'Encrypt Feature State' },
+        { id: 3, label: 'Persist Feature State' },
+        { id: 4, label: 'Chapter Round-up' },
+        { id: 5, label: 'Stackblitz & Downloadable Archive' }
+      ]
+    });
+  });
+});

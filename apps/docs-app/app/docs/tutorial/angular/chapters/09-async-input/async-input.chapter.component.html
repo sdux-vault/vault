@@ -1,0 +1,1058 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-9" aria-labelledby="chapter-9-title">
+  <h2>Chapter 9: Async Input</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter introduces asynchronous inputs without changing the
+      service-owned <sdux-feature-cell /> boundary. You will hydrate initial
+      State and then resolve Promise, Observable, and Angular HTTP Resource
+      inputs through the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline.
+    </p>
+    <p>
+      The component owns only the controls and presentation state, while the
+      service owns source registration and state updates. The active loading and
+      error State in the template makes each asynchronous lifecycle visible as
+      you work through the examples.
+    </p>
+  </div>
+</header>
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Treat asynchronous values as pipeline inputs, not component-managed side
+      paths.
+    </h3>
+    <p>
+      Initial data, API responses, Promises, and live streams all arrive on
+      different schedules, but they still represent State entering the same
+      Feature. This chapter shows how to bring those sources through one
+      service-owned pipeline so loading, transformation, and failure remain
+      visible and predictable.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The component starts an asynchronous request and presents its progress;
+      the <sdux-feature-cell /> owns when the value resolves, how it is
+      transformed, and what happens when it rejects. Keeping that lifecycle in
+      the pipeline prevents each input type from becoming a separate loading,
+      error, and state-management implementation.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>hydrating initial State from persisted data or a startup request</li>
+      <li>
+        awaiting one result from an API, database, or user-triggered Promise
+      </li>
+      <li>consuming ongoing Observable, stream, or HTTP Resource values</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have examples for deferred hydration, Promise, Observable, and
+      HTTP Resource input, each flowing through the same Resolve, Filter,
+      Reducer, and Emit stages with loading and error State handled at the
+      Feature boundary.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-9-start-title">
+  <div class="section-title" id="chapter-9-start-title">
+    Chapter 9 Starting Point and Input Guide
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 8 project. This lab adds source helpers
+      and updates configuration, service, component, template, and tests. All
+      four inputs converge on the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      snapshot; what differs is when the source begins and whether the request
+      merges or replaces State.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose the Input That Matches the Source</div>
+      <ul>
+        <li>
+          <strong>Hydration:</strong> one authoritative asynchronous source
+          needed before initialization can finish.
+        </li>
+        <li>
+          <strong>Promise:</strong> one deferred result submitted after
+          initialization; this example appends its resolved collection.
+        </li>
+        <li>
+          <strong>Observable:</strong> an RxJS source whose value is resolved by
+          the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          rather than subscribed to by the component.
+        </li>
+        <li>
+          <strong>HTTP Resource:</strong> Angular resource state parsed and
+          validated before atomically replacing the collection.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">One Pending Teaching Source at a Time</div>
+      <p>
+        The controlled Promise and Observable helpers exist to expose loading
+        and failure states. Settle the current source before starting another.
+        For production concurrency, cancellation, empty Observable completion,
+        and multiple emissions, follow the exact Resolve behavior contract
+        linked in each step rather than inferring a general RxJS policy from
+        this lab.
+      </p>
+    </div>
+
+    <div class="table-title">One Pipeline, Four Source Contracts</div>
+    <table>
+      <caption>
+        How each asynchronous source enters and settles the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        pipeline
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Input</th>
+          <th scope="col">Request boundary</th>
+          <th scope="col">Successful result in this example</th>
+          <th scope="col">Failure result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hydration Promise</td>
+          <td><span class="code">initialize()</span></td>
+          <td>
+            Supplies the authoritative initial collection, then filters and
+            reduces it before the first commit.
+          </td>
+          <td>
+            Initialization ends in Error State; configured initial State is not
+            used as a fallback.
+          </td>
+        </tr>
+        <tr>
+          <td>Promise</td>
+          <td><span class="code">mergeState()</span></td>
+          <td>
+            Resolves once, removes Grogu through the existing filter, derives
+            display fields, and appends the retained characters.
+          </td>
+          <td>Preserves the committed collection and records the error.</td>
+        </tr>
+        <tr>
+          <td>Observable</td>
+          <td><span class="code">mergeState()</span></td>
+          <td>
+            Consumes the helper's first emission, removes R2-D2 through the
+            existing filter, derives display fields, and appends the retained
+            characters.
+          </td>
+          <td>Preserves the committed collection and records the error.</td>
+        </tr>
+        <tr>
+          <td>HTTP Resource</td>
+          <td><span class="code">replaceState()</span></td>
+          <td>
+            Parses Han, Yoda, and Lando; filtering removes Yoda, and the
+            resulting Lando/Han collection replaces the previous value.
+          </td>
+          <td>
+            Preserves the previous collection when transport, parsing, or
+            validation fails.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      These outcomes describe the checked-in teaching helpers. They do not
+      define cancellation, repeated-emission, or overlapping-request policy for
+      arbitrary sources.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="9-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Hydrate Initial State
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step shows how a service can provide asynchronous initial State to a
+      service-owned <sdux-feature-cell />. Before the service calls
+      <span class="code">initialize()</span>, it registers a deferred
+      <span class="code">hydrate()</span> factory. Initialization then waits for
+      that factory to resolve or reject before the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> can
+      finish its first State request.
+    </p>
+
+    <p>
+      In this example, <span class="code">example.hydrate.ts</span> is only a
+      teaching helper. It creates a Promise, keeps its resolver and rejecter,
+      and exposes those controls to the example component so you can choose when
+      initialization completes. A real hydration factory would use the same
+      boundary to consume a database query, an API response, persisted
+      application data, or another asynchronous source. The helper does not
+      represent that production data-access layer.
+    </p>
+
+    <p>
+      The configured <span class="code">initialState</span> still exists, but
+      the deferred hydration result is authoritative for initialization. A
+      successful result continues through the normal Resolve, Filter, Reducer,
+      and Emit pipeline. If the hydration Promise rejects, the initialization
+      request enters Error State instead of falling back to
+      <span class="code">initialState</span> or persistence.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Initialization Precedence in This Lab</div>
+      <p>
+        Register hydration before <span class="code">initialize()</span>. When a
+        hydration factory is present, its fulfilled value supplies the initial
+        candidate. A rejection enters Error State; it does not silently switch
+        to the configured initial value. Chapter 10 separately demonstrates the
+        precedence rules of its persistence behavior.
+      </p>
+    </div>
+    <p>
+      This step does not introduce a new UI workflow or redesign the character
+      editor. The visible teaching interaction is limited to the Resolve and
+      Reject buttons, with the existing
+      <span class="code">state.isLoading()</span> indicator showing that the
+      initial request is waiting. Once you settle the request, the page
+      continues with the same UI so you can focus on the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      lifecycle.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Create <span class="code">example.hydrate.ts</span> from the
+          checkpoint below. Its <span class="code">getPromise()</span> method
+          creates one pending Promise;
+          <span class="code">getResolve()</span> and
+          <span class="code">getReject()</span> return one-use controls.
+          <sdux-example-viewer-source>
+            @for (file of hydrationFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">exampleHydrate</span>. Immediately before
+          <span class="code">this.#vault.initialize()</span>, add
+          <span class="code"
+            >this.#vault.hydrate(() =&gt; exampleHydrate.getPromise())</span
+          >.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, import the helper;
+          add <span class="code">hydrationSettled</span>,
+          <span class="code">resolveHydration()</span>, and
+          <span class="code">rejectHydration()</span>; then bind the existing
+          Resolve and Reject controls to those methods as shown below.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Reload the example. Confirm loading remains visible until you choose
+          Resolve or Reject. Resolve must render the filtered, reduced hydrated
+          collection; Reject must end loading and display Error State.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Hydrate File</div>
+      <p>
+        The
+        <span class="code">example.hydrate.ts</span> contains the helper logic
+        for managing the hydration process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          <span class="code">hydrate()</span> registers the deferred source
+          without executing it. The factory runs when
+          <span class="code">initialize()</span> begins, while the Fluent API
+          keeps asynchronous initialization and its error handling inside the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          pipeline.
+        </li>
+        <li>
+          Resolve completes initialization and sends the helper's collection
+          through the configured pipeline.
+        </li>
+        <li>
+          Reject produces initialization Error State without falling back to the
+          configured initial value or persistence.
+        </li>
+        <li>
+          <span class="code">state.isLoading()</span> remains true while the
+          helper's Promise is pending and returns to false after completion.
+        </li>
+        <li>
+          The component supplies the teaching controls; the service and
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          still own initialization and State authority.
+        </li>
+        <li>
+          After reloading the example, the existing loading indicator remains
+          visible until you click Resolve or Reject to complete initialization.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="9-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">Step 2: Resolve a Promise</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step shows how to submit a Promise-backed State update after the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> has
+      initialized. The service passes a deferred factory to
+      <span class="code">mergeState()</span>, allowing the Promise Resolve stage
+      to await its value before the candidate continues through the rest of the
+      pipeline.
+    </p>
+
+    <p>
+      In this example, <span class="code">example.promise.ts</span> is a
+      teaching helper. It creates one pending Promise, stores its resolver and
+      rejecter, and lets the component decide when the simulated request
+      completes. A real Promise factory would consume an asynchronous database,
+      API, or other application service. The helper only makes the pending
+      interval visible so you can observe the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      lifecycle.
+    </p>
+
+    <p>
+      The deferred Promise is not resolved by the component. The component
+      starts the request and exposes the teaching controls, while the service
+      submits the input through <span class="code">mergeState()</span>. The
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> owns
+      loading and error State, and the resolved characters continue through the
+      configured Filter and Reducer stages before the array-append merge commits
+      them to State.
+    </p>
+
+    <p>
+      This step does not introduce a new UI workflow. The existing
+      <span class="code">Fetch with Promise</span>, Resolve, and Reject buttons
+      make the Promise lifecycle visible, and the existing
+      <span class="code">state.isLoading()</span> indicator shows while the
+      request is pending. The surrounding character editor remains the same so
+      you can focus on how a Promise enters the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Create <span class="code">example.promise.ts</span> from the
+          checkpoint. Preserve its single pending Promise and one-use Resolve
+          and Reject controls; do not move that state into the component.
+          <sdux-example-viewer-source>
+            @for (file of promiseFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">examplePromise</span> and add
+          <span class="code">fetchWithPromise()</span>. Read
+          <span class="code">getPromise()</span> once and pass
+          <span class="code">() =&gt; deferredPromise</span> as the
+          <span class="code">value</span> submitted to
+          <span class="code">mergeState()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, add
+          <span class="code">promisePending</span>,
+          <span class="code">fetchWithPromise()</span>,
+          <span class="code">resolvePromise()</span>, and
+          <span class="code">rejectPromise()</span>. The Fetch method delegates
+          to the service; only the teaching controls call the helper.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Click Fetch, then Resolve. Confirm loading is true while pending and
+          false after Ahsoka and Din are appended. Repeat with Reject and
+          confirm the existing collection remains visible.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Promise File</div>
+      <p>
+        The
+        <span class="code">example.promise.ts</span> contains the helper logic
+        for managing the promise process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Click <span class="code">Fetch with Promise</span> and observe the
+          loading indicator while the helper's Promise remains pending.
+        </li>
+        <li>
+          Click Resolve to complete the Promise and watch its characters enter
+          Filter and Reducer stages before the array-append merge commits them.
+        </li>
+        <li>
+          The deferred factory is consumed once for the pipeline request, so
+          Promise resolution stays associated with that
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          execution.
+        </li>
+        <li>
+          Reload the example, start the request again, and click Reject to see
+          the Promise rejection become normalized pipeline Error State while the
+          previously committed collection is preserved.
+        </li>
+        <li>
+          The component supplies the teaching controls; the service and
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> own
+          loading, error, resolution, and commit behavior.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="9-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">
+      Step 3: Resolve an Observable
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step shows how to submit an Observable-backed State update after the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> has
+      initialized. The service passes the Observable to
+      <span class="code">mergeState()</span>, allowing the Observable Resolve
+      stage to subscribe to the source and extract its emitted value before the
+      candidate continues through the pipeline.
+    </p>
+
+    <p>
+      In this example, <span class="code">example.observable.ts</span> is a
+      teaching helper. It creates a controlled
+      <span class="code">ReplaySubject</span>, exposes it as an Observable, and
+      lets the component decide when the source emits or errors. A real
+      Observable could represent a stream from an API, database, event source,
+      or another application service. The helper only keeps the source pending
+      long enough for you to observe the Resolve lifecycle.
+    </p>
+
+    <p>
+      The Observable is not subscribed to by the component. The component starts
+      the request and exposes the teaching controls, while the service submits
+      the source through <span class="code">mergeState()</span>. The
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      owns the subscription lifecycle, loading and error State, and downstream
+      processing. The first emitted collection continues through Filter and
+      Reducer stages before the array-append merge commits it to State.
+    </p>
+
+    <p>
+      This step does not introduce a new UI workflow. The existing
+      <span class="code">Add by Observable</span>, Emit, and Error buttons make
+      the source lifecycle visible, and the existing
+      <span class="code">state.isLoading()</span> indicator shows while the
+      Observable is pending. The surrounding character editor remains the same
+      so you can focus on how an Observable enters the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Create <span class="code">example.observable.ts</span> from the
+          checkpoint. Its <span class="code">ReplaySubject(1)</span> owns the
+          active source, while <span class="code">getEmit()</span> and
+          <span class="code">getError()</span> settle and release it.
+          <sdux-example-viewer-source>
+            @for (file of observableFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.service.ts</span>, import
+          <span class="code">exampleObservable</span> and add
+          <span class="code">addByObservable()</span>, passing
+          <span class="code">exampleObservable.getObservable()</span> directly
+          to <span class="code">mergeState()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, add
+          <span class="code">observablePending</span>,
+          <span class="code">addByObservable()</span>,
+          <span class="code">emitObservable()</span>, and
+          <span class="code">errorObservable()</span>. Do not subscribe in the
+          component.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Click Add, then Emit. Confirm loading ends and Ezra and Hera are
+          appended. Repeat with Error and confirm the committed collection is
+          preserved.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Observable File</div>
+      <p>
+        The
+        <span class="code">example.observable.ts</span> contains the helper
+        logic for managing the observable process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Click <span class="code">Add by Observable</span> and observe the
+          loading indicator while the helper's source remains pending.
+        </li>
+        <li>
+          Click Emit to produce the source value and watch the first emitted
+          collection enter Filter and Reducer stages before the array-append
+          merge commits it.
+        </li>
+        <li>
+          Repeat the request and click Error to see the Observable error
+          normalized into pipeline Error State while the previously committed
+          collection is preserved.
+        </li>
+        <li>
+          The Observable Resolve stage owns subscription and extracts a single
+          emitted value for downstream processing; the component only supplies
+          the teaching controls.
+        </li>
+        <li>
+          <span class="code">state.isLoading()</span> remains active while the
+          Observable is pending and completes with the resolved or error State.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="9-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Step 4: Resolve an HTTP Resource
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step shows how to submit Angular's
+      <span class="code">HttpResourceRef</span> as a State input after the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> has
+      initialized. The service creates the resource and passes it to
+      <span class="code">replaceState()</span>, allowing the HTTP Resource
+      Resolve stage to observe its reactive value signal and wait for the first
+      concrete response before the candidate continues through the pipeline.
+    </p>
+
+    <p>
+      In this example, <span class="code">example.http-resource.ts</span> is a
+      teaching adapter around the public SWAPI people endpoint. It selects the
+      people needed by the tutorial, converts the untrusted response into the
+      application's character shape, and rejects incomplete data before it
+      reaches State. A real adapter could map an application's own HTTP
+      response, but it would follow the same boundary: create a resource, parse
+      its response, and submit the typed result to the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+    </p>
+
+    <p>
+      The component does not read the HTTP resource directly. It starts the
+      request, while the service submits the resource through
+      <span class="code">replaceState()</span>. The HTTP Resource Resolve stage
+      synchronizes the resource's loading and error signals with the pipeline,
+      then sends the parsed characters through Filter and Reducer stages before
+      the replacement collection is committed atomically to State.
+    </p>
+
+    <p>
+      This step does not introduce a new UI workflow. The existing
+      <span class="code">Replace with httpResource</span> button starts the
+      request, and the existing
+      <span class="code">state.isLoading()</span> indicator shows while the
+      resource is pending. The surrounding character editor remains the same so
+      you can focus on how an Angular HTTP resource enters the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      pipeline.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Create <span class="code">example.http-resource.ts</span> from the
+          checkpoint. Keep the endpoint, selected-character metadata, and
+          <span class="code">parseStarWarsCharacters()</span> together at the
+          transport boundary.
+          <sdux-example-viewer-source>
+            @for (file of httpResourceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.service.ts</span>, inject
+          <span class="code">Injector</span>, import
+          <span class="code">exampleHttpResource</span>, and add
+          <span class="code">fetchWithHttpResource()</span>. Pass the resource
+          returned by <span class="code">getResource(this.#injector)</span> to
+          <span class="code">replaceState()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, add
+          <span class="code">fetchWithHttpResource()</span> and delegate to the
+          service. Keep the resource itself out of the component.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Click Replace with httpResource. On success, confirm Lando Calrissian
+          and Han Solo replace the collection in last-name order. On a network
+          or validation failure, confirm the previous collection remains and the
+          normalized error is visible.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Public Endpoint Recovery</div>
+      <p>
+        This step depends on the public SWAPI endpoint and can fail because of
+        connectivity, CORS policy, rate limits, or remote schema changes. Treat
+        a normalized error with the previous collection preserved as a valid
+        failure observation. Use the completed StackBlitz source as the
+        reference and retry later; do not weaken response validation to force an
+        external response to commit.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting HTTP Resource File</div>
+      <p>
+        The
+        <span class="code">example.http-resource.ts</span> contains the helper
+        logic for managing the HTTP resource process.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Click <span class="code">Replace with httpResource</span> and observe
+          the existing collection and loading indicator while the HTTP resource
+          is pending.
+        </li>
+        <li>
+          The HTTP Resource Resolve stage observes the resource rather than the
+          component, then extracts the first concrete value for pipeline
+          processing.
+        </li>
+        <li>
+          After the response is parsed and validated, the selected characters
+          enter Filter and Reducer stages before replacing the previous
+          collection atomically.
+        </li>
+        <li>
+          Transport, parsing, validation, and HTTP failures are normalized into
+          the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          error lifecycle without committing a partial response.
+        </li>
+        <li>
+          <span class="code">state.isLoading()</span> remains active while the
+          resource is pending and completes with either the replacement or the
+          normalized error State.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="9-step-5" aria-labelledby="step-5-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-5-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The async input chapter is complete when you can distinguish
+      initialization-time hydration from later asynchronous state updates and
+      can observe the same
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> loading
+      and error lifecycle across all four input styles.
+    </p>
+
+    <p>
+      The component owns only presentation state and user actions. The service
+      owns the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> boundary
+      and submits each asynchronous source through the appropriate state API.
+      Resolve behavior then determines how each input becomes a candidate for
+      the shared Filter, Reducer, and commit pipeline.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Reload and resolve hydration. Confirm initialization commits four
+          characters because the filter removes BB-8 before reducers add display
+          fields and sort the collection. Reject hydration and confirm the
+          deferred result controls initialization rather than the configured
+          initial value.
+        </li>
+        <li>
+          Run the Promise success and rejection paths. Confirm success appends
+          Ahsoka and Din, while rejection preserves the committed collection.
+          Watch <span class="code">state.isLoading()</span> and Error State
+          while the Promise is pending and after it settles.
+        </li>
+        <li>
+          Run the Observable success and error paths. Confirm success appends
+          Ezra and Hera, while an error preserves the committed collection.
+          Watch <span class="code">state.isLoading()</span> and Error State
+          while the Observable is pending and after it settles.
+        </li>
+        <li>
+          Run the HTTP Resource path. Confirm a valid response replaces the
+          collection with Lando and Han; treat normalized failure with the old
+          collection preserved as the documented external-endpoint recovery.
+          Confirm the parsed result uses the same downstream Filter, Reducer,
+          and commit pipeline.
+        </li>
+        <li>
+          Across all four inputs, the component supplies teaching controls, the
+          service owns the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          boundary, and the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> owns
+          resolution, loading, errors, and committed State.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 9 Summary</div>
+      <ul>
+        <li>
+          <span class="code">hydrate()</span> supplies authoritative initial
+          State during initialization.
+        </li>
+        <li>
+          Promise and Observable inputs resolve deferred values for
+          <span class="code">mergeState()</span>.
+        </li>
+        <li>
+          HTTP Resource input resolves a reactive Angular resource for
+          <span class="code">replaceState()</span>.
+        </li>
+        <li>
+          All four inputs preserve the service-owned boundary and converge on
+          the same pipeline and reactive State APIs.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/hydrate-method"
+            >hydrate()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/resolve/core-promise"
+            >Promise Resolve Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/resolve/core-observable"
+            >Observable Resolve Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/resolve/http-resource"
+            >HTTP Resource Resolve Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/execution-guarantee"
+            >Pipeline Execution</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/merge-state-method"
+            >mergeState()</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/replace-state-method"
+            >replaceState()</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="9-step-6" aria-labelledby="step-6-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-6-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished async input example without these five steps?</h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed
+              hydration, Promise, Observable, and HTTP Resource configuration
+              and interactive example directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Delay Input">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-10']">Chapter 10: Delay Input</a>
+    </div>
+  </div>
+</section>

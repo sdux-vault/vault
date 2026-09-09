@@ -6,26 +6,28 @@
     [routerLinkActiveOptions]="{ exact: true }"
     [expanded]="forceExpanded() || vaultFeatureCellApiRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Vault Creation API</span>
+      <span class="menu-content parent-expansion-item">Vault Creation API</span>
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/vault"
-      aria-label="Vault documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">Vault</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/vault"
+        aria-label="Vault documentation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Vault</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/feature-cell"
-      aria-label="FeatureCell documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">FeatureCell</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/feature-cell"
+        aria-label="FeatureCell documentation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">FeatureCell</span>
+      </a>
+    </div>
 
     <mat-expansion-panel
       class="nav-expansion"
@@ -35,14 +37,12 @@
       [expanded]="forceExpanded() || vaultFeatureCellApiOverviewRla.isActive">
       <mat-expansion-panel-header>
         <div class="menu-icon">
-          <span class="sub-menu-content sub-item sub-header"
-            >FeatureCell Api</span
-          >
+          <span class="menu-content child-expansion-item">FeatureCell Api</span>
         </div>
       </mat-expansion-panel-header>
 
       <!-- Complete API -->
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/feature-cell-api"
@@ -50,7 +50,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           aria-label="Complete FeatureCell API documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">Overview</span>
+          <span class="menu-content sub-item">Overview</span>
         </a>
 
         <a
@@ -59,7 +59,7 @@
           routerLinkActive="active"
           aria-label="afterTaps method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">afterTaps()</span>
+          <span class="menu-content sub-item">afterTaps()</span>
         </a>
         <a
           mat-list-item
@@ -67,7 +67,7 @@
           routerLinkActive="active"
           aria-label="beforeTaps method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">beforeTaps()</span>
+          <span class="menu-content sub-item">beforeTaps()</span>
         </a>
         <a
           mat-list-item
@@ -75,7 +75,7 @@
           routerLinkActive="active"
           aria-label="destroy method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">destroy()</span>
+          <span class="menu-content sub-item">destroy()</span>
         </a>
         <a
           mat-list-item
@@ -83,7 +83,7 @@
           routerLinkActive="active"
           aria-label="destroyed stream documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">destroyed$</span>
+          <span class="menu-content sub-item">destroyed$</span>
         </a>
         <a
           mat-list-item
@@ -91,7 +91,7 @@
           routerLinkActive="active"
           aria-label="emitStates method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">emitStates()</span>
+          <span class="menu-content sub-item">emitStates()</span>
         </a>
         <a
           mat-list-item
@@ -99,7 +99,7 @@
           routerLinkActive="active"
           aria-label="errors method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">errors()</span>
+          <span class="menu-content sub-item">errors()</span>
         </a>
         <a
           mat-list-item
@@ -107,7 +107,7 @@
           routerLinkActive="active"
           aria-label="filters method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">filters()</span>
+          <span class="menu-content sub-item">filters()</span>
         </a>
         <a
           mat-list-item
@@ -115,7 +115,7 @@
           routerLinkActive="active"
           aria-label="fromStream method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">fromStream()</span>
+          <span class="menu-content sub-item">fromStream()</span>
         </a>
         <a
           mat-list-item
@@ -123,7 +123,7 @@
           routerLinkActive="active"
           aria-label="hydrate method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">hydrate()</span>
+          <span class="menu-content sub-item">hydrate()</span>
         </a>
         <a
           mat-list-item
@@ -131,7 +131,7 @@
           routerLinkActive="active"
           aria-label="initialize method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">initialize()</span>
+          <span class="menu-content sub-item">initialize()</span>
         </a>
         <a
           mat-list-item
@@ -139,7 +139,7 @@
           routerLinkActive="active"
           aria-label="interceptors method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">interceptors()</span>
+          <span class="menu-content sub-item">interceptors()</span>
         </a>
         <a
           mat-list-item
@@ -147,7 +147,7 @@
           routerLinkActive="active"
           aria-label="key property documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">key</span>
+          <span class="menu-content sub-item">key</span>
         </a>
         <a
           mat-list-item
@@ -155,7 +155,7 @@
           routerLinkActive="active"
           aria-label="mergeState method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">mergeState()</span>
+          <span class="menu-content sub-item">mergeState()</span>
         </a>
         <a
           mat-list-item
@@ -163,7 +163,7 @@
           routerLinkActive="active"
           aria-label="operators method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">operators()</span>
+          <span class="menu-content sub-item">operators()</span>
         </a>
         <a
           mat-list-item
@@ -171,7 +171,7 @@
           routerLinkActive="active"
           aria-label="reducers method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">reducers()</span>
+          <span class="menu-content sub-item">reducers()</span>
         </a>
         <a
           mat-list-item
@@ -179,7 +179,7 @@
           routerLinkActive="active"
           aria-label="replaceState method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">replaceState() </span>
+          <span class="menu-content sub-item">replaceState() </span>
         </a>
         <a
           mat-list-item
@@ -187,7 +187,7 @@
           routerLinkActive="active"
           aria-label="reset method documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">reset()</span>
+          <span class="menu-content sub-item">reset()</span>
         </a>
         <a
           mat-list-item
@@ -195,7 +195,7 @@
           routerLinkActive="active"
           aria-label="reset stream documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">reset$</span>
+          <span class="menu-content sub-item">reset$</span>
         </a>
         <a
           mat-list-item
@@ -203,7 +203,7 @@
           routerLinkActive="active"
           aria-label="state property documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">state</span>
+          <span class="menu-content sub-item">state</span>
         </a>
         <a
           mat-list-item
@@ -211,7 +211,7 @@
           routerLinkActive="active"
           aria-label="state stream documentation"
           (click)="closeSidenav()">
-          <span class="menu-content">state$</span>
+          <span class="menu-content sub-item">state$</span>
         </a>
 
         <a
@@ -220,7 +220,7 @@
           routerLinkActive="active"
           aria-label="useReactiveState method documentation"
           (click)="closeSidenav()">
-          <div class="menu-icon menu-content">
+          <div class="menu-icon menu-content sub-item">
             useReactiveState
             <img
               src="assets/brand/vue/vue-icon.svg"
@@ -234,7 +234,7 @@
           routerLinkActive="active"
           aria-label="useSyncExternalStore method documentation"
           (click)="closeSidenav()">
-          <div class="menu-icon menu-content">
+          <div class="menu-icon menu-content sub-item">
             useSyncExternalStore
             <img
               src="assets/brand/react/react-icon.svg"
@@ -245,18 +245,20 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/apis/cell-builder"
-      aria-label="CellBuilder documentation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">CellBuilder</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/apis/cell-builder"
+        aria-label="CellBuilder documentation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">CellBuilder</span>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >Angular
           <img
             src="assets/brand/angular/angular-icon.png"
@@ -265,7 +267,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/angular"
@@ -273,7 +275,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
         <a
           mat-list-item
@@ -281,7 +283,7 @@
           aria-label="provideVault documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">provideVault </span>
+          <span class="menu-icon menu-content sub-item">provideVault </span>
         </a>
 
         <a
@@ -290,7 +292,9 @@
           aria-label="provideFeatureCell documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">provideFeatureCell </span>
+          <span class="menu-icon menu-content sub-item"
+            >provideFeatureCell
+          </span>
         </a>
 
         <a
@@ -299,7 +303,7 @@
           aria-label="&#64;FeatureCell decorator documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">&#64;FeatureCell </span>
+          <span class="menu-icon menu-content sub-item">&#64;FeatureCell </span>
         </a>
 
         <a
@@ -308,14 +312,14 @@
           aria-label="injectVault injector documentation"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">injectVault</span>
+          <span class="menu-icon menu-content sub-item">injectVault</span>
         </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >React
           <img
             src="assets/brand/react/react-icon.svg"
@@ -324,7 +328,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/react"
@@ -332,14 +336,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >Svelte
           <img
             src="assets/brand/svelte/svelte-icon.svg"
@@ -348,7 +352,7 @@
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/svelte"
@@ -356,20 +360,20 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
       </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header menu-icon"
+        <span class="menu-content child-expansion-item menu-icon"
           >Vue
           <img src="assets/brand/vue/vue-icon.svg" class="image-15" alt="Vue" />
         </span>
       </mat-expansion-panel-header>
 
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/apis/vue"
@@ -377,7 +381,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeSidenav()">
-          <span class="menu-icon menu-content">Overview </span>
+          <span class="menu-icon menu-content sub-item">Overview </span>
         </a>
       </div>
     </mat-expansion-panel>

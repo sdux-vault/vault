@@ -5,58 +5,62 @@
     #executionGuaranteeRla="routerLinkActive"
     [expanded]="forceExpanded() || executionGuaranteeRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Execution Guarantees</span>
+      <span class="menu-content parent-expansion-item"
+        >Execution Guarantees</span
+      >
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/execution-guarantee"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeSidenav()">
-      <span class="menu-content">Overview</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/execution-guarantee"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Overview</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/execution-guarantee/conductor"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Conductor</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/execution-guarantee/conductor"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Conductor</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Conductor Queue</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Conductor Queue</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/execution-guarantee/decision-engine"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item"
-        >Decision Engine &amp; Arbitrator</span
-      >
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/execution-guarantee/decision-engine"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item"
+          >Decision Engine &amp; Arbitrator</span
+        >
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/execution-guarantee/orchestrator"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Orchestrator</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/execution-guarantee/orchestrator"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Orchestrator</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/execution-guarantee/isolation"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Pipeline Isolation</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/execution-guarantee/isolation"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Pipeline Isolation</span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

@@ -12,8 +12,10 @@
             class="source-row"
             [class.isMobile]="mobileLayoutService.isMobile()">
             <pre
-              #sourcePane
               class="source-pane"
+              sduxSourceOverflow
+              [sduxSourceOverflowMaxHeight]="sourcePaneMaxHeight()"
+              (sduxSourceOverflowChange)="setSourceOverflow(i, $event)"
               [class.source-pane-collapsed]="isSourceCollapsed(i)">
               <code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code>
             </pre>
@@ -76,8 +78,10 @@
 
       <div class="source-row" [class.isMobile]="mobileLayoutService.isMobile()">
         <pre
-          #sourcePane
           class="source-pane"
+          sduxSourceOverflow
+          [sduxSourceOverflowMaxHeight]="sourcePaneMaxHeight()"
+          (sduxSourceOverflowChange)="setSourceOverflow(i, $event)"
           [class.source-pane-collapsed]="isSourceCollapsed(i)">
           <code #codeBlock><ng-container *ngTemplateOutlet="tab.template"></ng-container></code>
         </pre>

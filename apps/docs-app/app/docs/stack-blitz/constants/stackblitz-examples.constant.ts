@@ -1,10 +1,11 @@
 import type { StackBlitzExampleShape } from '../shapes/stackblitz-example.shape';
+import type { StackBlitzGroupShape } from '../shapes/stackblitz-group.shape';
 import { createTutorialExampleGroups } from './stackblitz-tutorial-examples.constant';
 
 /** StackBlitz example group definitions. */
 export function createExampleGroups(brandName: string) {
-  const tutorialGroups = createTutorialExampleGroups();
-  const groups = [
+  const tutorialGroups: StackBlitzGroupShape[] = createTutorialExampleGroups();
+  const groups: StackBlitzGroupShape[] = [
     {
       heading: 'Getting Started',
       tutorialOnly: false,
@@ -249,12 +250,12 @@ export function createExampleGroups(brandName: string) {
           ]
         }
       ] satisfies StackBlitzExampleShape[]
-    },
-    ...tutorialGroups
+    }
   ];
 
-  return groups.map((group) => ({
+  const sortedGroups = groups.map((group) => ({
     ...group,
     examples: [...group.examples].sort((a, b) => a.title.localeCompare(b.title))
   }));
+  return sortedGroups.concat(tutorialGroups);
 }

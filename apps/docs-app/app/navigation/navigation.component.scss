@@ -4,6 +4,15 @@
    SDuX Sidenav Container
    ====================================================== */
 
+$parent-menu-indent: global.$spacing-sm;
+$child-menu-indent: global.$spacing-md;
+$grandchild-menu-indent: global.$spacing-lg;
+$great-grandchild-menu-indent: global.$spacing-xl;
+$navigation-item-height: global.$navigation-item-height;
+$font-size: global.$font-size-sm;
+$debug-parent-border: 0px;
+$debug-child-border: 0px;
+
 .sdux-sidenav-container {
   width: 100%;
   height: calc(100vh - var(--app-toolbar-height) - var(--app-footer-height));
@@ -41,13 +50,14 @@
     border-radius: 0;
 
     border-inline-end: 1px solid var(--sdux-surface-outline);
-    overflow: hidden;
+    overflow: unset;
 
     .sidenav-content {
-      width: 100%;
+      width: global.$sidenav-width;
       overflow-x: hidden;
 
       .navigation-list {
+        width: global.$sidenav-width;
         padding: 0;
         margin: 0;
         background-color: var(--sdux-surface-bg);
@@ -56,40 +66,8 @@
           background-color 0.25s ease,
           color 0.25s ease;
 
-        .menu-content-container {
-          height: 42px;
-
-          .menu-content {
-            height: 24px;
-            font-size: global.$font-size-sm;
-            font-weight: global.$font-weight-semibold;
-            color: var(--sdux-text-default);
-
-            .logo {
-              height: 25px;
-            }
-
-            .type {
-              font-size: global.$font-size-xs;
-            }
-
-            &.sub-item {
-              padding-inline-start: global.$spacing-md;
-              font-weight: global.$font-weight-medium;
-              color: var(--sdux-text-default);
-            }
-          }
-        }
-
-        /* ===============================
-           Sub-item indentation
-           =============================== */
-        .sub-item {
-          padding-inline-start: calc(global.$spacing-md + 12px);
-          color: var(--sdux-text-default);
-        }
-
         a.mat-mdc-list-item {
+          padding: 0;
           transition: background-color 0.2s ease;
           border-radius: 0;
 
@@ -99,10 +77,10 @@
           }
 
           &.mdc-list-item--with-one-line {
-            height: 42px;
+            height: $navigation-item-height;
 
             .logo {
-              height: 42px;
+              height: $navigation-item-height;
               display: flex;
               flex-direction: row;
               align-items: center;
@@ -117,6 +95,104 @@
               transparent
             );
             border-radius: 0;
+          }
+        }
+
+        .menu-content-container {
+          height: $navigation-item-height;
+
+          .menu-content {
+            padding-inline-start: $parent-menu-indent;
+            border: $debug-parent-border solid purple;
+            font-size: $font-size;
+            font-weight: global.$font-weight-semibold;
+            color: var(--sdux-text-default);
+
+            .logo {
+              height: 25px;
+            }
+
+            .type {
+              font-size: global.$font-size-xs;
+            }
+          }
+        }
+
+        .mat-expansion-panel {
+          .menu-content {
+            font-size: $font-size;
+            color: var(--sdux-text-default);
+          }
+
+          &.nav-expansion {
+            background: var(--sidenav-bg) !important;
+            color: var(--sidenav-text) !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            margin: 0;
+            padding: 0;
+
+            .mat-expansion-panel-body {
+              border-top: 1px solid global.$sdux-primary-base;
+              padding: 0 !important; /* exception: override Material internal padding */
+            }
+
+            .mat-expansion-panel-header {
+              border-radius: 0;
+              padding-left: 0;
+              padding-right: global.$spacing-sm;
+              min-height: global.$navigation-item-minheight !important;
+              height: $navigation-item-height;
+
+              .parent-expansion-item {
+                padding-inline-start: $parent-menu-indent;
+                border: $debug-parent-border solid red;
+
+                &.menu-content {
+                  font-weight: global.$font-weight-semibold;
+                }
+              }
+
+              .child-expansion-item {
+                border: $debug-child-border solid blue;
+                padding-inline-start: $child-menu-indent;
+              }
+
+              .grandchild-expansion-item {
+                border: $debug-child-border solid lime;
+                padding-inline-start: $grandchild-menu-indent;
+              }
+            }
+
+            .expansion-sub-menu {
+              border: $debug-child-border solid green;
+              padding: 0;
+              // padding-inline-start: $child-menu-indent;
+
+              .sub-item {
+                padding-inline-start: $grandchild-menu-indent;
+                color: var(--sdux-text-default);
+                border: $debug-child-border solid orange;
+              }
+
+              .grandchild-sub-item {
+                padding-inline-start: $great-grandchild-menu-indent;
+                color: var(--sdux-text-default);
+                border: $debug-child-border solid teal;
+              }
+            }
+
+            .sub-menu {
+              border: $debug-child-border solid green;
+              padding: 0;
+              // padding-inline-start: $child-menu-indent;
+
+              .sub-item {
+                padding-inline-start: $child-menu-indent;
+                color: var(--sdux-text-default);
+                border: $debug-child-border solid orange;
+              }
+            }
           }
         }
       }
@@ -143,7 +219,7 @@
     gap: global.$spacing-xs;
 
     .pill-label {
-      font-size: global.$font-size-sm;
+      font-size: $font-size;
       font-weight: global.$font-weight-medium;
       white-space: nowrap;
     }
@@ -151,101 +227,6 @@
     &:hover .pill-label {
       color: global.$sdux-text-white;
     }
-  }
-}
-
-/* exception: mat-expansion-panel-body padding is not configurable via inputs */
-::ng-deep .mat-expansion-panel-body {
-  border-top: 1px solid global.$sdux-primary-base;
-  padding: 0 !important; /* exception: override Material internal padding */
-}
-
-.nav-expansion {
-  /* exception: override Material expansion panel defaults */
-  background: var(--sidenav-bg) !important;
-  color: var(--sidenav-text) !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  margin: 0;
-  padding: 0;
-
-  .mat-expansion-panel-header {
-    border-radius: 0;
-    padding-left: 0;
-    min-height: 36px !important; /* exception: override Material min-height */
-    height: 42px;
-
-    .mat-content {
-      .nav-section-label {
-        padding: global.$spacing-sm global.$spacing-md;
-        font-size: global.$font-size-sm;
-        font-weight: global.$font-weight-semibold;
-        color: var(--sdux-text-muted);
-
-        .tiny-label {
-          font-size: global.$font-size-xs;
-        }
-      }
-    }
-
-    &.mat-expanded {
-      height: 42px;
-    }
-
-    .sub-menu-content {
-      padding-inline-start: global.$spacing-sm;
-      font-size: global.$font-size-sm;
-      font-weight: global.$font-weight-medium;
-    }
-  }
-
-  &.grandparent {
-    .sub-menu {
-      padding-inline-start: global.$spacing-sm;
-
-      .sub-header {
-        font-weight: global.$font-weight-medium;
-      }
-
-      a.mat-mdc-list-item {
-        padding-inline-start: 0;
-
-        .menu-content {
-          /* exception: override Material list-item padding */
-          padding-inline-start: global.$spacing-lg !important;
-          font-size: global.$font-size-sm;
-          font-weight: global.$font-weight-regular;
-          color: var(--sdux-text-muted);
-        }
-      }
-    }
-  }
-}
-
-/* Sub-items inside expansion panel */
-.nav-expansion .sub-menu a.mat-mdc-list-item {
-  /* exception: override Material list-item padding */
-  padding-inline-start: global.$spacing-md !important;
-
-  .menu-content {
-    /* exception: override Material list-item padding */
-    padding-inline-start: global.$spacing-lg !important;
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-regular;
-    color: var(--sdux-text-muted);
-  }
-}
-
-.nav-expansion a.mat-mdc-list-item {
-  /* exception: override Material list-item padding */
-  padding: 0 !important;
-
-  .menu-content {
-    /* exception: override Material list-item padding; +4px aligns text with expansion header labels */
-    padding-inline-start: calc(global.$spacing-lg + 4px) !important;
-    font-size: global.$font-size-sm;
-    font-weight: global.$font-weight-medium;
-    color: var(--sdux-text-default);
   }
 }
 

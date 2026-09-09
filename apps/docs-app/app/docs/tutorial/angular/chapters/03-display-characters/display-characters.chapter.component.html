@@ -1,0 +1,458 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-3" aria-labelledby="chapter-3-title">
+  <h2>Chapter 3: Display Characters</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter turns a fixed read view into a user-selected read path. The
+      same service-owned <sdux-feature-cell /> now exposes a managed collection
+      that the component can present through a dropdown-driven selection flow.
+    </p>
+    <p>
+      The important shift is architectural, not mechanical: selection stays
+      local to the component, while Feature State remains owned by the service.
+      The result is a more interactive read experience without moving State
+      ownership out of the existing boundary.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">Add interaction without moving ownership.</h3>
+    <p>
+      A fixed detail view proves that managed State can reach the UI. A useful
+      application lets people decide which record to inspect. This chapter adds
+      that choice without turning a short-lived UI decision into shared Feature
+      State or duplicating the collection in the component.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The character collection remains the service-owned, committed source of
+      truth. A selected id only describes what this component is showing right
+      now. Keeping those responsibilities separate prevents temporary navigation
+      choices from coupling other consumers to this one view.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>a master-detail page for customers, products, or records</li>
+      <li>a picker whose choice affects only the current view</li>
+      <li>an interactive read path that will later support editing</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a dropdown backed by the committed character collection, a
+      component-local selection Signal, and a reactive detail panel that follows
+      the selected record while the service continues to own the
+      <sdux-feature-cell />.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-3-start-title">
+  <h2 class="section-title" id="chapter-3-start-title">
+    Chapter 3 Starting Point and Decision
+  </h2>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 2 project. This chapter changes only
+      <span class="code">example.component.ts</span>,
+      <span class="code">example.component.html</span>, and the component spec.
+      Registration, bootstrap, seed data, and the service remain unchanged.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Confirm the Starting Checkpoint</div>
+      <ol>
+        <li>
+          Run the Chapter 1 project and confirm the first character renders.
+        </li>
+        <li>
+          Keep <span class="code">ExampleService</span> unchanged throughout
+          this chapter.
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="3-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">Step 1: Add a Dropdown</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This step upgrades the initial <sdux-brand-name /> read path from showing
+      the first committed record automatically to letting the user choose which
+      committed record to inspect. The Feature registration, service-owned
+      <sdux-feature-cell />, and managed collection stay the same; only the
+      UI-facing selection logic changes.
+    </p>
+
+    <p>
+      Assume the Angular mechanics are already familiar. Here, keep Feature
+      State in the service, keep selection state in the component, and derive
+      the displayed record from the latest service-owned collection.
+    </p>
+    <p>
+      Replace the single displayed-character computed Signal with a read-only
+      character collection, a
+      <span class="code">selectedCharacterId</span> Signal, a computed lookup
+      for the selected record, and a small selection handler.
+    </p>
+    <p>
+      In the template, add a <span class="code">select</span> element that lists
+      the registered characters and keep the detail panel bound to computed
+      controller state instead of reaching into <sdux-brand-name /> directly.
+    </p>
+    <p>
+      The matching verification belongs in this same step: the updated component
+      spec should prove the controller starts empty, accepts a valid selection,
+      ignores unknown ids, a Charactersnd renders the selected record without
+      moving
+      <sdux-brand-name /> ownership out of the service.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Reactive Lookup</div>
+      <p>
+        The selected character depends on two values: the latest committed
+        collection from the service and the component-local selected ID. When
+        either changes, the computed lookup runs again. A known ID produces its
+        record; an empty or unknown ID produces no selected record and the
+        template renders the empty state.
+      </p>
+    </div>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In <span class="code">example.component.ts</span>, replace the
+          single-record computed value with
+          <span class="code">characters</span>, a computed read of
+          <span class="code">this.#exampleService.state.value() ?? []</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'New Computed Value'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`readonly characters = computed&lt;readonly StarWarsCharacter[]&gt;(
+    () =&gt; this.#exampleService.state.value() ?? []
+);`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add <span class="code">selectedCharacterId</span> as a local Signal
+          initialized to <span class="code">null</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectedCharacterId'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacterId = signal&lt;number | null&gt;(null);
+`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add
+          <span class="code">selectedCharacter</span> as a computed lookup that
+          returns the matching collection record or
+          <span class="code">null</span>.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectedCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`protected readonly selectedCharacter = computed(() =&gt; {
+  const selectedId = this.selectedCharacterId();
+  return this.characters().find(({ id }) =&gt; id === selectedId) ?? null;
+});`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add <span class="code">selectCharacter(value: string)</span>. Convert
+          the dropdown value with <span class="code">Number(value)</span>, set
+          the Signal only when that ID exists in
+          <span class="code">characters()</span>, and otherwise leave the
+          current local selection unchanged.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`protected selectCharacter(value: string): void {
+  const character =
+    this.characters().find((character) => character.id === Number(value)) ??
+    null;
+
+  if (!character) {
+    return;
+  }
+
+  this.selectedCharacterId.set(character.id);
+}`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, render one option
+          per <span class="code">characters()</span> entry and pass the selected
+          value to <span class="code">selectCharacter()</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-top"&gt;
+  &lt;div class="field selection"&gt;
+    &lt;label for="character-selection"&gt;
+      Character (&#123;&#123; characters().length &#125;&#125; total)
+    &lt;/label&gt;
+    &lt;select
+      &#35;characterSelection
+      id="character-selection"
+      [disabled]="characters().length === 0"
+      (change)="selectCharacter(characterSelection.value)"&gt;
+      &lt;option
+        value=""
+        disabled
+        [selected]="selectedCharacterId() === null"&gt;
+        Select a character
+      &lt;/option&gt;
+      &#64;for (character of characters(); track character.id) &#123;
+        &lt;option
+          [value]="character.id"
+          [selected]="character.id === selectedCharacterId()"&gt;
+          &#123;&#123;
+            character.fullName ??
+              character.name + ' ' + character.lastName
+          &#125;&#125;
+        &lt;/option&gt;
+      &#125;
+    &lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Render the details panel only when
+          <span class="code">selectedCharacter()</span>
+          returns a record; otherwise render the empty guidance.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'selectCharacter'">
+              <pre
+                class="code-inline"><code class="language-ts">{{`&lt;div class="workspace-row workspace-row-bottom"&gt;
+  &lt;section
+    class="panel character-details"
+    aria-labelledby="details-title"&gt;
+    &lt;div class="header"&gt;
+      &lt;h3 id="details-title"&gt;Character details&lt;/h3&gt;
+    &lt;/div&gt;
+
+    &#64;if (selectedCharacter(); as character) &#123;
+      &lt;dl&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Full name&lt;/dt&gt;
+          &lt;dd&gt;
+            &#123;&#123; character.fullName &#125;&#125;
+          &lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;First name&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.name &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Last name&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.lastName &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Identifier&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.id &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt&gt;Faction&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.faction &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;dt class="force-sensitive"&gt;Force-sensitive&lt;/dt&gt;
+          &lt;dd&gt;&#123;&#123; character.forceSensitiveDisplay &#125;&#125;&lt;/dd&gt;
+        &lt;/div&gt;
+      &lt;/dl&gt;
+    &#125; &#64;else &#123;
+      &lt;div class="empty-state"&gt;
+        &lt;h4&gt;No character selected&lt;/h4&gt;
+        &lt;p&gt;Choose a character from the list.&lt;/p&gt;
+      &lt;/div&gt;
+    &#125;
+  &lt;/section&gt;
+&lt;/div&gt;`}}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          The service still owns the <sdux-feature-cell /> and does not change
+          for this UI enhancement.
+        </li>
+        <li>
+          The selection Signal is presentation state owned by the component, not
+          <sdux-brand-name /> Feature State owned by the service.
+        </li>
+        <li>
+          The template continues to render computed, display-ready values
+          instead of reading <sdux-feature-cell /> APIs directly.
+        </li>
+        <li>
+          The spec verifies the new UI behavior without changing the
+          <sdux-brand-name />-owned Feature State contract.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="3-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Display Characters</em> chapter is complete once the page starts
+      with no selected character, lists the registered collection in the picker,
+      and updates the detail panel when the selection changes.
+    </p>
+    <p>
+      The <sdux-brand-name /> boundary has not moved: the service still owns the
+      <sdux-feature-cell /> and the component still owns only UI selection
+      state.
+    </p>
+
+    <p>
+      This is the smallest useful <sdux-brand-name /> expansion of the initial
+      tutorial: the application moves from one fixed read path to one
+      user-directed read path without changing <sdux-feature-cell />
+      registration, service ownership, or application bootstrap structure. What
+      changed is the proof that the same service-owned State can now support
+      both an initial empty state and a selected-record view.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>Return to the running Angular application.</li>
+        <li>
+          Confirm the details panel shows the empty state before a character is
+          selected.
+        </li>
+        <li>
+          Open the dropdown, choose a character, and confirm the details panel
+          updates to the selected record.
+        </li>
+        <li>
+          Choose a different character to verify the same read path reacts to
+          the new selection.
+        </li>
+        <li>
+          In the component spec, submit an unknown ID and confirm the selection
+          remains empty rather than manufacturing or mutating Feature State.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 3 Summary</div>
+      <ul>
+        <li>
+          You should now be able to explain why the collection is shared Feature
+          State
+        </li>
+        <li>
+          Why the selected ID is local presentation state, and how the computed
+          detail reacts to both.
+        </li>
+        <li>
+          Chapter 3 keeps that boundary and adds service-owned create and update
+          requests.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="3-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished dropdown example without these two steps?</h2>
+      </div>
+
+      @if (stackblitz(); as stackblitz) {
+        <div class="tutorial-shortcut-launcher">
+          <p>
+            Launch the live StackBlitz project to inspect the completed display
+            characters configuration and interactive example directly.
+          </p>
+          <sdux-stackblitz-language-example
+            [example]="stackblitz.example"
+            [lang]="stackblitz.language" />
+        </div>
+      }
+
+      <div class="tutorial-download">
+        <p>Download the complete chapter source code as a ZIP archive.</p>
+        <sdux-download [url]="downloadUrl"></sdux-download>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Add/Edit Characters">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-4']">Chapter 4: Add/Edit Characters</a>
+    </div>
+  </div>
+</section>

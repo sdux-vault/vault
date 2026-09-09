@@ -1,0 +1,583 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-7" aria-labelledby="chapter-7-title">
+  <h2>Chapter 7: Filters and Reducers</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter focuses on pipeline shaping by introducing one filter and
+      three reducers. The service refines incoming candidates after Resolve and
+      derives display-ready values before the UI renders the committed State.
+    </p>
+    <p>
+      The service registers the filter and reducers, and the component renders
+      the committed display-ready State. That separation makes it clear why
+      filtering, sorting, and display derivation belong in the pipeline instead
+      of inside the template.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">Centralize cross-view data rules once.</h3>
+    <p>
+      Filtering, sorting, labels, and derived display values often begin as
+      small template decisions and gradually diverge across screens. This
+      chapter moves those rules into the pipeline, where a candidate collection
+      can be refined once and its display-ready State can be reused by every
+      consumer.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      Filters shape the candidate before reducers derive the committed value;
+      neither stage belongs in a component template. Pure, service-registered
+      functions keep the transformation order explicit, prevent repeated view
+      logic, and let each consumer render the same refined and derived State.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>
+        removing ineligible or incomplete records before they are rendered
+      </li>
+      <li>sorting collections consistently across multiple views</li>
+      <li>deriving labels and display fields once for every consumer</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a pure filter that refines candidate characters and ordered
+      reducers that derive sorting, labels, and full names before the committed
+      State reaches the component.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-7-start-title">
+  <h2 class="section-title" id="chapter-7-start-title">
+    Chapter 7 Starting Point and Stage Map
+  </h2>
+  <div class="section-body">
+    <p>
+      Start with a fresh completed Chapter 5 checkpoint, not the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      instance you destroyed while testing. This chapter changes the character
+      shape/domain helpers, service, component, template, and their specs.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Candidate Progression</div>
+      <ol>
+        <li>Resolve produces the incoming character collection.</li>
+        <li>
+          The filter removes records that fail this lab's eligibility rule.
+        </li>
+        <li>The first reducer derives a Force-sensitive display label.</li>
+        <li>The second reducer clones and sorts by last name.</li>
+        <li>The third reducer derives the reusable full name.</li>
+        <li>
+          Only the final display-ready collection becomes committed State.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Teaching Predicate, Not a Universal Domain Rule</div>
+      <p>
+        Removing the literal last name <span class="code">unknown</span> makes
+        the Filter stage easy to see; it is not a recommendation to discard
+        incomplete people or records. Production filters should encode a
+        defensible rule such as authorization, active status, or validated
+        eligibility. Preserve raw data elsewhere when the application must
+        correct or audit it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="7-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Add the Filter Stage
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This chapter focuses on pipeline shaping. The service still owns the same
+      <sdux-feature-cell />, but now the incoming candidate collection is
+      refined after the Resolve stage and before any reducer derives the final
+      committed value.
+    </p>
+
+    <p>
+      That execution order matters. The filter stage runs after Resolve and
+      before Reducers, so the candidate collection is refined before any reducer
+      logic runs.
+    </p>
+    <p>
+      In this example, the pure
+      <span class="code">removeUnknownLastNameFilter</span> removes any
+      candidate character whose last name is exactly
+      <span class="code">unknown</span>, so the collection is cleaned before
+      reducer logic derives any display fields.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Open <span class="code">example.filter.ts</span> and add the pure
+          filter that removes characters whose last name is
+          <span class="code">unknown</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of filterFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Open <span class="code">example.service.ts</span> and register that
+          filter with <span class="code">this.#vault.filters()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          The filter runs on the candidate collection produced after Resolve,
+          not on the currently rendered template state.
+        </li>
+        <li>
+          The filter is pure and side-effect free: it returns a refined array
+          and does not mutate the incoming candidate.
+        </li>
+        <li>
+          The service still owns pipeline registration. The component does not
+          decide which characters are filtered.
+        </li>
+        <li>
+          Filter registration order is deterministic, so the reducer stage only
+          sees the already-filtered candidate collection.
+        </li>
+        <li>
+          The seed file contains five characters. Chewbacca has the last name
+          <span class="code">unknown</span>, so this teaching filter removes
+          that record and passes four candidates to the reducers.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="7-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      Step 2: Register Ordered Reducers
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      After the filter stage refines the candidate collection, reducers derive
+      the display-ready state that the component will actually render. Here, you
+      apply three reducer styles to the same post-filter candidate while keeping
+      the same service-owned boundary.
+    </p>
+
+    <p>
+      The order is intentional and matches the pipeline documentation: reducers
+      run after filters.
+    </p>
+    <p>
+      The first reducer delegates to a pure helper that derives
+      <span class="code">forceSensitiveDisplay</span>.
+    </p>
+    <p>
+      The second uses a factory function,
+      <span class="code">withCharactersSortedByLastName()</span>, to return a
+      configured reducer.
+    </p>
+    <p>
+      The third delegates again to
+      <span class="code">deriveFullName</span> so the committed snapshot carries
+      a display-ready full name without pushing string composition into the
+      template.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="title">Why Compose Three Reducers?</div>
+      <p>
+        Each pure reducer protects one independently testable rule and can be
+        reused without copying template logic. Combine reducers when their
+        operations are inseparable or measured collection size makes repeated
+        passes materially expensive; do not combine them merely to shorten the
+        registration list.
+      </p>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Open <span class="code">example.character-domain.ts</span> and use the
+          existing reducer helpers for force-sensitive (<span class="code"
+            >deriveForceSensitiveDisplay</span
+          >) labels, last-name sorting (<span class="code"
+            >withCharactersSortedByLastName</span
+          >), and full-name (<span class="code">deriveFullName</span>)
+          derivation.
+          <sdux-example-viewer-source>
+            @for (file of characterDomain(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Register those reducers in
+          <span class="code">example.service.ts</span>
+          in the exact order they should run.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Reducer Styles in This Chapter</div>
+
+      <ul>
+        <li>
+          <strong>Reducer 1</strong> is a direct pure reducer helper:
+          <span class="code">deriveForceSensitiveDisplay</span> maps every
+          character to a display-ready <span class="code">Yes</span> or
+          <span class="code">No</span> label.
+        </li>
+        <li>
+          <strong>Reducer 2</strong> is a factory-generated reducer:
+          <span class="code">withCharactersSortedByLastName()</span> returns a
+          <span class="code"
+            ><a href="/docs/references/types/reducer-function"
+              >ReducerFunction</a
+            ></span
+          >
+          that clones and sorts the collection immutably.
+        </li>
+        <li>
+          <strong>Reducer 3</strong> is another direct pure reducer helper:
+          <span class="code">deriveFullName</span> derives the final display
+          label that every view reuses.
+        </li>
+        <li>
+          Because reducers run after filters, each reducer works on the already
+          refined candidate collection instead of repeating filter logic.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="title">Trace Chewbacca and Leia Through the Pipeline</div>
+      <ol>
+        <li>
+          Resolve supplies five seed characters. Chewbacca enters with
+          <span class="code">lastName: 'unknown'</span>; Leia enters with
+          <span class="code">lastName: 'Organa'</span>.
+        </li>
+        <li>
+          <span class="code">removeUnknownLastNameFilter</span> returns a new
+          four-record array. Chewbacca is absent, while Leia continues.
+        </li>
+        <li>
+          <span class="code">deriveForceSensitiveDisplay</span> adds Leia's
+          <span class="code">forceSensitiveDisplay</span> value.
+        </li>
+        <li>
+          <span class="code">withCharactersSortedByLastName()</span> clones and
+          sorts the four records into this exact order: Obi-Wan Kenobi, Leia
+          Organa, Luke Skywalker, and Darth Vader.
+        </li>
+        <li>
+          <span class="code">deriveFullName</span> adds
+          <span class="code">fullName: 'Leia Organa'</span>; that four-record,
+          display-ready collection is committed.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Keep Pipeline Transforms Deterministic</div>
+      <p>
+        Filters and reducers should be deterministic and side-effect-free for a
+        given candidate. Do not fetch data, write storage, or trigger telemetry
+        from these transforms. Route I/O and recoverable transport work through
+        an explicit service or Resolve boundary before applying domain shaping.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Supporting Domain File</div>
+      <p>
+        The
+        <span class="code">example.character-domain.ts</span> maintains the
+        draft type, next-ID helper, and character factory used by this add/edit
+        slice.
+      </p>
+      <p>
+        This file is intentionally separate so the service stays minimal and the
+        chapter stays focused on the state boundary instead of helper logic.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="7-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">
+      Step 3: Update the Component and HTML
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The filters and reducers chapter is complete once the page no longer
+      composes display values in the template, the reducer-derived character
+      fields drive the visible UI, and the filter and reducer source appears in
+      text areas for direct comparison.
+    </p>
+
+    <p>
+      That is the key architectural result of this chapter. The component still
+      owns selection, editor, and feedback state, but it now renders a
+      collection that has already moved through Resolve, Filter, and Reducer
+      stages. The template reads <span class="code">fullName</span> and
+      <span class="code">forceSensitiveDisplay</span> directly instead of
+      concatenating names or translating booleans inline, which keeps display
+      rules inside the pipeline rather than scattered across markup.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Update <span class="code">example.component.ts</span> to keep the same
+          component/service boundary while exposing the filter and reducer
+          source views.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> so the details
+          panel reads reducer-derived fields and the page shows filter and
+          reducer source text areas.
+          <sdux-example-viewer-source>
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look for</div>
+      <ul>
+        <li>
+          The filter passes four eligible records to three ordered, immutable
+          reducers.
+        </li>
+        <li>
+          The template consumes sorted and derived committed fields instead of
+          recreating rules.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 8, which turns one filter into a
+          controlled failure source.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="7-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Filters and Reducers</em> chapter is complete once the application
+      is running and can confirm the characters are successfully filtered and
+      reduced.
+      <sdux-feature-cell />
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Verify that the displayed source views and reducer-driven UI values
+          match the committed state.
+        </li>
+        <li>
+          Confirm Chewbacca is absent, the four remaining records are sorted by
+          last name, and every visible record contains the two derived display
+          fields. Verify the helpers return new arrays rather than mutating
+          their inputs.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 7 Summary</div>
+      <ul>
+        <li>
+          The template now renders reducer-derived
+          <span class="code">fullName</span> and
+          <span class="code">forceSensitiveDisplay</span> instead of computing
+          those values inline.
+        </li>
+        <li>
+          The page now includes dedicated text areas that surface the filter and
+          each reducer source for direct comparison.
+        </li>
+        <li>
+          The service now demonstrates pipeline-stage registration, not just
+          CRUD mutations, while preserving the same service-owned
+          <sdux-feature-cell /> boundary.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/complete-pipeline-spec"
+            >Pipeline Architecture</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/filters-method"
+            >filters()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/reducers-method"
+            >reducers()</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="7-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>
+          Want the finished filters and reducers example without these three
+          steps?
+        </h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed
+              filters and reducers configuration and interactive example
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="next-chapter" matTooltip="Navigate to the next chapter: Errors">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-8']">Chapter 8: Errors</a>
+    </div>
+  </div>
+</section>

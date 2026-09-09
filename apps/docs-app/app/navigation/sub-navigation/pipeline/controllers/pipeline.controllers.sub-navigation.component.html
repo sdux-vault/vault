@@ -5,7 +5,9 @@
     #controllerRla="routerLinkActive"
     [expanded]="forceExpanded() || controllerRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Pipeline Controllers</span>
+      <span class="menu-content parent-expansion-item"
+        >Pipeline Controllers</span
+      >
     </mat-expansion-panel-header>
 
     <mat-expansion-panel
@@ -14,11 +16,11 @@
       #controllerArchitectureRla="routerLinkActive"
       [expanded]="forceExpanded() || controllerArchitectureRla.isActive">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header"
+        <span class="menu-content child-expansion-item"
           >Architecture Overview</span
         >
       </mat-expansion-panel-header>
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/controllers/what-is-a-controller"
@@ -40,38 +42,42 @@
           routerLink="/docs/welcome/testing"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">Testing <sdux-brand-name /> </span>
+          <span class="menu-content sub-item"
+            >Testing <sdux-brand-name />
+          </span>
         </a>
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/controllers/policy"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Policy Overview</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/controllers/policy"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Policy Overview</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/controllers/with-delay-controller"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">Delay</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/controllers/with-delay-controller"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Delay</span>
+      </a>
+    </div>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Errors</span>
+        <span class="menu-content child-expansion-item">Errors</span>
       </mat-expansion-panel-header>
-      <div class="sub-menu">
+      <div class="expansion-sub-menu">
         <a
           mat-list-item
           routerLink="/docs/pipeline/controllers/with-max-failures-controller"
           routerLinkActive="active"
           (click)="closeSidenav()">
-          <span class="menu-content">Max Failures</span>
+          <span class="menu-content sub-item">Max Failures</span>
         </a>
 
         <a
@@ -84,34 +90,36 @@
       </div>
     </mat-expansion-panel>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/controllers/with-stepwise-controller"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Stepwise</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/controllers/with-stepwise-controller"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Stepwise</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/controllers/with-tab-sync-controller"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-icon menu-content">
-        Tab Sync
-        <sdux-image
-          class="logo"
-          image="brand/sdux/sdux-vault-logo.svg"
-          height="20"></sdux-image>
-      </div>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/controllers/with-tab-sync-controller"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-icon menu-content sub-item">
+          Tab Sync
+          <sdux-image
+            class="logo"
+            image="brand/sdux/sdux-vault-logo.svg"
+            height="20"></sdux-image>
+        </div>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/controllers/with-throttle-controller"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">Throttle</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/controllers/with-throttle-controller"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Throttle</span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

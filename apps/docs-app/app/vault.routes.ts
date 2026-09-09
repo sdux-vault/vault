@@ -60,18 +60,123 @@ export const routes: Routes = [
     data: { category: 'tutorial' },
     children: [
       {
-        path: '',
-        loadComponent: () =>
-          import('./docs/tutorial/tutorial.component').then(
-            (m) => m.TutorialComponent
-          )
-      },
-      {
         path: 'angular',
         loadComponent: () =>
           import('./docs/tutorial/angular/tutorial.angular.component').then(
             (m) => m.TutorialAngularComponent
-          )
+          ),
+        children: [
+          {
+            path: '',
+            redirectTo: 'welcome',
+            pathMatch: 'full'
+          },
+          {
+            path: 'welcome',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/01-welcome/angular-welcome.chapter.component').then(
+                (m) => m.AngularWelcomeChapterComponent
+              )
+          },
+          {
+            path: 'chapter-2',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/02-display-character/display-character.chapter.component').then(
+                (m) => m.DisplayCharacterChapterComponent
+              )
+          },
+          {
+            path: 'chapter-3',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/03-display-characters/display-characters.chapter.component').then(
+                (m) => m.DisplayCharactersChapterComponent
+              )
+          },
+          {
+            path: 'chapter-4',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/04-add-edit-characters/add-edit-characters.chapter.component').then(
+                (m) => m.AddEditCharactersChapterComponent
+              )
+          },
+          {
+            path: 'chapter-5',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/05-delete-characters/delete-characters.chapter.component').then(
+                (m) => m.DeleteCharactersChapterComponent
+              )
+          },
+          {
+            path: 'chapter-6',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/06-lifecycle/lifecycle.chapter.component').then(
+                (m) => m.LifecycleChapterComponent
+              )
+          },
+          {
+            path: 'chapter-7',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/07-filters-and-reducers/filters-and-reducers.chapter.component').then(
+                (m) => m.FiltersAndReducersChapterComponent
+              )
+          },
+          {
+            path: 'chapter-8',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/08-errors/errors.chapter.component').then(
+                (m) => m.ErrorsChapterComponent
+              )
+          },
+          {
+            path: 'chapter-9',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/09-async-input/async-input.chapter.component').then(
+                (m) => m.AsyncInputChapterComponent
+              )
+          },
+          {
+            path: 'chapter-10',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/10-delay/delay.chapter.component').then(
+                (m) => m.DelayChapterComponent
+              )
+          },
+          {
+            path: 'chapter-11',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/11-encrypt-and-persist/encrypt-and-persist.chapter.component').then(
+                (m) => m.EncryptAndPersistChapterComponent
+              )
+          },
+          {
+            path: 'chapter-12',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/12-state-introspection/state-introspection.chapter.component').then(
+                (m) => m.StateIntrospectionChapterComponent
+              )
+          },
+          {
+            path: 'chapter-13',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/13-tab-sync/tab-sync.chapter.component').then(
+                (m) => m.TabSyncChapterComponent
+              )
+          },
+          {
+            path: 'chapter-14',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/14-distinct-until-changed/distinct-until-changed.chapter.component').then(
+                (m) => m.DistinctUntilChangedChapterComponent
+              )
+          },
+          {
+            path: 'chapter-15',
+            loadComponent: () =>
+              import('./docs/tutorial/angular/chapters/15-stepwise/stepwise.chapter.component').then(
+                (m) => m.StepwiseChapterComponent
+              )
+          }
+        ]
       }
       // {
       //   path: 'example',

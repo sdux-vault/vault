@@ -171,7 +171,6 @@ export const appConfig: ApplicationConfig = {
           </div>
 
           @if (selectedCharacter(); as character) {
-            <!-- Teaching point: Minimal Read-Only FeatureCell (ex-002) -->
             <dl>
               <div>
                 <dt>Full name</dt>

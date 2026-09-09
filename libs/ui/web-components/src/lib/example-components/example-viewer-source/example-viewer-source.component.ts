@@ -17,7 +17,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
-  AfterViewInit,
   Component,
   ContentChildren,
   ElementRef,
@@ -33,6 +32,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MobileLayoutService } from '../../services/mobile-layout.service';
+import { SourceOverflowDirective } from '../directives/source-overflow.directive';
 import { ExampleViewerTabComponent } from '../example-viewer-tab/example-viewer-source-tab.component';
 import { FrameworkSelectorComponent } from '../framework-selector/framework-selector.component';
 import { ExampleViewerService } from '../services/example-viewer.service';
@@ -48,14 +48,13 @@ import { ExampleViewerService } from '../services/example-viewer.service';
     NgTemplateOutlet,
     MatTooltipModule,
     MatIconModule,
-    FrameworkSelectorComponent
+    FrameworkSelectorComponent,
+    SourceOverflowDirective
   ],
   templateUrl: './example-viewer-source.component.html',
   styleUrls: ['./example-viewer-source.component.scss']
 })
-export class ExampleViewerSourceComponent
-  implements AfterContentInit, AfterViewInit
-{
+export class ExampleViewerSourceComponent implements AfterContentInit {
   /**
    * All `<sdux-example-viewer-tab>` elements projected into this component.
    * These represent each source-code panel (HTML, TS, Service, Model, etc.).
@@ -69,13 +68,6 @@ export class ExampleViewerSourceComponent
    */
   @ViewChildren('codeBlock', { read: ElementRef })
   codeBlocks!: QueryList<ElementRef>;
-
-  /**
-   * All rendered source pane `<pre>` containers.
-   * These are measured to decide whether the max-height cap should apply.
-   */
-  @ViewChildren('sourcePane', { read: ElementRef })
-  sourcePanes!: QueryList<ElementRef<HTMLElement>>;
 
   /**
    * Whether the source code should be in a tab.
@@ -181,18 +173,6 @@ export class ExampleViewerSourceComponent
   }
 
   /**
-   * Measures rendered code panes once the view exists and whenever the set of
-   * code panes changes.
-   */
-  ngAfterViewInit(): void {
-    this.scheduleOverflowMeasurement();
-    /* istanbul ignore next */
-    this.sourcePanes.changes.subscribe(() =>
-      this.scheduleOverflowMeasurement()
-    );
-  }
-
-  /**
    * Whether the copy icon should display a “success” variant.
    * Automatically resets after a brief timeout when the user copies source code.
    */
@@ -237,6 +217,27 @@ export class ExampleViewerSourceComponent
   }
 
   /**
+   * Stores the overflow state reported by a source pane.
+   *
+   * @param index - Source tab index.
+   * @param isOverflowing - Whether the pane exceeds the configured max height.
+   */
+  setSourceOverflow(index: number, isOverflowing: boolean): void {
+    this.overflowingTabs.update((state) => ({
+      ...state,
+      [index]: isOverflowing
+    }));
+
+    if (!isOverflowing) {
+      this.expandedTabs.update((state) => {
+        const nextState = { ...state };
+        delete nextState[index];
+        return nextState;
+      });
+    }
+  }
+
+  /**
    * Copies the content of the given code tab to the clipboard.
    *
    * Steps:
@@ -277,41 +278,6 @@ export class ExampleViewerSourceComponent
 
       // Reset success indicator
       setTimeout(() => this.copySuccess.set(false), 2000);
-    });
-  }
-
-  /**
-   * Schedules a layout pass so pane heights are measured after Angular and Prism have rendered content.
-   */
-  private scheduleOverflowMeasurement(): void {
-    requestAnimationFrame(() => this.updateOverflowState());
-  }
-
-  /**
-   * Records whether each source pane exceeds the configured max-height.
-   */
-  private updateOverflowState(): void {
-    const maxHeight = this.sourcePaneMaxHeight();
-    const nextState = this.sourcePanes
-      .toArray()
-      .reduce<Record<number, boolean>>((overflowMap, paneRef, index) => {
-        overflowMap[index] = paneRef.nativeElement.scrollHeight > maxHeight;
-        return overflowMap;
-      }, {});
-
-    this.overflowingTabs.set(nextState);
-    this.expandedTabs.update((state) => {
-      const nextExpandedState = { ...state };
-
-      Object.entries(nextExpandedState).forEach(([indexKey]) => {
-        const index = Number(indexKey);
-
-        if (!nextState[index]) {
-          delete nextExpandedState[index];
-        }
-      });
-
-      return nextExpandedState;
     });
   }
 }

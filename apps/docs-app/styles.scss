@@ -327,6 +327,7 @@ END TABs
 }
 
 /* Hover Highlight */
+.mat-expansion-panel-header:hover,
 .mat-mdc-list-item:hover {
   /* !important: override Material's inline hover background for theme */
   background-color: color-mix(

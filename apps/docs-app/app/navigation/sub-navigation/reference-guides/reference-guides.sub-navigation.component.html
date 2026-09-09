@@ -5,33 +5,35 @@
     #referenceGuideRla="routerLinkActive"
     [expanded]="forceExpanded() || referenceGuideRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Reference Guides</span>
+      <span class="menu-content parent-expansion-item">Reference Guides</span>
     </mat-expansion-panel-header>
 
     <sdux-references-subnavigation />
 
-    <a
-      mat-list-item
-      routerLink="/docs/diagrams"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">Diagrams</span>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/docs/diagrams"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Diagrams</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/welcome/testing"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">Testing {{ brandName }}</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/welcome/testing"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Testing {{ brandName }}</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/videos"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content">Videos</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/videos"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Videos</span>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

@@ -1,0 +1,601 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-5" aria-labelledby="chapter-5-title">
+  <h2>Chapter 5: Delete Characters</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter adds delete behavior without moving collection ownership,
+      delete rules, or confirmation logic into the template. The workflow now
+      supports destructive updates through the same service-owned
+      <sdux-feature-cell /> boundary.
+    </p>
+    <p>
+      Keep the same split in place: the service is still the only place that
+      updates committed Feature State, while the component owns local selection,
+      confirmation, editor, and feedback state. Keeping that line clear makes
+      delete behavior easier to follow and easier to maintain.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Make destructive changes explicit, confirmable, and state-safe.
+    </h3>
+    <p>
+      Deletion changes more than a button label: it removes a record from the
+      feature's committed collection and can be difficult to undo. This chapter
+      adds a deliberate confirmation point while keeping the actual removal on
+      the same service-owned pipeline used for every other mutation.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The component coordinates selection, confirmation, and feedback, but it
+      never edits the committed collection directly. The service owns the
+      destructive policy and submits the target identity through
+      <span class="code">mergeState()</span> with
+      <span class="code">isDelete: true</span>. Array By ID Merge applies the
+      identifier-based removal while keeping the operation consistent with the
+      rest of the Feature State lifecycle.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>removing a saved item after an explicit confirmation</li>
+      <li>revoking an assignment or removing access to a record</li>
+      <li>deleting a draft while preserving a clear cancellation path</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have a pending-delete state, a cancelable confirmation flow, and
+      a service-owned removal method that removes the selected character by
+      identity while preserving every other committed record.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-5-start-title">
+  <h2 class="section-title" id="chapter-5-start-title">
+    Chapter 5 Starting Point and Change Map
+  </h2>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 4 project. Add one service removal
+      method, then add component-local pending-delete state,
+      request/cancel/confirm handlers, confirmation markup, and focused tests.
+      Register Array By ID Merge for the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>, then
+      use <span class="code">mergeState()</span> for create and update
+      operations. Deletion submits the target identity with
+      <span class="code">isDelete: true</span> so the active behavior removes
+      the matching record.
+    </p>
+    <div class="callout callout-warning">
+      <div class="title">What “Destructive” Means Here</div>
+      <p>
+        The array transformation is immutable, but the user-visible record is
+        intentionally removed from committed State. This browser-only tutorial
+        does not implement server authorization, durable deletion, undo,
+        optimistic rollback, or audit logging. Add those controls at the real
+        persistence boundary in production.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="5-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Configure Array By Id Merge Behavior
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Before the service can delete a character correctly, the registered
+      <sdux-feature-cell /> needs identifier-based array merge semantics. In the
+      previous chapter, it used append-style merge semantics for adding new
+      characters.
+    </p>
+
+    <p>
+      Now we need to switch to <em>Array By ID Merge</em> so matching records
+      can be updated, new records can be appended, and delete requests can
+      remove records by identifier.
+    </p>
+
+    <p>
+      To change that Merge-stage behavior, install the
+      <sdux-package-name [package]="'addons'" /> package and register
+      <span class="code"
+        ><a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+          >withArrayByIdMergeBehavior</a
+        ></span
+      >
+      in <span class="code">app.config.ts</span>. This makes
+      <span class="code">mergeState()</span> compare records by their identifier
+      during the Merge stage.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Install the
+          <sdux-package-name [package]="'addons'" /> package.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre
+                class="code-inline"><code class="language-ts">npm install @sdux-vault/addons</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>Open <span class="code">app.config.ts</span></li>
+
+        <li>
+          Import
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+              >withArrayByIdMergeBehavior</a
+            ></span
+          >
+          from <sdux-package-name [package]="'addons'" />.
+        </li>
+        <li>
+          Pass
+          <span class="code"
+            >[<a
+              href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+              >withArrayByIdMergeBehavior</a
+            >]</span
+          >
+          as the behavior list for
+          <span class="code">provide<sdux-feature-cell />()</span>.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Why This Behavior Is Required</div>
+
+      <ul>
+        <li>
+          <span class="code">mergeState()</span> submits the incoming records
+          and merge configuration to the active Array By ID Merge behavior.
+        </li>
+        <li>
+          The behavior updates an existing record when its identifier matches
+          and appends incoming records with new identifiers.
+        </li>
+        <li>
+          With
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+              >withArrayByIdMergeBehavior</a
+            ></span
+          >, setting <span class="code">isDelete</span> on a merge request
+          removes the matching record from the collection.
+        </li>
+        <li>
+          This keeps identifier matching and collection changes in the Merge
+          stage instead of requiring the service to manually find, replace,
+          append, or remove records.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Avoid Manual Array Merging</div>
+
+      <p>
+        You could build the next collection manually with a spread expression
+        such as
+        <span class="code">[...currentCharacters, newCharacter]</span>, but that
+        only covers appending. It does not provide the identifier-based update
+        and deletion rules required by this tutorial.
+      </p>
+
+      <p>
+        The spread operator itself does not mutate the array. The anti-pattern
+        is pushing identifier-based merge policy into the service instead of
+        configuring it in the <sdux-brand-name /> pipeline. Register Array By ID
+        Merge for the
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>, then
+        let <span class="code">mergeState()</span> apply matching, appending,
+        and <span class="code">isDelete</span> rules consistently.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="5-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      Step 2: Add the Delete Service Slice
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This is the point where the tutorial adds delete behavior. The service
+      still owns the <sdux-feature-cell />, the component still owns temporary
+      UI state, and the managed collection still flows through the same
+      pipeline. The new part is the delete write path: the service now submits a
+      selected identity through <span class="code">mergeState()</span> while
+      keeping Feature ownership in the same place.
+    </p>
+
+    <p>
+      Focus on the <sdux-brand-name /> boundary: keep deletion policy in the
+      service, keep confirmation state in the component, and route the removal
+      through a normal Feature update instead of an ad hoc mutable array
+      operation. To do that, add a
+      <span class="code">removeCharacter()</span> method that submits the target
+      identity through <span class="code">mergeState()</span> with
+      <span class="code">isDelete: true</span>, and keep the confirmation flow
+      in a local delete-candidate Signal. The important constraint does not
+      change: the component coordinates the destructive action, but it still
+      does not mutate committed Feature State directly.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Open <span class="code">example.service.ts</span> and add a
+          <span class="code">removeCharacter()</span> method.
+
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add the <span class="code">withArrayMergeId</span> to the
+          initialization chain.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'Install @sdux-vault/addons'">
+              <pre class="code-inline"><code class="language-ts">{{ 
+                  `this.#vault?.withArrayMergeId?.({ idKey: 'id' }).initialize();` 
+                  }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          The <span class="code">updateCharacter()</span> uses
+          <span class="code">mergeState()</span> so Array By ID Merge replaces
+          the matching character by identifier.
+        </li>
+        <li>
+          Keep the service as the only place that calls the destructive
+          <sdux-brand-name /> update API.
+        </li>
+        <li>
+          Submit the target identity with
+          <span class="code">isDelete: true</span>
+          so unknown IDs leave the visible State equivalent.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          Delete remains a service-owned write path just like add and edit.
+        </li>
+        <li>
+          <span class="code">mergeState()</span> with
+          <span class="code">isDelete: true</span> is the right operation for
+          removal because Array By ID Merge applies the identity-based rule.
+        </li>
+        <li>
+          The removal rule is identity-based, so one matching record is removed
+          while every other record is preserved.
+        </li>
+        <li>
+          The component will request deletion, but the service still owns the
+          <sdux-feature-cell /> mutation and supplies the delete configuration.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="5-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">
+      Step 3: Update the Component and HTML for Delete
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The delete tutorial is complete once the page can stage a pending delete,
+      cancel that destructive action, confirm removal of the selected record,
+      and react cleanly when the collection becomes smaller or empty. The
+      <sdux-brand-name /> boundary still has not moved: the service owns the
+      <sdux-feature-cell />, and the component owns only local selection,
+      editor, confirmation, and feedback state.
+    </p>
+
+    <p>
+      This chapter keeps the implementation disciplined even while it adds a
+      destructive action. The component presents a confirmation panel, clears
+      local selection after a confirmed removal, and returns the editor to a
+      safe create-ready state. The architectural rule stays fixed: the component
+      does not call <sdux-brand-name /> APIs directly, and it does not own
+      committed Feature State. Delete is routed through the same service-owned
+      boundary as every other mutation.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Update <span class="code">example.component.ts</span> to add the
+          delete-candidate Signal plus the request, cancel, and confirm delete
+          methods.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> to add the
+          confirmation panel and the delete action button.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @if (htmlFile(); as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Unknown or Stale IDs</div>
+      <p>
+        <span class="code">removeCharacter()</span> submits the target identity
+        through <span class="code">mergeState()</span> with
+        <span class="code">isDelete: true</span>. When the ID is absent, Array
+        By ID Merge leaves the collection equivalent; the example does not treat
+        that as an error or create a record. The service spec verifies the
+        resulting value, not an emission-count guarantee. In a multi-writer
+        application, revalidate the pending record at confirmation time. Any
+        success feedback shown for a stale ID is a tutorial limitation, not an
+        authoritative server acknowledgment; report the stale deletion instead
+        of claiming success.
+      </p>
+    </div>
+
+    <div class="table-title">Delete Outcome Contract</div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Action</th>
+          <th scope="col">
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            request
+          </th>
+          <th scope="col">Expected result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cancel delete</td>
+          <td>No request</td>
+          <td>
+            Clears only the component's delete candidate. The collection and
+            selection remain unchanged.
+          </td>
+        </tr>
+        <tr>
+          <td>Confirm a known ID</td>
+          <td>
+            <span class="code">mergeState()</span> with
+            <span class="code">isDelete: true</span>
+          </td>
+          <td>
+            Removes the matching record, clears selection and the form, and
+            returns the editor to create mode. Every nonmatching record is
+            retained.
+          </td>
+        </tr>
+        <tr>
+          <td>Confirm a stale ID</td>
+          <td>
+            <span class="code">mergeState()</span> with
+            <span class="code">isDelete: true</span>
+          </td>
+          <td>
+            Leaves the collection equivalent. This tutorial makes no promise
+            about subscriber emission for equivalent array values.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          Cancel preserves the record; confirm removes only that identity and
+          clears stale local selection.
+        </li>
+        <li>
+          The component coordinates confirmation while the service owns the
+          identifier-based merge request.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 5 and reload it after testing
+          terminal destruction.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="5-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Delete Characters</em> chapter is complete once characters can be
+      deleted successfully.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Select Leia Organa and note the five-record count. Cancel deletion and
+          confirm the count remains five and Leia remains selected.
+        </li>
+        <li>
+          Request deletion again, confirm it, and verify that the count becomes
+          four, Leia disappears, selection clears, and Luke Skywalker remains
+          unchanged. The empty-state guidance appears after the last record is
+          removed.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 5 Summary</div>
+      <ul>
+        <li>
+          The component now owns a delete-confirmation state in addition to its
+          existing selection and editor state.
+        </li>
+        <li>
+          The template adds an explicit destructive-action checkpoint instead of
+          deleting immediately from the current selection.
+        </li>
+        <li>
+          The service now supports full create, update, and delete operations
+          through the same <sdux-feature-cell /> boundary.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-learn-more">
+    <div class="title">Explore the Docs</div>
+
+    <ul>
+      <li>
+        <a href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+          >withArrayByIdMergeBehavior</a
+        >
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="5-step-5" aria-labelledby="step-5-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-5-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <div class="tutorial-shortcut-copy">
+          <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+          <h2>Want the finished delete example without these three steps?</h2>
+        </div>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              If you want the completed delete characters example, launch the
+              live StackBlitz project and inspect the finished implementation
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Lifecycle">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-6']">Chapter 6: Lifecycle</a>
+    </div>
+  </div>
+</section>

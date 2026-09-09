@@ -23,6 +23,7 @@ import { PipelineExtensionsSubNavigationComponent } from './sub-navigation/pipel
 import { PipelineSubNavigationComponent } from './sub-navigation/pipeline/pipeline.sub-navigation.component';
 import { ReferenceGuidesSubNavigationComponent } from './sub-navigation/reference-guides/reference-guides.sub-navigation.component';
 // import { TutorialSubNavigationComponent } from './sub-navigation/tutorial/tutorial.sub-navigation.component';
+import { TutorialSubNavigationComponent } from './sub-navigation/tutorial/tutorial.sub-navigation.component';
 import { VaultFeatureCellApiSubNavigationComponent } from './sub-navigation/vault-feature-cell-api/vault-feature-cell-api.sub-navigation.component';
 
 /**
@@ -65,8 +66,8 @@ import { VaultFeatureCellApiSubNavigationComponent } from './sub-navigation/vaul
     GettingStartedSubNavigationComponent,
     DevToolsSubNavigationComponent,
     SDuXNewComponent,
-    BrandNameComponent
-    // TutorialSubNavigationComponent
+    BrandNameComponent,
+    TutorialSubNavigationComponent
   ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']

@@ -1,0 +1,459 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+
+<div class="header" id="chapter-6" aria-labelledby="chapter-6-title">
+  <h2>Chapter 6: Lifecycle</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter shifts from record mutation to lifecycle control by
+      distinguishing persisted <span class="code">null</span>, runtime reset,
+      and permanent destruction of the <sdux-feature-cell />.
+    </p>
+    <p>
+      The service still owns every lifecycle API, while the component responds
+      by clearing or disabling local UI state. That separation makes it clear
+      why
+      <span class="code">replaceState({{ '{' }} value: null {{ '}' }})</span>,
+      <span class="code">reset()</span>, and
+      <span class="code">destroy()</span> are related but not interchangeable.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">Distinguish clearing data from ending a feature.</h3>
+    <p>
+      An empty feature is not always an ended feature. Signing out, switching
+      accounts, abandoning a workflow, and tearing down a screen can look
+      similar in the UI while requiring different lifecycle decisions. This
+      chapter makes those decisions visible by separating an intentional
+      <span class="code">null</span> value, a reusable runtime reset, and
+      permanent destruction.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The service owns lifecycle authority, so
+      <span class="code">replaceState(null)</span>,
+      <span class="code">reset()</span>, and
+      <span class="code">destroy()</span> retain their distinct meanings. The
+      component responds by clearing temporary UI state or stopping interaction;
+      it does not infer lifecycle from an empty collection or call the
+      <sdux-feature-cell /> APIs directly.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>clearing feature data when a user signs out or changes accounts</li>
+      <li>returning a reusable feature to a neutral starting state</li>
+      <li>ending a feature when its screen or runtime ownership is complete</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will be able to demonstrate intentional
+      <span class="code">null</span> persistence, reusable
+      <span class="code">reset()</span>, and permanent
+      <span class="code">destroy()</span> while the UI presents the correct
+      response for each lifecycle outcome.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-6-start-title">
+  <div class="section-title" id="chapter-6-start-title">
+    Chapter 6 Starting Point and Lifecycle Contract
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 5 project. This chapter changes the
+      service, component, template, and their specs. Record-level CRUD remains
+      available until the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+      destroyed.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose by Intended Outcome</div>
+      <ul>
+        <li>
+          <span class="code">replaceState(null)</span> commits an intentional
+          value. <span class="code">hasValue</span> remains meaningful because
+          <span class="code">null</span> is data, not absence.
+        </li>
+        <li>
+          <span class="code">reset()</span> clears the current runtime snapshot
+          to its neutral state and leaves this
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          available for later work.
+        </li>
+        <li>
+          <span class="code">destroy()</span> finalizes the current
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          lifecycle. Do not offer later requests from the same teaching view.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Scope of “Permanent”</div>
+      <p>
+        Destruction is terminal for the active
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        instance, not a promise that data can never exist again in a future
+        application runtime. Recreating a feature after navigation, reload, or a
+        new injector must follow the lifecycle contract documented for your
+        application, including any persistence cleanup it requires.
+      </p>
+    </div>
+
+    <div class="table-title">Lifecycle Operations at a Glance</div>
+    <table>
+      <caption>
+        Lifecycle operations and whether the current
+        <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+        remains usable
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Operation</th>
+          <th scope="col">Resulting value</th>
+          <th scope="col">Later request</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="code">replaceState(null)</span></td>
+          <td>Intentional null value</td>
+          <td>Allowed</td>
+        </tr>
+        <tr>
+          <td><span class="code">reset()</span></td>
+          <td>Neutral runtime snapshot</td>
+          <td>Allowed</td>
+        </tr>
+        <tr>
+          <td><span class="code">destroy()</span></td>
+          <td>Feature torn down</td>
+          <td>Requires recreation</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="6-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Persist Null and Reset State
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This chapter focuses on lifecycle clearing instead of record mutation. You
+      will clear the Feature in two distinct ways while keeping the same
+      service-owned <sdux-feature-cell /> boundary intact.
+    </p>
+
+    <p>
+      Pair these two operations deliberately. Persisting
+      <span class="code">null</span> is a normal
+      <a routerLink="/docs/pipeline/api/feature-cell-methods/replace-state"
+        >replaceState()</a
+      >
+      update: you are storing an intentional value, and the Feature remains
+      alive for future work. Calling
+      <a routerLink="/docs/pipeline/api/feature-cell-methods/reset">reset()</a>
+      is different: it clears the current snapshot back to the neutral runtime
+      state without finalizing the Feature. The service should own both
+      lifecycle APIs, and the component should respond by clearing only its
+      temporary UI state.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Open <span class="code">example.service.ts</span> and add
+          <span class="code">persistNullState()</span>,
+          <span class="code">resetState()</span> and
+          <span class="code">destroyFeatureCell()</span>
+          .
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Use <span class="code">replaceState()</span> for the intentional
+          <span class="code">null</span> write, and use
+          <span class="code">reset()</span> for the neutral-state clear.
+        </li>
+        <li>
+          Update the service spec so the chapter proves
+          <span class="code">null</span> and
+          <span class="code">undefined</span> are not the same lifecycle
+          outcome.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          Persisting <span class="code">null</span> is still just state
+          replacement, so it belongs in the same service-owned write boundary as
+          create, update, and delete.
+        </li>
+        <li>
+          <span class="code">reset()</span> does not store a replacement value.
+          It clears the current snapshot and leaves the
+          <sdux-feature-cell /> ready for later updates.
+        </li>
+        <li>
+          The component should clear selection, form, and confirmation Signals
+          after either lifecycle action, but it still should not call
+          <sdux-brand-name /> APIs directly.
+        </li>
+        <li>
+          Use this step to distinguish an intentional empty value from a runtime
+          reset before you move to permanent teardown.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="6-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      Step 2: Finalize with destroy()
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The last lifecycle step is intentionally different from everything before
+      it. Calling
+      <a routerLink="/docs/pipeline/api/feature-cell-methods/destroy"
+        >destroy()</a
+      >
+      does not clear the current value for future reuse. It permanently
+      finalizes the <sdux-feature-cell />, ends its runtime lifecycle, and turns
+      every later interaction into an invalid operation.
+    </p>
+
+    <p>
+      That means the component needs one more responsibility: when the service
+      destroys the Feature, the UI must stop pretending the collection is still
+      interactive. Clear local editor state, disable later actions, and render
+      an explicit lifecycle message so you can see finalization instead of a
+      silent failure. The architectural line still does not move: the service
+      owns <span class="code">destroy()</span>, and the component owns the
+      visual response to that final state.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Update <span class="code">example.component.ts</span> to add lifecycle
+          action handlers for persist-null, reset, and destroy.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> to add the
+          lifecycle control bar, snapshot summary, and destroyed-state
+          messaging.
+          <sdux-example-viewer-source>
+            @if (htmlFile(); as file) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Recovery Checkpoint</div>
+      <p>
+        After testing <span class="code">destroy()</span>, reload or replace
+        your project with the completed Chapter 6 checkpoint before starting
+        Chapter 7. Do not expect the destroyed instance to accept the next
+        chapter's requests.
+      </p>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look for</div>
+      <ul>
+        <li>
+          Committed null, runtime reset, and terminal destruction produce
+          different lifecycle outcomes.
+        </li>
+        <li>
+          The UI stops offering requests after destruction of the active
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          instance.
+        </li>
+        <li>
+          Start Chapter 7 from a fresh checkpoint rather than the destroyed
+          runtime instance.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="6-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The <em>Lifecycle</em> chapter is complete once the application is running
+      and you can successfully reset, replaceState with null and destroy the
+      <sdux-feature-cell />
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Verify that the UI resets safely for
+          <span class="code">null</span> and <span class="code">reset()</span>,
+          then disables later interaction after
+          <span class="code">destroy()</span>.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 6 Summary</div>
+      <ul>
+        <li>
+          The component now shows three lifecycle outcomes: intentional
+          <span class="code">null</span> persistence, runtime reset, and
+          permanent teardown.
+        </li>
+        <li>
+          The template now exposes the raw lifecycle result so you can see the
+          difference between <span class="code">null</span> and
+          <span class="code">undefined</span> instead of inferring it.
+        </li>
+        <li>
+          After <span class="code">destroy()</span>, the UI stops offering the
+          earlier CRUD interactions because the Feature lifecycle is complete.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-learn-more">
+    <div class="title">Explore the Docs</div>
+    <ul>
+      <li>
+        <a routerLink="/docs/pipeline/api/feature-cell-methods/reset"
+          >reset()</a
+        >
+      </li>
+      <li>
+        <a routerLink="/docs/pipeline/api/feature-cell-methods/destroy"
+          >destroy()</a
+        >
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="6-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished lifecycle example without these two steps?</h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed
+              lifecycle configuration and interactive example directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Filters and Reducers">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-7']">Chapter 7: Filters and Reducers</a>
+    </div>
+  </div>
+</section>

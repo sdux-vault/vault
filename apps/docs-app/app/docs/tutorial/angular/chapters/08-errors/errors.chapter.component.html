@@ -1,0 +1,487 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-8" aria-labelledby="chapter-8-title">
+  <h2>Chapter 8: Errors</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      This chapter shifts from shaping successful candidates to observing what
+      happens when the pipeline rejects them. The same service-owned
+      <sdux-feature-cell /> now demonstrates a simulated filter failure, a
+      global error response, and a finalized
+      <span class="code">errors()</span> emission.
+    </p>
+    <p>
+      The service still owns the pipeline and the component still owns local UI
+      state, but now you also see the singleton global error service operate
+      independently from the feature itself. That separation makes it clear why
+      error observation belongs at both the application boundary and the fluent
+      API boundary.
+    </p>
+  </div>
+</header>
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Keep the reason for failure separate from how the UI communicates it.
+    </h3>
+    <p>
+      A failed request is both a pipeline event and a product communication
+      problem. The application must preserve the reason a candidate was rejected
+      while deciding whether to show a banner, record telemetry, or offer
+      recovery. This chapter makes that distinction visible by simulating a
+      failure without changing the normal CRUD requests.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The pipeline owns error authority and finalization; the component observes
+      the result and chooses how to present it. Clearing a global error
+      acknowledges the current message but does not repair the failing
+      condition. Keeping those responsibilities separate prevents UI feedback
+      from becoming accidental pipeline control.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>
+        validation failures that should prevent a candidate from committing
+      </li>
+      <li>unavailable dependencies that need visible recovery guidance</li>
+      <li>authorization or operational failures that require monitoring</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will be able to trigger a controlled pipeline failure, inspect its
+      finalized error and snapshot, distinguish local emission from global error
+      state, and restore normal CRUD behavior by resetting the cause.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-8-start-title">
+  <div class="section-title" id="chapter-8-start-title">
+    Chapter 8 Starting Point and Failure Model
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 7 project. This chapter changes the
+      service, component, template, and specs. Normal CRUD calls remain
+      unchanged so the pipeline—not the component—demonstrates failure and
+      recovery.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Separate Four Responsibilities</div>
+      <ul>
+        <li>The throwing filter creates the teaching failure.</li>
+        <li>
+          The pipeline normalizes and finalizes the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          error.
+        </li>
+        <li>
+          <span class="code">errors()</span> observes the feature-specific
+          finalized error and snapshot.
+        </li>
+        <li>
+          <span class="code"
+            ><a href="/docs/references/functions/vault-error-service"
+              >VaultErrorService</a
+            ></span
+          >
+          exposes application-level error state for presentation or monitoring.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Exceptions Are Not Routine Validation</div>
+      <p>
+        This chapter throws deliberately so the Error stage is observable. Do
+        not use unexpected exceptions as the default contract for ordinary form
+        or domain validation. Use the library's documented rejection/validation
+        mechanism for expected invalid input, and reserve exceptions for
+        failures that should enter error handling.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="8-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Simulate Pipeline Errors
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      This chapter keeps the same service-owned <sdux-feature-cell /> and the
+      same character workflow, but now you deliberately push one candidate path
+      into the Error stage. The goal is not to change how add, edit, or delete
+      are requested. The goal is to show what happens when the pipeline rejects
+      those candidates before State can commit.
+    </p>
+
+    <p>
+      The existing pure
+      <span class="code">removeUnknownLastNameFilter</span> still runs first.
+      After that, the service adds a second inline filter that normally returns
+      the candidate unchanged. When the deliberate error flag is enabled, that
+      inline filter throws intentionally. Because every create, update, and
+      delete candidate flows through the same filter stage, all of those
+      requests keep failing until you explicitly disable the simulated error.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Open <span class="code">example.service.ts</span> and register the
+          pure filter, the intentional throwing filter, and the
+          <span class="code">this.#vault.errors()</span> callback.
+
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Keep the error callback observational only: capture the finalized
+          error and immutable snapshot without changing error authority or
+          pipeline control.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          The simulated failure lives in the pipeline, not in the component. The
+          component only triggers normal add, edit, and delete requests.
+        </li>
+        <li>
+          Once the teaching flag is enabled, every later mutation candidate
+          keeps re-entering the same throwing filter until you reset it.
+        </li>
+        <li>
+          The <span class="code">errors()</span> callback runs after the error
+          has been normalized and committed as the finalized Vault error.
+        </li>
+        <li>
+          The callback receives the finalized error plus the immutable
+          <sdux-feature-cell /> snapshot, but it does not mutate either one.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="8-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      Step 2: Display Global Error State
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Now surface the failure in two separate teaching outputs. First, the
+      component observes the singleton
+      <span class="code"
+        ><a href="/docs/references/functions/vault-error-service"
+          >VaultErrorService</a
+        ></span
+      >
+      so the UI can render the current global Vault error and clear it after
+      acknowledgement. Second, the component renders the serialized output from
+      the service-owned <span class="code">errors()</span> callback so you can
+      see the finalized error and snapshot that were emitted after error
+      commitment.
+    </p>
+
+    <p>
+      Those two flows are related, but they are not the same thing. The global
+      error service is independent of any one <sdux-feature-cell /> and works
+      well for application-level concerns such as monitoring, banners, or shared
+      recovery controls. The emitted error JSON is chapter-specific teaching
+      output from this one fluent API registration.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          Open <span class="code">example.component.ts</span> and subscribe to
+          the singleton global error stream.
+
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Expose one action that clears the current global error and another
+          action that disarms the simulated throwing filter.
+        </li>
+        <li>
+          Update <span class="code">example.component.html</span> so the page
+          shows the global error banner, the Throw Error or Reset Error action,
+          and the serialized <span class="code">errors()</span> emission.
+
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Production Error Data</div>
+      <p>
+        Render user-safe messages separately from diagnostic causes. Before
+        sending an error or State snapshot to telemetry, redact credentials,
+        personal data, and domain secrets; add correlation metadata outside the
+        UI; and define whether retry repeats the request or first removes its
+        failing condition. Clearing a banner is acknowledgement, not retry.
+      </p>
+    </div>
+
+    <div class="table-title">Error Representations and Consumers</div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Representation</th>
+          <th scope="col">Consumer</th>
+          <th scope="col">Safe content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Raw exception</td>
+          <td>Normalization boundary</td>
+          <td>Do not render or transmit without redaction.</td>
+        </tr>
+        <tr>
+          <td>
+            <a href="/docs/references/shapes/vault-error-shape"
+              >VaultErrorShape</a
+            >
+          </td>
+          <td>Application error handling</td>
+          <td>Normalized classification and approved context.</td>
+        </tr>
+        <tr>
+          <td>UI message</td>
+          <td>User</td>
+          <td>Actionable, non-sensitive summary.</td>
+        </tr>
+        <tr>
+          <td>Telemetry payload</td>
+          <td>Operators</td>
+          <td>Error code, feature key, and request ID—not the candidate.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+
+      <ul>
+        <li>
+          <a href="/docs/references/functions/vault-error-service"
+            >VaultErrorService</a
+          >
+          is a singleton service, not a property of this chapter's
+          <sdux-feature-cell />.
+        </li>
+        <li>
+          Clicking <span class="code">Clear</span> acknowledges the current
+          global error, but it does not disable the simulated throwing filter.
+        </li>
+        <li>
+          Clicking <span class="code">Reset Error</span> disables the filter and
+          clears the global error without sending a new pipeline request.
+        </li>
+        <li>
+          The <span class="code">Error Emission</span> textarea is populated by
+          the <span class="code">errors()</span> callback, not by the global
+          error singleton.
+        </li>
+        <li>
+          Save this checkpoint for Chapter 9, which applies the same error model
+          to async inputs.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="8-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      The errors chapter is complete once you can enable the simulated filter
+      failure, watch the global error banner appear, inspect the emitted error
+      snapshot, and then prove that every later add, update, and delete
+      candidate keeps failing while the filter remains enabled.
+    </p>
+
+    <p>
+      That final distinction matters. Clearing the global error acknowledges the
+      current singleton error state, but it does not change why the next
+      candidate will fail. The actual cause is still the enabled throwing filter
+      in the pipeline. Once you reset that filter, the same feature resumes
+      normal CRUD behavior without changing how the component requests work.
+    </p>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Click <span class="code">Throw Error</span> to enable the simulated
+          filter and send a candidate into the Error stage.
+        </li>
+        <li>
+          Try one add, edit, or delete action while the button reads
+          <span class="code">Reset Error</span> and confirm the same pipeline
+          failure keeps reappearing.
+        </li>
+        <li>
+          Click <span class="code">Clear</span> to acknowledge the active global
+          error, then trigger another mutation to confirm the failure is still
+          enabled.
+        </li>
+        <li>
+          Click <span class="code">Reset Error</span> and confirm later
+          mutations succeed again through the normal service-owned boundary.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 8 Summary</div>
+      <ul>
+        <li>
+          The tutorial now demonstrates how one throwing filter can stop later
+          candidate commitment without changing the component's CRUD calls.
+        </li>
+        <li>
+          The singleton global error service provides application-level error
+          visibility that is independent of any one <sdux-feature-cell />.
+        </li>
+        <li>
+          The <span class="code">errors()</span> fluent API provides a separate
+          post-finalization observation surface for emitted error details.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/errors-method"
+            >errors()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/global-error-handler">Global Error Handler</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="8-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished errors example without these two steps?</h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              If you want the completed errors example, launch the live
+              StackBlitz project and inspect the finished implementation
+              directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Async Input">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-9']">Chapter 9: Async Input</a>
+    </div>
+  </div>
+</section>

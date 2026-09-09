@@ -12,20 +12,20 @@ import path from 'node:path';
  */
 export const AngularTutorialExamplesConstants = (projectRoot) =>
   [
-    ['display-character', 'display-character-example'],
-    ['display-characters', 'display-characters-example'],
-    ['add-edit-characters', 'add-edit-characters-example'],
-    ['delete-characters', 'delete-characters-example'],
-    ['lifecycle', 'lifecycle-tutorial-example'],
-    ['filters-and-reducers', 'filters-and-reducers-tutorial-example'],
-    ['errors', 'errors-tutorial-example'],
-    ['async-input', 'async-input-tutorial-example'],
-    ['delay', 'delay-tutorial-example'],
-    ['encrypt-and-persist', 'encrypt-and-persist-tutorial-example'],
-    ['state-introspection', 'state-introspection-tutorial-example'],
-    ['tab-sync', 'tab-sync-tutorial-example'],
-    ['stepwise', 'stepwise-tutorial-example'],
-    ['distinct-until-changed', 'distinct-until-changed-tutorial-example']
+    ['02-display-character', 'display-character-example'],
+    ['03-display-characters', 'display-characters-example'],
+    ['04-add-edit-characters', 'add-edit-characters-example'],
+    ['05-delete-characters', 'delete-characters-example'],
+    ['06-lifecycle', 'lifecycle-tutorial-example'],
+    ['07-filters-and-reducers', 'filters-and-reducers-tutorial-example'],
+    ['08-errors', 'errors-tutorial-example'],
+    ['09-async-input', 'async-input-tutorial-example'],
+    ['10-delay', 'delay-tutorial-example'],
+    ['11-encrypt-and-persist', 'encrypt-and-persist-tutorial-example'],
+    ['12-state-introspection', 'state-introspection-tutorial-example'],
+    ['13-tab-sync', 'tab-sync-tutorial-example'],
+    ['14-distinct-until-changed', 'distinct-until-changed-tutorial-example'],
+    ['15-stepwise', 'stepwise-tutorial-example']
   ].map(([directoryName, name]) => ({
     language: 'angular',
     directory: path.join(

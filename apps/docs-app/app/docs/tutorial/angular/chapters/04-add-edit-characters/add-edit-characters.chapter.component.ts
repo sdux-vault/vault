@@ -1,0 +1,90 @@
+import { Component, computed, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import {
+  BrandNameComponent,
+  ExampleViewerSourceComponent,
+  ExampleViewerTabComponent,
+  FeatureCellBrandNameComponent,
+  PackageNameComponent,
+  SDuXDownloadComponent
+} from '@sdux-vault/ui/web-components';
+import { StackblitzLanguageExampleComponent } from '../../../../stack-blitz/example/stackblitz-language-example/stackblitz-language-example.component';
+import { StackblitzExampleService } from '../../../../stack-blitz/services/stackblitz-example.service';
+import { TutorialNavigationDirective } from '../../../directive/tutorial-navigation.directive';
+import { ExampleFileService } from '../../../services/example-file.service';
+import { ChapterStackBlitzShape } from '../../../shape/chapter-stackblitz.shape';
+import { ExampleFileTypes } from '../../../types/example-file.type';
+import { STAR_WARS_ADD_EDIT_CHARACTERS_FILES } from '../../generated/04-add-edit-characters.generated';
+
+@Component({
+  selector: 'sdux-add-edit-characters-chapter',
+  standalone: true,
+  imports: [
+    RouterModule,
+    BrandNameComponent,
+    FeatureCellBrandNameComponent,
+    ExampleViewerSourceComponent,
+    ExampleViewerTabComponent,
+    StackblitzLanguageExampleComponent,
+    SDuXDownloadComponent,
+    PackageNameComponent
+  ],
+  templateUrl: './add-edit-characters.chapter.component.html'
+})
+export class AddEditCharactersChapterComponent extends TutorialNavigationDirective {
+  readonly #stackblitzService = inject(StackblitzExampleService);
+  readonly #exampleFileService = inject(ExampleFileService);
+  readonly #files = STAR_WARS_ADD_EDIT_CHARACTERS_FILES;
+  readonly downloadUrl =
+    '/assets/tutorial/sdux-04-add-edit-characters.tutorial.zip';
+
+  readonly allSourceFiles = this.#files;
+
+  readonly stackblitz = computed<ChapterStackBlitzShape>(() => {
+    const example = this.#stackblitzService.getExample('add-edit-characters')!;
+
+    return {
+      example,
+      language: example.languages.find((lang) => lang.key === 'angular')!
+    };
+  });
+
+  readonly appConfigFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#files,
+      ExampleFileTypes.AppConfig
+    );
+  });
+
+  readonly characterDomainFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#files,
+      ExampleFileTypes.CharacterDomain
+    );
+  });
+
+  readonly serviceFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#files,
+      ExampleFileTypes.Service
+    );
+  });
+
+  readonly characterEditorFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#files,
+      ExampleFileTypes.CharacterEditor
+    );
+  });
+
+  readonly componentFile = computed(() => {
+    return this.#exampleFileService.getFile(
+      this.#files,
+      ExampleFileTypes.Component
+    );
+  });
+
+  readonly htmlFile = computed(() => {
+    return this.#exampleFileService.getFile(this.#files, ExampleFileTypes.Html);
+  });
+}

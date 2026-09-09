@@ -1,0 +1,476 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-13" aria-labelledby="chapter-13-title">
+  <h2>Chapter 13: Tab Sync</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      You will configure Tab Sync once, open a second browser tab, and observe
+      finalized
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      State stay aligned while each tab keeps its own form and presentation
+      state.
+    </p>
+    <p>
+      This is same-origin browser coordination, not transactional collaboration.
+      The chapter keeps that scope explicit and shows which transient state must
+      remain local to each tab.
+    </p>
+  </div>
+</header>
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Keep the same feature coherent across tabs on one browser origin.
+    </h3>
+    <p>
+      People often open the same application twice: a preference changes in one
+      tab, a draft remains open in another, or an administrative view needs the
+      latest committed record. This chapter keeps those Feature State values
+      aligned across same-origin tabs without pretending that every form
+      interaction is shared collaboration.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      Tab Sync shares finalized Feature State while each tab retains its own
+      selection, form, loading, and error experience. The behavior and
+      controller coordinate synchronization at the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      boundary, so the service and component need no special cross-tab plumbing.
+      This is not a substitute for server-authoritative collaboration,
+      cross-device sync, or a security design for sensitive data.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>preferences that should remain consistent in every open tab</li>
+      <li>drafts or cart-like State shared within one browser session</li>
+      <li>administrative views that need the latest committed feature value</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will have the Tab Sync behavior and controller configured as a pair,
+      with finalized character State updating across same-origin tabs while
+      transient page interactions remain local to each tab.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-13-start-title">
+  <div class="section-title" id="chapter-13-start-title">
+    Chapter 13 Starting Point and Synchronization Scope
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 7 project. Tab Sync is a Pro capability;
+      production use requires a valid license. This lab changes configuration,
+      component presentation, and tests. The service does not add cross-tab
+      messaging code.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Shared vs. Local</div>
+      <ul>
+        <li>
+          Shared: finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          value identified by the same key on the same origin—scheme, host, and
+          port.
+        </li>
+        <li>
+          Local: selection, unsaved form values, pending confirmation, loading,
+          and error presentation in each tab.
+        </li>
+        <li>
+          Not provided: server authority, authorization, cross-device sync,
+          offline reconciliation, audit history, or collaborative conflict
+          resolution.
+        </li>
+      </ul>
+    </div>
+    <div class="callout callout-warning">
+      <div class="title">Concurrent Edits</div>
+      <p>
+        This lab demonstrates propagation and transactional consistency.
+        <sdux-brand-name /> guarantees ordering from sequential edits. Tab Sync
+        transports finalized Feature State and reconciles record-level conflicts
+        by using the
+        <a routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
+          >Conductor Queue</a
+        >.
+      </p>
+    </div>
+    <div class="callout callout-info">
+      <div class="title">Environment Support Checklist</div>
+      <ul>
+        <li>
+          Both tabs use the same scheme, host, port, and
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key.
+        </li>
+        <li>
+          The browser permits the required storage and messaging mechanism.
+        </li>
+        <li>Private or restricted contexts may disable the demonstration.</li>
+        <li>
+          The browser allows the second tab and N tabs to open and all pages
+          remain active and synchronized.
+        </li>
+        <li>
+          Reload both tabs after correcting configuration; do not copy State
+          manually.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="13-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Configure Tab Sync
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div class="callout callout-warning">
+      <div class="title">Simplicity Warning</div>
+      <p>
+        This lab is incredibly simple. The Tab Sync controller and behavior
+        takes care of all the logic. There are
+        <strong><em>no changes</em></strong> to the
+        <span class="code">example.service.ts</span>,
+        <span class="code">example.component.ts</span> or
+        <span class="code">example.component.html</span> files.
+      </p>
+      <p>
+        This simplistic <sdux-brand-name /> functionality is intentional and
+        designed to keep unnecessary logic out of the service and component
+        files.
+      </p>
+    </div>
+    <p>
+      Tab Sync keeps one <sdux-feature-cell /> State value aligned across
+      browser tabs that share the same origin. You configure the complete
+      feature in <span class="code">app.config.ts</span>: the State behavior
+      shares finalized values, and the controller coordinates the initial State
+      when you open another tab.
+    </p>
+
+    <p>
+      Register both on the same <sdux-feature-cell />. The behavior belongs in
+      the behaviors array and the controller belongs in the controllers array
+      passed to
+      <span class="code"
+        ><a href="/docs/references/functions/provide-feature-cell"
+          >provideFeatureCell</a
+        >()</span
+      >. Nothing changes in the service or component to make synchronization
+      work.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>Open the <span class="code">app.config.ts</span> file.</li>
+        <li>
+          Import
+          <span class="code"
+            ><a
+              routerLink="/docs/references/behaviors/with-tab-sync-state-behavior"
+              >withTabSyncStateBehavior</a
+            ></span
+          >
+          and
+          <span class="code"
+            ><a
+              routerLink="/docs/references/controllers/with-tab-sync-controller"
+              >withTabSyncController</a
+            ></span
+          >
+          from
+          <span class="code"><sdux-package-name [package]="'core'" /></span>.
+        </li>
+        <li>
+          Add the behavior to the behavior list and the controller to the
+          controller list for the same <sdux-feature-cell />.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">{{ appConfigFile().source }}</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          The Tab Sync controller and behavior are Pro features and require a
+          valid Pro license for production use. To explore them locally without
+          a license, add the
+          <span class="code">devMode</span> and
+          <span class="code">bypassingLicensing</span> attributes to the
+          <span class="code"
+            ><a href="/docs/references/functions/provide-vault"
+              >provideVault</a
+            ></span
+          >
+          configuration.
+          <sdux-example-viewer-source [displayTabs]="false">
+            <sdux-example-viewer-tab [label]="'app.config.ts'">
+              <pre
+                class="code-inline"><code class="language-ts">provideVault(&#123;
+  devMode: true,
+  bypassingLicensing: true 
+&#125;)</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The behavior and controller are a required pair for this
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          The configuration owns cross-tab State coordination; the service and
+          component stay focused on their existing responsibilities.
+        </li>
+        <li>
+          Only finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          State is shared with a peer tab.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">What the Stale-Form Exercise Proves</div>
+      <p>
+        The exercise proves only that a peer's committed collection can update
+        while Tab B's unsaved form remains local. It proves that saving the
+        stale form is safe and defines which concurrent write wins.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Pro Feature</div>
+      <p>
+        Tab Sync is a Pro feature.
+        <a href="/sdux/vault">Explore Pro</a> for production-ready access and
+        guidance.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="13-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      Step 2: View Tab Sync In Action
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Once your application reloads, you can open a second tab to observe the
+      Tab Sync behavior in action.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>
+          Tabs
+          <ol>
+            <li>
+              Open <span class="code">Tab A</span> and make sure the application
+              has fully reloaded.
+            </li>
+            <li>
+              Open <span class="code">Tab B</span> on same application URL.
+            </li>
+            <li>
+              Duplicate (right-mouse click on the tab)
+              <span class="code">Tab B</span> (now
+              <span class="code">Tab C</span>
+              )
+            </li>
+            <li>Open <span class="code">Tab D</span> and leave blank.</li>
+          </ol>
+        </li>
+        <li>
+          Add, edit, delete, or reset a character collection in tabs A, B or C.
+        </li>
+        <li>
+          Return to the other tabs (A, B, or C) and inspect the synchronized
+          character State.
+        </li>
+        <li>
+          Now in the <span class="code">Tab D</span> navigate to the application
+          URL.
+        </li>
+        <li>
+          Leave an unsaved edit open in Tab B, commit a change in Tab A, and
+          confirm the committed collection updates while Tab B's transient form
+          remains local. Cancel the stale form before continuing.
+        </li>
+      </ol>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          Committed
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          State values are preserved and updated between tabs, including shared
+          resets.
+        </li>
+        <li>
+          Forms, selection, loading, errors, and other page interactions remain
+          local to the tab where they occur.
+        </li>
+        <li>A failed pipeline attempt does not update a peer tab.</li>
+        <li>
+          The new tab receives State without inheriting transient loading or
+          error metadata from its peer.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="13-step-3" aria-labelledby="step-3-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-3-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Your Tab Sync example is complete when the behavior and controller are
+      registered together in <span class="code">app.config.ts</span>, and the
+      View Tab Sync action lets you observe committed character State moving
+      between tabs. The existing service and component continue to own their
+      original responsibilities.
+    </p>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 13 Summary</div>
+      <ul>
+        <li>
+          Cross-tab coordination is structural configuration, not component or
+          service logic.
+        </li>
+        <li>
+          Each tab keeps its local form and presentation state while sharing the
+          finalized
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          value.
+        </li>
+        <li>
+          The same
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a> key
+          identifies the State that participates in synchronization.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/behaviors/tab-sync"
+            >Tab Sync Behavior</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/controllers/with-tab-sync-controller"
+            >Tab Sync Controller</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/execution-guarantee/conductor-queue"
+            >Conductor Queue</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="13-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <h2>Want the finished Tab Sync example?</h2>
+
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Stackblitz does not support multiple browser tabs for this
+              example. The demonstration is limited to a single tab within the
+              Stackblitz environment.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Distinct Until Changed">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-14']">Chapter 14: Distinct Until Changed</a>
+    </div>
+  </div>
+</section>

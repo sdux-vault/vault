@@ -20,6 +20,16 @@
     font-weight: global.$font-weight-semibold;
   }
 
+  ul,
+  ol {
+    padding-left: global.$spacing-md;
+  }
+
+  > ul,
+  > ol {
+    margin-top: global.$spacing-xs;
+  }
+
   // p {
   //   margin: global.$spacing-xs 0 0;
   // }
@@ -40,6 +50,7 @@
     border: 1px solid global.$sdux-primary-base;
     border-left-width: 4px;
     padding: global.$spacing-md;
+    padding-bottom: 0;
     background-color: color-mix(
       in srgb,
       global.$sdux-primary-base 8%,

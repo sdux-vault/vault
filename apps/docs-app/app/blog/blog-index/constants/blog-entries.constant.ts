@@ -59,14 +59,6 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
-    slug: 'redux-pattern-sdux-vault-contract',
-    title: 'Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract',
-    date: '2026-06-19',
-    readingTime: 9,
-    pillar: 'RC',
-    active: true
-  },
-  {
     slug: 'from-redux-to-sdux-vault',
     title:
       "From Redux to SDuX Vault — A Migration Guide That Doesn't Ask You to Rewrite Everything",
@@ -363,6 +355,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-09-03',
     readingTime: 5,
     pillar: 'ED',
+    active: true
+  },
+  {
+    slug: 'redux-pattern-sdux-vault-contract',
+    title: 'Redux Gave You a Pattern — SDuX Vault™ 1.0 Gives You a Contract',
+    date: '2026-09-08',
+    readingTime: 9,
+    pillar: 'RC',
     active: true
   }
 ];

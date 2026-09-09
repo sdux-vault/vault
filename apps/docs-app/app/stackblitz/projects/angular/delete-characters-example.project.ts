@@ -84,7 +84,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { withArrayAppendMergeBehavior } from '@sdux-vault/addons';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { ExampleService } from './example.service';
 import { STAR_WARS_CHARACTERS } from './star-wars-character.constant';
@@ -121,12 +121,12 @@ export const appConfig: ApplicationConfig = {
       },
       [
         /**
-         * \`provideFeatureCell()\` accepts an optional behaviors array as its third argument.
-         * Registering \`withArrayAppendMergeBehavior\` here changes the Merge stage so
-         * \`mergeState()\` appends the incoming one-item character array to the current
-         * collection instead of replacing the entire FeatureCell value.
+         * Registers identifier-based array merging for this FeatureCell. During
+         * the Merge stage, matching character identifiers are updated, new
+         * identifiers are appended, and merge requests configured for deletion
+         * remove the matching records from the committed collection.
          */
-        withArrayAppendMergeBehavior
+        withArrayByIdMergeBehavior
       ]
     )
   ]
@@ -2337,6 +2337,7 @@ export class ExampleCharacterEditor {
 `,
     'src/example.component.spec.ts': `import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleComponent } from './example.component';
@@ -2372,10 +2373,14 @@ describe('ExampleComponent', () => {
       providers: [
         provideVaultTesting(),
         provideZonelessChangeDetection(),
-        provideFeatureCell(ExampleService, {
-          key,
-          initialState: initialCharacters
-        })
+        provideFeatureCell(
+          ExampleService,
+          {
+            key,
+            initialState: initialCharacters
+          },
+          [withArrayByIdMergeBehavior]
+        )
       ]
     }).compileComponents();
 
@@ -3112,6 +3117,7 @@ export class ExampleComponent {
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { withArrayByIdMergeBehavior } from '@sdux-vault/addons';
 import { provideFeatureCell, provideVaultTesting } from '@sdux-vault/angular';
 import { vaultSettled } from '@sdux-vault/engine';
 import { ExampleService } from './example.service';
@@ -3145,7 +3151,12 @@ describe('ExampleService', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
-        provideFeatureCell(ExampleService, { key, initialState }, [], [])
+        provideFeatureCell(
+          ExampleService,
+          { key, initialState },
+          [withArrayByIdMergeBehavior],
+          []
+        )
       ]
     });
 
@@ -3187,7 +3198,7 @@ describe('ExampleService', () => {
       faction: 'Rebel Alliance',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([createdCharacter]);
+    expect(service.state.value()?.[2]).toEqual(createdCharacter);
   });
 
   it('should create the first character with id 1 when no value exists', async () => {
@@ -3256,7 +3267,7 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual(initialCharacters);
+    expect(service.state.value()?.[2]).toEqual(updatedCharacter);
   });
 
   it('should safely update against an empty collection when no value exists', async () => {
@@ -3278,7 +3289,7 @@ describe('ExampleService', () => {
       faction: 'Unaffiliated',
       isForceSensitive: false
     });
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toEqual([updatedCharacter]);
   });
 
   it('should remove the matching character from the current collection', async () => {
@@ -3298,7 +3309,7 @@ describe('ExampleService', () => {
 
     await vaultSettled(key);
 
-    expect(service.state.value()).toEqual([]);
+    expect(service.state.value()).toBeUndefined();
   });
 });
 `,
@@ -3334,15 +3345,18 @@ export class ExampleService {
   readonly state = this.#vault.state;
 
   /**
-   * Initializes the FeatureCell for the add/edit tutorial slice.
+   * Initializes the FeatureCell for the delete tutorial slice.
    */
   constructor() {
-    this.#vault.initialize();
+    /**
+     * Initializes identifier-based array merge behavior.
+     */
+    this.#vault?.withArrayMergeId?.({ idKey: 'id' }).initialize();
   }
 
   /**
    * Assigns an ID and sends the new character through \`mergeState\` as a one-item array.
-   * The configured array-append merge behavior adds that item while preserving existing characters.
+   * The configured array-by-ID merge behavior appends the new item while preserving existing characters.
    * @param draft - Editable character fields collected from the component form.
    * @returns The character submitted to the FeatureCell with its assigned ID.
    */
@@ -3358,8 +3372,8 @@ export class ExampleService {
   }
 
   /**
-   * Builds a replacement character and maps it into the latest collection through \`replaceState\`.
-   * A matching ID is replaced while every other character retains its existing value.
+   * Builds a replacement character and submits it through \`mergeState\`.
+   * The configured array-by-ID merge behavior replaces a matching ID while every other character remains unchanged.
    * @param id - Identity of the character to replace.
    * @param changes - Complete editable fields that should accompany the preserved identity.
    * @returns The replacement character submitted to the FeatureCell.
@@ -3370,30 +3384,26 @@ export class ExampleService {
   ): StarWarsCharacter {
     const updatedCharacter = createCharacterState(id, changes);
 
-    this.#vault.replaceState({
-      value: () =>
-        this.#vault.state
-          .value()
-          ?.map((character) =>
-            character.id === id ? updatedCharacter : character
-          ) ?? []
+    this.#vault.mergeState({
+      value: [updatedCharacter]
     });
 
     return updatedCharacter;
   }
 
   /**
-   * Filters the requested identity from the latest collection through \`replaceState\`.
-   * An unknown ID leaves the visible collection unchanged.
+   * Submits the requested identity through \`mergeState\` with deletion enabled.
+   * The configured array-by-ID merge behavior removes the matching record, while an unknown ID leaves the collection equivalent.
    * @param id - Identity of the character to remove.
    * @returns Nothing; consumers observe the resulting collection through \`characters\`.
    */
   removeCharacter(id: number): void {
-    this.#vault.replaceState({
-      value: () =>
-        this.#vault.state.value()?.filter((character) => character.id !== id) ??
-        []
-    });
+    this.#vault.mergeState(
+      {
+        value: [{ id } as StarWarsCharacter]
+      },
+      { isDelete: true }
+    );
   }
 }
 `,

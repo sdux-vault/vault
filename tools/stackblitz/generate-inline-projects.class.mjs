@@ -392,14 +392,14 @@ ${fileEntries}
         routerLink="/examples/${framework}/${slug}"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">${title}</div>
+        <div class="menu-content sub-item">${title}</div>
       </a>`;
           })
           .join('\n');
 
         return `    <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">${this.capitalize(framework)}</span>
+        <span class="menu-content child-expansion-item">${this.capitalize(framework)}</span>
       </mat-expansion-panel-header>
 
 ${links}
@@ -414,7 +414,7 @@ ${links}
 <nav aria-label="StackBlitz Examples">
   <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">StackBlitz Examples</span>
+      <span class="menu-content parent-expansion-item">StackBlitz Examples</span>
     </mat-expansion-panel-header>
 
 ${frameworkSections}

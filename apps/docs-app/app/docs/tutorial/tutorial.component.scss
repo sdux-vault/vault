@@ -15,16 +15,12 @@
 
   @media (min-width: global.$breakpoint-md) {
     grid-template-areas: 'content steps';
-    grid-template-columns: minmax(0, 1fr) minmax(225px, 275px);
+    grid-template-columns: minmax(0, 1fr) minmax(175px, 225px);
     gap: global.$spacing-lg;
   }
 
   .tutorial-steps {
     grid-area: steps;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     gap: global.$spacing-sm;
     position: static;
     align-self: start;
@@ -34,110 +30,149 @@
     max-height: none;
     padding: global.$spacing-sm;
     overflow: visible;
-    box-sizing: border-box;
-    border: 1px solid global.$sdux-primary-base;
-    border-radius: global.$border-radius-md;
     background-color: var(--sdux-surface-bg);
 
     @media (min-width: global.$breakpoint-md) {
       position: sticky;
-      top: 150px;
+      top: 25px;
     }
 
-    .tutorial-steps-title {
-      margin: 0;
-      color: var(--sdux-text-default);
-      font-size: global.$font-size-md;
+    .tutorial-chapters-title {
+      margin-left: global.$spacing-sm;
+      color: global.$sdux-primary-base;
+      font-size: global.$font-size-sm;
       font-weight: global.$font-weight-semibold;
-
-      a {
-        @include global.a-link-primary;
-        display: block;
-      }
     }
 
-    .tutorial-group {
-      display: flex;
-      flex-direction: column;
-      gap: global.$spacing-xs;
-      width: 100%;
-    }
-
-    .tutorial-steps-heading {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: global.$spacing-xs;
-      width: 100%;
-    }
-
-    .tutorial-group-chevron {
-      @include global.sdux-icon-button(1.40625rem);
-
-      flex-shrink: 0;
-      min-width: 1.40625rem;
-      margin-top: calc(
-        (global.$font-size-lg * global.$line-height - 1.40625rem) / 2
-      );
-
-      mat-icon {
-        font-size: global.$font-size-md;
-      }
-    }
-
-    .tutorial-step-list {
+    .tutorial-steps-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: global.$spacing-xs;
+      justify-content: flex-start;
+      gap: global.$spacing-sm;
       width: 100%;
-      margin: 0;
-      padding-left: global.$spacing-lg;
+      height: fit-content;
+      max-height: none;
+      padding: global.$spacing-sm;
+      overflow: visible;
       box-sizing: border-box;
+      border: 1px solid global.$sdux-primary-base;
+      border-radius: global.$border-radius-md;
+      background-color: var(--sdux-surface-bg);
 
-      .tutorial-step-item {
-        position: relative;
-        width: 100%;
-        padding: global.$spacing-xs global.$spacing-sm;
-        font-size: global.$font-size-sm;
-        padding-left: 0;
-        box-sizing: border-box;
-        border-left: 3px solid transparent;
-        border-radius: global.$border-radius-sm;
-        transition:
-          background-color 150ms ease,
-          border-color 150ms ease;
+      @media (min-width: global.$breakpoint-md) {
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
       }
 
-      .tutorial-step-active {
-        border-left-color: global.$sdux-primary-base;
-        background-color: color-mix(
-          in srgb,
-          global.$sdux-primary-base 12%,
-          transparent
-        );
-        padding-left: global.$spacing-xs;
+      .tutorial-steps-title {
+        margin: 0;
+        color: var(--sdux-text-default);
+        font-size: global.$font-size-sm;
         font-weight: global.$font-weight-semibold;
+
+        a {
+          @include global.a-link-primary;
+          display: block;
+        }
       }
 
-      a {
-        @include global.a-link-primary;
-        display: block;
-        min-width: 0;
-      }
+      .tutorial-group {
+        display: flex;
+        flex-direction: column;
+        gap: global.$spacing-xs;
+        width: 100%;
 
-      .tutorial-step-number {
-        position: absolute;
-        top: global.$spacing-xs;
-        left: calc((global.$spacing-sm + 2.5ch) * -1);
-        width: 2.5ch;
-        text-align: right;
-        font-variant-numeric: tabular-nums;
-      }
+        .chapter-meta-group {
+          border: 1px solid global.$sdux-primary-base;
+          border-radius: global.$border-radius-md;
+          margin: global.$spacing-xs;
+          padding: global.$spacing-xs;
 
-      .tutorial-step-label {
-        display: block;
-        font-size: global.$font-size-sm;
+          .chapter-meta-header,
+          .chapter-meta {
+            display: flex;
+            align-items: center;
+            gap: global.$spacing-xs;
+            font-size: global.$font-size-sm;
+
+            .difficulty {
+              color: global.$sdux-success-base;
+            }
+          }
+
+          .chapter-meta-header {
+            justify-content: space-between;
+          }
+        }
+
+        .tutorial-steps-heading {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: global.$spacing-xs;
+          width: 100%;
+        }
+
+        .tutorial-group-chevron {
+          @include global.sdux-icon-button(24px);
+        }
+
+        .tutorial-step-list {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: global.$spacing-xs;
+          width: 100%;
+          margin: 0;
+          padding-left: global.$spacing-lg;
+          box-sizing: border-box;
+
+          .tutorial-step-item {
+            position: relative;
+            width: 100%;
+            padding: global.$spacing-xs global.$spacing-sm;
+            font-size: global.$font-size-sm;
+            padding-left: 0;
+            box-sizing: border-box;
+            border-left: 3px solid transparent;
+            border-radius: global.$border-radius-sm;
+            transition:
+              background-color 150ms ease,
+              border-color 150ms ease;
+          }
+
+          .tutorial-step-active {
+            border-left-color: global.$sdux-primary-base;
+            background-color: color-mix(
+              in srgb,
+              global.$sdux-primary-base 12%,
+              transparent
+            );
+            padding-left: global.$spacing-xs;
+            font-weight: global.$font-weight-semibold;
+          }
+
+          a {
+            @include global.a-link-primary;
+            display: block;
+            min-width: 0;
+          }
+
+          .tutorial-step-number {
+            position: absolute;
+            top: global.$spacing-xs;
+            left: calc((global.$spacing-sm + 2.5ch) * -1);
+            width: 2.5ch;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+          }
+
+          .tutorial-step-label {
+            display: block;
+            font-size: global.$font-size-sm;
+          }
+        }
       }
     }
   }
@@ -149,27 +184,18 @@
     gap: global.$spacing-md;
     min-width: 0;
 
-    .chapter-break {
+    .next-chapter {
+      margin: global.$spacing-md 0;
+      font-size: global.$font-size-xl;
+    }
+
+    .chapter-header {
       display: flex;
       flex-direction: column;
       gap: global.$spacing-md;
       margin: global.$spacing-sm 0;
 
-      .chapter-rule {
-        width: 100%;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent 0%,
-          color-mix(in srgb, global.$sdux-primary-base 55%, transparent) 18%,
-          global.$sdux-primary-base 50%,
-          color-mix(in srgb, global.$sdux-primary-base 55%, transparent) 82%,
-          transparent 100%
-        );
-        box-shadow: 0 0 18px rgb(25 118 210 / 12%);
-      }
-
-      .chapter-copy {
+      .chapter-header-copy {
         display: flex;
         flex-direction: column;
         gap: global.$spacing-sm;
@@ -185,45 +211,10 @@
           ),
           var(--sdux-surface-bg);
 
-        .chapter-header {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: global.$spacing-md;
-          width: 100%;
-        }
-
-        .chapter-eyebrow {
-          margin: 0;
-          color: global.$sdux-primary-base;
-          font-size: global.$font-size-sm;
-          font-weight: global.$font-weight-bold;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        h2,
         p {
           margin: 0;
-        }
-
-        h2 {
-          flex: 1 1 auto;
-          color: var(--sdux-text-default);
-          font-size: global.$font-size-2xl;
-          font-weight: global.$font-weight-bold;
-          line-height: 1.2;
-        }
-
-        p {
           max-width: 72ch;
           color: var(--sdux-text-default);
-        }
-
-        .chapter-toggle {
-          @include global.sdux-icon-button();
-
-          flex-shrink: 0;
         }
       }
     }

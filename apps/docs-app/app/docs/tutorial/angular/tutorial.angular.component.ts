@@ -9,43 +9,30 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
-  BrandNameComponent,
-  FeatureCellBrandNameComponent,
-  SDuXVideoComponent
-} from '@sdux-vault/ui/web-components';
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterModule
+} from '@angular/router';
 import { PipelineRelatedTopicComponent } from 'apps/docs-app/app/docs/related-topic/related-topic.component';
 import { TutorialNavigationDirective } from '../directive/tutorial-navigation.directive';
 import { ChapterShape } from '../shape/chapter.shape';
-import { AddEditCharactersChapterComponent } from './chapters/add-edit-characters/add-edit-characters.chapter.component';
-import { AddEditCharactersService } from './chapters/add-edit-characters/services/add-edit-characters.service';
-import { AsyncInputChapterComponent } from './chapters/async-input/async-input.chapter.component';
-import { AsyncInputService } from './chapters/async-input/services/async-input.service';
-import { DeleteCharactersChapterComponent } from './chapters/delete-characters/delete-characters.chapter.component';
-import { DeleteCharactersService } from './chapters/delete-characters/services/delete-characters.service';
-import { DelayChapterComponent } from './chapters/delay/delay.chapter.component';
-import { DelayService } from './chapters/delay/services/delay.service';
-import { DisplayCharacterChapterComponent } from './chapters/display-character/display-character.chapter.component';
-import { DisplayCharacterService } from './chapters/display-character/services/display-character.service';
-import { DisplayCharactersChapterComponent } from './chapters/display-characters/display-characters.chapter.component';
-import { DisplayCharactersService } from './chapters/display-characters/services/display-characters.service';
-import { ErrorsChapterComponent } from './chapters/errors/errors.chapter.component';
-import { ErrorsService } from './chapters/errors/services/errors.service';
-import { FiltersAndReducersChapterComponent } from './chapters/filters-and-reducers/filters-and-reducers.chapter.component';
-import { FiltersAndReducersService } from './chapters/filters-and-reducers/services/filters-and-reducers.service';
-import { LifecycleChapterComponent } from './chapters/lifecycle/lifecycle.chapter.component';
-import { LifecycleService } from './chapters/lifecycle/services/lifecycle.service';
-import { EncryptAndPersistChapterComponent } from './chapters/encrypt-and-persist/encrypt-and-persist.chapter.component';
-import { EncryptAndPersistService } from './chapters/encrypt-and-persist/services/encrypt-and-persist.service';
-import { StateIntrospectionChapterComponent } from './chapters/state-introspection/state-introspection.chapter.component';
-import { StateIntrospectionService } from './chapters/state-introspection/services/state-introspection.service';
-import { TabSyncChapterComponent } from './chapters/tab-sync/tab-sync.chapter.component';
-import { TabSyncService } from './chapters/tab-sync/services/tab-sync.service';
-import { DistinctUntilChangedChapterComponent } from './chapters/distinct-until-changed/distinct-until-changed.chapter.component';
-import { DistinctUntilChangedService } from './chapters/distinct-until-changed/services/distinct-until-changed.service';
-import { StepwiseChapterComponent } from './chapters/stepwise/stepwise.chapter.component';
-import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
+import { AngularWelcomeService } from './chapters/01-welcome/services/welcome.service';
+import { DisplayCharacterService } from './chapters/02-display-character/services/display-character.service';
+import { DisplayCharactersService } from './chapters/03-display-characters/services/display-characters.service';
+import { AddEditCharactersService } from './chapters/04-add-edit-characters/services/add-edit-characters.service';
+import { DeleteCharactersService } from './chapters/05-delete-characters/services/delete-characters.service';
+import { LifecycleService } from './chapters/06-lifecycle/services/lifecycle.service';
+import { FiltersAndReducersService } from './chapters/07-filters-and-reducers/services/filters-and-reducers.service';
+import { ErrorsService } from './chapters/08-errors/services/errors.service';
+import { AsyncInputService } from './chapters/09-async-input/services/async-input.service';
+import { DelayService } from './chapters/10-delay/services/delay.service';
+import { EncryptAndPersistService } from './chapters/11-encrypt-and-persist/services/encrypt-and-persist.service';
+import { StateIntrospectionService } from './chapters/12-state-introspection/services/state-introspection.service';
+import { TabSyncService } from './chapters/13-tab-sync/services/tab-sync.service';
+import { DistinctUntilChangedService } from './chapters/14-distinct-until-changed/services/distinct-until-changed.service';
+import { StepwiseService } from './chapters/15-stepwise/services/stepwise.service';
 
 @Component({
   selector: 'sdux-angular-tutorial',
@@ -54,33 +41,28 @@ import { StepwiseService } from './chapters/stepwise/services/stepwise.service';
     MatIconModule,
     MatTooltipModule,
     RouterModule,
-    BrandNameComponent,
-    PipelineRelatedTopicComponent,
-    SDuXVideoComponent,
-    FeatureCellBrandNameComponent,
-    DisplayCharactersChapterComponent,
-    DisplayCharacterChapterComponent,
-    AddEditCharactersChapterComponent,
-    AsyncInputChapterComponent,
-    DeleteCharactersChapterComponent,
-    LifecycleChapterComponent,
-    FiltersAndReducersChapterComponent,
-    ErrorsChapterComponent,
-    DelayChapterComponent,
-    EncryptAndPersistChapterComponent,
-    StateIntrospectionChapterComponent,
-    TabSyncChapterComponent,
-    DistinctUntilChangedChapterComponent,
-    StepwiseChapterComponent
+    PipelineRelatedTopicComponent
   ],
   templateUrl: './tutorial.angular.component.html',
   styleUrls: ['../../scss/documentation.scss', '../tutorial.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class TutorialAngularComponent extends TutorialNavigationDirective {
+  protected readonly verifiedEnvironment = {
+    verifiedOn: '2026-08-06',
+    verifiedOnLabel: 'August 6, 2026',
+    node: '24 or newer',
+    npm: '11 or newer',
+    angular: '21',
+    sduxAngular: 'latest',
+    sduxAddons: 'latest'
+  } as const;
+
   readonly #route = inject(ActivatedRoute);
-  readonly #displayCharactersService = inject(DisplayCharactersService);
+  readonly #router = inject(Router);
+  readonly #angularWelcomeService = inject(AngularWelcomeService);
   readonly #displayCharacterService = inject(DisplayCharacterService);
+  readonly #displayCharactersService = inject(DisplayCharactersService);
   readonly #addEditCharactersService = inject(AddEditCharactersService);
   readonly #asyncInputService = inject(AsyncInputService);
   readonly #deleteCharactersService = inject(DeleteCharactersService);
@@ -128,20 +110,17 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     14: false
   });
 
+  readonly #activeRouteChapterId = signal<number | null>(null);
+
+  readonly chapters = this.#getChapters();
+
   constructor() {
     super();
 
     effect(() => {
-      const activeStepMatch = /^step-(\d+)$/.exec(this.activeStep());
-      const activeStepId = activeStepMatch
-        ? Number(activeStepMatch[1])
-        : Number.NaN;
-
-      if (Number.isNaN(activeStepId)) {
-        return;
-      }
-
-      const activeGroupId = this.getTutorialGroupIdForStepId(activeStepId);
+      const activeGroupId =
+        this.#activeRouteChapterId() ??
+        this.getTutorialGroupIdForStepId(this.activeStep());
 
       if (activeGroupId === null) {
         return;
@@ -163,14 +142,37 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       this.setExpandedTutorialGroups(targetGroupId);
       this.setExpandedChapters(targetGroupId);
     });
+
+    const updateExpandedChapterFromRoute = (): void => {
+      const routePath = this.#route.firstChild?.snapshot?.url?.[0]?.path;
+      const activeChapter = this.chapters.find(
+        (chapter) => chapter.route === routePath
+      );
+
+      if (activeChapter) {
+        this.#activeRouteChapterId.set(activeChapter.id);
+      }
+    };
+
+    updateExpandedChapterFromRoute();
+
+    this.#router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        updateExpandedChapterFromRoute();
+      }
+    });
   }
 
-  getStepId(groupIndex: number, stepIndex: number): number {
-    const completedSteps = this.chapters
-      .slice(0, groupIndex)
-      .reduce((count, group) => count + group.steps.length, 0);
+  getStepId(chapterIndex: number, stepIndex: number): string {
+    return `${chapterIndex + 1}-step-${stepIndex + 1}`;
+  }
 
-    return completedSteps + stepIndex + 1;
+  getChapterLink(chapterIndex: number): string {
+    return `./chapter-${chapterIndex + 1}`;
+  }
+
+  getStepNumber(stepIndex: number): number {
+    return stepIndex + 1;
   }
 
   getTutorialGroupAriaLabel(groupIndex: number, groupLabel: string): string {
@@ -182,7 +184,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     stepIndex: number,
     stepLabel: string
   ): string {
-    return `Go to Step ${this.getStepId(groupIndex, stepIndex)}: ${stepLabel}`;
+    return `Go to Chapter ${groupIndex + 1}, Step ${stepIndex + 1}: ${stepLabel}`;
   }
 
   isTutorialGroupExpanded(groupId: number): boolean {
@@ -211,6 +213,11 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     this.setExpandedChapters(groupId);
   }
 
+  selectTutorialChapter(groupId: number): void {
+    this.setExpandedTutorialGroups(groupId);
+    this.setExpandedChapters(groupId);
+  }
+
   getTutorialGroupToggleAriaLabel(
     groupLabel: string,
     isExpanded: boolean
@@ -225,18 +232,10 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     return `${isExpanded ? 'Collapse' : 'Expand'} ${tutorialTitle}`;
   }
 
-  private getTutorialGroupIdForStepId(stepId: number): number | null {
-    let completedSteps = 0;
+  private getTutorialGroupIdForStepId(stepId: string): number | null {
+    const stepMatch = /^chapter-(\d+)-step-(\d+)$/.exec(stepId);
 
-    for (const group of this.chapters) {
-      completedSteps += group.steps.length;
-
-      if (stepId <= completedSteps) {
-        return group.id;
-      }
-    }
-
-    return null;
+    return stepMatch ? Number(stepMatch[1]) : null;
   }
 
   private getTutorialGroupIdForFragment(
@@ -256,11 +255,7 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
       return Number(chapterMatch[1]);
     }
 
-    const stepMatch = /^step-(\d+)$/.exec(fragment);
-
-    return stepMatch
-      ? this.getTutorialGroupIdForStepId(Number(stepMatch[1]))
-      : null;
+    return this.getTutorialGroupIdForStepId(fragment);
   }
 
   private setExpandedTutorialGroups(activeGroupId: number): void {
@@ -301,20 +296,26 @@ export class TutorialAngularComponent extends TutorialNavigationDirective {
     }
   }
 
-  readonly chapters: readonly ChapterShape[] = [
-    this.#displayCharacterService.chapters(),
-    this.#displayCharactersService.chapters(),
-    this.#addEditCharactersService.chapters(),
-    this.#deleteCharactersService.chapters(),
-    this.#lifeCycleService.chapters(),
-    this.#filtersAndReducersService.chapters(),
-    this.#errorsService.chapters(),
-    this.#asyncInputService.chapters(),
-    this.#delayService.chapters(),
-    this.#encryptAndPersistService.chapters(),
-    this.#stateIntrospectionService.chapters(),
-    this.#tabSyncService.chapters(),
-    this.#distinctUntilChangedService.chapters(),
-    this.#stepwiseService.chapters()
-  ];
+  #getChapters(): readonly ChapterShape[] {
+    return [
+      this.#angularWelcomeService.chapters(),
+      this.#displayCharacterService.chapters(),
+      this.#displayCharactersService.chapters(),
+      this.#addEditCharactersService.chapters(),
+      this.#deleteCharactersService.chapters(),
+      this.#lifeCycleService.chapters(),
+      this.#filtersAndReducersService.chapters(),
+      this.#errorsService.chapters(),
+      this.#asyncInputService.chapters(),
+      this.#delayService.chapters(),
+      this.#encryptAndPersistService.chapters(),
+      this.#stateIntrospectionService.chapters(),
+      this.#tabSyncService.chapters(),
+      this.#distinctUntilChangedService.chapters(),
+      this.#stepwiseService.chapters()
+    ].map((chapter: ChapterShape, index: number) => {
+      chapter.id = index + 1;
+      return chapter;
+    });
+  }
 }

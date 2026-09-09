@@ -10,20 +10,20 @@ import { TutorialNavigationDirective } from './tutorial-navigation.directive';
   template: `
     <nav>
       <a
-        [class.tutorial-step-active]="isActiveStep(1)"
-        [attr.aria-current]="isAriaStep(1)"
+        [class.tutorial-step-active]="isActiveStep('1-step-1')"
+        [attr.aria-current]="isAriaStep('1-step-1')"
         >Step One</a
       >
       <a
-        [class.tutorial-step-active]="isActiveStep(2)"
-        [attr.aria-current]="isAriaStep(2)"
+        [class.tutorial-step-active]="isActiveStep('1-step-2')"
+        [attr.aria-current]="isAriaStep('1-step-2')"
         >Step Two</a
       >
     </nav>
     <main class="tutorial-content">
-      <section class="section" id="step-1"></section>
-      <section class="section" id="step-2"></section>
-      <section class="section" id="step-3"></section>
+      <section class="section" id="1-step-1"></section>
+      <section class="section" id="1-step-2"></section>
+      <section class="section" id="1-step-3"></section>
     </main>
   `
 })
@@ -121,7 +121,7 @@ describe('Directive: TutorialNavigation', () => {
       '[aria-current="step"]'
     ) as HTMLAnchorElement;
 
-    expect(component.activeStep()).toBe('step-1');
+    expect(component.activeStep()).toBe('1-step-1');
     expect(IntersectionObserverMock.instances.length).toBe(1);
     expect(observer.options).toEqual({
       rootMargin: '-20% 0px -70% 0px',
@@ -138,9 +138,9 @@ describe('Directive: TutorialNavigation', () => {
     await createComponent();
 
     const observer = IntersectionObserverMock.instances[0];
-    const stepOne = fixture.nativeElement.querySelector('#step-1');
-    const stepTwo = fixture.nativeElement.querySelector('#step-2');
-    const stepThree = fixture.nativeElement.querySelector('#step-3');
+    const stepOne = fixture.nativeElement.querySelector('[id="1-step-1"]');
+    const stepTwo = fixture.nativeElement.querySelector('[id="1-step-2"]');
+    const stepThree = fixture.nativeElement.querySelector('[id="1-step-3"]');
 
     observer.emit([
       createEntry(stepThree, true, 300),
@@ -154,7 +154,7 @@ describe('Directive: TutorialNavigation', () => {
       '[aria-current="step"]'
     ) as HTMLAnchorElement;
 
-    expect(component.activeStep()).toBe('step-2');
+    expect(component.activeStep()).toBe('1-step-2');
     expect(currentLink.textContent?.trim()).toBe('Step Two');
     expect(
       fixture.nativeElement.querySelectorAll('.tutorial-step-active').length
@@ -165,29 +165,29 @@ describe('Directive: TutorialNavigation', () => {
     await createComponent();
 
     const observer = IntersectionObserverMock.instances[0];
-    const stepOne = fixture.nativeElement.querySelector('#step-1');
+    const stepOne = fixture.nativeElement.querySelector('[id="1-step-1"]');
 
     observer.emit([createEntry(stepOne, false, -100)]);
 
-    expect(component.activeStep()).toBe('step-1');
+    expect(component.activeStep()).toBe('1-step-1');
   });
 
   it('should report the active and aria state for a step', async () => {
     await createComponent();
 
-    component.activeStep.set('step-3');
+    component.activeStep.set('1-step-3');
 
-    expect(component.isActiveStep(3)).toBeTrue();
-    expect(component.isActiveStep(2)).toBeFalse();
-    expect(component.isAriaStep(3)).toBe('step');
-    expect(component.isAriaStep(2)).toBeNull();
+    expect(component.isActiveStep('1-step-3')).toBeTrue();
+    expect(component.isActiveStep('1-step-2')).toBeFalse();
+    expect(component.isAriaStep('1-step-3')).toBe('step');
+    expect(component.isAriaStep('1-step-2')).toBeNull();
   });
 
   it('should scroll the fragment target into view', async () => {
     await createComponent();
 
     const stepTwo = fixture.nativeElement.querySelector(
-      '#step-2'
+      '[id="1-step-2"]'
     ) as HTMLElement;
     const scrollIntoView = jasmine.createSpy('scrollIntoView');
 
@@ -196,7 +196,7 @@ describe('Directive: TutorialNavigation', () => {
       value: scrollIntoView
     });
 
-    fragment$.next('step-2');
+    fragment$.next('1-step-2');
     await new Promise((resolve) => setTimeout(resolve));
 
     expect(scrollIntoView).toHaveBeenCalledOnceWith({
@@ -209,7 +209,7 @@ describe('Directive: TutorialNavigation', () => {
     await createComponent();
 
     const stepOne = fixture.nativeElement.querySelector(
-      '#step-1'
+      '[id="1-step-1"]'
     ) as HTMLElement;
     const scrollIntoView = jasmine.createSpy('scrollIntoView');
 
@@ -249,7 +249,7 @@ describe('Directive: TutorialNavigation', () => {
 
     await createComponent();
 
-    expect(component.activeStep()).toBe('step-1');
+    expect(component.activeStep()).toBe('1-step-1');
     expect(IntersectionObserverMock.instances).toEqual([]);
   });
 });

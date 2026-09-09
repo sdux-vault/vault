@@ -5,55 +5,57 @@
     #licensingRla="routerLinkActive"
     [expanded]="forceExpanded() || licensingRla.isActive">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">Licensing</span>
+      <span class="menu-content parent-expansion-item">Licensing</span>
     </mat-expansion-panel-header>
 
-    <a
-      mat-list-item
-      routerLink="/sdux/vault"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-icon menu-content">
-        <sdux-image
-          class="logo"
-          image="brand/sdux/sdux-vault-logo.svg"
-          height="20"></sdux-image>
-        Purchase {{ vaultBrandName }}
-      </div>
-    </a>
+    <div class="sub-menu">
+      <a
+        mat-list-item
+        routerLink="/sdux/vault"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-icon menu-content sub-item">
+          Purchase {{ vaultBrandName }}
+          <sdux-image
+            class="logo"
+            image="brand/sdux/sdux-vault-logo.svg"
+            height="20"></sdux-image>
+        </div>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/pipeline/extensions/licensing-and-monetization"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Licensing & Monetization</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/pipeline/extensions/licensing-and-monetization"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Licensing & Monetization</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/press"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <span class="menu-content sub-item">Press</span>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/press"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Press</span>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/welcome/license"
-      aria-label="Licensing"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-content">{{ brandName }} License</div>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/welcome/license"
+        aria-label="Licensing"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content sub-item">{{ brandName }} License</div>
+      </a>
 
-    <a
-      mat-list-item
-      routerLink="/docs/welcome/trademark-usage"
-      aria-label="Trademark Usage & Brand Policy"
-      routerLinkActive="active"
-      (click)="closeSidenav()">
-      <div class="menu-content">{{ brandName }} Trademark Usage</div>
-    </a>
+      <a
+        mat-list-item
+        routerLink="/docs/welcome/trademark-usage"
+        aria-label="Trademark Usage & Brand Policy"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content sub-item">{{ brandName }} Trademark Usage</div>
+      </a>
+    </div>
   </mat-expansion-panel>
 </nav>

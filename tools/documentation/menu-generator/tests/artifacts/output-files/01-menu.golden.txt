@@ -4,24 +4,22 @@ AUTO-GENERATED DOCUMENTATION COMPONENT
 Tools/documentation/menu-generator
 -->
 <nav aria-labelledby="types-section-label">
-  <mat-expansion-panel class="nav-expansion grandparent">
+  <mat-expansion-panel class="nav-expansion">
     <mat-expansion-panel-header>
-      <span class="sub-menu-content sub-item sub-header">API Reference</span>
+      <span class="menu-content child-expansion-item">API Reference</span>
     </mat-expansion-panel-header>
 
-    <div class="sub-menu">
+    <div class="expansion-sub-menu">
       
       
       
     <mat-expansion-panel class="nav-expansion" [expanded]="false">
       <mat-expansion-panel-header>
-        <div class="menu-icon">
-          <span class="sub-menu-content sub-item sub-header">Classes</span>
-        </div>
+          <span class="menu-content grandchild-expansion-item">Classes</span>
       </mat-expansion-panel-header>
 
-      <div class="submenu">
-        <a mat-list-item routerLink="/docs/references/classes/value-resolve-example-component" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content">ValueResolveExampleComponent</span></a>
+      <div class="expansion-sub-menu">
+        <a mat-list-item routerLink="/docs/references/classes/value-resolve-example-component" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content grandchild-sub-item">ValueResolveExampleComponent</span></a>
       </div>
     </mat-expansion-panel>
 
@@ -40,13 +38,11 @@ Tools/documentation/menu-generator
       
     <mat-expansion-panel class="nav-expansion" [expanded]="false">
       <mat-expansion-panel-header>
-        <div class="menu-icon">
-          <span class="sub-menu-content sub-item sub-header">Shapes</span>
-        </div>
+          <span class="menu-content grandchild-expansion-item">Shapes</span>
       </mat-expansion-panel-header>
 
-      <div class="submenu">
-        <a mat-list-item routerLink="/docs/references/shapes/bank-employee-shape" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content">BankEmployeeShape</span></a>
+      <div class="expansion-sub-menu">
+        <a mat-list-item routerLink="/docs/references/shapes/bank-employee-shape" routerLinkActive="active" (click)="closeSidenav()"><span class="menu-content grandchild-sub-item">BankEmployeeShape</span></a>
       </div>
     </mat-expansion-panel>
 

@@ -1,16 +1,33 @@
 @use 'global' as global;
 
+:host ::ng-deep .mat-mdc-tab-header {
+  background-color: inherit !important;
+}
+
+:host ::ng-deep .mdc-tab {
+  background-color: inherit !important;
+}
+
 .example-viewer-source {
   --sdux-example-viewer-source-max-height: 640px;
+
+  :host ::ng-deep .mat-mdc-tab-header {
+    background-color: inherit !important;
+  }
+
+  :host ::ng-deep .mdc-tab {
+    background-color: inherit !important;
+  }
 
   height: auto;
   // background-color: var(--sdux-surface-elevated);
   color: var(--sdux-text-black);
+  margin-top: global.$spacing-sm;
+  margin-bottom: global.$spacing-sm;
 
   &.tabs {
     min-height: 300px;
-    border: 1px solid black;
-    border-top: 1px solid global.$sdux-primary-base;
+    border: 1px solid global.$sdux-primary-base;
 
     .source-row {
       min-height: 300px;
@@ -18,14 +35,15 @@
       pre {
         min-height: 300px;
         code {
-          width: calc(100% - global.$spacing-md * 3 - 4px);
+          width: fit-content;
+          // width: calc(100% - global.$spacing-md * 2 - 4px);
           min-height: 300px;
-          margin-top: global.$spacing-md;
+          //margin-top: global.$spacing-md;
           margin-left: global.$spacing-md;
           margin-bottom: global.$spacing-md;
 
-          padding-left: global.$spacing-md;
-          padding-right: global.$spacing-md;
+          // padding-left: global.$spacing-md;
+          // padding-right: global.$spacing-md;
         }
       }
     }
@@ -118,18 +136,16 @@
       align-items: center;
       gap: global.$spacing-sm;
       flex-shrink: 0;
+      margin-top: global.$spacing-sm;
+      margin: global.$spacing-xs;
 
       .copy-btn,
       .expand-btn {
-        @include global.sdux-icon-button(36px);
-
-        margin: global.$spacing-sm;
-        position: relative;
-        flex-shrink: 0;
+        @include global.sdux-icon-button(32px);
       }
 
       .check-mark {
-        @include global.sdux-icon-button(36, global.$sdux-success-base);
+        @include global.sdux-icon-button(36px, global.$sdux-success-base);
       }
     }
   }

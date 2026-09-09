@@ -5,12 +5,14 @@
 <nav aria-label="StackBlitz Examples">
   <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
     <mat-expansion-panel-header>
-      <span class="nav-section-label">StackBlitz Examples</span>
+      <span class="menu-content parent-expansion-item"
+        >StackBlitz Examples</span
+      >
     </mat-expansion-panel-header>
 
     <mat-expansion-panel class="nav-expansion" [expanded]="forceExpanded()">
       <mat-expansion-panel-header>
-        <span class="sub-menu-content sub-item sub-header">Angular</span>
+        <span class="menu-content child-expansion-item">Angular</span>
       </mat-expansion-panel-header>
 
       <a
@@ -18,7 +20,7 @@
         routerLink="/examples/angular/basic-filter-reducer"
         routerLinkActive="active"
         (click)="closeSidenav()">
-        <div class="menu-content">Basic Filter Reducer</div>
+        <div class="menu-content sub-item">Basic Filter Reducer</div>
       </a>
     </mat-expansion-panel>
   </mat-expansion-panel>

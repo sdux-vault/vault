@@ -1,0 +1,880 @@
+<!-- AUTO-GENERATED DOCUMENTATION LINKS -->
+<div class="header" id="chapter-12" aria-labelledby="chapter-12-title">
+  <h2>Chapter 12: State Introspection</h2>
+</div>
+<header class="chapter-header">
+  <div class="chapter-header-copy">
+    <p>
+      You will inspect
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      State at each important boundary: raw StateSnapshot values, the
+      StateSnapshot$ stream, tap callbacks, finalized State emission, and the
+      captured Initial State baseline.
+    </p>
+    <p>
+      Use this diagnostic lab when you need to explain a transition or verify a
+      pipeline boundary. Observation is not a reason to expose complete
+      application State indiscriminately; production telemetry must be bounded
+      and redacted.
+    </p>
+  </div>
+</header>
+<section class="section">
+  <div class="section-body">
+    <h3 class="fake-h4">
+      Observe a pipeline without turning observation into control.
+    </h3>
+    <p>
+      When a State transition is difficult to explain, a final rendered value is
+      not enough. You need to see what was committed, what was loading, which
+      candidate entered the pipeline, how taps changed it, and what event
+      produced the emission. This chapter introduces those observation points
+      without giving diagnostics authority over State.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Why this boundary matters</h3>
+    <p>
+      The service exposes immutable snapshots and pipeline observations while
+      the component renders them for inspection. Reading
+      <span class="code">state</span>, <span class="code">state$</span>, or tap
+      callbacks does not commit a candidate, transform a value, or alter
+      pipeline control. That separation keeps diagnostics trustworthy and
+      prevents logging code from becoming hidden business logic.
+    </p>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">Use this structure for</h3>
+    <ul>
+      <li>debugging why a candidate differs from committed State</li>
+      <li>diagnostic or telemetry views that need lifecycle context</li>
+      <li>tests that verify pipeline boundaries and emitted outcomes</li>
+    </ul>
+  </div>
+
+  <div class="section-body">
+    <h3 class="fake-h4">By the end of this chapter</h3>
+    <p>
+      You will be able to inspect raw StateSnapshot values, observe
+      <span class="code">state$</span>, compare before- and after-tap values,
+      and capture State emissions without moving observation authority into the
+      component.
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="chapter-12-start-title">
+  <div class="section-title" id="chapter-12-start-title">
+    Chapter 12 Starting Point and Observation Guide
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the completed Chapter 7 project. This diagnostic lab updates
+      the service, component, template, and tests. Use one mutation throughout
+      the steps so you can compare the same attempt at each boundary.
+    </p>
+    <div class="callout callout-info">
+      <div class="title">Choose an Observation Surface</div>
+      <ul>
+        <li>
+          <span class="code">state</span>: Angular Signal accessors for the
+          latest value, loading flag, error, and value-presence flag.
+        </li>
+        <li>
+          <span class="code">state$</span>: an RxJS stream whose emissions carry
+          a complete snapshot and event context.
+        </li>
+        <li>
+          <span class="code">beforeTaps()</span>: the filtered candidate
+          immediately before reducers run.
+        </li>
+        <li>
+          <span class="code">afterTaps()</span>: the derived candidate
+          immediately after reducers run.
+        </li>
+        <li>
+          <span class="code">emitStates()</span>: the finalized snapshot after
+          State emission.
+        </li>
+        <li>
+          The captured baseline: an application-created clone of the first
+          stream value whose snapshot reports
+          <span class="code">hasValue</span>.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="title">Diagnostics Must Be Bounded</div>
+      <p>
+        The textareas serialize complete values only to teach the boundaries. In
+        production, redact sensitive fields, sample high-frequency emissions,
+        limit payload size, and avoid retaining snapshots longer than necessary.
+        Observation callbacks must not become hidden business logic.
+      </p>
+    </div>
+
+    <div class="table-title">Observation Timeline for One Mutation</div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Surface</th>
+          <th scope="col">Moment observed</th>
+          <th scope="col">Shape</th>
+          <th scope="col">Question it answers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="code">state</span></td>
+          <td>Latest reactive read</td>
+          <td>Four Angular Signal accessors</td>
+          <td>
+            What is the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            reporting now?
+          </td>
+        </tr>
+        <tr>
+          <td><span class="code">state$</span></td>
+          <td>
+            Each
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            state event
+          </td>
+          <td>Event containing an immutable snapshot</td>
+          <td>Which snapshots arrived over time?</td>
+        </tr>
+        <tr>
+          <td><span class="code">beforeTaps()</span></td>
+          <td>After filtering, before reducers</td>
+          <td>Filtered candidate collection</td>
+          <td>What is about to be transformed?</td>
+        </tr>
+        <tr>
+          <td><span class="code">afterTaps()</span></td>
+          <td>After all reducers</td>
+          <td>Derived candidate collection</td>
+          <td>What is about to be committed?</td>
+        </tr>
+        <tr>
+          <td><span class="code">emitStates()</span></td>
+          <td>After final State emission</td>
+          <td>Finalized StateSnapshot</td>
+          <td>What did this attempt emit?</td>
+        </tr>
+        <tr>
+          <td>Captured baseline</td>
+          <td>First <span class="code">state$</span> snapshot with a value</td>
+          <td>Application-owned cloned collection</td>
+          <td>What known collection should this lab restore?</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="12-step-1" aria-labelledby="step-1-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-1-title">
+      Step 1: Read Raw StateSnapshot
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Start with the <span class="code">state</span> property on the
+      <sdux-feature-cell />. It exposes the current StateSnapshot as individual
+      reactive values, so you can read the committed value, loading status,
+      error, and <span class="code">hasValue</span> flag without subscribing to
+      a stream.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In <span class="code">example.service.ts</span>, expose
+          <span class="code">readonly state = this.#vault.state</span>
+          immediately after the private Vault reference.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, expose the service
+          state and add <span class="code">rawStateJson</span> as a computed
+          value containing <span class="code">isLoading</span>,
+          <span class="code">value</span>, <span class="code">error</span>, and
+          <span class="code">hasValue</span>.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, bind
+          <span class="code">rawStateJson()</span> to the Raw StateSnapshot
+          textarea. Add a character and confirm its committed, reduced
+          collection appears with <span class="code">isLoading: false</span>,
+          <span class="code">error: null</span>, and
+          <span class="code">hasValue: true</span>.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The component reads a reactive snapshot through the service boundary.
+        </li>
+        <li>
+          The output describes the current committed State, not a pending
+          candidate.
+        </li>
+        <li>
+          <span class="code">hasValue</span> distinguishes an available value
+          from an absent one.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-2" aria-labelledby="step-2-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-2-title">
+      Step 2: Observe the state$ Snapshot
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Use <span class="code">state$</span> when you need the full StateSnapshot
+      as an Observable. Each emission gives you a stream-friendly view of the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      boundary, including the snapshot and the event type that produced it.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In <span class="code">example.service.ts</span>, expose
+          <span class="code">readonly state$ = this.#vault.state$</span> beside
+          <span class="code">state</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, initialize
+          <span class="code">rawStateStreamJson</span> to
+          <span class="code">'undefined'</span>. Subscribe to
+          <span class="code">state$</span> with
+          <span class="code">takeUntilDestroyed()</span>, destructure each
+          event's <span class="code">snapshot</span>, and serialize it into that
+          Signal.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, bind the Signal
+          to the latest <span class="code">state$</span>
+          snapshot. Add, edit, and delete a character; after each settled
+          request, confirm this stream output and the raw Signal output describe
+          the same committed snapshot.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>
+          The stream emits the immutable snapshot supplied by the
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+        </li>
+        <li>
+          The observable is useful when your integration already uses RxJS
+          operators.
+        </li>
+        <li>The component keeps the subscription lifecycle-safe.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-40" aria-labelledby="step-40-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-40-title">
+      Step 40: Inspect Before Taps
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Register <span class="code">beforeTaps()</span> to observe a candidate
+      immediately before the configured tap pipeline runs. This is an inspection
+      point for understanding what the pipeline is about to process; it is not a
+      replacement for a Filter or Reducer.
+    </p>
+    <p>
+      In this example, “Before Taps” means after filtering and immediately
+      before reducer execution. The registered callback publishes the immutable
+      input to a read-only teaching Signal and returns no replacement value.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In <span class="code">example.service.ts</span>, import
+          <span class="code"
+            ><a href="/docs/references/types/tap-callback">TapCallback</a></span
+          >
+          and create a private writable Signal named
+          <span class="code">#beforeTapInput</span>. Expose only its
+          <span class="code">asReadonly()</span> result.
+        </li>
+        <li>
+          Add <span class="code">#captureBeforeTapInput</span> as a typed
+          callback that sets that Signal and returns no value. Register it with
+          <span class="code"
+            >this.#vault.beforeTaps([this.#captureBeforeTapInput])</span
+          >
+          immediately before initialization.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, serialize
+          <span class="code">beforeTapInput()</span> into
+          <span class="code">beforeTapInputJson</span> and bind it to Before
+          Taps. Add a character whose fields need reducers and confirm this
+          output lacks reducer-derived display fields.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, bind
+          <span class="code">beforeTapInputJson()</span> to the Before Taps
+          textarea.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>The callback observes the candidate before tap processing.</li>
+        <li>
+          Observing a candidate does not commit it or alter pipeline control.
+        </li>
+        <li>
+          The output can differ from the final State when later stages transform
+          the candidate.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-4" aria-labelledby="step-4-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-4-title">
+      Step 4: Inspect After Taps
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Register <span class="code">afterTaps()</span> to observe the value after
+      tap processing has completed. This gives you a second diagnostic point so
+      you can see how the candidate changes before State emission.
+    </p>
+    <p>
+      The reducers—not the observation callback—produce the transformed value.
+      “After Taps” publishes that post-reducer candidate for comparison and
+      cannot change what the
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a> later
+      commits.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In <span class="code">example.service.ts</span>, import
+          <span class="code"
+            ><a href="/docs/references/types/tap-callback">TapCallback</a></span
+          >
+          and create a private writable Signal named
+          <span class="code">#afterTapInput</span>. Expose only its
+          <span class="code">asReadonly()</span> result.
+        </li>
+        <li>
+          Add <span class="code">#captureAfterTapInput</span> as a typed
+          callback that sets that Signal and returns no value. Register it with
+          <span class="code"
+            >this.#vault.afterTaps([this.#captureAfterTapInput])</span
+          >
+          immediately before initialization.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.ts</span>, serialize
+          <span class="code">afterTapInput()</span> into
+          <span class="code">afterTapInputJson</span> and bind it to After Taps.
+          Add a character whose fields need reducers and confirm this output
+          lacks reducer-derived display fields.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, bind
+          <span class="code">afterTapInputJson()</span> to the After Taps
+          textarea.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>The callback sees the transformed pipeline value.</li>
+        <li>
+          This observation point remains separate from the component's display
+          State.
+        </li>
+        <li>
+          Comparing the three outputs makes each pipeline boundary visible.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-5" aria-labelledby="step-5-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-5-title">
+      Step 5: Observe State Emission
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Register <span class="code">emitStates()</span> to observe the finalized
+      StateSnapshot after the pipeline has emitted State. This is the output to
+      use when you need to inspect the committed result of an attempt.
+    </p>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In the service, create <span class="code">#emittedState</span> as a
+          Signal of
+          <span class="code"
+            ><a href="/docs/references/shapes/state-snapshot-shape"
+              >StateSnapshotShape</a
+            ></span
+          >
+          or <span class="code">undefined</span>, and expose its read-only view
+          as <span class="code">emittedState</span>.
+        </li>
+        <li>
+          Add <span class="code">#captureEmittedState</span> as a
+          <span class="code"
+            ><a href="/docs/references/types/core-emit-state-callback"
+              >CoreEmitStateCallback</a
+            ></span
+          >
+          that publishes the snapshot. Register it through
+          <span class="code"
+            >this.#vault.emitStates([this.#captureEmittedState])</span
+          >
+          before initialization.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Serialize <span class="code">emittedState()</span> in the component.
+          Perform an edit and confirm State Emission matches the final
+          StateSnapshot after loading has ended.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          In <span class="code">example.component.html</span>, bind
+          <span class="code">emittedStateJson()</span> to the State Emission
+          textarea.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>The emission represents the finalized StateSnapshot.</li>
+        <li>
+          The callback is observational; the component still uses the service
+          for mutations.
+        </li>
+        <li>
+          Loading, value, error, and <span class="code">hasValue</span> remain
+          visible together.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-6" aria-labelledby="step-6-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-6-title">
+      Step 6: Capture Initial State
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>
+      Capture the first value emitted by <span class="code">state$</span> when
+      the <a href="/docs/references/functions/feature-cell">FeatureCell</a> has
+      a value. The example uses that snapshot as a teaching baseline, so you can
+      inspect the original collection and restore it after experimenting with
+      the CRUD controls.
+    </p>
+    <div class="callout callout-warning">
+      <div class="title">
+        First Committed Baseline vs. Configured Initial State
+      </div>
+      <p>
+        The UI labels this teaching clone “Initial State,” but the code captures
+        the first qualifying committed stream value. Hydration, persistence,
+        filters, and reducers may make that value different from the raw
+        <span class="code">initialState</span> supplied during registration. Use
+        <span class="code">restoreInitialCharacters()</span> for the cloned
+        baseline and <span class="code">reset()</span> for lifecycle reset; they
+        are not interchangeable.
+      </p>
+    </div>
+    <div class="callout callout-action">
+      <div class="title">Make the Change</div>
+      <ol>
+        <li>
+          In the service constructor, call
+          <span class="code">#captureInitialCharacters()</span> before pipeline
+          configuration.
+        </li>
+        <li>
+          In that method, subscribe to <span class="code">state$</span>, filter
+          for <span class="code">snapshot.hasValue</span>, take one event, and
+          clone <span class="code">snapshot.value ?? []</span> into
+          <span class="code">#initialCharacters</span>.
+        </li>
+        <li>
+          Implement <span class="code">restoreInitialCharacters()</span> by
+          cloning the captured baseline and submitting it through
+          <span class="code">replaceState()</span>. Keep
+          <span class="code">resetState()</span> as a separate call to
+          <span class="code">reset()</span>.
+          <sdux-example-viewer-source>
+            @for (file of serviceFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.ts</span> file.
+          <sdux-example-viewer-source>
+            @for (file of componentFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Update the <span class="code">example.component.html</span> file.
+          <sdux-example-viewer-source [displayTabs]="false">
+            @for (file of htmlFiles(); track file?.type) {
+              <sdux-example-viewer-tab [label]="file.fileName">
+                <pre
+                  class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+              </sdux-example-viewer-tab>
+            }
+          </sdux-example-viewer-source>
+        </li>
+        <li>
+          Add a character, select Restore Initial Data, and confirm the first
+          committed collection returns. Then select Reset State and confirm the
+          lifecycle output reports no value; these actions are intentionally
+          different.
+        </li>
+      </ol>
+    </div>
+    <div class="callout callout-learn-more">
+      <div class="title">What to Look For</div>
+      <ul>
+        <li>The baseline is captured once from the State stream.</li>
+        <li>
+          It is a separate teaching snapshot and does not replace normal State
+          updates.
+        </li>
+        <li>
+          The lifecycle buttons are available for resetting the example without
+          adding another pipeline concept.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-7" aria-labelledby="step-7-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-7-title">Chapter Round-up</div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>
+      Your state-introspection example is complete when it exposes the raw
+      StateSnapshot and <span class="code">state$</span> snapshot views,
+      captures Before Taps and After Taps, renders the finalized State Emission,
+      and records the Initial State baseline. The service owns every
+      <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+      interaction while the component presents each observation point.
+    </p>
+    <div class="callout callout-learn-more">
+      <div class="title">Run and Verify</div>
+      <ol>
+        <li>Refresh the page</li>
+        <li>Verify the Raw StateSnapshot is displayed.</li>
+        <li>Verify the Raw StateSnapshot$ observable is displayed.</li>
+        <li>Verify the Before Taps are displayed.</li>
+        <li>Verify the After Taps are displayed.</li>
+        <li>Verify the Finalized State Emission is displayed.</li>
+        <li>Verify the Initial State baseline is displayed.</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-action">
+      <div class="title">Chapter 11 Summary</div>
+      <ul>
+        <li>
+          Each output answers a different question about the same pipeline
+          attempt.
+        </li>
+        <li>
+          Raw state reads, streams, tap callbacks, and emitted State remain
+          distinct concerns.
+        </li>
+        <li>
+          The example remains usable as a complete character workflow while
+          making State transitions inspectable.
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-learn-more">
+      <div class="title">Explore the Docs</div>
+      <ul>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/state-property"
+            >state</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/state-stream-method"
+            >state$</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/before-taps-method"
+            >beforeTaps()</a
+          >
+        </li>
+        <li>
+          <a routerLink="/docs/pipeline/apis/feature-cell-api/after-taps-method"
+            >afterTaps()</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/docs/pipeline/apis/feature-cell-api/emit-states-method"
+            >emitStates()</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="12-step-8" aria-labelledby="step-8-title">
+  <div class="section-title-navigation">
+    <div class="section-title" id="step-8-title">
+      Stackblitz & Downloadable Archive
+    </div>
+    <div class="section-top-link">
+      <a [routerLink]="[]" fragment="top">↑ top</a>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <p>All Chapter Source Files</p>
+    <sdux-example-viewer-source>
+      @for (file of allSourceFiles; track file?.type) {
+        <sdux-example-viewer-tab [label]="file.fileName">
+          <pre
+            class="code-inline"><code class="language-ts">{{ file?.source }}</code></pre>
+        </sdux-example-viewer-tab>
+      }
+    </sdux-example-viewer-source>
+  </div>
+
+  <div class="section-body">
+    <div
+      class="tutorial-shortcut"
+      aria-label="Launch the completed initial tutorial example">
+      <div class="tutorial-shortcut-copy">
+        <p class="tutorial-shortcut-eyebrow">Compare Your Checkpoint</p>
+        <div>Want the finished state introspection example?</div>
+        @if (stackblitz(); as stackblitz) {
+          <div class="tutorial-shortcut-launcher">
+            <p>
+              Launch the live StackBlitz project to inspect the completed state
+              introspection configuration and interactive example directly.
+            </p>
+            <sdux-stackblitz-language-example
+              [example]="stackblitz.example"
+              [lang]="stackblitz.language" />
+          </div>
+        }
+
+        <div class="tutorial-download">
+          <p>Download the complete chapter source code as a ZIP archive.</p>
+          <sdux-download [url]="downloadUrl"></sdux-download>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div
+      class="next-chapter"
+      matTooltip="Navigate to the next chapter: Tab Sync">
+      <strong>Next Up: </strong>
+      <a [routerLink]="['../chapter-13']">Chapter 13: Tab Sync</a>
+    </div>
+  </div>
+</section>

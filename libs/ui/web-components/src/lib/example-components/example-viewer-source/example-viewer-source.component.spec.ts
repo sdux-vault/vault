@@ -187,17 +187,11 @@ describe('ExampleViewerSourceComponent', () => {
   });
 
   it('should mark panes as overflowing only when they exceed the max height', () => {
-    component.sourcePanes = {
-      toArray: () => [
-        { nativeElement: { scrollHeight: 800 } },
-        { nativeElement: { scrollHeight: 320 } }
-      ]
-    } as any;
-
     fixture.componentRef.setInput('sourcePaneMaxHeight', 640);
     fixture.detectChanges();
 
-    (component as any).updateOverflowState();
+    component.setSourceOverflow(0, true);
+    component.setSourceOverflow(1, false);
 
     expect(component.isSourceOverflowing(0)).toBeTrue();
     expect(component.isSourceOverflowing(1)).toBeFalse();
