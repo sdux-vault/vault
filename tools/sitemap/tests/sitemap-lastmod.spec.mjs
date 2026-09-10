@@ -59,7 +59,7 @@ describe('CLI: sitemap-lastmod', () => {
     const dates = resolver.resolve(
       ['/welcome/core-concepts', '/about'],
       [
-        '<url><loc>https://www.sdux-vault.com/docs/welcome/core-concepts</loc><lastmod>2026-06-01</lastmod></url>',
+        '<url><loc>https://www.sdux-vault.com/welcome/core-concepts</loc><lastmod>2026-06-01</lastmod></url>',
         '<url><loc>https://www.sdux-vault.com/about</loc><lastmod>2026-06-02</lastmod></url>'
       ].join('\n')
     );

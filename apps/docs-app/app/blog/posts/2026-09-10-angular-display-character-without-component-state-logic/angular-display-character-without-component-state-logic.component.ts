@@ -120,9 +120,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             This distinction matters: an interface defines the expected State
             shape, but it does not create or load a State value. The contract
-            gives the FeatureCell and its consumers the same vocabulary, while
-            the application configuration supplies the initial character
-            collection.
+            gives the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            and its consumers the same vocabulary, while the application
+            configuration supplies the initial character collection.
           </p>
           <sdux-example-viewer-source
             [displayTabs]="false"
@@ -173,17 +174,25 @@ export interface RawStarWarsCharacter &#123;
           <p>
             Angular's <span class="code">@Injectable</span> continues to do its
             normal job. The tutorial does not replace Angular service injection.
-            It adds a FeatureCell association, typed access through
-            <span class="code">injectVault</span>, and initialization in the
-            service constructor. The component injects the service, not the
-            FeatureCell configuration.
+            It adds a
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            association, typed access through
+            <span class="code"
+              ><a href="/docs/references/functions/inject-vault"
+                >injectVault</a
+              ></span
+            >, and initialization in the service constructor. The component
+            injects the service, not the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            configuration.
           </p>
           <div class="concept-box">
             <p>
               <strong>Ownership rule:</strong> Keep committed Feature State and
-              FeatureCell calls in the service. Keep selection, form controls,
-              confirmation prompts, and display-only feedback in the component
-              unless a later requirement makes that data shared Feature State.
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              calls in the service. Keep selection, form controls, confirmation
+              prompts, and display-only feedback in the component unless a later
+              requirement makes that data shared Feature State.
             </p>
           </div>
           <div class="callout callout-warning">
@@ -211,11 +220,14 @@ export interface RawStarWarsCharacter &#123;
             and the component receives a small reactive surface to render.
           </p>
           <p>
-            The service exposes the FeatureCell's Signal-based State access. The
-            component then uses a computed Signal to project the first character
-            from the service-owned collection. The template reads that computed
-            value declaratively through Angular bindings; it does not configure
-            the FeatureCell or initialize the runtime.
+            The service exposes the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
+            Signal-based State access. The component then uses a computed Signal
+            to project the first character from the service-owned collection.
+            The template reads that computed value declaratively through Angular
+            bindings; it does not configure the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a> or
+            initialize the runtime.
           </p>
           <table aria-label="Angular responsibility boundaries">
             <thead>
@@ -237,8 +249,11 @@ export interface RawStarWarsCharacter &#123;
               <tr>
                 <td>Feature service</td>
                 <td>
-                  Owns FeatureCell access, initialization, and the State
-                  surface.
+                  Owns
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  access, initialization, and the State surface.
                 </td>
               </tr>
               <tr>
@@ -251,8 +266,11 @@ export interface RawStarWarsCharacter &#123;
               <tr>
                 <td>Template</td>
                 <td>
-                  Renders character fields without calling FeatureCell APIs
-                  directly.
+                  Renders character fields without calling
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  APIs directly.
                 </td>
               </tr>
             </tbody>
@@ -273,11 +291,12 @@ export interface RawStarWarsCharacter &#123;
         <div class="section-body">
           <p>
             By the end of Chapter 2, the application has a typed character
-            collection, an application-registered FeatureCell, an initialized
-            Angular service, and a component that can display one character. The
-            template renders the full name, first name, last name, identifier,
-            faction, and Force-sensitive value from the service's reactive
-            State.
+            collection, an application-registered
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+            an initialized Angular service, and a component that can display one
+            character. The template renders the full name, first name, last
+            name, identifier, faction, and Force-sensitive value from the
+            service's reactive State.
           </p>
           <p>
             The result is intentionally modest: there are no selection or edit
@@ -291,7 +310,9 @@ export interface RawStarWarsCharacter &#123;
               <strong>Try the checkpoint:</strong> Open the Chapter 2 StackBlitz
               project, compare the service and component boundaries, and confirm
               that the template reads display-ready character data without
-              configuring the FeatureCell itself.
+              configuring the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              itself.
             </p>
           </div>
         </div>

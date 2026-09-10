@@ -439,6 +439,26 @@
       "url": "/blog/svelte-reactivity-without-a-second-state-subscription",
       "symbols": ["svelte-reactivity-without-a-second-state-subscription"],
       "content": "svelte reactivity without a second state subscription svelte-reactivity-without-a-second-state-subscription"
+    },
+    {
+      "id": "blog:new-angular-tutorial-complete-feature",
+      "title": "new angular tutorial complete feature",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/new-angular-tutorial-complete-feature",
+      "symbols": ["new-angular-tutorial-complete-feature"],
+      "content": "new angular tutorial complete feature new-angular-tutorial-complete-feature"
+    },
+    {
+      "id": "blog:angular-display-character-without-component-state-logic",
+      "title": "angular display character without component state logic",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/angular-display-character-without-component-state-logic",
+      "symbols": ["angular-display-character-without-component-state-logic"],
+      "content": "angular display character without component state logic angular-display-character-without-component-state-logic"
     }
   ]
 }
