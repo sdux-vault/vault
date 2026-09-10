@@ -2,11 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.sdux-vault.com/</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.sdux-vault.com/about</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -30,6 +32,12 @@
   <url>
     <loc>https://www.sdux-vault.com/blog/ai-assisted-debugging</loc>
     <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/angular-display-character-without-component-state-logic</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -95,7 +103,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/from-redux-to-sdux-vault</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -118,6 +126,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/new-angular-tutorial-complete-feature</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/no-createstore-no-combinereducers-no-provider</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -131,7 +144,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/one-engine-every-framework</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -167,7 +180,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/reducers-cant-change-after-init</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -185,7 +198,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/redux-pattern-sdux-vault-contract</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -209,7 +222,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/state-management-without-framework-lock-in</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -233,13 +246,13 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/testing-state-3-steps</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/testing-without-mock-stores</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -263,7 +276,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/what-is-sdux-vault</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -287,6 +300,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/contact</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -331,6 +345,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/migration</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -893,11 +908,13 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/extensions/licensing-and-monetization</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/pipeline-architecture</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2490,74 +2507,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/best-practices</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/contributors</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/core-concepts</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/getting-started</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/how-to-define-your-state</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/license</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/roadmap</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/sdux-redux-similarities</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/supported-languages</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/testing</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/trademark-usage</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sdux-vault.com/docs/welcome/what-is-sdux</loc>
-    <lastmod>2026-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.sdux-vault.com/examples/angular/add-edit-characters</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2949,7 +2898,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/press</loc>
-    <lastmod>2026-08-07</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2970,7 +2919,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/sitemap</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2983,6 +2932,78 @@
   <url>
     <loc>https://www.sdux-vault.com/tutorial/angular</loc>
     <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/best-practices</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/contributors</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/core-concepts</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/getting-started</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/how-to-define-your-state</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/license</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/roadmap</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/sdux-redux-similarities</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/supported-languages</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/testing</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/trademark-usage</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/welcome/what-is-sdux</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

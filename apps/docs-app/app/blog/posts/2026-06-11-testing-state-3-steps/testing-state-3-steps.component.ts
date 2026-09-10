@@ -324,7 +324,7 @@ describe('Employee FeatureCell', () =&gt; &#123;
         <div class="section-body">
           <p>
             Read the full
-            <a href="/docs/welcome/testing">testing documentation</a> for
+            <a href="/welcome/testing">testing documentation</a> for
             stabilization rules, timer testing patterns, and advanced
             integration scenarios. The three-step pattern covers the standard
             case — the docs cover everything else.

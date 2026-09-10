@@ -1,7 +1,7 @@
 import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/shapes/related-topic-category.shape';
 
 export const RELATED_TOPICS_PRESS_REGISTRY: RelatedTopicCategoryShape = {
-  baseRoute: '/docs/welcome/press',
+  baseRoute: '/welcome/press',
   baseDisplay: 'Press & Brand Assets',
   title: 'SDuX Vault Press & Brand Assets — Official Logos',
   description:

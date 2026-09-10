@@ -44,8 +44,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             <strong>Key takeaway:</strong> The tutorial teaches a repeatable
             feature structure. Angular UI events call a feature service; the
-            service owns its FeatureCell; the pipeline resolves and shapes a
-            candidate; and the component reads the committed StateSnapshot.
+            service owns its
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>;
+            the pipeline resolves and shapes a candidate; and the component
+            reads the committed StateSnapshot.
           </p>
         </div>
       </header>
@@ -66,8 +68,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             keeps one feature in view while the requirements grow. The
             application is a <span class="code">Star Wars</span> character
             registry, but the teaching target is the boundary: the service owns
-            Feature State and FeatureCell access, while the component owns local
-            presentation concerns and user interaction.
+            Feature State and
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            access, while the component owns local presentation concerns and
+            user interaction.
           </p>
           <p>
             You do not need previous <sdux-brand-name /> experience. The opening
@@ -86,9 +90,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             The core path starts with the application boundary and ends with a
             useful read-and-write workflow. You define the Feature State,
-            register the FeatureCell, connect it to an Angular service, and keep
-            the component focused on rendering and interaction. The character
-            workflow then grows in deliberate steps:
+            register the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+            connect it to an Angular service, and keep the component focused on
+            rendering and interaction. The character workflow then grows in
+            deliberate steps:
           </p>
           <table aria-label="Angular tutorial core path">
             <thead>
@@ -105,8 +111,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                   >
                 </td>
                 <td>
-                  Establish a service-owned FeatureCell and expose committed
-                  State to the UI.
+                  Establish a service-owned
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  and expose committed State to the UI.
                 </td>
               </tr>
               <tr>
@@ -127,9 +136,16 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                   >
                 </td>
                 <td>
-                  Use <span class="code">withArrayAppendMergeBehavior</span> to
-                  append a new character or update an existing character while
-                  keeping collection updates inside the service-owned boundary.
+                  Use
+                  <span class="code"
+                    ><a
+                      href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+                      >withArrayAppendMergeBehavior</a
+                    ></span
+                  >
+                  to append a new character or update an existing character
+                  while keeping collection updates inside the service-owned
+                  boundary.
                 </td>
               </tr>
               <tr>
@@ -139,8 +155,14 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                   >
                 </td>
                 <td>
-                  Use <span class="code">withArrayByIdMergeBehavior</span> to
-                  remove (add and edit) a character by identifier inside the
+                  Use
+                  <span class="code"
+                    ><a
+                      href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+                      >withArrayByIdMergeBehavior</a
+                    ></span
+                  >
+                  to remove (add and edit) a character by identifier inside the
                   service-owned boundary.
                 </td>
               </tr>
@@ -152,7 +174,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                 </td>
                 <td>
                   Distinguish a persisted null value, a reusable reset, and
-                  permanent FeatureCell destruction.
+                  permanent
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  destruction.
                 </td>
               </tr>
               <tr>
@@ -186,12 +212,16 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             The tutorial repeatedly returns to one rule: the component should
             not become the owner of Feature State just because it is the place
             where State is displayed. The service exposes the component-facing
-            reactive State, while the service also owns the FeatureCell
+            reactive State, while the service also owns the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             configuration and update methods.
           </p>
           <p>
             The welcome chapter summarizes the flow like this: Angular UI
-            action, feature service method, FeatureCell request, FeatureCell
+            action, feature service method,
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            request,
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             pipeline execution, committed StateSnapshot, component Signal or
             Observable, and finally the template. That sequence gives every
             later chapter a stable place to add behavior without changing the
@@ -219,10 +249,12 @@ export const appConfig: ApplicationConfig = &#123;
           </sdux-example-viewer-source>
           <p>
             This is the tutorial's initial application configuration. Later
-            checkpoints add the FeatureCell provider and the service-owned
-            feature contract without changing the application runtime setup. The
-            code is small; the important lesson is where the setup lives and how
-            it prepares the application boundary for the feature.
+            checkpoints add the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            provider and the service-owned feature contract without changing the
+            application runtime setup. The code is small; the important lesson
+            is where the setup lives and how it prepares the application
+            boundary for the feature.
           </p>
           <div class="callout callout-warning">
             <p>
@@ -388,7 +420,8 @@ export const appConfig: ApplicationConfig = &#123;
             the feature step by step. Use the chapter labs to test a specific
             requirement, but keep the central boundary in view: the component
             renders and interacts, the feature service owns State, and the
-            FeatureCell pipeline keeps the transition path explicit.
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            pipeline keeps the transition path explicit.
           </p>
           <p>
             If you are evaluating <sdux-brand-name /> for an existing Angular

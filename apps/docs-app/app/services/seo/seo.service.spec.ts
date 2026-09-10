@@ -2,8 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router } from '@angular/router';
 import {
-  SDUX_CATCH_PHRASE,
   SDUX_BRAND_NAME,
+  SDUX_CATCH_PHRASE,
   SDUX_FEATURE_CELL_BRAND_NAME,
   SDUX_VAULT_BRAND_NAME
 } from '@sdux-vault/ui/web-components';
@@ -82,11 +82,7 @@ describe('Service: Seo', () => {
     service.initialize();
 
     routerEvents$.next(
-      new NavigationEnd(
-        1,
-        '/docs/welcome/core-concepts',
-        '/docs/welcome/core-concepts'
-      )
+      new NavigationEnd(1, '/welcome/core-concepts', '/welcome/core-concepts')
     );
 
     expect(document.title).toContain('SDuX Vault Core Concepts');

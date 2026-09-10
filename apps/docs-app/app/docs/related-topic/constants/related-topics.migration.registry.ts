@@ -117,14 +117,14 @@ export const RELATED_TOPICS_MIGRATION_REGISTRY: RelatedTopicCategoryShape = {
         'Register a FeatureCell with Angular dependency injection using provideFeatureCell in SDuX Vault.'
     },
     {
-      link: '/docs/welcome/how-to-define-your-state"',
+      link: '/welcome/how-to-define-your-state"',
       display: 'Define Your State',
       title: 'Define Your State in SDuX Vault — State Shape Design',
       description:
         'Learn how to define and structure your application state shape in SDuX Vault.'
     },
     {
-      link: '/docs/welcome/testing"',
+      link: '/welcome/testing"',
       display: 'Testing with SDuX',
       title: 'Testing with SDuX Vault — Unit and Integration Testing',
       description:

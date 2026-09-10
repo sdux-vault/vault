@@ -430,6 +430,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-09-09-new-angular-tutorial-complete-feature/new-angular-tutorial-complete-feature.component').then(
         (m) => m.BlogNewAngularTutorialCompleteFeatureComponent
       )
+  },
+  {
+    path: 'angular-display-character-without-component-state-logic',
+    data: {
+      category: 'blogs',
+      type: 'angular-display-character-without-component-state-logic'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-10-angular-display-character-without-component-state-logic/angular-display-character-without-component-state-logic.component').then(
+        (m) => m.BlogAngularDisplayCharacterWithoutComponentStateLogicComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

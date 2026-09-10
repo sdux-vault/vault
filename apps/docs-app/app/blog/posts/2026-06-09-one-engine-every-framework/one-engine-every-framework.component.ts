@@ -200,7 +200,7 @@ employeeCell.initialize();</code></pre>
             Runtimes:
           </p>
           <p>
-            <a href="/docs/top-tier/supported-languages"
+            <a href="/welcome/supported-languages"
               >Supported Languages Documentation</a
             >
           </p>

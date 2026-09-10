@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /docs/tutorial/angular/examples/
+Disallow: /docs/tutorial/angular/generated/
+Disallow: /examples/
+Disallow: /generated/
 Sitemap: https://www.sdux-vault.com/sitemap.xml

@@ -7,5 +7,9 @@
     "types": ["chrome"]
   },
   "include": ["**/*.ts"],
-  "exclude": ["**/*.spec.ts", "**/tutorial/angular/examples/**/*.ts"]
+  "exclude": [
+    "**/*.spec.ts",
+    "**/tutorial/angular/examples/**/*.ts",
+    "**/tutorial/angular/generated/**/*.ts"
+  ]
 }

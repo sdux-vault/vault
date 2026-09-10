@@ -352,6 +352,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'A New Angular Tutorial for Building a Complete Feature — SDuX Blog',
       description:
         'Explore the new Angular tutorial and learn how its chapters build a service-owned FeatureCell feature from setup through optional labs.'
+    },
+    {
+      link: '/blog/angular-display-character-without-component-state-logic',
+      display:
+        'Chapter 2 — Display Character State in Angular Without State Logic in the Component',
+      title: 'Chapter 2 — Display Character State in Angular — SDuX Blog',
+      description:
+        'Learn how Chapter 2 uses Angular services, FeatureCell ownership, and Signals to display typed character State without moving state logic into components.'
     }
   ]
 };

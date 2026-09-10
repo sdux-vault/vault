@@ -53,7 +53,7 @@ describe('Component: Splash Page', () => {
     it('should navigate to the testing page', () => {
       component.openTesting();
       expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/docs/welcome/testing']);
+      expect(router.navigate).toHaveBeenCalledWith(['/welcome/testing']);
     });
   });
 
@@ -90,7 +90,7 @@ describe('Component: Splash Page', () => {
       component.openComparisons();
       expect(navigationService.show).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/welcome/sdux-redux-similarities'
+        '/welcome/sdux-redux-similarities'
       ]);
     });
   });
@@ -196,7 +196,7 @@ describe('Component: Splash Page', () => {
       component.openStartHere();
       expect(navigationService.show).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        '/docs/welcome/getting-started'
+        '/welcome/getting-started'
       ]);
     });
   });

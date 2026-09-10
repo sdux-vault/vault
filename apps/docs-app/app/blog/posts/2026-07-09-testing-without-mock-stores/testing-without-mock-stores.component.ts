@@ -334,7 +334,7 @@ it('sorts items by name immutably', () =&gt; &#123;
           <div class="callout callout-info">
             <p>
               Want to dive deeper? Read the complete
-              <a [routerLink]="['/docs/top-tier/testing']">Testing guide</a> for
+              <a [routerLink]="['/welcome/testing']">Testing guide</a> for
               details on settlement APIs, scheduler layers, and Angular-specific
               patterns.
             </p>
@@ -347,7 +347,7 @@ it('sorts items by name immutably', () =&gt; &#123;
         <div class="section-body">
           <ul>
             <li>
-              <a [routerLink]="['/docs/top-tier/testing']"
+              <a [routerLink]="['/welcome/testing']"
                 >Docs: Testing with <sdux-brand-name
               /></a>
             </li>
