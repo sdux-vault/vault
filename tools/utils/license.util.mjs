@@ -4,9 +4,9 @@
 // --- END AI MODEL FILE PATH ---
 
 // Import license constants (single source of truth)
-import { MIT_LICENSE_1_0 } from '../../apps/docs-app/app/docs/top-tier/license/sdux-license/constants/mit-license-1.0.mjs';
-import { NGL_COMMERCIAL_LICENSE_1_0 } from '../../apps/docs-app/app/docs/top-tier/license/sdux-license/constants/ngl-commercial-license-1.0.mjs';
-import { SDUX_VAULT_COMMUNITY_LICENSE_1_0 } from '../../apps/docs-app/app/docs/top-tier/license/sdux-license/constants/ngl-vault-community-license-1.0.mjs';
+import { MIT_LICENSE_1_0 } from '../../apps/docs-app/app/docs/welcome/license/sdux-license/constants/mit-license-1.0.mjs';
+import { NGL_COMMERCIAL_LICENSE_1_0 } from '../../apps/docs-app/app/docs/welcome/license/sdux-license/constants/ngl-commercial-license-1.0.mjs';
+import { SDUX_VAULT_COMMUNITY_LICENSE_1_0 } from '../../apps/docs-app/app/docs/welcome/license/sdux-license/constants/ngl-vault-community-license-1.0.mjs';
 
 export const LicenseUtil = {
   /**

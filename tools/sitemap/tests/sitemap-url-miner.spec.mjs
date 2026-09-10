@@ -30,8 +30,8 @@ describe('CLI: sitemap-url-miner', () => {
     fs.writeFileSync(
       path.join(fixturesDir, 'sub-navigation', 'getting-started.html'),
       [
-        '<a routerLink="/docs/welcome/getting-started" routerLinkActive="active">Getting Started</a>',
-        '<a routerLink="/docs/welcome/core-concepts" routerLinkActive="active">Core Concepts</a>'
+        '<a routerLink="/welcome/getting-started" routerLinkActive="active">Getting Started</a>',
+        '<a routerLink="/welcome/core-concepts" routerLinkActive="active">Core Concepts</a>'
       ].join('\n'),
       'utf-8'
     );
@@ -95,8 +95,8 @@ describe('CLI: sitemap-url-miner', () => {
       expect(urls).toContain('/docs/pipeline/builder');
       expect(urls).toContain('/docs/global-error-handler');
       expect(urls).toContain('/blog');
-      expect(urls).toContain('/docs/welcome/getting-started');
-      expect(urls).toContain('/docs/welcome/core-concepts');
+      expect(urls).toContain('/welcome/getting-started');
+      expect(urls).toContain('/welcome/core-concepts');
     });
 
     it('should normalize routes without leading slash', () => {

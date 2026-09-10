@@ -316,10 +316,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
           <p>
             Ready to dig deeper? Start with the
-            <a href="/docs/welcome/getting-started">Getting Started guide</a>,
-            or explore the
-            <a href="/docs/welcome/core-concepts">Core Concepts</a> page for a
-            complete reference.
+            <a href="/welcome/getting-started">Getting Started guide</a>, or
+            explore the <a href="/welcome/core-concepts">Core Concepts</a> page
+            for a complete reference.
           </p>
         </div>
       </section>

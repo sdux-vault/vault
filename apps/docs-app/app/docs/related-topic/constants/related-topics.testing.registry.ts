@@ -1,7 +1,7 @@
 import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/shapes/related-topic-category.shape';
 
 export const RELATED_TOPICS_TESTING_REGISTRY: RelatedTopicCategoryShape = {
-  baseRoute: '/docs/welcome/testing',
+  baseRoute: '/welcome/testing',
   baseDisplay: 'Testing Strategies',
   title: 'Testing Strategies in SDuX Vault — Unit and Integration Testing',
   description:

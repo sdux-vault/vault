@@ -8,7 +8,7 @@ import {
   VaultBrandNameComponent
 } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
-import { SupportedLanguagesConstants } from '../docs/top-tier/supported-languages/constants/supported-languages.constant';
+import { SupportedLanguagesConstants } from '../docs/welcome/supported-languages/constants/supported-languages.constant';
 import { NavigationService } from '../navigation/service/navigation.service';
 import { SplashPageExampleComponent } from './splash-page-example/splash-page-example.component';
 
@@ -49,7 +49,7 @@ export class SplashPageComponent implements AfterViewInit {
 
   openTesting() {
     this.openMenu();
-    this.#router.navigate(['/docs/welcome/testing']);
+    this.#router.navigate(['/welcome/testing']);
   }
 
   openMigration() {
@@ -69,7 +69,7 @@ export class SplashPageComponent implements AfterViewInit {
 
   openComparisons() {
     this.openMenu();
-    this.#router.navigate(['/docs/welcome/sdux-redux-similarities']);
+    this.#router.navigate(['/welcome/sdux-redux-similarities']);
   }
 
   openStackBlitz() {
@@ -122,7 +122,7 @@ export class SplashPageComponent implements AfterViewInit {
 
   openStartHere() {
     this.openMenu();
-    this.#router.navigate(['/docs/welcome/getting-started']);
+    this.#router.navigate(['/welcome/getting-started']);
   }
 
   openMenu() {

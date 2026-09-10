@@ -3,19 +3,19 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { PipelineRoutingDirective } from './pipeline/directives/pipeline-routing.directive';
-import { SDuXBestPracticesComponent } from './top-tier/best-practices/best-practices.component';
-import { SDuXContributorsComponent } from './top-tier/contributors/contributors.component';
-import { DocsTopTierCoreConceptsComponent } from './top-tier/core-concepts.component';
-import { DocsTopTierGettingStartedComponent } from './top-tier/getting-started.component';
-import { DocsTopTierHowToDefineYourStateComponent } from './top-tier/how-to-define-your-state.component';
-import { DocsTopTierSDuXLicenseComponent } from './top-tier/license/sdux-license/sdux-license.component';
-import { DocsTopTierSDuXTrademarkUsageComponent } from './top-tier/license/sdux-trademark-usage/sdux-trademark-usage.component';
-import { DocsTopTierPressComponent } from './top-tier/press/press.component';
-import { DocsTopTierRoadmapComponent } from './top-tier/roadmap/roadmap.component';
-import { DocsTopTierSDuXReduxSimilaritiesComponent } from './top-tier/sdux-redux-similarities.component';
-import { DocsTopTierSupportedLanguagesComponent } from './top-tier/supported-languages/supported-languages.component';
-import { SDuXTestingComponent } from './top-tier/testing/testing.component';
-import { DocsTopTierWhatIsSDuXComponent } from './top-tier/what-is-sdux.component';
+import { SDuXBestPracticesComponent } from './welcome/best-practices/best-practices.component';
+import { SDuXContributorsComponent } from './welcome/contributors/contributors.component';
+import { DocsTopTierCoreConceptsComponent } from './welcome/core-concepts.component';
+import { DocsTopTierGettingStartedComponent } from './welcome/getting-started.component';
+import { DocsTopTierHowToDefineYourStateComponent } from './welcome/how-to-define-your-state.component';
+import { DocsTopTierSDuXLicenseComponent } from './welcome/license/sdux-license/sdux-license.component';
+import { DocsTopTierSDuXTrademarkUsageComponent } from './welcome/license/sdux-trademark-usage/sdux-trademark-usage.component';
+import { DocsTopTierPressComponent } from './welcome/press/press.component';
+import { DocsTopTierRoadmapComponent } from './welcome/roadmap/roadmap.component';
+import { DocsTopTierSDuXReduxSimilaritiesComponent } from './welcome/sdux-redux-similarities.component';
+import { DocsTopTierSupportedLanguagesComponent } from './welcome/supported-languages/supported-languages.component';
+import { SDuXTestingComponent } from './welcome/testing/testing.component';
+import { DocsTopTierWhatIsSDuXComponent } from './welcome/what-is-sdux.component';
 
 @Component({
   selector: 'sdux-value-splashpage',

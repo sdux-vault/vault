@@ -2,7 +2,7 @@ import { RelatedTopicCategoryShape } from 'apps/docs-app/app/docs/related-topic/
 
 export const RELATED_TOPICS_TRADEMARK_USAGE_REGISTRY: RelatedTopicCategoryShape =
   {
-    baseRoute: '/docs/welcome/trademark-usage',
+    baseRoute: '/welcome/trademark-usage',
     baseDisplay: 'Trademark Usage',
     title: 'SDuX Vault Trademark Usage — Brand Guidelines',
     description:

@@ -115,9 +115,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             The <sdux-brand-name />
-            <a routerLink="/docs/welcome/sdux-redux-similarities"
-              >comparison page</a
-            >
+            <a routerLink="/welcome/sdux-redux-similarities">comparison page</a>
             lays out these differences at the concept level. Here's what each
             row means in practice:
           </p>
@@ -326,7 +324,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             Explore the full
-            <a routerLink="/docs/welcome/sdux-redux-similarities"
+            <a routerLink="/welcome/sdux-redux-similarities"
               >Redux / <sdux-brand-name /> comparison</a
             >
             for a detailed concept-level breakdown. Visit

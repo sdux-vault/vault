@@ -324,7 +324,7 @@ employeeCell.initialize();</code></pre>
         <div class="section-body">
           <p>
             Explore the full
-            <a [routerLink]="['/docs/top-tier/supported-languages']"
+            <a [routerLink]="['/welcome/supported-languages']"
               >Supported Languages</a
             >
             page, compare the same feature side by side in the

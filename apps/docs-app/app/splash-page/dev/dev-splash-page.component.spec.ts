@@ -70,7 +70,7 @@ describe('Component: Dev Splash Page', () => {
     it('should navigate to the testing page', () => {
       component.openTesting();
       expect(navigationService.show).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/docs/welcome/testing']);
+      expect(router.navigate).toHaveBeenCalledWith(['/welcome/testing']);
     });
   });
 

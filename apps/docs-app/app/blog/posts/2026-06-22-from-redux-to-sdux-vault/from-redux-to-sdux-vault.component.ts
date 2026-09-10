@@ -536,7 +536,7 @@ notificationsCell.mergeState(&#123;
         <div class="section-body">
           <p>
             Explore the full
-            <a routerLink="/docs/welcome/sdux-redux-similarities"
+            <a routerLink="/welcome/sdux-redux-similarities"
               >Redux / <sdux-brand-name /> comparison</a
             >
             for a detailed concept-level breakdown. Read the

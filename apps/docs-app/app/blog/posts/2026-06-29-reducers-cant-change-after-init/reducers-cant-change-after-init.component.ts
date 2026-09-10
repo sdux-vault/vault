@@ -83,8 +83,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="section-body">
           <p>
             <sdux-brand-name /> takes the opposite position. Every
-            <a routerLink="/docs/welcome/what-is-a-behavior">Behavior</a> and
-            <a routerLink="/docs/welcome/what-is-a-controller">Controller</a>
+            <a routerLink="/welcome/what-is-a-behavior">Behavior</a> and
+            <a routerLink="/welcome/what-is-a-controller">Controller</a>
             is registered before
             <span class="code">initialize()</span> is called. After
             initialization the pipeline is sealed. No additions. No removals. No
@@ -360,7 +360,7 @@ export function initAnalytics() &#123;
         <div class="section-body">
           <ul>
             <li>
-              <a routerLink="/docs/welcome/core-concepts">
+              <a routerLink="/welcome/core-concepts">
                 Core Concepts — FeatureCell Architecture
               </a>
             </li>
@@ -370,7 +370,7 @@ export function initAnalytics() &#123;
               </a>
             </li>
             <li>
-              <a routerLink="/docs/welcome/what-is-a-behavior">
+              <a routerLink="/welcome/what-is-a-behavior">
                 What Is a Behavior?
               </a>
             </li>

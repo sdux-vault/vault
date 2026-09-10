@@ -27,23 +27,20 @@ describe('CLI: sitemap-lastmod', () => {
       'apps/docs-app/app/docs/docs-landingpage.component.html'
     ]);
 
-    const dates = resolver.resolve(
-      ['/docs/welcome/core-concepts', '/about'],
-      ''
-    );
+    const dates = resolver.resolve(['/welcome/core-concepts', '/about'], '');
 
-    expect(dates.get('/docs/welcome/core-concepts')).toBe('2026-08-07');
+    expect(dates.get('/welcome/core-concepts')).toBe('2026-08-07');
     expect(dates.has('/about')).toBeFalse();
   });
 
   it('should map a selected child component change through the landing template', () => {
     const { resolver } = createResolver([
-      'apps/docs-app/app/docs/top-tier/core-concepts.component.ts'
+      'apps/docs-app/app/docs/welcome/core-concepts.component.ts'
     ]);
 
-    const dates = resolver.resolve(['/docs/welcome/core-concepts'], '');
+    const dates = resolver.resolve(['/welcome/core-concepts'], '');
 
-    expect(dates.get('/docs/welcome/core-concepts')).toBe('2026-08-07');
+    expect(dates.get('/welcome/core-concepts')).toBe('2026-08-07');
   });
 
   it('should include a component template when its TypeScript file changes', () => {
@@ -51,23 +48,23 @@ describe('CLI: sitemap-lastmod', () => {
       'apps/docs-app/app/docs/docs-landingpage.component.ts'
     ]);
 
-    const dates = resolver.resolve(['/docs/welcome/core-concepts'], '');
+    const dates = resolver.resolve(['/welcome/core-concepts'], '');
 
-    expect(dates.get('/docs/welcome/core-concepts')).toBe('2026-08-07');
+    expect(dates.get('/welcome/core-concepts')).toBe('2026-08-07');
   });
 
   it('should preserve existing dates for URLs with no changed source files', () => {
     const { resolver } = createResolver([]);
 
     const dates = resolver.resolve(
-      ['/docs/welcome/core-concepts', '/about'],
+      ['/welcome/core-concepts', '/about'],
       [
         '<url><loc>https://www.sdux-vault.com/docs/welcome/core-concepts</loc><lastmod>2026-06-01</lastmod></url>',
         '<url><loc>https://www.sdux-vault.com/about</loc><lastmod>2026-06-02</lastmod></url>'
       ].join('\n')
     );
 
-    expect(dates.get('/docs/welcome/core-concepts')).toBe('2026-06-01');
+    expect(dates.get('/welcome/core-concepts')).toBe('2026-06-01');
     expect(dates.get('/about')).toBe('2026-06-02');
   });
 

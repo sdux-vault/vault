@@ -22,7 +22,7 @@ RUN npx ng build docs-app --configuration ${DOCS_BUILD_CONFIGURATION}
 FROM nginx:1.27-alpine
 
 RUN rm /etc/nginx/conf.d/default.conf && \
-	printf 'server {\n  listen 80;\n  server_name _;\n  root /usr/share/nginx/html;\n  index index.html;\n\n  location / {\n    try_files $uri $uri/ /index.html;\n  }\n}\n' > /etc/nginx/conf.d/default.conf
+	printf 'server {\n  listen 80;\n  server_name go.sdux-vault.com;\n  root /usr/share/nginx/html;\n  index index.html;\n  add_header X-Robots-Tag "noindex, nofollow, noarchive" always;\n\n  location = /robots.txt {\n    default_type text/plain;\n    return 200 "User-agent: *\\nDisallow: /\\n";\n  }\n\n  location / {\n    try_files $uri $uri/ /index.html;\n  }\n}\n\nserver {\n  listen 80 default_server;\n  server_name _;\n  root /usr/share/nginx/html;\n  index index.html;\n\n  location / {\n    try_files $uri $uri/ /index.html;\n  }\n}\n' > /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /build/dist/docs-app/browser /usr/share/nginx/html
 

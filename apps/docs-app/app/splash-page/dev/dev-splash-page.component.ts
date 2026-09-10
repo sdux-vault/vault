@@ -11,7 +11,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { VaultBrandNameComponent } from '@sdux-vault/ui/web-components';
 import Prism from 'prismjs';
-import { SupportedLanguagesConstants } from '../../docs/top-tier/supported-languages/constants/supported-languages.constant';
+import { SupportedLanguagesConstants } from '../../docs/welcome/supported-languages/constants/supported-languages.constant';
 import { NavigationService } from '../../navigation/service/navigation.service';
 import { FrameworkComparisonRegistryConstant } from './constants/framework-comparison-registry.constant';
 import { FrameworkComparisonConstant } from './constants/framework-comparison.constant';
@@ -59,7 +59,7 @@ export class DevSplashPageComponent implements AfterViewInit {
 
   openTesting() {
     this.openMenu();
-    this.#router.navigate(['/docs/welcome/testing']);
+    this.#router.navigate(['/welcome/testing']);
   }
 
   viewStackblitz(fragment: string, hasStackblitzExample?: boolean): void {

@@ -40,7 +40,7 @@ export const RELATED_TOPICS_REGISTRY: RelatedTopicRegistryShape = {
     core: [
       { link: '/docs/pipeline/builder', display: 'Pipeline Builder' },
       { link: '/docs/pipelines', display: 'The SDuX Pipeline' },
-      { link: '/docs/welcome/best-practices', display: 'Best Practices' },
+      { link: '/welcome/best-practices', display: 'Best Practices' },
       { link: '/docs/diagrams', display: 'SDuX Diagrams' },
       { link: '/docs/videos', display: 'SDuX Videos' },
       { link: '/docs/dev-tools/overview', display: 'DevTools' },

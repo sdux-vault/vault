@@ -26,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'contact',
     loadComponent: () =>
-      import('./docs/top-tier/contact-us/contact.component').then(
+      import('./docs/welcome/contact-us/contact.component').then(
         (m) => m.ContactComponent
       )
   },
@@ -47,7 +47,7 @@ export const routes: Routes = [
     path: 'press',
     data: { category: 'welcome' },
     loadComponent: () =>
-      import('./docs/top-tier/press/press.component').then(
+      import('./docs/welcome/press/press.component').then(
         (m) => m.DocsTopTierPressComponent
       )
   },
@@ -259,6 +259,19 @@ export const routes: Routes = [
       import('./docs/stack-blitz/stackblitz.component').then(
         (m) => m.StackBlitzOverviewComponent
       )
+  },
+  {
+    path: 'welcome',
+    data: { category: 'welcome' },
+    children: [
+      {
+        path: ':type',
+        loadComponent: () =>
+          import('./docs/docs-landingpage.component').then(
+            (m) => m.DocsLandingPageComponent
+          )
+      }
+    ]
   },
   {
     path: 'docs',
@@ -646,7 +659,6 @@ export const routes: Routes = [
           }
         ]
       },
-
       {
         path: 'stackblitz',
         data: { category: 'stackblitz' },
@@ -654,20 +666,6 @@ export const routes: Routes = [
           import('./docs/stack-blitz/stackblitz.component').then(
             (m) => m.StackBlitzOverviewComponent
           )
-      },
-
-      {
-        path: 'welcome',
-        data: { category: 'welcome' },
-        children: [
-          {
-            path: ':type',
-            loadComponent: () =>
-              import('./docs/docs-landingpage.component').then(
-                (m) => m.DocsLandingPageComponent
-              )
-          }
-        ]
       }
     ]
   },
