@@ -372,5 +372,13 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 8,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'angular-display-character-without-component-state-logic',
+    title: 'Angular Tutorial Chapter 2 — Display Character State',
+    date: '2026-09-10',
+    readingTime: 6,
+    pillar: 'SP',
+    active: true
   }
 ];
