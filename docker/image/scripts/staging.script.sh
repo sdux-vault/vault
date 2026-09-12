@@ -9,6 +9,7 @@ COMPOSE_PATH="./docker-compose-files"
 COMPOSE_FILE="$COMPOSE_PATH/docker-compose.staging.yml"
 CONTAINER_NAME="sdux"
 CONTAINER_PORT="4100"
+SHARED_INDEX_PATH="/home/bitnami/docker-production/sdux-angular/shared/index.staging.html"
 
 clear; 
 
@@ -70,9 +71,39 @@ done
 printf "\nStep 2: Loading Docker image from $TAR_NAME...\n\n"
 docker load < "$TAR_NAME"
 
-printf "\n🚀 Launching staging container using $STAGING_COMPOSE...\n\n"
+# Step 3: Publish the generated index for the social metadata service.
+# The frontend image owns the generated document, so extract it before the
+# read-only bind mount is used by either the frontend or social container.
+printf "\nStep 3: Publishing the generated staging index...\n\n"
+SHARED_INDEX_DIR=$(dirname "$SHARED_INDEX_PATH")
+mkdir -p "$SHARED_INDEX_DIR"
 
-# Step 3: Stop and remove existing container if running
+# Docker creates a missing file bind-mount source as a directory. Remove that
+# empty placeholder so the source has the correct file type.
+if [ -d "$SHARED_INDEX_PATH" ]; then
+  rmdir "$SHARED_INDEX_PATH" 2>/dev/null || {
+    printf "\n\n❌ Expected a file but found a non-empty directory: $SHARED_INDEX_PATH\n\n"
+    exit 1
+  }
+fi
+
+INDEX_BOOTSTRAP_CONTAINER="sdux-index-bootstrap-$$"
+docker create --name "$INDEX_BOOTSTRAP_CONTAINER" "${CONTAINER_NAME}:${VERSION_TAG}" >/dev/null
+docker cp \
+  "$INDEX_BOOTSTRAP_CONTAINER:/usr/share/nginx/html/index.html" \
+  "$SHARED_INDEX_PATH"
+docker rm "$INDEX_BOOTSTRAP_CONTAINER" >/dev/null
+
+if [ ! -s "$SHARED_INDEX_PATH" ]; then
+  printf "\n\n❌ Generated staging index is missing or empty: $SHARED_INDEX_PATH\n\n"
+  exit 1
+fi
+
+printf "✅ Published staging index: $SHARED_INDEX_PATH\n\n"
+
+# Step 4: Stop and remove existing container if running
+printf "\n🚀 Launching staging container using $COMPOSE_FILE...\n\n"
+
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}-staging$"; then
   printf "\n🛑 Stopping existing container: ${CONTAINER_NAME}-staging\n\n"
   docker stop "${CONTAINER_NAME}-staging" >/dev/null 2>&1 || printf "\n\nℹ️ No running staging container to stop.\n\n"
@@ -83,7 +114,7 @@ else
   printf "\nℹ️ No existing container named ${CONTAINER_NAME}-staging. Skipping stop/remove.\n\n"
 fi
 
-# Step 4: Start new container
+# Step 5: Start new container
 printf "\n🚀 Launching staging container using $COMPOSE_FILE\n\n"
 if env VERSION_TAG="$VERSION_TAG" CONTAINER_NAME="$CONTAINER_NAME" docker-compose -f "$COMPOSE_FILE" up -d; then
   printf "\n\n✅ Staging container started successfully.\n\n"
