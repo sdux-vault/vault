@@ -8,7 +8,7 @@ import {
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
-  selector: 'sdux-blog-display-character-without-component-state-logic',
+  selector: 'sdux-blog-angular-display-character-without-component-state-logic',
   standalone: true,
   imports: [
     BlogLayoutComponent,
@@ -18,7 +18,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     FeatureCellBrandNameComponent
   ],
   template: `
-    <sdux-blog-layout id="display-character-without-component-state-logic">
+    <sdux-blog-layout
+      id="angular-display-character-without-component-state-logic">
       <header class="docs-header">
         <p class="lead">
           The second chapter of the
@@ -343,4 +344,4 @@ export interface RawStarWarsCharacter &#123;
   styleUrls: ['../../../docs/scss/documentation.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BlogDisplayCharacterWithoutComponentStateLogicComponent {}
+export class BlogAngularDisplayCharacterWithoutComponentStateLogicComponent {}

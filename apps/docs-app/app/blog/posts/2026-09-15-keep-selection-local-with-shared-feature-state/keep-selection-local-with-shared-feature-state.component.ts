@@ -1,6 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MultiFrameworkExampleComponent } from '@sdux-vault/ui/web-components';
+import {
+  BrandNameComponent,
+  MultiFrameworkExampleComponent
+} from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
 @Component({
@@ -9,14 +12,16 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     MultiFrameworkExampleComponent,
-    MatExpansionModule
+    MatExpansionModule,
+    BrandNameComponent
   ],
   template: `
     <sdux-blog-layout id="keep-selection-local-with-shared-feature-state">
       <header class="docs-header">
         <p class="lead">
           A master-detail view needs a current selection, but that does not mean
-          the selection belongs in shared State. Chapter 3 of the SDuX tutorial
+          the selection belongs in shared State. Chapter 3 of the
+          <a href="/tutorial" target="new"><sdux-brand-name /> tutorial</a>
           adds an interactive read path while keeping the committed character
           collection behind its service boundary.
         </p>

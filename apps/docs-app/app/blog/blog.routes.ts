@@ -432,14 +432,14 @@ export const blogRoutes: Routes = [
       )
   },
   {
-    path: 'display-character-without-component-state-logic',
+    path: 'angular-display-character-without-component-state-logic',
     data: {
       category: 'blogs',
-      type: 'display-character-without-component-state-logic'
+      type: 'angular-display-character-without-component-state-logic'
     },
     loadComponent: () =>
-      import('./posts/2026-09-10-display-character-without-component-state-logic/display-character-without-component-state-logic.component').then(
-        (m) => m.BlogDisplayCharacterWithoutComponentStateLogicComponent
+      import('./posts/2026-09-10-angular-display-character-without-component-state-logic/angular-display-character-without-component-state-logic.component').then(
+        (m) => m.BlogAngularDisplayCharacterWithoutComponentStateLogicComponent
       )
   },
   {

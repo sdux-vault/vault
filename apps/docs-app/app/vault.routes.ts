@@ -60,6 +60,14 @@ export const routes: Routes = [
     data: { category: 'tutorial' },
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./docs/tutorial/tutorial.component').then(
+            (m) => m.TutorialOverviewComponent
+          )
+      },
+      {
         path: 'angular',
         loadComponent: () =>
           import('./docs/tutorial/angular/tutorial.angular.component').then(

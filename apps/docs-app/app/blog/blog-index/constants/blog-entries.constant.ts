@@ -374,8 +374,8 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
-    slug: 'display-character-without-component-state-logic',
-    title: 'Tutorial Chapter 2 — Display Character State',
+    slug: 'angular-display-character-without-component-state-logic',
+    title: 'Tutorial Chapter 2 (Angular) — Display Character State',
     date: '2026-09-10',
     readingTime: 6,
     pillar: 'SP',
