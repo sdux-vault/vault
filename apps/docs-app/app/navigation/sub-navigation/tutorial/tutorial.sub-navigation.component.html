@@ -7,6 +7,14 @@
     <div class="sub-menu">
       <a
         mat-list-item
+        routerLink="/tutorial"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeSidenav()">
+        <span class="menu-content sub-item">Overview</span>
+      </a>
+      <a
+        mat-list-item
         routerLink="/tutorial/angular"
         routerLinkActive="active"
         (click)="closeSidenav()">

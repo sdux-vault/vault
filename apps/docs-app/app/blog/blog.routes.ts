@@ -441,6 +441,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-09-10-angular-display-character-without-component-state-logic/angular-display-character-without-component-state-logic.component').then(
         (m) => m.BlogAngularDisplayCharacterWithoutComponentStateLogicComponent
       )
+  },
+  {
+    path: 'keep-selection-local-with-shared-feature-state',
+    data: {
+      category: 'blogs',
+      type: 'keep-selection-local-with-shared-feature-state'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-15-keep-selection-local-with-shared-feature-state/keep-selection-local-with-shared-feature-state.component').then(
+        (m) => m.BlogKeepSelectionLocalWithSharedFeatureStateComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

@@ -6,6 +6,8 @@
     @for (tab of visibleTabs(); track tab.label) {
       <mat-tab [label]="tab.label">
         <div class="tab-panel">
+          <ng-container *ngTemplateOutlet="getBeforeTemplate(tab)" />
+
           <sdux-example-viewer-source
             [displayTabs]="false"
             [displayCopyPaste]="displayCopyPaste()"
@@ -16,6 +18,8 @@
               <ng-container *ngTemplateOutlet="getTemplate(tab)" />
             </sdux-example-viewer-tab>
           </sdux-example-viewer-source>
+
+          <ng-container *ngTemplateOutlet="getAfterTemplate(tab)" />
         </div>
       </mat-tab>
     }

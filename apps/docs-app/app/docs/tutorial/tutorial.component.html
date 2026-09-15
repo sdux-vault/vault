@@ -1,0 +1,359 @@
+<div class="docs-container">
+  <div class="header">
+    <h2>Tutorials with <sdux-brand-name [tm]="true" /></h2>
+  </div>
+
+  <header class="docs-header">
+    <p class="lead">
+      Whether you are new to <sdux-brand-name [tm]="true" /> or ready to add
+      advanced capabilities to an existing feature, this tutorial gives you a
+      place to start and a path to grow. Build a Star Wars character feature
+      from the ground up, learn the State boundary one chapter at a time, turn
+      it into a complete CRUD application, and then explore errors, asynchronous
+      input, persistence, synchronization, and the Pipeline.
+    </p>
+    <p>
+      Each major platform has a tutorial designed specifically for its tools,
+      conventions, and development workflow. Use this page as the common
+      starting point, then choose the platform path that fits the application
+      you are building.
+    </p>
+  </header>
+
+  <section class="section" id="tutorial-overview">
+    <div class="section-title">How to Use This Overview</div>
+    <div class="section-body">
+      <div class="toc-container">
+        <ul class="toc">
+          <li>
+            <a [routerLink]="[]" fragment="what-the-tutorial-builds"
+              >What the Tutorial Builds</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="chapter-checkpoints"
+              >Your Chapter Checkpoints</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="chapters-1-7"
+              >Build the Complete Feature: Chapters 1–7</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="chapters-8-15"
+              >Explore Focused Capabilities: Chapters 8–15</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="[]" fragment="angular-tutorial"
+              >Angular Tutorial</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="what-the-tutorial-builds">
+    <div class="section-title">What the Tutorial Builds</div>
+    <div class="section-body">
+      <p>
+        You are going to build a Star Wars character component from the ground
+        up. It starts as a small read view, then grows into a real feature with
+        selection, create, read, update, and delete operations—all backed by a
+        service-owned <sdux-feature-cell />.
+      </p>
+      <p>
+        Along the way, the characters become a friendly way to explore the
+        important parts of a feature: typed State, reactive read paths,
+        service-owned updates, local selection, lifecycle operations, filters,
+        reducers, errors, asynchronous input, persistence, and more. The story
+        is fun; the State boundary is the part you can carry into your own
+        application.
+      </p>
+      <table aria-label="What the tutorial builds">
+        <thead>
+          <tr>
+            <th scope="col" class="column-200">Your feature gains</th>
+            <th scope="col" class="column-auto">What happens</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A character roster</td>
+            <td>
+              A typed collection gives every character a dependable shape.
+            </td>
+          </tr>
+          <tr>
+            <td>A trusted home for State</td>
+            <td>
+              A service owns the <sdux-feature-cell /> and gives the view a
+              reactive path to committed State.
+            </td>
+          </tr>
+          <tr>
+            <td>A working character screen</td>
+            <td>
+              The view can display character details without configuring the
+              <sdux-feature-cell /> directly.
+            </td>
+          </tr>
+          <tr>
+            <td>CRUD interaction</td>
+            <td>
+              You can select characters, create new ones, update them, and
+              remove them while State ownership stays with the feature service.
+            </td>
+          </tr>
+          <tr>
+            <td>Room to go further</td>
+            <td>
+              Later chapters add lifecycle, errors, asynchronous input,
+              persistence, observation, synchronization, and Pipeline topics.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info">
+        <p>
+          <strong>End result:</strong> You finish with a small character command
+          center: a view for exploring the roster and a feature boundary that
+          keeps its committed State in the right place.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="chapter-checkpoints">
+    <div class="section-title">Your Chapter Checkpoints</div>
+    <div class="section-body">
+      <p>
+        Every chapter ends with a useful checkpoint. Review the ideas, compare
+        your work with the complete source, and then open the working example to
+        see the feature running. You can move forward with confidence or pause
+        and practice before taking on the next capability.
+      </p>
+      <ul>
+        <li>A concise summary of the chapter's key concepts</li>
+        <li>Each source file in a ready-to-copy format</li>
+        <li>A working StackBlitz project for hands-on practice</li>
+        <li>
+          A downloadable ZIP archive containing the complete chapter source
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="chapters-1-7">
+    <div class="section-title">Build the Complete Feature: Chapters 1–7</div>
+    <div class="section-body">
+      <p>
+        Chapters 1–7 are one continuous build. You start with the foundation,
+        give the character feature a typed State contract, and then add the
+        pieces one at a time: a first read view, character selection, CRUD
+        interaction, lifecycle operations, and display derivation. Each chapter
+        builds on the application from the chapter before it, so by the end you
+        have a complete feature application rather than a collection of
+        disconnected examples.
+      </p>
+      <table aria-label="Chapters 1 through 7">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Chapter</th>
+            <th scope="col" class="column-auto">Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/welcome']"
+                >Chapter 1: Welcome</a
+              >
+            </td>
+            <td>Establish the tutorial foundation and feature boundary.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-2']"
+                >Chapter 2: Display Character</a
+              >
+            </td>
+            <td>Expose committed State to a detail view.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-3']"
+                >Chapter 3: Display Characters</a
+              >
+            </td>
+            <td>
+              Add local selection while the collection remains service-owned.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-4']"
+                >Chapter 4: Add/Edit Characters</a
+              >
+            </td>
+            <td>Add and update records through the feature service.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-5']"
+                >Chapter 5: Delete Characters</a
+              >
+            </td>
+            <td>Remove records while preserving feature State ownership.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-6']"
+                >Chapter 6: Lifecycle</a
+              >
+            </td>
+            <td>Work with lifecycle operations for the feature.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-7']"
+                >Chapter 7: Filters and Reducers</a
+              >
+            </td>
+            <td>
+              Apply filtering, sorting, and display derivation before rendering.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="chapters-8-15">
+    <div class="section-title">Explore Focused Capabilities: Chapters 8–15</div>
+    <div class="section-body">
+      <p>
+        Chapters 8–15 begin with the complete application from Chapter 7. Each
+        chapter then takes that working feature and explores one focused
+        capability: errors, asynchronous input, delay, persistence,
+        introspection, tab synchronization, distinct State changes, or stepwise
+        Pipeline decisions. These chapters are focused experiments you can study
+        one at a time, so you can see exactly what each capability adds without
+        rebuilding the feature from scratch.
+      </p>
+      <table aria-label="Chapters 8 through 15">
+        <thead>
+          <tr>
+            <th scope="col" class="column-250">Chapter</th>
+            <th scope="col" class="column-auto">Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-8']"
+                >Chapter 8: Errors</a
+              >
+            </td>
+            <td>Represent and observe error State at the feature boundary.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-9']"
+                >Chapter 9: Async Input</a
+              >
+            </td>
+            <td>Resolve asynchronous inputs through the feature.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-10']"
+                >Chapter 10: Delay Controller</a
+              >
+            </td>
+            <td>Configure delayed State resolution.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-11']"
+                >Chapter 11: Encrypt and Persist</a
+              >
+            </td>
+            <td>Configure encrypted persistence for State.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-12']"
+                >Chapter 12: State Introspection</a
+              >
+            </td>
+            <td>Observe State at defined points in the feature lifecycle.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-13']"
+                >Chapter 13: Tab Sync</a
+              >
+            </td>
+            <td>Coordinate State across browser tabs.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-14']"
+                >Chapter 14: Distinct Until Changed</a
+              >
+            </td>
+            <td>Suppress redundant State emissions.</td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/tutorial/angular/chapter-15']"
+                >Chapter 15: Stepwise Pipeline</a
+              >
+            </td>
+            <td>Work with controlled Pipeline decisions.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="angular-tutorial">
+    <div class="section-title">Angular Tutorial</div>
+    <div class="section-body">
+      <p>
+        If you work in Angular, this tutorial gives you a hands-on path from an
+        empty application to a complete, working feature. You will build a Star
+        Wars character component, connect it to a service-owned
+        <sdux-feature-cell />, and watch committed State move into a reactive
+        Angular view.
+      </p>
+      <p>
+        You will begin with Angular application setup and a typed character
+        contract, then grow the feature chapter by chapter. Add character
+        selection, create and update records, delete them, apply filters and
+        reducers, and keep the component focused on the view while the service
+        owns the feature State.
+      </p>
+      <p>
+        Once the core application is running, continue into focused Angular
+        chapters for errors, asynchronous input, delay, encrypted persistence,
+        State introspection, tab synchronization, distinct changes, and stepwise
+        Pipeline decisions. Each chapter gives you another practical tool for
+        building a feature that stays clear as its requirements grow.
+      </p>
+      <div class="callout callout-info">
+        <p>
+          <strong>Ready to build?</strong> Start with the
+          <a [routerLink]="['/tutorial/angular/welcome']">Angular tutorial</a>,
+          follow the chapters in order, and finish with a character feature you
+          can run, inspect, and extend.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <sdux-pipeline-related-topics />
+</div>

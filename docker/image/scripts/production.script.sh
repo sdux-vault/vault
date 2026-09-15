@@ -5,6 +5,7 @@ set -e
 COMPOSE_PATH="./docker-compose-files"
 COMPOSE_FILE="$COMPOSE_PATH/docker-compose.production.yml"
 CONTAINER_NAME="sdux"
+SHARED_INDEX_PATH="/home/bitnami/docker-production/sdux-angular/shared/index.html"
 
 clear; 
 printf "\n\n🚀 Promoting specified image to production...\n\n\n"
@@ -47,6 +48,32 @@ fi
 VERSION_TAG="${image_tags[$((selection-1))]}"
 printf "\nℹ️ Using VERSION_TAG: $VERSION_TAG\n\n"
 
+# Publish the generated index for the social metadata service before the
+# frontend container starts with its read-only bind mount.
+printf "\n📄 Publishing the generated production index...\n\n"
+SHARED_INDEX_DIR=$(dirname "$SHARED_INDEX_PATH")
+mkdir -p "$SHARED_INDEX_DIR"
+
+if [ -d "$SHARED_INDEX_PATH" ]; then
+  rmdir "$SHARED_INDEX_PATH" 2>/dev/null || {
+    printf "\n\n❌ Expected a file but found a non-empty directory: $SHARED_INDEX_PATH\n\n"
+    exit 1
+  }
+fi
+
+INDEX_BOOTSTRAP_CONTAINER="sdux-index-bootstrap-$$"
+docker create --name "$INDEX_BOOTSTRAP_CONTAINER" "${CONTAINER_NAME}:${VERSION_TAG}" >/dev/null
+docker cp \
+  "$INDEX_BOOTSTRAP_CONTAINER:/usr/share/nginx/html/index.html" \
+  "$SHARED_INDEX_PATH"
+docker rm "$INDEX_BOOTSTRAP_CONTAINER" >/dev/null
+
+if [ ! -s "$SHARED_INDEX_PATH" ]; then
+  printf "\n\n❌ Generated production index is missing or empty: $SHARED_INDEX_PATH\n\n"
+  exit 1
+fi
+
+printf "✅ Published production index: $SHARED_INDEX_PATH\n\n"
 
 # Step 3: Stop and remove existing container if running
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}-staging$"; then
