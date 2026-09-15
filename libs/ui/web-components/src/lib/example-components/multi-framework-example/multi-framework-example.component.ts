@@ -61,6 +61,22 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
   @ContentChild('core', { static: true })
   coreTemplate: TemplateRef<unknown> | undefined;
 
+  /** Optional text rendered before Angular source. */
+  @ContentChild('beforeAngular', { static: true })
+  beforeAngularTemplate: TemplateRef<unknown> | undefined;
+
+  /** Optional text rendered after Angular source. */
+  @ContentChild('afterAngular', { static: true })
+  afterAngularTemplate: TemplateRef<unknown> | undefined;
+
+  /** Optional text rendered before the shared core source. */
+  @ContentChild('beforeCore', { static: true })
+  beforeCoreTemplate: TemplateRef<unknown> | undefined;
+
+  /** Optional text rendered after the shared core source. */
+  @ContentChild('afterCore', { static: true })
+  afterCoreTemplate: TemplateRef<unknown> | undefined;
+
   /** Optional generic tab component with its own label, order, and content. */
   @ContentChild(GenericTabComponent)
   genericTab!: GenericTabComponent;
@@ -160,5 +176,23 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
       default:
         return this.coreTemplate;
     }
+  }
+
+  /** Resolves optional framework-specific content rendered before source code. */
+  getBeforeTemplate(tab: TabEntry): TemplateRef<unknown> | undefined {
+    return tab.template === 'angular'
+      ? this.beforeAngularTemplate
+      : tab.template === 'core'
+        ? this.beforeCoreTemplate
+        : undefined;
+  }
+
+  /** Resolves optional framework-specific content rendered after source code. */
+  getAfterTemplate(tab: TabEntry): TemplateRef<unknown> | undefined {
+    return tab.template === 'angular'
+      ? this.afterAngularTemplate
+      : tab.template === 'core'
+        ? this.afterCoreTemplate
+        : undefined;
   }
 }

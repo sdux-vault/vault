@@ -144,6 +144,34 @@ class TestHostAngularOnlyComponent {}
 
 @Component({
   standalone: true,
+  imports: [MultiFrameworkExampleComponent],
+  template: `
+    <sdux-multi-framework-example description="With surrounding text">
+      <ng-template #beforeAngular>
+        <p class="before-angular">Angular text before the source viewer</p>
+      </ng-template>
+      <ng-template #angular>
+        <pre class="code-inline"><code>angular code</code></pre>
+      </ng-template>
+      <ng-template #core>
+        <pre class="code-inline"><code>core code</code></pre>
+      </ng-template>
+      <ng-template #afterAngular>
+        <p class="after-angular">Angular text after the source viewer</p>
+      </ng-template>
+      <ng-template #beforeCore>
+        <p class="before-core">Core text before the source viewer</p>
+      </ng-template>
+      <ng-template #afterCore>
+        <p class="after-core">Core text after the source viewer</p>
+      </ng-template>
+    </sdux-multi-framework-example>
+  `
+})
+class TestHostWithSurroundingTextComponent {}
+
+@Component({
+  standalone: true,
   imports: [MultiFrameworkExampleComponent, GenericTabComponent],
   template: `
     <sdux-multi-framework-example description="Core with Generic">
@@ -575,5 +603,57 @@ describe('MultiFrameworkExampleComponent without angular template but with gener
     fixture.detectChanges();
     const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
     expect(panel?.textContent).toContain('vue code');
+  });
+});
+
+describe('MultiFrameworkExampleComponent with optional surrounding text', () => {
+  let fixture: ComponentFixture<TestHostWithSurroundingTextComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        TestHostWithSurroundingTextComponent,
+        MultiFrameworkExampleComponent,
+        MatTabsModule,
+        NoopAnimationsModule
+      ],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostWithSurroundingTextComponent);
+    fixture.detectChanges();
+  });
+
+  it('should render Angular before and after text outside the source viewer', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const panel = el.querySelector('.tab-panel');
+    const sourceViewer = panel?.querySelector('.example-viewer-source');
+
+    expect(panel?.querySelector('.before-angular')?.textContent).toContain(
+      'Angular text before the source viewer'
+    );
+    expect(panel?.querySelector('.after-angular')?.textContent).toContain(
+      'Angular text after the source viewer'
+    );
+    expect(sourceViewer?.querySelector('.before-angular')).toBeNull();
+    expect(sourceViewer?.querySelector('.after-angular')).toBeNull();
+  });
+
+  it('should render Core before and after text outside the source viewer', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const tabs = el.querySelectorAll<HTMLElement>('.mat-mdc-tab');
+    tabs[1].click();
+    fixture.detectChanges();
+
+    const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
+    expect(panel?.querySelector('.before-core')?.textContent).toContain(
+      'Core text before the source viewer'
+    );
+    expect(panel?.querySelector('.after-core')?.textContent).toContain(
+      'Core text after the source viewer'
+    );
+    expect(panel?.querySelector('.before-angular')).toBeNull();
+    expect(panel?.querySelector('.after-angular')).toBeNull();
+    expect(panel?.textContent).toContain('core code');
   });
 });

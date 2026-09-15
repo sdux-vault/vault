@@ -360,6 +360,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 2 — Display Character State in Angular — SDuX Blog',
       description:
         'Learn how Chapter 2 uses Angular services, FeatureCell ownership, and Signals to display typed character State without moving state logic into components.'
+    },
+    {
+      link: '/blog/keep-selection-local-while-feature-state-stays-shared',
+      display:
+        'Chapter 3 — Keep Selection Local While Feature State Stays Shared',
+      title: 'Local Selection and Shared State — SDuX Blog',
+      description:
+        'Learn how local selection state drives a reactive master-detail view while a service-owned FeatureCell collection remains the committed source of truth.'
     }
   ]
 };

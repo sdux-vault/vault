@@ -374,10 +374,19 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     active: true
   },
   {
-    slug: 'angular-display-character-without-component-state-logic',
-    title: 'Angular Tutorial Chapter 2 — Display Character State',
+    slug: 'display-character-without-component-state-logic',
+    title: 'Tutorial Chapter 2 — Display Character State',
     date: '2026-09-10',
     readingTime: 6,
+    pillar: 'SP',
+    active: true
+  },
+  {
+    slug: 'keep-selection-local-with-shared-feature-state',
+    title:
+      'Tutorial Chapter 3 — Keep Selection Local With Shared Feature State',
+    date: '2026-09-15',
+    readingTime: 8,
     pillar: 'SP',
     active: true
   }
