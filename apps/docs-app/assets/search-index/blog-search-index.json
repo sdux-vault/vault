@@ -459,6 +459,16 @@
       "url": "/blog/angular-display-character-without-component-state-logic",
       "symbols": ["angular-display-character-without-component-state-logic"],
       "content": "angular display character without component state logic angular-display-character-without-component-state-logic"
+    },
+    {
+      "id": "blog:keep-selection-local-with-shared-feature-state",
+      "title": "keep selection local with shared feature state",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/keep-selection-local-with-shared-feature-state",
+      "symbols": ["keep-selection-local-with-shared-feature-state"],
+      "content": "keep selection local with shared feature state keep-selection-local-with-shared-feature-state"
     }
   ]
 }
