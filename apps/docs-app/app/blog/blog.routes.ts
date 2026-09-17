@@ -452,6 +452,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-09-15-keep-selection-local-with-shared-feature-state/keep-selection-local-with-shared-feature-state.component').then(
         (m) => m.BlogKeepSelectionLocalWithSharedFeatureStateComponent
       )
+  },
+  {
+    path: 'add-edit-records-without-mixing-editor-state',
+    data: {
+      category: 'blogs',
+      type: 'add-edit-records-without-mixing-editor-state'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-17-add-edit-records-without-mixing-editor-state/add-edit-records-without-mixing-editor-state.component').then(
+        (m) => m.BlogAddEditRecordsWithoutMixingEditorStateComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

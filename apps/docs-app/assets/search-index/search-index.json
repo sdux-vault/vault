@@ -3747,6 +3747,26 @@
       "url": "/blog/angular-display-character-without-component-state-logic",
       "symbols": ["angular-display-character-without-component-state-logic"],
       "content": "angular display character without component state logic angular-display-character-without-component-state-logic"
+    },
+    {
+      "id": "blog:keep-selection-local-with-shared-feature-state",
+      "title": "keep selection local with shared feature state",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/keep-selection-local-with-shared-feature-state",
+      "symbols": ["keep-selection-local-with-shared-feature-state"],
+      "content": "keep selection local with shared feature state keep-selection-local-with-shared-feature-state"
+    },
+    {
+      "id": "blog:add-edit-records-without-mixing-editor-state",
+      "title": "Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/add-edit-records-without-mixing-editor-state",
+      "symbols": ["add-edit-records-without-mixing-editor-state"],
+      "content": "Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State add-edit-records-without-mixing-editor-state SP"
     }
   ]
 }

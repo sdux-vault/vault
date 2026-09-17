@@ -30,6 +30,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/add-edit-records-without-mixing-editor-state</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/ai-assisted-debugging</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -116,6 +122,11 @@
   <url>
     <loc>https://www.sdux-vault.com/blog/global-store-shared-dependency</loc>
     <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/keep-selection-local-with-shared-feature-state</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -914,7 +925,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/pipeline-architecture</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2926,6 +2937,11 @@
   <url>
     <loc>https://www.sdux-vault.com/stackblitz</loc>
     <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/tutorial</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

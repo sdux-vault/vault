@@ -8,11 +8,13 @@ import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { LoadingSpinnerComponent } from '../spinner/loading-spinner.component';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { SeoService } from '../services/seo/seo.service';
 
 describe('Component: App', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let themeService: ThemeService;
+  let seoService: SeoService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,11 +26,13 @@ describe('Component: App', () => {
         LoadingSpinnerComponent,
         sduxTestingModule
       ],
-      providers: [ThemeService]
+      providers: [ThemeService, SeoService]
     }).compileComponents();
 
     themeService = TestBed.inject(ThemeService);
+    seoService = TestBed.inject(SeoService);
     spyOn(themeService, 'restorePreferences'); // 👈 Spy before component creation
+    spyOn(seoService, 'initialize');
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
@@ -40,5 +44,9 @@ describe('Component: App', () => {
 
   it('should call ThemeService.restorePreferences once on initialization', () => {
     expect(themeService.restorePreferences).toHaveBeenCalledTimes(1);
+  });
+
+  it('should initialize SeoService once on application startup', () => {
+    expect(seoService.initialize).toHaveBeenCalledTimes(1);
   });
 });

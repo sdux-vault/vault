@@ -368,6 +368,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Local Selection and Shared State — SDuX Blog',
       description:
         'Learn how local selection state drives a reactive master-detail view while a service-owned FeatureCell collection remains the committed source of truth.'
+    },
+    {
+      link: '/blog/add-edit-records-without-mixing-editor-state',
+      display:
+        'Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State',
+      title: 'Chapter 4 — Add and Edit Records — SDuX Blog',
+      description:
+        'Learn how a service-owned FeatureCell appends new records, replaces known identities, and keeps temporary editor state out of shared Feature State.'
     }
   ]
 };

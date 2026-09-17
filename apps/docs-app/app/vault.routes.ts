@@ -294,6 +294,22 @@ export const routes: Routes = [
           )
       },
       {
+        // redirect to handle previous changes
+        path: 'top-tier',
+        children: [
+          {
+            path: '',
+            redirectTo: '/welcome',
+            pathMatch: 'full'
+          },
+          {
+            path: ':type',
+            redirectTo: '/welcome/:type',
+            pathMatch: 'full'
+          }
+        ]
+      },
+      {
         path: 'dev-tools',
         data: { category: 'dev-tools' },
         children: [
@@ -669,11 +685,8 @@ export const routes: Routes = [
       },
       {
         path: 'stackblitz',
-        data: { category: 'stackblitz' },
-        loadComponent: () =>
-          import('./docs/stack-blitz/stackblitz.component').then(
-            (m) => m.StackBlitzOverviewComponent
-          )
+        redirectTo: '/stackblitz',
+        pathMatch: 'full'
       }
     ]
   },
