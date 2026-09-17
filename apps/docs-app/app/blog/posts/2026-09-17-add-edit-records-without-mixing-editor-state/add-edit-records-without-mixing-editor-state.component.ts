@@ -1,8 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   BrandNameComponent,
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
   MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -13,9 +11,7 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     BrandNameComponent,
-    MultiFrameworkExampleComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent
+    MultiFrameworkExampleComponent
   ],
   template: `
     <sdux-blog-layout
