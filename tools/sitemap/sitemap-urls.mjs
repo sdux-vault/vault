@@ -12,6 +12,7 @@ export const SITEMAP_URLS = [
   '/blog',
   '/blog/a-featurecell-in-plain-javascript',
   '/blog/actions-are-ceremony',
+  '/blog/add-edit-records-without-mixing-editor-state',
   '/blog/ai-assisted-debugging',
   '/blog/angular-display-character-without-component-state-logic',
   '/blog/array-state-updates-without-manual-find-and-replace-logic',

@@ -31,9 +31,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           appends one new identity. Update replaces one known identity without
           disturbing the rest.
           <a href="/tutorial" target="new"> Chapter 4</a> shows how to keep
-          those promises in a service-owned
-          <sdux-brand-name [tm]="true" /> FeatureCell while the component owns
-          only temporary editor state.
+          those promises in a service-owned <sdux-brand-name [tm]="true" />
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          while the component owns only temporary editor state.
         </p>
         <p>
           This boundary is easy to lose when a form starts small. A component
@@ -46,9 +46,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         <div class="callout callout-info">
           <p>
             <strong>Key takeaway:</strong> Let the feature service commit
-            collection changes through its FeatureCell. Let the editor manage
-            drafts, mode, validation, cancellation, and feedback until a valid
-            user action crosses the commit boundary.
+            collection changes through its
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            Let the editor manage drafts, mode, validation, cancellation, and
+            feedback until a valid user action crosses the commit boundary.
           </p>
         </div>
       </header>
@@ -114,10 +115,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             The character collection is committed Feature State. It can be
             displayed by a list, selected by a detail view, and used by other
             consumers of the feature. Its ownership belongs in the service that
-            owns the FeatureCell. The editor draft has a different lifetime: it
-            exists while someone is typing, can be rejected by validation, and
-            can disappear when the user cancels. That makes it local editor
-            state, not another copy of the collection.
+            owns the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            The editor draft has a different lifetime: it exists while someone
+            is typing, can be rejected by validation, and can disappear when the
+            user cancels. That makes it local editor state, not another copy of
+            the collection.
           </p>
           <div class="concept-box">
             <p>
@@ -154,9 +157,14 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             The create path gets a new identity from the current collection,
             builds a complete character, and passes a one-item array to
             <span class="code">mergeState</span>. The registered
-            <span class="code">withArrayAppendMergeBehavior</span> gives that
-            input append semantics. Existing records remain in the collection;
-            the incoming character becomes the new record.
+            <span class="code"
+              ><a
+                href="/docs/pipeline/addons/merge/with-array-append-merge-behavior"
+                >withArrayAppendMergeBehavior</a
+              ></span
+            >
+            gives that input append semantics. Existing records remain in the
+            collection; the incoming character becomes the new record.
           </p>
           <sdux-multi-framework-example description="Create a character">
             <ng-template #angular>
@@ -175,7 +183,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </sdux-multi-framework-example>
           <p>
             The important detail is not the form event that called this method.
-            It is the input shape and the configured policy at the FeatureCell
+            It is the input shape and the configured policy at the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             boundary. A one-record incoming array communicates an append request
             clearly. The editor does not need to copy the existing collection,
             push into it, or know how unrelated records should be retained.
@@ -307,12 +316,13 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             cancellation leave committed State alone?
           </p>
           <p>
-            The <a href="/tutorial" target="new">Chapter 4</a>
-            example makes those answers observable through its add and edit
-            flows. The view supplies temporary intent. The service owns the
-            mutation policy. The FeatureCell receives the operation through the
-            documented write APIs, and the resulting collection can continue
-            serving every consumer that depends on it.
+            The <a href="/tutorial" target="new">Chapter 4</a> example makes
+            those answers observable through its add and edit flows. The view
+            supplies temporary intent. The service owns the mutation policy. The
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            receives the operation through the documented write APIs, and the
+            resulting collection can continue serving every consumer that
+            depends on it.
           </p>
           <!-- StackBlitz: add-edit-records-without-mixing-editor-state -->
           <div class="callout callout-info">
