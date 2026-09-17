@@ -389,5 +389,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 8,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'add-edit-records-without-mixing-editor-state',
+    title:
+      'Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State',
+    date: '2026-09-17',
+    readingTime: 9,
+    pillar: 'SP',
+    active: true
   }
 ];

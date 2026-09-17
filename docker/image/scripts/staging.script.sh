@@ -162,4 +162,4 @@ else
 fi
 
 # Return to main menu
-exec "$SCRIPT_DIRECTORY/main.script.sh"
+exec "$SCRIPT_DIRECTORY/../main.script.sh"
