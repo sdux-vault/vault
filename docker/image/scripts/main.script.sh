@@ -1,18 +1,34 @@
 #!/bin/bash
 
-SCRIPTS_DIR="./scripts"
-SCRIPT_SUFFIX=".script.sh"
+SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="$SCRIPT_DIRECTORY/.env"
+
+if [[ ! -f "$ENV_FILE" ]]; then
+  printf "\n❌ Required environment file not found: %s\n\n" "$ENV_FILE"
+  exit 1
+fi
+
+set -a
+source "$ENV_FILE"
+set +a
+
+for required_variable in IMAGE_LABEL SCRIPTS_DIR SCRIPT_SUFFIX; do
+  if [[ -z "${!required_variable:-}" ]]; then
+    printf "\n❌ %s is not set in %s\n\n" "$required_variable" "$ENV_FILE"
+    exit 1
+  fi
+done
 
 # Check for CLI argument
 if [ $# -gt 0 ]; then
   ARG_SCRIPT="$SCRIPTS_DIR/$1$SCRIPT_SUFFIX"
   if [ -f "$ARG_SCRIPT" ]; then
-    echo "🚀 Running $ARG_SCRIPT via command-line argument"
+    echo "🚀 Running ${IMAGE_LABEL} script $ARG_SCRIPT via command-line argument"
     chmod +x "$ARG_SCRIPT"
     exec "$ARG_SCRIPT"
     exit 0
   else
-    echo "❌ Script '$1$SCRIPT_SUFFIX' not found in $SCRIPTS_DIR"
+    echo "❌ ${IMAGE_LABEL} script '$1$SCRIPT_SUFFIX' not found in $SCRIPTS_DIR"
     exit 1
   fi
 fi
@@ -21,11 +37,11 @@ fi
 mapfile -t SCRIPT_FILES < <(find "$SCRIPTS_DIR" -maxdepth 1 -type f -name "*$SCRIPT_SUFFIX" | sort)
 
 if [ ${#SCRIPT_FILES[@]} -eq 0 ]; then
-  echo "❌ No scripts found in $SCRIPTS_DIR"
+  echo "❌ No ${IMAGE_LABEL} scripts found in $SCRIPTS_DIR"
   exit 1
 fi
 
-echo "📜 Available Scripts:"
+echo "📜 Available ${IMAGE_LABEL} Scripts:"
 i=1
 for script in "${SCRIPT_FILES[@]}"; do
   script_name=$(basename "$script")
@@ -34,17 +50,17 @@ for script in "${SCRIPT_FILES[@]}"; do
 done
 
 echo ""
-read -p "➡️  Enter the number of the script to run: " selection
+read -p "➡️  Enter the number of the ${IMAGE_LABEL} script to run: " selection
 echo ""
 
 # Validate numeric input
 if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt "${#SCRIPT_FILES[@]}" ]; then
-  echo "❌ Invalid selection."
+  echo "❌ Invalid ${IMAGE_LABEL} script selection."
   exit 1
 fi
 
 SELECTED_SCRIPT="${SCRIPT_FILES[$((selection - 1))]}"
-echo "🚀 Running $SELECTED_SCRIPT"
+echo "🚀 Running ${IMAGE_LABEL} script $SELECTED_SCRIPT"
 echo ""
 
 # Make sure the script is executable

@@ -296,8 +296,18 @@ export const routes: Routes = [
       {
         // redirect to handle previous changes
         path: 'top-tier',
-        redirectTo: '/welcome',
-        pathMatch: 'full'
+        children: [
+          {
+            path: '',
+            redirectTo: '/welcome',
+            pathMatch: 'full'
+          },
+          {
+            path: ':type',
+            redirectTo: '/welcome/:type',
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'dev-tools',

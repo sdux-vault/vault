@@ -1,78 +1,93 @@
 #!/bin/bash
 
-# restart.script.sh — Restart a specific SDuX container environment (staging, production, backup)
+# restart.script.sh — Restart a project container environment
 
-clear; 
-printf "\n\n🚀 Restarting a container ...\n\n\n"
+SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="$SCRIPT_DIRECTORY/.env"
 
-printf "Docker containers:\n\n"
-docker ps -a --filter "name=sdux"
+if [[ ! -f "$ENV_FILE" ]]; then
+  printf "\n❌ Required environment file not found: %s\n\n" "$ENV_FILE"
+  exit 1
+fi
 
-COMPOSE_DIR="./docker-compose-files"
+set -a
+source "$ENV_FILE"
+set +a
+
+for required_variable in IMAGE_LABEL IMAGE_REPOSITORY CONTAINER_PREFIX CONTAINER_ENVIRONMENTS RESTART_STAGING_PORT RESTART_PRODUCTION_PORT RESTART_BACKUP_PORT RESTART_HEALTH_CHECK_API; do
+  if [[ -z "${!required_variable:-}" ]]; then
+    printf "\n❌ %s is not set in %s\n\n" "$required_variable" "$ENV_FILE"
+    exit 1
+  fi
+done
+
+clear
+printf "\n\n🚀 Restarting a %s container...\n\n\n" "$IMAGE_LABEL"
+
+printf "All %s Docker containers:\n\n" "$IMAGE_LABEL"
+docker ps -a --filter "name=$CONTAINER_PREFIX"
 
 printf "\n\n"
-read -p "Enter the container to restart [ staging | production | backup ]: " ENVIRONMENT 
+read -p "Enter the ${IMAGE_LABEL} container to restart [ ${CONTAINER_ENVIRONMENTS// / | } ]: " ENVIRONMENT 
 
-if [ -z "$ENVIRONMENT" ] || [[ "$ENVIRONMENT" != "staging" && "$ENVIRONMENT" != "production" && "$ENVIRONMENT" != "backup" ]]; then
-  printf "\n\n❌ Usage: $0 [ staging | production | backup ]\n\n"
+if [[ ! " $CONTAINER_ENVIRONMENTS " =~ " $ENVIRONMENT " ]]; then
+  printf "\n\n❌ Usage: $0 [ ${CONTAINER_ENVIRONMENTS// / | } ] for %s\n\n" "$IMAGE_LABEL"
   exit 1
 fi
 
-COMPOSE_FILE="$COMPOSE_DIR/docker-compose.$ENVIRONMENT.yml"
-CONTAINER_NAME="sdux-$ENVIRONMENT"
+COMPOSE_FILE="$COMPOSE_PATH/docker-compose.$ENVIRONMENT.yml"
+CONTAINER_NAME="${CONTAINER_PREFIX}-${ENVIRONMENT}"
 
 if [ ! -f "$COMPOSE_FILE" ]; then
-  printf "\n\n❌ Compose file not found: $COMPOSE_FILE\n\n"
+  printf "\n\n❌ %s compose file not found: %s\n\n" "$IMAGE_LABEL" "$COMPOSE_FILE"
   exit 1
 fi
 
-if [ "$ENVIRONMENT" = "staging" ]; then
-  CONTAINER_PORT=4100
-elif [ "$ENVIRONMENT" = "production" ]; then
-  CONTAINER_PORT=3100
-elif [ "$ENVIRONMENT" = "backup" ]; then
-  CONTAINER_PORT=5100
-fi
+case "$ENVIRONMENT" in
+  staging) CONTAINER_PORT="$RESTART_STAGING_PORT"; ENV_FILE_NAME="$RESTART_STAGING_ENV_FILE_NAME" ;;
+  production) CONTAINER_PORT="$RESTART_PRODUCTION_PORT"; ENV_FILE_NAME="$RESTART_PRODUCTION_ENV_FILE_NAME" ;;
+  backup) CONTAINER_PORT="$RESTART_BACKUP_PORT"; ENV_FILE_NAME="$RESTART_BACKUP_ENV_FILE_NAME" ;;
+esac
 
 # Extract VERSION_TAG dynamically from the running container's image
 VERSION_TAG=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" | cut -d':' -f2)
 
 if [ -z "$VERSION_TAG" ]; then
-  printf "\n❌ Unable to determine VERSION_TAG from container: $CONTAINER_NAME\n\n"
+  printf "\n❌ Unable to determine the %s VERSION_TAG from container: %s\n\n" "$IMAGE_LABEL" "$CONTAINER_NAME"
   exit 1
 else
-  printf "\nℹ️ Using VERSION_TAG: $VERSION_TAG\n\n"
+  printf "\nℹ️ Using %s VERSION_TAG: %s\n\n" "$IMAGE_LABEL" "$VERSION_TAG"
 fi
 
-printf "\n🛑 Stopping container: $CONTAINER_NAME\n\n"
-docker stop "$CONTAINER_NAME" >/dev/null 2>&1 || printf "\n\nℹ️ No running container to stop.\n\n"
+printf "\n🛑 Stopping %s container: %s\n\n" "$IMAGE_LABEL" "$CONTAINER_NAME"
+docker stop "$CONTAINER_NAME" >/dev/null 2>&1 || printf "\n\nℹ️ No running %s container to stop.\n\n" "$IMAGE_LABEL"
 
-printf "\n🗑  Removing container: $CONTAINER_NAME\n\n"
-docker rm "$CONTAINER_NAME" >/dev/null 2>&1 || printf "\n\nℹ️ No container to remove.\n\n"
+printf "\n🗑  Removing %s container: %s\n\n" "$IMAGE_LABEL" "$CONTAINER_NAME"
+docker rm "$CONTAINER_NAME" >/dev/null 2>&1 || printf "\n\nℹ️ No %s container to remove.\n\n" "$IMAGE_LABEL"
 
-printf "\n🚀 Restarting $CONTAINER_NAME with VERSION_TAG=$VERSION_TAG\n\n"
+printf "\n🚀 Restarting %s container %s with VERSION_TAG=%s\n\n" "$IMAGE_LABEL" "$CONTAINER_NAME" "$VERSION_TAG"
 
-if env VERSION_TAG="$VERSION_TAG" docker-compose -f "$COMPOSE_FILE" up -d; then
-  printf "\n\n✅ Restart complete using VERSION_TAG=$VERSION_TAG\n\n"
+if env VERSION_TAG="$VERSION_TAG" CONTAINER_NAME="$IMAGE_REPOSITORY" ENV_FILE_NAME="$ENV_FILE_NAME" docker-compose -f "$COMPOSE_FILE" up -d; then
+  printf "\n\n✅ %s restart complete using VERSION_TAG=%s\n\n" "$IMAGE_LABEL" "$VERSION_TAG"
 
-  printf "Docker container:\n\n"
+  printf "%s Docker container:\n\n" "$IMAGE_LABEL"
   docker ps --filter "name=$CONTAINER_NAME"
   printf "\n\n"
 
-  printf "🔍 Verifying container is healthy...\n\n"
+  printf "🔍 Verifying %s container is healthy...\n\n" "$IMAGE_LABEL"
   sleep 5
 
-  RESPONSE=$(curl -fsSL http://localhost:$CONTAINER_PORT/ 2>/dev/null)
+  RESPONSE=$(curl -fsSL "http://localhost:$CONTAINER_PORT$RESTART_HEALTH_CHECK_API" 2>/dev/null)
 
   if [ -n "$RESPONSE" ]; then
-    echo "✅ Health check passed"
+    echo "✅ ${IMAGE_LABEL} health check passed"
   else
     echo "$RESPONSE"
-    echo "⚠️ Health check failed"
+    echo "⚠️ ${IMAGE_LABEL} health check failed"
   fi
 
   printf "\n\n"
 else
-  printf "\n\n❌ Failed to restart container.\n\n"
+  printf "\n\n❌ Failed to restart %s container.\n\n" "$IMAGE_LABEL"
   exit 1
 fi
