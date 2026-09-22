@@ -398,5 +398,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 9,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'route-destructive-delete-through-the-service-owned-boundary',
+    title:
+      'Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary',
+    date: '2026-09-22',
+    readingTime: 9,
+    pillar: 'SP',
+    active: true
   }
 ];
