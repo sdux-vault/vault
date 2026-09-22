@@ -376,6 +376,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 4 — Add and Edit Records — SDuX Blog',
       description:
         'Learn how a service-owned FeatureCell appends new records, replaces known identities, and keeps temporary editor state out of shared Feature State.'
+    },
+    {
+      link: '/blog/route-destructive-delete-through-the-service-owned-boundary',
+      display:
+        'Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary',
+      title: 'Chapter 5 — Destructive Delete — SDuX Blog',
+      description:
+        'Learn how identifier-based array merge and a service-owned removeCharacter method route destructive delete through the same write boundary as create and update.'
     }
   ]
 };

@@ -463,6 +463,18 @@ export const blogRoutes: Routes = [
       import('./posts/2026-09-17-add-edit-records-without-mixing-editor-state/add-edit-records-without-mixing-editor-state.component').then(
         (m) => m.BlogAddEditRecordsWithoutMixingEditorStateComponent
       )
+  },
+  {
+    path: 'route-destructive-delete-through-the-service-owned-boundary',
+    data: {
+      category: 'blogs',
+      type: 'route-destructive-delete-through-the-service-owned-boundary'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-22-route-destructive-delete-through-the-service-owned-boundary/route-destructive-delete-through-the-service-owned-boundary.component').then(
+        (m) =>
+          m.BlogRouteDestructiveDeleteThroughTheServiceOwnedBoundaryComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

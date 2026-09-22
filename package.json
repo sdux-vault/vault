@@ -69,6 +69,7 @@
     "start:chrome:prod": "ng serve devtools-demo --port 4250 --configuration production",
     "build:devtools": "ng build devtools",
     "build:devtools-ui": "ng build devtools-ui",
+    "build:docs-app": "ng build docs-app --output-path=dist/docs-app",
     "build:testing-utils": "ng build testing-utils",
     "build:integration:tests": "node libs/testing/integration/integration-build.script.mjs",
     "build:react": "ng build react",
