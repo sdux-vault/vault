@@ -77,10 +77,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <p>
               <strong>Warning:</strong> A component-level
               <span class="code">.filter()</span> against a local array copy is
-              not synchronized with the FeatureCell's committed collection. Any
-              other consumer of that Feature State will not see the removal, and
-              the next unrelated write can silently reintroduce the deleted
-              record.
+              not synchronized with the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a
+              >'s committed collection. Any other consumer of that Feature State
+              will not see the removal, and the next unrelated write can
+              silently reintroduce the deleted record.
             </p>
           </div>
         </div>
@@ -97,9 +98,15 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             needs to compare incoming records by identifier rather than simply
             appending them. Chapter 5 registers
-            <span class="code">withArrayByIdMergeBehavior</span> for the Merge
-            stage — the same stage used by the create and update paths from
-            earlier chapters, now configured to also honor a delete flag.
+            <span class="code"
+              ><a
+                href="/docs/pipeline/addons/merge/with-array-by-id-merge-behavior"
+                >withArrayByIdMergeBehavior</a
+              ></span
+            >
+            for the Merge stage — the same stage used by the create and update
+            paths from earlier chapters, now configured to also honor a delete
+            flag.
           </p>
           <sdux-multi-framework-example
             description="Register identifier-based array merge">
@@ -154,8 +161,10 @@ characterCell
           <p>
             The delete method looks almost identical to create and update: it
             still calls <span class="code">mergeState</span> on the
-            service-owned FeatureCell. The difference is the shape of the input
-            and a second argument that marks the request as destructive.
+            service-owned
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+            The difference is the shape of the input and a second argument that
+            marks the request as destructive.
           </p>
           <sdux-multi-framework-example
             description="Remove a character by identity">
@@ -222,8 +231,9 @@ characterCell
             <p>
               <strong>Design rule:</strong> Every write — create, update, or
               delete — is still a <span class="code">mergeState</span> call on
-              the service-owned FeatureCell. The service never needs a parallel,
-              hand-built removal algorithm.
+              the service-owned
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
+              The service never needs a parallel, hand-built removal algorithm.
             </p>
           </div>
         </div>
@@ -272,7 +282,8 @@ protected requestDelete(): void &#123;
               <strong>Ownership test:</strong> If canceling the action should
               leave the committed collection untouched, the state describing
               that in-progress action belongs in the component. Only a
-              confirmed, committed intent should reach the FeatureCell.
+              confirmed, committed intent should reach the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
             </p>
           </div>
         </div>
@@ -346,9 +357,10 @@ protected requestDelete(): void &#123;
           </p>
           <p>
             Tests can confirm the service behavior directly by acting on the
-            FeatureCell, settling the pipeline, and asserting on the resulting
-            State — the same act, settle, assert pattern used throughout the
-            tutorial series.
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+            settling the pipeline, and asserting on the resulting State — the
+            same act, settle, assert pattern used throughout the tutorial
+            series.
           </p>
           <div class="code-inline">
             <pre><code class="language-ts">it('should remove the matching character from the current collection', async () =&gt; &#123;

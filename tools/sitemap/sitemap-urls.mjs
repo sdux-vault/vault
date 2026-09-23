@@ -43,6 +43,7 @@ export const SITEMAP_URLS = [
   '/blog/redux-and-sdux-vault-side-by-side',
   '/blog/redux-broke-my-trust',
   '/blog/redux-pattern-sdux-vault-contract',
+  '/blog/route-destructive-delete-through-the-service-owned-boundary',
   '/blog/selectors-without-a-global-tree',
   '/blog/state-management-in-vue-without-a-store',
   '/blog/state-management-without-a-ui-on-deno',

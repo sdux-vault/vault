@@ -479,6 +479,18 @@
       "url": "/blog/add-edit-records-without-mixing-editor-state",
       "symbols": ["add-edit-records-without-mixing-editor-state"],
       "content": "Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State add-edit-records-without-mixing-editor-state SP"
+    },
+    {
+      "id": "blog:route-destructive-delete-through-the-service-owned-boundary",
+      "title": "Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/route-destructive-delete-through-the-service-owned-boundary",
+      "symbols": [
+        "route-destructive-delete-through-the-service-owned-boundary"
+      ],
+      "content": "Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary route-destructive-delete-through-the-service-owned-boundary SP"
     }
   ]
 }
