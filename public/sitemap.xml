@@ -72,6 +72,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-6-feature-lifecycle-null-reset-destroy</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/circuit-breaker-state-pipeline</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -215,6 +221,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/route-destructive-delete-through-the-service-owned-boundary</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
