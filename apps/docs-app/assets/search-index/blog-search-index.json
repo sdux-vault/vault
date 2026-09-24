@@ -479,6 +479,28 @@
       "url": "/blog/add-edit-records-without-mixing-editor-state",
       "symbols": ["add-edit-records-without-mixing-editor-state"],
       "content": "Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State add-edit-records-without-mixing-editor-state SP"
+    },
+    {
+      "id": "blog:route-destructive-delete-through-the-service-owned-boundary",
+      "title": "Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/route-destructive-delete-through-the-service-owned-boundary",
+      "symbols": [
+        "route-destructive-delete-through-the-service-owned-boundary"
+      ],
+      "content": "Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary route-destructive-delete-through-the-service-owned-boundary SP"
+    },
+    {
+      "id": "blog:chapter-6-feature-lifecycle-null-reset-destroy",
+      "title": "Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-6-feature-lifecycle-null-reset-destroy",
+      "symbols": ["chapter-6-feature-lifecycle-null-reset-destroy"],
+      "content": "Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy chapter-6-feature-lifecycle-null-reset-destroy SP"
     }
   ]
 }

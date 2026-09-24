@@ -41,7 +41,7 @@ if [ ${#SCRIPT_FILES[@]} -eq 0 ]; then
   exit 1
 fi
 
-echo "📜 Available ${IMAGE_LABEL} Scripts:"
+echo "Available ${IMAGE_LABEL} Scripts:"
 i=1
 for script in "${SCRIPT_FILES[@]}"; do
   script_name=$(basename "$script")

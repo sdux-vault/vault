@@ -475,6 +475,17 @@ export const blogRoutes: Routes = [
         (m) =>
           m.BlogRouteDestructiveDeleteThroughTheServiceOwnedBoundaryComponent
       )
+  },
+  {
+    path: 'chapter-6-feature-lifecycle-null-reset-destroy',
+    data: {
+      category: 'blogs',
+      type: 'chapter-6-feature-lifecycle-null-reset-destroy'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-24-chapter-6-feature-lifecycle-null-reset-destroy/chapter-6-feature-lifecycle-null-reset-destroy.component').then(
+        (m) => m.BlogChapter6FeatureLifecycleNullResetDestroyComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
