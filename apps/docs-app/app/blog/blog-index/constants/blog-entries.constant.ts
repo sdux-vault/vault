@@ -407,5 +407,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 9,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-6-feature-lifecycle-null-reset-destroy',
+    title:
+      'Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy',
+    date: '2026-09-24',
+    readingTime: 8,
+    pillar: 'SP',
+    active: true
   }
 ];

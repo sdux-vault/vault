@@ -384,6 +384,15 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 5 — Destructive Delete — SDuX Blog',
       description:
         'Learn how identifier-based array merge and a service-owned removeCharacter method route destructive delete through the same write boundary as create and update.'
+    },
+    {
+      link: '/blog/chapter-6-feature-lifecycle-null-reset-destroy',
+      display:
+        'Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy',
+      title:
+        'Chapter 6 — Feature Lifecycle: Null, Reset, and Destroy — SDuX Blog',
+      description:
+        'Learn how null persistence, reset(), and destroy() give a FeatureCell distinct lifecycle outcomes with clear service and UI responsibilities.'
     }
   ]
 };
