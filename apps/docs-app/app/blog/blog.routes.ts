@@ -486,6 +486,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-09-24-chapter-6-feature-lifecycle-null-reset-destroy/chapter-6-feature-lifecycle-null-reset-destroy.component').then(
         (m) => m.BlogChapter6FeatureLifecycleNullResetDestroyComponent
       )
+  },
+  {
+    path: 'chapter-7-filters-and-reducers',
+    data: {
+      category: 'blogs',
+      type: 'chapter-7-filters-and-reducers'
+    },
+    loadComponent: () =>
+      import('./posts/2026-09-29-chapter-7-filters-and-reducers/chapter-7-filters-and-reducers.component').then(
+        (m) => m.BlogChapter7FiltersAndReducersComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

@@ -393,6 +393,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Chapter 6 — Feature Lifecycle: Null, Reset, and Destroy — SDuX Blog',
       description:
         'Learn how null persistence, reset(), and destroy() give a FeatureCell distinct lifecycle outcomes with clear service and UI responsibilities.'
+    },
+    {
+      link: '/blog/chapter-7-filters-and-reducers',
+      display:
+        'Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline',
+      title: 'Chapter 7 — Filters and Reducers — SDuX Blog',
+      description:
+        'Learn how pure filters and ordered reducers produce one immutable, display-ready collection before the component renders it.'
     }
   ]
 };

@@ -416,5 +416,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 8,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-7-filters-and-reducers',
+    title:
+      'Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline',
+    date: '2026-09-29',
+    readingTime: 9,
+    pillar: 'SP',
+    active: true
   }
 ];
