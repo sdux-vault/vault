@@ -272,7 +272,8 @@ export const removeUnknownLastNameFilter: FilterFunction&lt;
             reducers return new collections, their inputs remain unchanged, and
             the registration order matches the intended data flow. Those checks
             are more valuable than a screenshot because they protect the rule
-            when another view or future update reuses the same FeatureCell.
+            when another view or future update reuses the same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>.
           </p>
           <div class="callout callout-warning">
             <p>

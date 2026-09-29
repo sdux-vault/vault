@@ -78,6 +78,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-7-filters-and-reducers</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/circuit-breaker-state-pipeline</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -570,7 +576,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/docs/pipeline/apis/feature-cell-api</loc>
-    <lastmod>2026-08-07</lastmod>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
