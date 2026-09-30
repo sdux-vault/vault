@@ -2736,6 +2736,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/react/comparison-rtk</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/react/debugger</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2926,6 +2931,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/framework-comparison</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/press</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -2948,13 +2958,13 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/sitemap</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.sdux-vault.com/stackblitz</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

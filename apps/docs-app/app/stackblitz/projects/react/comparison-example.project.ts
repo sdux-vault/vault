@@ -4,22 +4,6 @@ export const comparisonExampleProject: Project = {
   title: 'react-comparison-example',
   template: 'node',
   files: {
-    'dist/assets/index-CxTEQTeM.css': `.example-container{flex-direction:column;gap:.75rem;width:800px;padding:1rem;display:flex}.textarea{box-sizing:border-box;color:#222;background:#fafafa;border:1px solid #00000014;border-radius:6px;width:100%;height:175px;padding:.5rem;font-family:monospace;font-size:.8rem}.actions{justify-content:flex-start;align-items:center;gap:3rem;display:flex}@media (width<=768px){.example-container{width:auto}.actions{flex-direction:column;align-items:flex-start;gap:2rem}}.example-container{flex-direction:column;gap:.25rem;padding:.25rem;display:flex}.sdux-button{color:#fff;cursor:pointer;white-space:nowrap;text-overflow:ellipsis;background-color:#1976d2;border:1px solid #004ba0;border-radius:.3125rem;flex-direction:row;justify-content:center;align-items:center;gap:.25rem;min-width:125px;height:40px;padding:.5rem;font-size:.875rem;font-weight:600;display:flex;overflow:hidden}
-`,
-    'dist/index.html': `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>SDuX React Comparison Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="module" crossorigin src="/assets/index-rOG6hr_Q.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CxTEQTeM.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
-`,
     'index.html': `<!doctype html>
 <html lang="en">
   <head>
@@ -150,7 +134,7 @@ export interface Employee {
 .textarea {
   width: 100%;
   box-sizing: border-box;
-  height: 175px;
+  height: 200px;
   padding: 0.5rem;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 6px;

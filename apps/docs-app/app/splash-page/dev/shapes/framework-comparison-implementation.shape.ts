@@ -4,6 +4,7 @@ import { FrameworkComparisonLineMetadataShape } from './framework-comparison-lin
 export type FrameworkComparisonImplementationShape = {
   readonly frameworkLabel: string;
   readonly libraryLabel: string;
+  readonly stackblitzExample: string | null;
   readonly files: readonly FrameworkComparisonSourceFileShape[];
   readonly metadata?: FrameworkComparisonLineMetadataShape;
   readonly usesSduxBrandName?: boolean;

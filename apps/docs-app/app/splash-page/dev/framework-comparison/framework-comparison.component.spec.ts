@@ -18,6 +18,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     left: {
       frameworkLabel: 'Angular',
       libraryLabel: 'Redux',
+      stackblitzExample: null,
       files: [
         {
           type: 'typescript',
@@ -42,6 +43,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     right: {
       frameworkLabel: 'Angular',
       libraryLabel: 'SDuX',
+      stackblitzExample: null,
       usesSduxBrandName: true,
       files: [
         {
@@ -68,6 +70,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     left: {
       frameworkLabel: 'React',
       libraryLabel: 'Redux',
+      stackblitzExample: 'comparison-rtk',
       files: [
         {
           type: 'typescript',
@@ -86,6 +89,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     right: {
       frameworkLabel: 'React',
       libraryLabel: 'SDuX',
+      stackblitzExample: 'comparison',
       usesSduxBrandName: true,
       files: [
         {
@@ -111,6 +115,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     left: {
       frameworkLabel: 'Vue',
       libraryLabel: 'Pinia',
+      stackblitzExample: null,
       files: [
         {
           type: 'typescript',
@@ -123,6 +128,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     right: {
       frameworkLabel: 'Vue',
       libraryLabel: 'Pinia',
+      stackblitzExample: null,
       files: [
         {
           type: 'vue',
@@ -153,6 +159,41 @@ describe('Component: FrameworkComparisonComponent', () => {
 
   it('should create the component', () => {
     expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('should resolve the configured StackBlitz example', () => {
+    const stackblitzExample: StackBlitzExampleShape = {
+      id: 'comparison',
+      title: 'Framework Comparison',
+      exampleName: 'comparison-example',
+      displayCopyIcon: true,
+      display: true,
+      description: 'Compares framework integrations.',
+      languages: [{ name: 'Angular', key: 'angular' }]
+    };
+
+    spyOn(serviceSpy, 'getExample').and.returnValue(stackblitzExample);
+
+    const resolved = (
+      fixture.componentInstance as unknown as {
+        getStackblitzExample: (implementation: {
+          stackblitzExample: string | null;
+        }) => StackBlitzExampleShape;
+      }
+    ).getStackblitzExample({ stackblitzExample: 'comparison' });
+
+    expect(resolved).toBe(stackblitzExample);
+    expect(serviceSpy.getExample).toHaveBeenCalledWith('comparison');
+  });
+
+  it('should keep both StackBlitz containers blank but sized when examples are null', () => {
+    const containers = fixture.nativeElement.querySelectorAll(
+      '.stackblitz-container'
+    );
+
+    expect(containers.length).toBe(2);
+    expect(containers[0].textContent.trim()).toBe('');
+    expect(containers[1].textContent.trim()).toBe('');
   });
 
   it('should render one comparison row per aligned file slot', () => {
@@ -247,7 +288,7 @@ describe('Component: FrameworkComparisonComponent', () => {
     fallbackFixture.componentRef.setInput('comparison', comparison);
     fallbackFixture.detectChanges();
 
-    expect(fallbackFixture.componentInstance.example()).toEqual(
+    expect(fallbackFixture.componentInstance.rightsideExample()).toEqual(
       {} as StackBlitzExampleShape
     );
     expect(fallbackFixture.componentInstance.lang()).toEqual(
@@ -260,6 +301,7 @@ describe('Component: FrameworkComparisonComponent', () => {
       id: 'comparison',
       title: 'Framework Comparison',
       displayCopyIcon: true,
+      display: true,
       exampleName: 'comparison',
       description: 'Compares framework integrations.',
       languages: [{ name: 'Vue', key: 'vue' }]
@@ -270,10 +312,18 @@ describe('Component: FrameworkComparisonComponent', () => {
     const fallbackFixture = TestBed.createComponent(
       FrameworkComparisonComponent
     );
-    fallbackFixture.componentRef.setInput('comparison', comparison);
+    fallbackFixture.componentRef.setInput('comparison', {
+      ...comparison,
+      right: {
+        ...comparison.right,
+        stackblitzExample: 'comparison'
+      }
+    });
     fallbackFixture.detectChanges();
 
-    expect(fallbackFixture.componentInstance.example()).toBe(stackblitzExample);
+    expect(fallbackFixture.componentInstance.rightsideExample()).toBe(
+      stackblitzExample
+    );
     expect(fallbackFixture.componentInstance.lang()).toEqual(
       {} as StackBlitzExampleLanguageShape
     );

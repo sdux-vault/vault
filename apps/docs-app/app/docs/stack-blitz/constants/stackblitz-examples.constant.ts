@@ -21,10 +21,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>replaceState</strong> — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -35,10 +35,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>resetState</strong> — the simplest way to reset a FeatureCell to an <span class="code">undefined</span> state. The entire previous state is discarded and replaced with undefined in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -49,10 +49,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>initialState</strong> — the descriptor-level seed value that populates a FeatureCell before any explicit replaceState() or mergeState() call. ${brandName} initializes the cell automatically so components receive state immediately on startup. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         }
       ] satisfies StackBlitzExampleShape[]
@@ -72,10 +72,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>error</strong> setting, resetting and handling. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -86,10 +86,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>hydrate()</strong> with a <strong>deferred factory</strong> that supplies the authoritative initial FeatureCell value when initialize() runs. ${brandName} processes the resolved value through the normal state pipeline. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -100,10 +100,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>replaceState</strong> with a <strong>deferred promise factory</strong> — ${brandName} handles asynchronous state updates via promises. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -114,10 +114,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>replaceState</strong> with an <strong>RxJS Observable</strong> — ${brandName} manages state through reactive stream patterns. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -127,7 +127,7 @@ export function createExampleGroups(brandName: string) {
           displayCopyIcon: true,
           display: true,
           description: `Demonstrates <strong>replaceState</strong> with Angular's <strong>httpResource</strong> — ${brandName} integrates HTTP requests directly into state management. Launch the example in StackBlitz.`,
-          languages: [{ name: 'Angular', key: 'angular' }]
+          languages: [{ name: 'Angular', key: 'angular', iconKey: 'angular' }]
         }
       ] satisfies StackBlitzExampleShape[]
     },
@@ -146,10 +146,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>mergeState</strong> with <strong>withArrayAppendMergeBehavior</strong> — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, growing the list without discarding previous entries. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -160,10 +160,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates <strong>mergeState</strong> with <strong>withArrayByIdMergeBehavior</strong> — ${brandName} compares incoming records by their <strong>id</strong>, updating matching entries, adding new records, and deleting records by ID when requested. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -174,10 +174,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates how ${brandName} processes state through a pipeline: input data flows through <strong>filters</strong> and <strong>reducers</strong> before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
@@ -188,10 +188,10 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates how ${brandName} processes state through a pipeline: input data flows through a delay interceptor before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         }
       ] satisfies StackBlitzExampleShape[]
@@ -211,34 +211,34 @@ export function createExampleGroups(brandName: string) {
           display: true,
           description: `Demonstrates the ${brandName} <strong>built-in debugger</strong> — a floating panel that captures pipeline execution traces. Record a session, trigger state changes, then export logs or generate an AI diagnostic report. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
-          title: 'Comparison',
+          title: 'Framework Comparison',
           id: 'comparison',
           exampleName: 'comparison-example',
           displayCopyIcon: true,
           display: true,
           description: `The example from the <a href="/developer">State library</a> comparison guide. The example includes filtering, reduction, replacement, async fetch, loading, error and reset operations. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'reactSDuX' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         },
         {
           title: 'Comparison of React and RTK',
           id: 'comparison-rtk',
-          exampleName: 'comparison-rtkexample',
+          exampleName: 'comparison-rtk-example',
           displayCopyIcon: true,
           display: false,
           description: `The example from the <a href="/developer">State library</a> comparison guide. The example includes filtering, reduction, replacement, async fetch, loading, error and reset operations. Choose your framework and launch the example directly in StackBlitz.`,
-          languages: [{ name: 'React', key: 'react' }]
+          languages: [{ name: 'React', key: 'react', iconKey: 'reactRTK' }]
         },
         {
           title: 'Tab Sync',
@@ -267,10 +267,10 @@ export function createExampleGroups(brandName: string) {
           `,
           description: `Demonstrates <strong>cross-tab state synchronization</strong> using the Tab Sync behavior and controller. State changes committed in one browser tab are automatically broadcast to all other tabs via BroadcastChannel. Open the example in two tabs to see state synchronize in real time. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
-            { name: 'Angular', key: 'angular' },
-            { name: 'React', key: 'react' },
-            { name: 'Svelte', key: 'svelte' },
-            { name: 'Vue', key: 'vue' }
+            { name: 'Angular', key: 'angular', iconKey: 'angular' },
+            { name: 'React', key: 'react', iconKey: 'react' },
+            { name: 'Svelte', key: 'svelte', iconKey: 'svelte' },
+            { name: 'Vue', key: 'vue', iconKey: 'vue' }
           ]
         }
       ] satisfies StackBlitzExampleShape[]

@@ -4,22 +4,6 @@ export const arrayByIdMergeExampleProject: Project = {
   title: 'vue-array-by-id-merge-example',
   template: 'node',
   files: {
-    'dist/assets/index-Bn85GRYb.css': `.example-container[data-v-093bd610]{display:flex;flex-direction:column;gap:.75rem;padding:1rem}.header[data-v-093bd610]{display:flex;flex-direction:column;gap:.25rem}.title[data-v-093bd610]{font-size:2rem;font-weight:600;letter-spacing:.3px}.subtitle[data-v-093bd610]{font-size:1rem;color:#666;max-width:600px}.section[data-v-093bd610]{padding:1rem}.section.column[data-v-093bd610]{border:1px solid rgba(0,0,0,.08);border-radius:8px;display:flex;gap:.75rem}@media(max-width:768px){.section.column[data-v-093bd610]{flex-direction:column}.section.column .state-container[data-v-093bd610]{width:100%}}.state-container[data-v-093bd610]{flex:1;display:flex;flex-direction:column;gap:.35rem;min-width:0}.state-container.data-row[data-v-093bd610]{height:430px}.textarea[data-v-093bd610],.data-textarea[data-v-093bd610]{width:100%;box-sizing:border-box;height:300px;padding:.5rem;border:1px solid rgba(0,0,0,.08);border-radius:6px;font-family:monospace;font-size:.8rem;background:#fafafa;color:#222}.data-textarea.error[data-v-093bd610]{color:#d33}.textarea[data-v-093bd610]{height:175px}.label[data-v-093bd610]{font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666}.flow-hint[data-v-093bd610]{margin-top:.25rem;font-size:1rem;letter-spacing:.3px;color:#666}.hint[data-v-093bd610]{font-size:1rem;color:#777;margin-top:-.15rem;margin-left:.5rem}.hint.file[data-v-093bd610]{min-height:16px;color:#999;font-family:monospace;font-size:.9rem}.hint.state[data-v-093bd610]{margin-top:.15rem}.emphasis[data-v-093bd610]{font-weight:600;color:#555}.actions[data-v-093bd610]{justify-content:flex-start;display:flex;align-items:center;gap:3rem}@media(max-width:768px){.actions[data-v-093bd610]{flex-direction:column;align-items:flex-start;gap:2rem}}.secondary-actions[data-v-093bd610]{display:flex;gap:2rem}@media(max-width:768px){.secondary-actions[data-v-093bd610]{gap:1.5rem;flex-direction:column;align-items:flex-start}}.status[data-v-093bd610]{height:300px;font-size:.85rem;color:#666;display:flex;align-items:center;justify-content:center}.learn-more[data-v-093bd610]{display:flex;flex-direction:column;gap:.35rem}.learn-more-links[data-v-093bd610]{display:flex;align-items:center;gap:.75rem;font-size:1rem}.learn-more-links a[data-v-093bd610]{color:#555;text-decoration:none}.learn-more-links a[data-v-093bd610]:hover{text-decoration:underline;color:#222}.learn-more-links .separator[data-v-093bd610]{color:#ccc}.example-container{padding:.25rem;display:flex;flex-direction:column;gap:.25rem}.sdux-button{height:40px;color:#fff;background-color:#1976d2;border:1px solid #004ba0;border-radius:.3125rem;font-size:.875rem;padding:.5rem;gap:.25rem;font-weight:600;min-width:125px;display:flex;flex-direction:row;justify-content:center;align-items:center;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sdux-button.warn{background-color:#d32f2f;border-color:#b71c1c}
-`,
-    'dist/index.html': `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>SDuX Vue Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="module" crossorigin src="/assets/index-DuUfMfZG.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Bn85GRYb.css">
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
-</html>
-`,
     'index.html': `<!doctype html>
 <html lang="en">
   <head>

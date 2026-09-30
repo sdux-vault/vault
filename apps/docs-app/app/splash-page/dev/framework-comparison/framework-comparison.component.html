@@ -34,6 +34,14 @@
             </li>
           </ul>
         </div>
+        <div class="stackblitz-container">
+          @if (comparison().left.stackblitzExample) {
+            <div>View it live on StackBlitz:</div>
+            <sdux-stackblitz-language-example
+              [example]="leftsideExample()"
+              [lang]="leftsideLang()" />
+          }
+        </div>
       </div>
     </header>
   </article>
@@ -82,10 +90,12 @@
           </ul>
         </div>
         <div class="stackblitz-container">
-          <div>View it live on StackBlitz:</div>
-          <sdux-stackblitz-language-example
-            [example]="example()"
-            [lang]="lang()" />
+          @if (comparison().right.stackblitzExample) {
+            <div>View it live on StackBlitz:</div>
+            <sdux-stackblitz-language-example
+              [example]="rightsideExample()"
+              [lang]="lang()" />
+          }
         </div>
       </div>
     </header>
