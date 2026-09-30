@@ -501,6 +501,16 @@
       "url": "/blog/chapter-6-feature-lifecycle-null-reset-destroy",
       "symbols": ["chapter-6-feature-lifecycle-null-reset-destroy"],
       "content": "Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy chapter-6-feature-lifecycle-null-reset-destroy SP"
+    },
+    {
+      "id": "blog:chapter-7-filters-and-reducers",
+      "title": "Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-7-filters-and-reducers",
+      "symbols": ["chapter-7-filters-and-reducers"],
+      "content": "Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline chapter-7-filters-and-reducers SP"
     }
   ]
 }
