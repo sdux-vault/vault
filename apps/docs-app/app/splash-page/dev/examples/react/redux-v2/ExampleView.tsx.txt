@@ -13,39 +13,44 @@ const sample: Employee[] = [
 ];
 
 export function ExampleView() {
-  const {
-    data = [],
-    error,
-    isFetching,
-    isLoading
-  } = useGetEmployeesState();
+  const snapshot = useGetEmployeesState();
+
+  const loadSample = () => {
+    replaceEmployees(sample);
+  };
+
+  const loadSampleAsync = () => {
+    replaceEmployeesAsync();
+  };
+
+  const resetState = () => {
+    resetEmployees();
+  };
 
   return (
     <div>
       <div>
-        {isLoading ? (
+        {snapshot.isLoading ? (
           <div>Loading...</div>
-        ) : error ? (
-          <div>{String(error)}</div>
+        ) : snapshot.error ? (
+          <div>{String(snapshot.error)}</div>
         ) : (
-          <textarea readOnly value={JSON.stringify(data, null, 2)} />
+          <textarea readOnly value={JSON.stringify(snapshot.data ?? [], null, 2)} />
         )}
       </div>
 
       <div>
-        <button type="button" onClick={() => replaceEmployees(sample)}>
+        <button type="button" onClick={loadSample}>
           Load Sample State
         </button>
 
-        <button type="button" onClick={replaceEmployeesAsync}>
+        <button type="button" onClick={loadSampleAsync}>
           Load Async State
         </button>
 
-        <button type="button" onClick={resetEmployees}>
+        <button type="button" onClick={resetState}>
           Reset State
         </button>
-
-        {isFetching && !isLoading ? <div>Loading...</div> : null}
       </div>
     </div>
   );
