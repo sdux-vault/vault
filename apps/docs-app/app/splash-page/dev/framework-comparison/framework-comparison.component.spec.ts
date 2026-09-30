@@ -169,7 +169,7 @@ describe('Component: FrameworkComparisonComponent', () => {
       displayCopyIcon: true,
       display: true,
       description: 'Compares framework integrations.',
-      languages: [{ name: 'Angular', key: 'angular' }]
+      languages: [{ name: 'Angular', key: 'angular', iconKey: 'angular' }]
     };
 
     spyOn(serviceSpy, 'getExample').and.returnValue(stackblitzExample);
@@ -304,7 +304,7 @@ describe('Component: FrameworkComparisonComponent', () => {
       display: true,
       exampleName: 'comparison',
       description: 'Compares framework integrations.',
-      languages: [{ name: 'Vue', key: 'vue' }]
+      languages: [{ name: 'Vue', key: 'vue', iconKey: 'vue' }]
     };
 
     spyOn(serviceSpy, 'getExample').and.returnValue(stackblitzExample);

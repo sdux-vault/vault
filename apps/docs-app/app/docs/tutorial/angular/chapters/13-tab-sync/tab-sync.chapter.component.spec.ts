@@ -31,10 +31,15 @@ describe('Component: TabSyncChapterComponent', () => {
           id: 'tab-sync-tutorial',
           exampleName: 'tab-sync-tutorial-example',
           displayCopyIcon: false,
-          languages: [{ name: 'Angular', key: 'angular' }],
+          display: true,
+          languages: [{ name: 'Angular', key: 'angular', iconKey: 'angular' }],
           description: jasmine.any(String) as unknown as string
         }),
-        language: Object({ name: 'Angular', key: 'angular' })
+        language: Object({
+          name: 'Angular',
+          key: 'angular',
+          iconKey: 'angular'
+        })
       })
     );
   });
