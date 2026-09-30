@@ -18,6 +18,7 @@ export function createExampleGroups(brandName: string) {
           id: 'replace-state',
           exampleName: 'replace-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>replaceState</strong> — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -31,6 +32,7 @@ export function createExampleGroups(brandName: string) {
           id: 'reset-state',
           exampleName: 'replace-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>resetState</strong> — the simplest way to reset a FeatureCell to an <span class="code">undefined</span> state. The entire previous state is discarded and replaced with undefined in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -44,6 +46,7 @@ export function createExampleGroups(brandName: string) {
           id: 'initial-state',
           exampleName: 'initial-state-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>initialState</strong> — the descriptor-level seed value that populates a FeatureCell before any explicit replaceState() or mergeState() call. ${brandName} initializes the cell automatically so components receive state immediately on startup. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -66,6 +69,7 @@ export function createExampleGroups(brandName: string) {
           id: 'basic-error',
           exampleName: 'replace-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>error</strong> setting, resetting and handling. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -79,6 +83,7 @@ export function createExampleGroups(brandName: string) {
           id: 'hydrate-state',
           exampleName: 'hydrate-state-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>hydrate()</strong> with a <strong>deferred factory</strong> that supplies the authoritative initial FeatureCell value when initialize() runs. ${brandName} processes the resolved value through the normal state pipeline. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -92,6 +97,7 @@ export function createExampleGroups(brandName: string) {
           id: 'promise',
           exampleName: 'promise-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>replaceState</strong> with a <strong>deferred promise factory</strong> — ${brandName} handles asynchronous state updates via promises. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -105,6 +111,7 @@ export function createExampleGroups(brandName: string) {
           id: 'observable',
           exampleName: 'observable-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>replaceState</strong> with an <strong>RxJS Observable</strong> — ${brandName} manages state through reactive stream patterns. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -118,6 +125,7 @@ export function createExampleGroups(brandName: string) {
           id: 'http-resource',
           exampleName: 'http-resource-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>replaceState</strong> with Angular's <strong>httpResource</strong> — ${brandName} integrates HTTP requests directly into state management. Launch the example in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         }
@@ -135,6 +143,7 @@ export function createExampleGroups(brandName: string) {
           id: 'array-append-merge',
           exampleName: 'array-append-merge-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>mergeState</strong> with <strong>withArrayAppendMergeBehavior</strong> — ${brandName} concatenates incoming arrays with existing FeatureCell state on every mergeState() call, growing the list without discarding previous entries. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -148,6 +157,7 @@ export function createExampleGroups(brandName: string) {
           id: 'array-by-id-merge',
           exampleName: 'array-by-id-merge-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates <strong>mergeState</strong> with <strong>withArrayByIdMergeBehavior</strong> — ${brandName} compares incoming records by their <strong>id</strong>, updating matching entries, adding new records, and deleting records by ID when requested. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -161,6 +171,7 @@ export function createExampleGroups(brandName: string) {
           id: 'basic-filter-reducer',
           exampleName: 'basic-filter-reducer-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates how ${brandName} processes state through a pipeline: input data flows through <strong>filters</strong> and <strong>reducers</strong> before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -174,6 +185,7 @@ export function createExampleGroups(brandName: string) {
           id: 'interceptor-delay',
           exampleName: 'interceptor-delay-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates how ${brandName} processes state through a pipeline: input data flows through a delay interceptor before becoming the final FeatureCell state. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -196,6 +208,7 @@ export function createExampleGroups(brandName: string) {
           id: 'debugger',
           exampleName: 'debugger-example',
           displayCopyIcon: true,
+          display: true,
           description: `Demonstrates the ${brandName} <strong>built-in debugger</strong> — a floating panel that captures pipeline execution traces. Record a session, trigger state changes, then export logs or generate an AI diagnostic report. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -209,6 +222,7 @@ export function createExampleGroups(brandName: string) {
           id: 'comparison',
           exampleName: 'comparison-example',
           displayCopyIcon: true,
+          display: true,
           description: `The example from the <a href="/developer">State library</a> comparison guide. The example includes filtering, reduction, replacement, async fetch, loading, error and reset operations. Choose your framework and launch the example directly in StackBlitz.`,
           languages: [
             { name: 'Angular', key: 'angular' },
@@ -218,10 +232,20 @@ export function createExampleGroups(brandName: string) {
           ]
         },
         {
+          title: 'Comparison of React and RTK',
+          id: 'comparison-rtk',
+          exampleName: 'comparison-rtkexample',
+          displayCopyIcon: true,
+          display: false,
+          description: `The example from the <a href="/developer">State library</a> comparison guide. The example includes filtering, reduction, replacement, async fetch, loading, error and reset operations. Choose your framework and launch the example directly in StackBlitz.`,
+          languages: [{ name: 'React', key: 'react' }]
+        },
+        {
           title: 'Tab Sync',
           id: 'tab-sync',
           exampleName: 'tab-sync-example',
           displayCopyIcon: true,
+          display: true,
           isVault: true,
           notice: `
             <p>

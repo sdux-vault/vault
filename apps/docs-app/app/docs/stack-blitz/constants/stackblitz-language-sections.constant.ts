@@ -1,6 +1,11 @@
+import type { StackBlitzLanguageExampleShape } from '../shapes/stackblitz-language-example.shape';
+import type { StackBlitzLanguageSectionShape } from '../shapes/stackblitz-language-section.shape';
+
 /** Language-specific example section definitions for specialty runtimes. */
-export function createLanguageSections(brandName: string) {
-  const sections = [
+export function createLanguageSections(
+  brandName: string
+): StackBlitzLanguageSectionShape[] {
+  const sections: StackBlitzLanguageSectionShape[] = [
     {
       heading: 'Bun',
       id: 'bun',
@@ -13,6 +18,7 @@ export function createLanguageSections(brandName: string) {
           id: 'bun-replace-state',
           exampleName: 'replace-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Bun examples are designed to run locally and are not available in
@@ -38,6 +44,7 @@ export function createLanguageSections(brandName: string) {
           id: 'bun-promise',
           exampleName: 'promise-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Bun examples are designed to run locally and are not available in
@@ -63,6 +70,7 @@ export function createLanguageSections(brandName: string) {
           id: 'bun-http-resource',
           exampleName: 'http-resource-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Bun examples are designed to run locally and are not available in
@@ -83,7 +91,7 @@ export function createLanguageSections(brandName: string) {
           description: `Demonstrates HTTP resource management with Bun — ${brandName} fetches remote API data and commits state deterministically through a local Bun server. A learning example for the SDuX pipeline model; not a production-hardened server. Run the example locally with Bun. Refer to the README file.`,
           languages: [{ name: 'Bun', key: 'bun' }]
         }
-      ]
+      ] satisfies StackBlitzLanguageExampleShape[]
     },
     {
       heading: 'Deno',
@@ -97,6 +105,7 @@ export function createLanguageSections(brandName: string) {
           id: 'deno-array-append',
           exampleName: 'array-append-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Deno examples are designed to run locally and are not available in
@@ -121,6 +130,7 @@ export function createLanguageSections(brandName: string) {
           id: 'deno-promise',
           exampleName: 'promise-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Deno examples are designed to run locally and are not available in
@@ -145,6 +155,7 @@ export function createLanguageSections(brandName: string) {
           id: 'deno-replace-state',
           exampleName: 'replace-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Deno examples are designed to run locally and are not available in
@@ -164,7 +175,7 @@ export function createLanguageSections(brandName: string) {
           description: `Demonstrates replaceState in Deno — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with awaited confirmation through state$ before the next operation proceeds. Native Deno TypeScript using npm specifiers, with no npm installation or separate TypeScript runner required. Run the example locally with Deno. Refer to the README file.`,
           languages: [{ name: 'Deno', key: 'deno' }]
         }
-      ]
+      ] satisfies StackBlitzLanguageExampleShape[]
     },
     {
       heading: 'VanillaJS',
@@ -178,6 +189,7 @@ export function createLanguageSections(brandName: string) {
           id: 'vanillajs-array-append',
           exampleName: 'array-append-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               VanillaJS examples are designed to run locally and are not available in
@@ -203,6 +215,7 @@ export function createLanguageSections(brandName: string) {
           id: 'vanillajs-promise',
           exampleName: 'promise-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               VanillaJS examples are designed to run locally and are not available in
@@ -228,6 +241,7 @@ export function createLanguageSections(brandName: string) {
           id: 'vanillajs-replace-state',
           exampleName: 'replace-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               VanillaJS examples are designed to run locally and are not available in
@@ -248,7 +262,7 @@ export function createLanguageSections(brandName: string) {
           description: `Demonstrates replaceState in plain JavaScript — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with no TypeScript or build step required. Run the example locally with Node.js. Refer to the README file.`,
           languages: [{ name: 'VanillaJS', key: 'vanillajs' }]
         }
-      ]
+      ] satisfies StackBlitzLanguageExampleShape[]
     },
     {
       heading: 'Node.js',
@@ -262,6 +276,7 @@ export function createLanguageSections(brandName: string) {
           id: 'nodejs-array-append',
           exampleName: 'array-append-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Node.js examples are designed to run locally and are not available in
@@ -287,6 +302,7 @@ export function createLanguageSections(brandName: string) {
           id: 'nodejs-promise',
           exampleName: 'promise-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Node.js examples are designed to run locally and are not available in
@@ -312,6 +328,7 @@ export function createLanguageSections(brandName: string) {
           id: 'nodejs-replace-state',
           exampleName: 'replace-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               Node.js examples are designed to run locally and are not available in
@@ -332,7 +349,7 @@ export function createLanguageSections(brandName: string) {
           description: `Demonstrates replaceState in Node.js — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with awaited confirmation via state$ before the next operation proceeds. Run the example locally with Node.js. Refer to the README file.`,
           languages: [{ name: 'Node.js', key: 'nodejs' }]
         }
-      ]
+      ] satisfies StackBlitzLanguageExampleShape[]
     },
     {
       heading: 'TypeScript',
@@ -346,6 +363,7 @@ export function createLanguageSections(brandName: string) {
           id: 'typescript-array-append',
           exampleName: 'array-append-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               TypeScript examples are designed to run locally and are not available in
@@ -371,6 +389,7 @@ export function createLanguageSections(brandName: string) {
           id: 'typescript-promise',
           exampleName: 'promise-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               TypeScript examples are designed to run locally and are not available in
@@ -396,6 +415,7 @@ export function createLanguageSections(brandName: string) {
           id: 'typescript-replace-state',
           exampleName: 'replace-example',
           localOnly: true,
+          display: true,
           notice: `
             <p>
               TypeScript examples are designed to run locally and are not available in
@@ -416,7 +436,7 @@ export function createLanguageSections(brandName: string) {
           description: `Demonstrates replaceState in plain TypeScript — ${brandName} atomically swaps the entire FeatureCell state in a single pipeline write, with awaited confirmation via state$ before the next operation proceeds. Runtime-neutral TypeScript that runs anywhere TypeScript runs. Refer to the README file.`,
           languages: [{ name: 'TypeScript', key: 'typescript' }]
         }
-      ]
+      ] satisfies StackBlitzLanguageExampleShape[]
     }
   ];
 

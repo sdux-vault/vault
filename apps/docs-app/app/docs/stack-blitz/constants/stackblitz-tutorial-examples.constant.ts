@@ -15,6 +15,7 @@ export function createTutorialExampleGroups() {
           id: 'display-character',
           exampleName: 'display-character-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Display Character</strong> tutorial example — a standalone component reads one selected record from FeatureCell state through a service boundary. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -23,6 +24,7 @@ export function createTutorialExampleGroups() {
           id: 'display-characters',
           exampleName: 'display-characters-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Display Characters</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user choose a record from a dropdown, and renders the selected details through a service boundary. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -31,6 +33,7 @@ export function createTutorialExampleGroups() {
           id: 'add-edit-characters',
           exampleName: 'add-edit-characters-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Add/Edit Characters</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user select a record, add a new character, and update an existing one through a service-owned SDuX boundary. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -39,6 +42,7 @@ export function createTutorialExampleGroups() {
           id: 'delete-characters',
           exampleName: 'delete-characters-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Delete Characters</strong> tutorial example — a standalone component reads a character collection from FeatureCell state, lets the user stage and confirm deletion of a selected record, and keeps the actual state update inside the same service-owned SDuX boundary used throughout the earlier tutorial flows. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -47,6 +51,7 @@ export function createTutorialExampleGroups() {
           id: 'lifecycle-tutorial',
           exampleName: 'lifecycle-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Lifecycle</strong> tutorial example — a standalone component keeps the same service-owned character collection, shows the difference between persisting <strong>null</strong> and calling <strong>reset()</strong>, and then finalizes the FeatureCell with <strong>destroy()</strong> without moving lifecycle control into the template. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -55,6 +60,7 @@ export function createTutorialExampleGroups() {
           id: 'filters-and-reducers-tutorial',
           exampleName: 'filters-and-reducers-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Filters and Reducers</strong> tutorial example — a standalone component keeps the same service-owned character collection, refines candidate State with a Filter after Resolve, then applies three Reducers to derive force-sensitive display labels, sort the collection by last name, and build full-name display values before the template renders them. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -63,6 +69,7 @@ export function createTutorialExampleGroups() {
           id: 'errors-tutorial',
           exampleName: 'errors-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Errors</strong> tutorial example — a standalone component keeps the same service-owned character collection, arms an intentional Filter-stage failure, observes the singleton global Vault error service, and displays the finalized <strong>errors()</strong> emission without moving error ownership into the template. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -71,6 +78,7 @@ export function createTutorialExampleGroups() {
           id: 'async-input-tutorial',
           exampleName: 'async-input-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Async Input</strong> tutorial example — a standalone component keeps the same service-owned character collection, hydrates initial State, and resolves Promise, Observable, and Angular HTTP Resource inputs through the service-owned FeatureCell pipeline while the template reflects loading and error State. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -79,6 +87,7 @@ export function createTutorialExampleGroups() {
           id: 'delay-tutorial',
           exampleName: 'delay-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Delay Controller</strong> tutorial example — a standalone component keeps the same service-owned character collection, configures a fixed execution pause, and makes the elapsed interval visible while every pipeline attempt continues unchanged after the delay. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -87,6 +96,7 @@ export function createTutorialExampleGroups() {
           id: 'encrypt-and-persist-tutorial',
           exampleName: 'encrypt-and-persist-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Encrypt and Persist</strong> tutorial example — a standalone component encrypts finalized FeatureCell state with AES-256-GCM, persists the encrypted envelope in tab-scoped session storage, and observes simulated Filter-stage failures through both the global error service and the fluent API <strong>errors()</strong> callback. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -95,6 +105,7 @@ export function createTutorialExampleGroups() {
           id: 'state-introspection-tutorial',
           exampleName: 'state-introspection-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>State Introspection</strong> tutorial example — a standalone component exposes raw StateSnapshot and StateSnapshot$ values, observes Before Taps and After Taps, renders finalized State Emission, and captures an Initial State baseline through a service-owned FeatureCell boundary. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -103,6 +114,7 @@ export function createTutorialExampleGroups() {
           id: 'tab-sync-tutorial',
           exampleName: 'tab-sync-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Tab Sync</strong> tutorial example — a standalone component registers the Tab Sync State behavior and controller, opens a second tab, and keeps finalized FeatureCell State values aligned while forms, selection, loading, errors, and other page interactions remain local. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -111,6 +123,7 @@ export function createTutorialExampleGroups() {
           id: 'distinct-until-changed-tutorial',
           exampleName: 'distinct-until-changed-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Distinct Until Changed</strong> tutorial example — a service registers a custom Operator-stage comparison that suppresses repeated character identities while allowing new identities to continue through the FeatureCell pipeline. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         },
@@ -119,6 +132,7 @@ export function createTutorialExampleGroups() {
           id: 'stepwise-tutorial',
           exampleName: 'stepwise-tutorial-example',
           displayCopyIcon: false,
+          display: true,
           description: `Demonstrates the completed <strong>Stepwise Pipeline</strong> tutorial example — a standalone component configures Resolve, Filter, and Reducer approval boundaries, displays each pending candidate, and lets you continue or block the pipeline through explicit decisions. Launch the live example directly in StackBlitz.`,
           languages: [{ name: 'Angular', key: 'angular' }]
         }
