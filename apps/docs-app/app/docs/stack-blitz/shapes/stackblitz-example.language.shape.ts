@@ -11,4 +11,9 @@ export interface StackBlitzExampleLanguageShape {
    * Provides the identifier used to select the example language.
    */
   key: string;
+
+  /**
+   * Provides the identifier used to resolve the language icon.
+   */
+  iconKey: string;
 }

@@ -1,10 +1,10 @@
 import {
-  employeeCell,
   replaceEmployees,
   replaceEmployeesAsync,
   resetEmployees
-} from './employee.cell';
-import { Employee } from './employee.model';
+} from './employee.actions';
+import { useGetEmployeesState } from './employee.api';
+import type { Employee } from './employee.model';
 
 const sample: Employee[] = [
   { id: 11, name: 'Luke' },
@@ -13,7 +13,7 @@ const sample: Employee[] = [
 ];
 
 export function ExampleView() {
-  const snapshot = employeeCell.useSyncExternalStore();
+  const snapshot = useGetEmployeesState();
 
   const loadSample = () => {
     replaceEmployees(sample);
@@ -35,7 +35,7 @@ export function ExampleView() {
         ) : snapshot.error ? (
           <div>{String(snapshot.error)}</div>
         ) : (
-          <textarea readOnly value={JSON.stringify(snapshot.value ?? [], null, 2)} />
+          <textarea readOnly value={JSON.stringify(snapshot.data ?? [], null, 2)} />
         )}
       </div>
 

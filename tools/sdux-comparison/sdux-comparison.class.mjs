@@ -48,6 +48,14 @@ const FRAMEWORK_FILE_ORDER = {
     ['employee.reducer.ts'],
     ['employee.selectors.ts']
   ],
+  'redux-v2': [
+    ['main.tsx'],
+    ['store.ts'],
+    ['ExampleView.tsx'],
+    ['employee.model.ts'],
+    ['employee.api.ts'],
+    ['employee.actions.ts']
+  ],
   sdux: [
     ['main.ts', 'main.tsx'],
     ['app.config.ts', 'App.svelte', 'App.vue'],
@@ -284,9 +292,13 @@ export const ${exportName} = ${JSON.stringify(files, null, 2)} as const satisfie
       const sduxGroup = comparisonGroups?.find(
         (group) => group.frameworkName?.toLowerCase() === 'sdux'
       );
-      const competitorGroup = comparisonGroups?.find(
-        (group) => group.frameworkName?.toLowerCase() !== 'sdux'
-      );
+      const competitorGroup =
+        comparisonGroups?.find(
+          (group) => group.frameworkName?.toLowerCase() === 'redux-v2'
+        ) ??
+        comparisonGroups?.find(
+          (group) => group.frameworkName?.toLowerCase() !== 'sdux'
+        );
       const sduxFiles = sduxGroup
         ? this.collectFiles(
             sduxGroup.sourceDirectory,
@@ -294,13 +306,16 @@ export const ${exportName} = ${JSON.stringify(files, null, 2)} as const satisfie
             sduxGroup.frameworkName
           )
         : [];
-      const competitorFiles = competitorGroup
-        ? this.collectFiles(
-            competitorGroup.sourceDirectory,
-            competitorGroup.sourceDirectory,
-            competitorGroup.frameworkName
-          )
-        : [];
+      const competitorFiles =
+        sourceGroup.frameworkName?.toLowerCase() === 'sdux'
+          ? competitorGroup
+            ? this.collectFiles(
+                competitorGroup.sourceDirectory,
+                competitorGroup.sourceDirectory,
+                competitorGroup.frameworkName
+              )
+            : []
+          : files;
       const metadata = this.createOutputMetadata(competitorFiles, sduxFiles);
       const generatedSource = this.generateSourceFile(
         sourceGroup.exportName,

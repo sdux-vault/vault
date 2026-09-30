@@ -4,9 +4,9 @@
  */
 export const REACT_REDUX_OUTPUT_METADATA = {
   competitorTotalLines: 216,
-  sduxTotalLines: 110,
-  lineDifference: 106,
-  percentageSavings: 49.07
+  sduxTotalLines: 113,
+  lineDifference: 103,
+  percentageSavings: 47.69
 } as const;
 
 export const REACT_REDUX_OUTPUT = [

@@ -45,6 +45,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/react/array-by-id-merge',
   '/examples/react/basic-filter-reducer',
   '/examples/react/comparison',
+  '/examples/react/comparison-rtk',
   '/examples/react/debugger',
   '/examples/react/hydrate-state',
   '/examples/react/initial-state',

@@ -15,9 +15,10 @@ describe('Service: StackblitzExampleService', () => {
     title: 'Replace State',
     id: 'replace-state',
     displayCopyIcon: true,
+    display: true,
     exampleName: 'replace-example',
     description: 'Replaces the complete FeatureCell state.',
-    languages: [{ name: 'Angular', key: 'angular' }]
+    languages: [{ name: 'Angular', key: 'angular', iconKey: 'angular' }]
   };
 
   beforeEach(async () => {
@@ -60,13 +61,14 @@ describe('Service: StackblitzExampleService', () => {
           'Demonstrates <strong>replaceState</strong> — the simplest way to update a FeatureCell. The entire previous state is discarded and replaced with the new value in a single atomic operation. Choose your framework and launch the example directly in StackBlitz.',
         title: 'Replace State',
         displayCopyIcon: true,
+        display: true,
         id: 'replace-state',
         exampleName: 'replace-example',
         languages: [
-          Object({ name: 'Angular', key: 'angular' }),
-          Object({ name: 'React', key: 'react' }),
-          Object({ name: 'Svelte', key: 'svelte' }),
-          Object({ name: 'Vue', key: 'vue' })
+          Object({ name: 'Angular', key: 'angular', iconKey: 'angular' }),
+          Object({ name: 'React', key: 'react', iconKey: 'react' }),
+          Object({ name: 'Svelte', key: 'svelte', iconKey: 'svelte' }),
+          Object({ name: 'Vue', key: 'vue', iconKey: 'vue' })
         ]
       })
     );

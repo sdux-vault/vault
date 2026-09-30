@@ -4,22 +4,6 @@ export const arrayByIdMergeExampleProject: Project = {
   title: 'react-array-by-id-merge-example',
   template: 'node',
   files: {
-    'dist/assets/index-BVqJXALc.css': `.header{flex-direction:column;gap:.25rem;display:flex}.title{letter-spacing:.3px;font-size:2rem;font-weight:600}.subtitle{color:#666;max-width:600px;font-size:1rem}.section{padding:1rem}.section.column{border:1px solid #00000014;border-radius:8px;gap:.75rem;display:flex}@media (width<=768px){.section.column{flex-direction:column}.section.column .state-container{width:100%}}.state-container{flex-direction:column;flex:1;gap:.35rem;min-width:0;display:flex}.state-container.data-row{height:430px}.textarea,.data-textarea{box-sizing:border-box;color:#222;background:#fafafa;border:1px solid #00000014;border-radius:6px;width:100%;height:300px;padding:.5rem;font-family:monospace;font-size:.8rem}.data-textarea.error{color:#d33}.textarea{height:175px}.label{text-transform:uppercase;letter-spacing:.5px;color:#666;font-size:1.1rem;font-weight:600}.flow-hint{letter-spacing:.3px;color:#666;margin-top:.25rem;font-size:1rem}.hint{color:#777;margin-top:-.15rem;margin-left:.5rem;font-size:1rem}.hint.file{color:#999;min-height:16px;font-family:monospace;font-size:.9rem}.hint.state{margin-top:.15rem}.emphasis{color:#555;font-weight:600}.actions{justify-content:flex-start;align-items:center;gap:3rem;display:flex}@media (width<=768px){.actions{flex-direction:column;align-items:flex-start;gap:2rem}}.secondary-actions{gap:2rem;display:flex}@media (width<=768px){.secondary-actions{flex-direction:column;align-items:flex-start;gap:1.5rem}}.status{color:#666;justify-content:center;align-items:center;height:300px;font-size:.85rem;display:flex}.learn-more{flex-direction:column;gap:.35rem;display:flex}.learn-more-links{align-items:center;gap:.75rem;font-size:1rem;display:flex}.learn-more-links a{color:#555;text-decoration:none}.learn-more-links a:hover{color:#222;text-decoration:underline}.learn-more-links .separator{color:#ccc}.example-container{flex-direction:column;gap:.25rem;padding:.25rem;display:flex}.sdux-button{color:#fff;cursor:pointer;white-space:nowrap;text-overflow:ellipsis;background-color:#1976d2;border:1px solid #004ba0;border-radius:.3125rem;flex-direction:row;justify-content:center;align-items:center;gap:.25rem;min-width:125px;height:40px;padding:.5rem;font-size:.875rem;font-weight:600;display:flex;overflow:hidden}
-`,
-    'dist/index.html': `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>SDuX React Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="module" crossorigin src="/assets/index-DVVxSDDC.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BVqJXALc.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
-`,
     'index.html': `<!doctype html>
 <html lang="en">
   <head>

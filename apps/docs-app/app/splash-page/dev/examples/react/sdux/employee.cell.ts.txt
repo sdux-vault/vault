@@ -12,8 +12,7 @@ export const employeeCell = FeatureCell<Employee[]>({
 
 employeeCell
   .filters([
-    (examples: Employee[]) =>
-      examples.filter((example) => example.id % 2 !== 0)
+    (examples: Employee[]) => examples.filter((example) => example.id % 2 !== 0)
   ])
   .reducers([
     (examples: Employee[]) => {

@@ -7,9 +7,9 @@ import {
   ANGULAR_SDUX_OUTPUT_METADATA
 } from '../examples/angular/sdux/sdux-output';
 import {
-  REACT_REDUX_OUTPUT,
-  REACT_REDUX_OUTPUT_METADATA
-} from '../examples/react/redux/redux-output';
+  REACT_REDUX_V2_OUTPUT,
+  REACT_REDUX_V2_OUTPUT_METADATA
+} from '../examples/react/redux-v2/redux-v2-output';
 import {
   REACT_SDUX_OUTPUT,
   REACT_SDUX_OUTPUT_METADATA
@@ -45,12 +45,14 @@ export const FrameworkComparisonRegistryConstant: Record<
     left: {
       frameworkLabel: 'Angular',
       libraryLabel: 'Redux',
+      stackblitzExample: null,
       files: ANGULAR_REDUX_OUTPUT,
       metadata: ANGULAR_REDUX_OUTPUT_METADATA
     },
     right: {
       frameworkLabel: 'Angular',
       libraryLabel: 'SDuX',
+      stackblitzExample: 'comparison',
       usesSduxBrandName: true,
       files: ANGULAR_SDUX_OUTPUT,
       metadata: ANGULAR_SDUX_OUTPUT_METADATA
@@ -63,13 +65,15 @@ export const FrameworkComparisonRegistryConstant: Record<
     displayCeremony: true,
     left: {
       frameworkLabel: 'React',
-      libraryLabel: 'Redux',
-      files: REACT_REDUX_OUTPUT,
-      metadata: REACT_REDUX_OUTPUT_METADATA
+      libraryLabel: 'RTK Query',
+      stackblitzExample: 'comparison-rtk',
+      files: REACT_REDUX_V2_OUTPUT,
+      metadata: REACT_REDUX_V2_OUTPUT_METADATA
     },
     right: {
       frameworkLabel: 'React',
       libraryLabel: 'SDuX',
+      stackblitzExample: 'comparison',
       usesSduxBrandName: true,
       files: REACT_SDUX_OUTPUT,
       metadata: REACT_SDUX_OUTPUT_METADATA
@@ -83,12 +87,14 @@ export const FrameworkComparisonRegistryConstant: Record<
     left: {
       frameworkLabel: 'Svelte',
       libraryLabel: 'Stores',
+      stackblitzExample: null,
       files: SVELTE_STORES_OUTPUT,
       metadata: SVELTE_STORES_OUTPUT_METADATA
     },
     right: {
       frameworkLabel: 'Svelte',
       libraryLabel: 'SDuX',
+      stackblitzExample: 'comparison',
       usesSduxBrandName: true,
       files: SVELTE_SDUX_OUTPUT,
       metadata: SVELTE_SDUX_OUTPUT_METADATA
@@ -102,12 +108,14 @@ export const FrameworkComparisonRegistryConstant: Record<
     left: {
       frameworkLabel: 'Vue',
       libraryLabel: 'Pinia',
+      stackblitzExample: null,
       files: VUE_PINIA_OUTPUT,
       metadata: VUE_PINIA_OUTPUT_METADATA
     },
     right: {
       frameworkLabel: 'Vue',
       libraryLabel: 'SDuX',
+      stackblitzExample: 'comparison',
       usesSduxBrandName: true,
       files: VUE_SDUX_OUTPUT,
       metadata: VUE_SDUX_OUTPUT_METADATA

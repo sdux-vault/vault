@@ -37,18 +37,39 @@ export class FrameworkComparisonComponent {
 
   readonly #stackblitzService = inject(StackblitzExampleService);
 
-  readonly example = computed<StackBlitzExampleShape>(
+  readonly leftsideExample = computed(() =>
+    this.getStackblitzExample(this.comparison().left)
+  );
+
+  readonly rightsideExample = computed(() =>
+    this.getStackblitzExample(this.comparison().right)
+  );
+
+  readonly leftsideLang = computed<StackBlitzExampleLanguageShape>(
     () =>
-      this.#stackblitzService.getExample('comparison') ??
-      ({} as StackBlitzExampleShape)
+      this.leftsideExample()?.languages?.find(
+        (lang) => lang.key === this.comparison()?.id
+      ) ?? ({} as StackBlitzExampleLanguageShape)
   );
 
   readonly lang = computed<StackBlitzExampleLanguageShape>(
     () =>
-      this.example()?.languages?.find(
+      this.rightsideExample()?.languages?.find(
         (lang) => lang.key === this.comparison()?.id
       ) ?? ({} as StackBlitzExampleLanguageShape)
   );
+
+  protected getStackblitzExample(
+    implementation: FrameworkComparisonImplementationShape
+  ): StackBlitzExampleShape {
+    const stackblitzExample = implementation.stackblitzExample;
+
+    return (
+      (stackblitzExample
+        ? this.#stackblitzService.getExample(stackblitzExample)
+        : undefined) ?? ({} as StackBlitzExampleShape)
+    );
+  }
 
   constructor() {
     effect(() => {

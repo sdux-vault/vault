@@ -48,4 +48,9 @@ export interface StackBlitzExampleShape {
    * Indicates whether the example should have the copy icon displayed.
    */
   displayCopyIcon: boolean;
+
+  /**
+   * Indicates whether the example should be displayed on the StackBlitz examples page.
+   */
+  display: boolean;
 }

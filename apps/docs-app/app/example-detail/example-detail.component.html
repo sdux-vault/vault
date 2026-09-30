@@ -69,7 +69,7 @@
             <div class="other-framework-links">
               @for (lang of otherLanguages(); track lang.key) {
                 <a [routerLink]="'/examples/' + lang.key + '/' + exampleId()">
-                  <img [src]="frameworkIcons[lang.key]" [alt]="lang.name" />
+                  <img [src]="frameworkIcons[lang.iconKey]" [alt]="lang.name" />
                   {{ lang.name }}
                 </a>
               }

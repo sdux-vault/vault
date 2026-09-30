@@ -1,15 +1,15 @@
 import { Project } from '@stackblitz/sdk';
 
-export const comparisonExampleProject: Project = {
-  title: 'react-comparison-example',
+export const comparisonRtkExampleProject: Project = {
+  title: 'react-redux-v2-example',
   template: 'node',
   files: {
     'index.html': `<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>SDuX React Comparison Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React RTK Query Example</title>
   </head>
   <body>
     <div id="root"></div>
@@ -18,7 +18,7 @@ export const comparisonExampleProject: Project = {
 </html>
 `,
     'package.json': `{
-  "name": "react-comparison-example",
+  "name": "react-redux-v2-example",
   "version": "2.0.0",
   "private": true,
   "type": "module",
@@ -29,10 +29,10 @@ export const comparisonExampleProject: Project = {
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sdux-vault/react": "latest",
+    "@reduxjs/toolkit": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "rxjs": "~7.8.0"
+    "react-redux": "latest"
   },
   "devDependencies": {
     "@types/react": "^19.1.2",
@@ -43,83 +43,76 @@ export const comparisonExampleProject: Project = {
   }
 }
 `,
-    'src/employee.cell.ts': `import { FeatureCell, Vault } from '@sdux-vault/react';
-import { Employee } from './employee.model';
-
-Vault({
-  logLevel: 'off'
-});
+    'src/employee.actions.ts': `import { employeeApi, prepareEmployees } from './employee.api';
+import type { Employee } from './employee.model';
+import { store } from './store';
 
 /**
- * Holds employee state and exposes the fluent pipeline used by this example.
- * The filter removes even identifiers, and the reducer sorts the remaining
- * records by name before the cell publishes the processed array.
+ * Replaces the cached collection after applying the same filter and sort transformation used by the remote response.
  *
- * ⚠️ Architectural Boundary:
- * State updates are routed through the exported functions below so consumers
- * use the configured cell rather than mutating state directly.
- */
-export const employeeCell = FeatureCell<Employee[]>({
-  key: 'employees',
-  initialState: []
-});
-
-employeeCell
-  .filters([
-    (examples: Employee[]) => examples.filter((example) => example.id % 2 !== 0)
-  ])
-  .reducers([
-    (examples: Employee[]) => {
-      examples.sort((left, right) => left.name.localeCompare(right.name));
-      return examples;
-    }
-  ])
-  .initialize();
-
-/**
- * Replaces the current employee state and sends it through the pipeline.
- *
- * @param employees - Records to filter, sort, and publish as state.
- * @returns Nothing; consumers observe the result through the FeatureCell snapshot.
+ * @param employees Records to transform and place in the employee query cache.
+ * @returns Nothing; subscribed query state updates from the cache write.
  */
 export function replaceEmployees(employees: Employee[]): void {
-  employeeCell.replaceState({
-    value: employees
-  });
+  store.dispatch(
+    employeeApi.util.upsertQueryData(
+      'getEmployees',
+      undefined,
+      prepareEmployees(employees)
+    )
+  );
 }
 
 /**
- * Starts an asynchronous employee-state update from the example API.
+ * Starts a fresh employee request through the RTK Query endpoint.
  *
- * @returns Nothing; the snapshot reports loading, success, or error state.
+ * @returns Nothing; the subscribed query state reports the request lifecycle.
  */
 export function replaceEmployeesAsync(): void {
-  employeeCell.replaceState({
-    value: () =>
-      fetch('https://jsonplaceholder.typicode.com/users').then((response) =>
-        response.json()
-      )
-  });
+  void store.dispatch(
+    employeeApi.endpoints.getEmployees.initiate(undefined, {
+      forceRefetch: true,
+      subscribe: false
+    })
+  );
 }
 
 /**
- * Restores the FeatureCell's configured empty-array state.
+ * Clears the employee query cache so the view returns to its initial state.
  *
- * @returns Nothing; consumers observe the reset through the cell snapshot.
+ * @returns Nothing; subscribed query state updates after the cache reset.
  */
 export function resetEmployees(): void {
-  employeeCell.reset();
+  store.dispatch(employeeApi.util.resetApiState());
 }
 `,
-    'src/employee.model.ts': `/**
- * Describes the employee records stored in the FeatureCell array. The pipeline
- * uses the identifier for filtering and the name for alphabetical sorting.
- */
-export interface Employee {
-  /** Identifies the employee and determines whether the filter keeps it. */
-  id: number;
+    'src/employee.api.ts': `import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { Employee } from './employee.model';
 
-  /** Supplies the employee name used by the sorting reducer. */
+export const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return employees
+    .filter((employee) => employee.id % 2 !== 0)
+    .sort((left, right) => left.name.localeCompare(right.name));
+};
+
+export const employeeApi = createApi({
+  reducerPath: 'employeeApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://jsonplaceholder.typicode.com'
+  }),
+  endpoints: (build) => ({
+    getEmployees: build.query<Employee[], void>({
+      query: () => 'users',
+      transformResponse: prepareEmployees
+    })
+  })
+});
+
+export const useGetEmployeesState =
+  employeeApi.endpoints.getEmployees.useQueryState;
+`,
+    'src/employee.model.ts': `export interface Employee {
+  id: number;
   name: string;
 }
 `,
@@ -185,54 +178,36 @@ export interface Employee {
 }
 `,
     'src/ExampleView.tsx': `import {
-  employeeCell,
   replaceEmployees,
   replaceEmployeesAsync,
   resetEmployees
-} from './employee.cell';
-import { Employee } from './employee.model';
+} from './employee.actions';
+import { useGetEmployeesState } from './employee.api';
+import type { Employee } from './employee.model';
 import './ExampleView.css';
 
-/** Records used to demonstrate filtering and alphabetical reduction. */
+/** Supplies records for the synchronous replacement path so the query cache can demonstrate its transformation pipeline. */
 const sample: Employee[] = [
   { id: 11, name: 'Luke' },
   { id: 38, name: 'Leia' },
   { id: 9, name: 'Han' }
 ];
 
-/**
- * Renders the employee snapshot and provides controls for the three state
- * transitions demonstrated by the example: replacement, async loading, and reset.
- *
- * @returns The interactive React view for the comparison example.
- */
+/** Renders the query state and exposes the three state transitions demonstrated by this comparison example. */
 export function ExampleView() {
-  /** Reactive snapshot exposed by the FeatureCell's external-store hook. */
-  const snapshot = employeeCell.useSyncExternalStore();
+  const snapshot = useGetEmployeesState();
 
-  /**
-   * Sends the sample records through the configured filter and reducer stages.
-   *
-   * @returns Nothing; the subscribed snapshot updates after the state change.
-   */
+  /** Sends the sample records through the filtering and sorting transformation before displaying them. */
   const loadSample = () => {
     replaceEmployees(sample);
   };
 
-  /**
-   * Requests employee data through the asynchronous FeatureCell update.
-   *
-   * @returns Nothing; the snapshot reflects loading and settlement state.
-   */
+  /** Starts the remote request and lets the query state expose loading, success, or error results. */
   const loadSampleAsync = () => {
     replaceEmployeesAsync();
   };
 
-  /**
-   * Restores the FeatureCell to its initial empty-array state.
-   *
-   * @returns Nothing; the subscribed snapshot reflects the reset.
-   */
+  /** Clears the query cache and returns the displayed collection to its initial state. */
   const resetState = () => {
     resetEmployees();
   };
@@ -259,7 +234,7 @@ export function ExampleView() {
           <textarea
             className="textarea"
             readOnly
-            value={JSON.stringify(snapshot.value ?? [], null, 2)}
+            value={JSON.stringify(snapshot.data ?? [], null, 2)}
           />
         )}
       </div>
@@ -282,14 +257,34 @@ export function ExampleView() {
 `,
     'src/main.tsx': `import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { ExampleView } from './ExampleView';
+import { store } from './store';
 import './styles.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ExampleView />
+    <Provider store={store}>
+      <ExampleView />
+    </Provider>
   </StrictMode>
 );
+`,
+    'src/store.ts': `import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { employeeApi } from './employee.api';
+
+export const store = configureStore({
+  reducer: {
+    [employeeApi.reducerPath]: employeeApi.reducer
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(employeeApi.middleware)
+});
+
+setupListeners(store.dispatch);
+
+export type AppDispatch = typeof store.dispatch;
 `,
     'src/styles.css': `body {
   margin: 0;

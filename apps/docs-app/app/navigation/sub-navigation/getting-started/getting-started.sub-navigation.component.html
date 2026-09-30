@@ -19,6 +19,14 @@
 
       <a
         mat-list-item
+        routerLink="/framework-comparison"
+        routerLinkActive="active"
+        (click)="closeSidenav()">
+        <div class="menu-content sub-item">Framework Comparison</div>
+      </a>
+
+      <a
+        mat-list-item
         routerLink="/welcome/core-concepts"
         routerLinkActive="active"
         (click)="closeSidenav()">

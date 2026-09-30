@@ -14,7 +14,7 @@
           ' — see instructions below.'
         ">
         <img
-          [src]="getFrameworkIcon(lang().key)"
+          [src]="getFrameworkIcon(lang().iconKey)"
           [alt]="lang().name"
           class="framework-icon" />
       </div>
@@ -26,7 +26,7 @@
         [matTooltip]="'Launch ' + example().title + ' in ' + lang().name"
         (click)="launchStackblitzExample(example(), lang().key)">
         <img
-          [src]="getFrameworkIcon(lang().key)"
+          [src]="getFrameworkIcon(lang().iconKey)"
           [alt]="lang().name"
           class="framework-icon" />
         <mat-icon class="launch-overlay-icon">open_in_new</mat-icon>

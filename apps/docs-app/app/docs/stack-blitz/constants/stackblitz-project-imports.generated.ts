@@ -45,6 +45,7 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
   'react/array-by-id-merge-example': () => import('../../../stackblitz/projects/react/array-by-id-merge-example.project'),
   'react/basic-filter-reducer-example': () => import('../../../stackblitz/projects/react/basic-filter-reducer-example.project'),
   'react/comparison-example': () => import('../../../stackblitz/projects/react/comparison-example.project'),
+  'react/comparison-rtk-example': () => import('../../../stackblitz/projects/react/comparison-rtk-example.project'),
   'react/debugger-example': () => import('../../../stackblitz/projects/react/debugger-example.project'),
   'react/hydrate-state-example': () => import('../../../stackblitz/projects/react/hydrate-state-example.project'),
   'react/initial-state-example': () => import('../../../stackblitz/projects/react/initial-state-example.project'),

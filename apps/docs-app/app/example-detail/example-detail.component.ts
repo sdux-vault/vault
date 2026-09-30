@@ -7,6 +7,8 @@ import StackBlitz from '@stackblitz/sdk';
 import { PipelineRelatedTopicComponent } from '../docs/related-topic/related-topic.component';
 import { createExampleGroups } from '../docs/stack-blitz/constants/stackblitz-examples.constant';
 import { STACKBLITZ_PROJECT_IMPORTS } from '../docs/stack-blitz/constants/stackblitz-project-imports.generated';
+import type { StackBlitzExampleShape } from '../docs/stack-blitz/shapes/stackblitz-example.shape';
+import type { StackBlitzGroupShape } from '../docs/stack-blitz/shapes/stackblitz-group.shape';
 
 /**
  * Detail page for a single StackBlitz example scoped to one framework.
@@ -44,16 +46,8 @@ export class ExampleDetailComponent {
 
   readonly language = signal('');
   readonly exampleId = signal('');
-  readonly example = signal<{
-    title: string;
-    id: string;
-    exampleName: string;
-    description: string;
-    languages: { name: string; key: string }[];
-    isVault?: boolean;
-    notice?: string;
-  } | null>(null);
-  readonly group = signal<{ heading: string; id: string } | null>(null);
+  readonly example = signal<StackBlitzExampleShape | null>(null);
+  readonly group = signal<StackBlitzGroupShape | null>(null);
   readonly notFound = signal(false);
   readonly copySuccess = signal(false);
 
@@ -73,14 +67,10 @@ export class ExampleDetailComponent {
     for (const grp of groups) {
       for (const ex of grp.examples) {
         if (ex.id === id) {
-          const hasLanguage = (
-            ex as { languages: { key: string }[] }
-          ).languages.some((l: { key: string }) => l.key === language);
+          const hasLanguage = ex.languages.some((l) => l.key === language);
           if (hasLanguage) {
-            this.example.set(
-              ex as typeof this.example extends () => infer T ? T : never
-            );
-            this.group.set({ heading: grp.heading, id: grp.id });
+            this.example.set(ex);
+            this.group.set(grp);
             this.notFound.set(false);
             return;
           }
@@ -121,7 +111,7 @@ export class ExampleDetailComponent {
     setTimeout(() => this.copySuccess.set(false), 2000);
   }
 
-  otherLanguages(): { name: string; key: string }[] {
+  otherLanguages(): StackBlitzExampleShape['languages'] {
     const ex = this.example();
     const lang = this.language();
     if (!ex) return [];
