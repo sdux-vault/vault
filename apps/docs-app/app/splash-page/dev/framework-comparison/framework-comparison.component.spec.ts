@@ -186,6 +186,30 @@ describe('Component: FrameworkComparisonComponent', () => {
     expect(serviceSpy.getExample).toHaveBeenCalledWith('comparison');
   });
 
+  it('should resolve the left-side language and fall back when it is unavailable', () => {
+    expect(fixture.componentInstance.leftsideLang()).toEqual(
+      {} as StackBlitzExampleLanguageShape
+    );
+
+    const stackblitzExample: StackBlitzExampleShape = {
+      id: 'comparison-rtk',
+      title: 'Framework Comparison',
+      exampleName: 'comparison-rtk-example',
+      displayCopyIcon: true,
+      display: true,
+      description: 'Compares framework integrations.',
+      languages: [{ name: 'React', key: 'react', iconKey: 'react' }]
+    };
+
+    spyOn(serviceSpy, 'getExample').and.returnValue(stackblitzExample);
+    fixture.componentRef.setInput('comparison', reactComparison);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.leftsideLang()).toEqual(
+      stackblitzExample.languages[0]
+    );
+  });
+
   it('should keep both StackBlitz containers blank but sized when examples are null', () => {
     const containers = fixture.nativeElement.querySelectorAll(
       '.stackblitz-container'
