@@ -1,0 +1,52 @@
+import {
+  replaceEmployees,
+  replaceEmployeesAsync,
+  resetEmployees
+} from './employee.actions';
+import { useGetEmployeesState } from './employee.api';
+import type { Employee } from './employee.model';
+
+const sample: Employee[] = [
+  { id: 11, name: 'Luke' },
+  { id: 38, name: 'Leia' },
+  { id: 9, name: 'Han' }
+];
+
+export function ExampleView() {
+  const {
+    data = [],
+    error,
+    isFetching,
+    isLoading
+  } = useGetEmployeesState();
+
+  return (
+    <div>
+      <div>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>{String(error)}</div>
+        ) : (
+          <textarea readOnly value={JSON.stringify(data, null, 2)} />
+        )}
+      </div>
+
+      <div>
+        <button type="button" onClick={() => replaceEmployees(sample)}>
+          Load Sample State
+        </button>
+
+        <button type="button" onClick={replaceEmployeesAsync}>
+          Load Async State
+        </button>
+
+        <button type="button" onClick={resetEmployees}>
+          Reset State
+        </button>
+
+        {isFetching && !isLoading ? <div>Loading...</div> : null}
+      </div>
+    </div>
+  );
+}

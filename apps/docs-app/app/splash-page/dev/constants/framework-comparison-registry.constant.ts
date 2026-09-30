@@ -7,9 +7,9 @@ import {
   ANGULAR_SDUX_OUTPUT_METADATA
 } from '../examples/angular/sdux/sdux-output';
 import {
-  REACT_REDUX_OUTPUT,
-  REACT_REDUX_OUTPUT_METADATA
-} from '../examples/react/redux/redux-output';
+  REACT_REDUX_V2_OUTPUT,
+  REACT_REDUX_V2_OUTPUT_METADATA
+} from '../examples/react/redux-v2/redux-v2-output';
 import {
   REACT_SDUX_OUTPUT,
   REACT_SDUX_OUTPUT_METADATA
@@ -63,9 +63,9 @@ export const FrameworkComparisonRegistryConstant: Record<
     displayCeremony: true,
     left: {
       frameworkLabel: 'React',
-      libraryLabel: 'Redux',
-      files: REACT_REDUX_OUTPUT,
-      metadata: REACT_REDUX_OUTPUT_METADATA
+      libraryLabel: 'RTK Query',
+      files: REACT_REDUX_V2_OUTPUT,
+      metadata: REACT_REDUX_V2_OUTPUT_METADATA
     },
     right: {
       frameworkLabel: 'React',

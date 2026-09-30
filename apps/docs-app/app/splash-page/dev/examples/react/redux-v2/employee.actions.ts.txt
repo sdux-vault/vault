@@ -1,0 +1,26 @@
+import { employeeApi, prepareEmployees } from './employee.api';
+import type { Employee } from './employee.model';
+import { store } from './store';
+
+export function replaceEmployees(employees: Employee[]): void {
+  store.dispatch(
+    employeeApi.util.upsertQueryData(
+      'getEmployees',
+      undefined,
+      prepareEmployees(employees)
+    )
+  );
+}
+
+export function replaceEmployeesAsync(): void {
+  void store.dispatch(
+    employeeApi.endpoints.getEmployees.initiate(undefined, {
+      forceRefetch: true,
+      subscribe: false
+    })
+  );
+}
+
+export function resetEmployees(): void {
+  store.dispatch(employeeApi.util.resetApiState());
+}
