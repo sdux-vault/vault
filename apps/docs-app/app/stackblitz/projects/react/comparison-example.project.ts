@@ -291,32 +291,9 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>
 );
 `,
-    'src/styles.css': `.example-container {
-  padding: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.sdux-button {
-  height: 40px;
-  color: #ffffff;
-  background-color: #1976d2;
-  border: 1px solid #004ba0;
-  border-radius: 0.3125rem;
-  font-size: 0.875rem;
-  padding: 0.5rem;
-  gap: 0.25rem;
-  font-weight: 600;
-  min-width: 125px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    'src/styles.css': `body {
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 `,
     'tsconfig.json': `{
