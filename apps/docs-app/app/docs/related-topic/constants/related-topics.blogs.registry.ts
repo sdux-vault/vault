@@ -401,6 +401,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 7 — Filters and Reducers — SDuX Blog',
       description:
         'Learn how pure filters and ordered reducers produce one immutable, display-ready collection before the component renders it.'
+    },
+    {
+      link: '/blog/chapter-8-observe-pipeline-failures',
+      display:
+        'Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control',
+      title: 'Chapter 8 — Pipeline Failures and Error Observation — SDuX Blog',
+      description:
+        'Learn how a Chapter 7 lab checkpoint observes finalized pipeline errors, separates acknowledgement from recovery, and restores CRUD safely.'
     }
   ]
 };

@@ -84,6 +84,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-8-observe-pipeline-failures</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/circuit-breaker-state-pipeline</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>

@@ -497,6 +497,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-09-29-chapter-7-filters-and-reducers/chapter-7-filters-and-reducers.component').then(
         (m) => m.BlogChapter7FiltersAndReducersComponent
       )
+  },
+  {
+    path: 'chapter-8-observe-pipeline-failures',
+    data: {
+      category: 'blogs',
+      type: 'chapter-8-observe-pipeline-failures'
+    },
+    loadComponent: () =>
+      import('./posts/2026-10-01-chapter-8-observe-pipeline-failures/chapter-8-observe-pipeline-failures.component').then(
+        (m) => m.BlogChapter8ObservePipelineFailuresComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

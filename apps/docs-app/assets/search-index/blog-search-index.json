@@ -511,6 +511,16 @@
       "url": "/blog/chapter-7-filters-and-reducers",
       "symbols": ["chapter-7-filters-and-reducers"],
       "content": "Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline chapter-7-filters-and-reducers SP"
+    },
+    {
+      "id": "blog:chapter-8-observe-pipeline-failures",
+      "title": "Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-8-observe-pipeline-failures",
+      "symbols": ["chapter-8-observe-pipeline-failures"],
+      "content": "Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control chapter-8-observe-pipeline-failures SP"
     }
   ]
 }
