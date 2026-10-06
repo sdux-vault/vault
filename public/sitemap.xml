@@ -31,7 +31,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/add-edit-records-without-mixing-editor-state</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -73,7 +73,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/chapter-6-feature-lifecycle-null-reset-destroy</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -85,7 +85,13 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/chapter-8-observe-pipeline-failures</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-9-route-async-inputs-through-one-service-owned-pipeline</loc>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -145,6 +151,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/keep-selection-local-with-shared-feature-state</loc>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -233,7 +240,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/route-destructive-delete-through-the-service-owned-boundary</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

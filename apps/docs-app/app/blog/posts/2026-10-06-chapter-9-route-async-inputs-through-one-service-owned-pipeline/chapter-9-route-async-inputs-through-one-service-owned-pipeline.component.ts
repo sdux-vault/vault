@@ -155,14 +155,17 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <p>
             This is why the lab keeps the Resolve and Reject buttons separate
             from the service. The component decides when to settle the teaching
-            helper, but the FeatureCell owns initialization, loading, error
-            handling, and the eventual State snapshot.
+            helper, but the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            owns initialization, loading, error handling, and the eventual State
+            snapshot.
           </p>
           <div class="callout callout-info">
             <p>
               <strong>What to observe:</strong> Reload the example and leave
               hydration pending. The loading indicator remains active until you
-              choose Resolve or Reject. That interval belongs to the FeatureCell
+              choose Resolve or Reject. That interval belongs to the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
               lifecycle, not to a second loading flag invented by the component.
             </p>
           </div>
@@ -214,9 +217,11 @@ characterCell.mergeState(&#123;
           </sdux-multi-framework-example>
           <p>
             The request shape is intentionally small. The service passes the
-            deferred source to the FeatureCell; the pipeline owns waiting,
-            transformation, error handling, and commitment. A rejected Promise
-            does not erase the last committed collection.
+            deferred source to the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>;
+            the pipeline owns waiting, transformation, error handling, and
+            commitment. A rejected Promise does not erase the last committed
+            collection.
           </p>
           <h3 class="fake-h4">Observable: resolve one emitted value</h3>
           <p>
@@ -255,13 +260,14 @@ characterCell.mergeState(characters$);</code></pre>
             </ng-template>
           </sdux-multi-framework-example>
           <p>
-            The Observable source is submitted to the FeatureCell just like the
-            Promise source, but Resolve handles the Observable subscription and
-            forwards its single emitted value. The existing filter, reducers,
-            and array-append merge then process that value. In the lab, Emit
-            appends Ezra and Hera after R2-D2 is filtered out; Error preserves
-            the previously committed collection while the pipeline error
-            lifecycle completes.
+            The Observable source is submitted to the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            just like the Promise source, but Resolve handles the Observable
+            subscription and forwards its single emitted value. The existing
+            filter, reducers, and array-append merge then process that value. In
+            the lab, Emit appends Ezra and Hera after R2-D2 is filtered out;
+            Error preserves the previously committed collection while the
+            pipeline error lifecycle completes.
           </p>
           <div class="callout callout-warning">
             <strong>Do not move the subscription into the component:</strong>
@@ -401,7 +407,8 @@ characterCell.mergeState(characters$);</code></pre>
               <strong>One boundary, four sources:</strong> Choose the state API
               that matches the source contract, then keep resolution,
               transformation, loading, errors, and commitment inside the same
-              FeatureCell pipeline.
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              pipeline.
             </p>
           </div>
         </div>
@@ -438,8 +445,10 @@ characterCell.mergeState(characters$);</code></pre>
           <p>
             This lab is complete when you can explain the difference between
             initialization-time hydration and later asynchronous updates, and
-            when all four sources show the same FeatureCell loading and error
-            lifecycle without moving pipeline authority into the component.
+            when all four sources show the same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            loading and error lifecycle without moving pipeline authority into
+            the component.
           </p>
         </div>
       </section>

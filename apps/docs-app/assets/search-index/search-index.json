@@ -3809,6 +3809,18 @@
       "url": "/blog/chapter-8-observe-pipeline-failures",
       "symbols": ["chapter-8-observe-pipeline-failures"],
       "content": "Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control chapter-8-observe-pipeline-failures SP"
+    },
+    {
+      "id": "blog:chapter-9-route-async-inputs-through-one-service-owned-pipeline",
+      "title": "Chapter 9 — Route Async Inputs Through One Service-Owned Pipeline",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-9-route-async-inputs-through-one-service-owned-pipeline",
+      "symbols": [
+        "chapter-9-route-async-inputs-through-one-service-owned-pipeline"
+      ],
+      "content": "Chapter 9 — Route Async Inputs Through One Service-Owned Pipeline Promise: await one deferred result Observable: resolve one emitted value chapter-9-route-async-inputs-through-one-service-owned-pipeline SP"
     }
   ]
 }
