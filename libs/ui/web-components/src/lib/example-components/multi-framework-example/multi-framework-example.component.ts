@@ -23,13 +23,14 @@ interface TabEntry {
   label: string;
 
   /** Identifies which projected template supplies the tab's content. */
-  template: 'angular' | 'core' | 'generic';
+  template: 'angular' | 'core' | 'react' | 'generic';
 }
 
 /**
  * Renders a multi-framework tabbed code example from two or three inputs:
  * an Angular template, a Core template (used for all other frameworks),
- * and an optional `<sdux-generic-tab>` for additional framework-specific examples.
+ * an optional React template, and an optional `<sdux-generic-tab>` for
+ * additional framework-specific examples.
  *
  * Tabs are rendered in alphabetical order by default.
  * The `description` input is combined with each framework name to produce
@@ -60,6 +61,10 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
   /** Template containing the core code block (used for all non-Angular frameworks). */
   @ContentChild('core', { static: true })
   coreTemplate: TemplateRef<unknown> | undefined;
+
+  /** Optional React-specific code block, used instead of the shared core block for React. */
+  @ContentChild('react', { static: true })
+  reactTemplate: TemplateRef<unknown> | undefined;
 
   /** Optional text rendered before Angular source. */
   @ContentChild('beforeAngular', { static: true })
@@ -117,14 +122,20 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
       allTabs.push(
         { label: 'Bun', template: 'core' },
         { label: 'Deno', template: 'core' },
-        { label: 'Node.js', template: 'core' },
-        { label: 'React', template: 'core' },
+        { label: 'Node.js', template: 'core' }
+      );
+      allTabs.push(
+        this.reactTemplate
+          ? { label: 'React', template: 'react' }
+          : { label: 'React', template: 'core' },
         { label: 'Solid', template: 'core' },
         { label: 'Svelte', template: 'core' },
         { label: 'Vanilla JS', template: 'core' },
         { label: 'Vue', template: 'core' },
         { label: 'Web Components', template: 'core' }
       );
+    } else if (this.reactTemplate) {
+      allTabs.push({ label: 'React', template: 'react' });
     }
 
     if (this.genericTab) {
@@ -173,6 +184,8 @@ export class MultiFrameworkExampleComponent implements AfterContentInit {
         return this.angularTemplate;
       case 'generic':
         return this.genericTab.template;
+      case 'react':
+        return this.reactTemplate;
       default:
         return this.coreTemplate;
     }
