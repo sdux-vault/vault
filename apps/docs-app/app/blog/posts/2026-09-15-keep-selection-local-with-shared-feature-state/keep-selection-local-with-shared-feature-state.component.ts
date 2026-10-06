@@ -174,6 +174,29 @@ protected readonly selectedCharacter = computed(() =&gt; &#123;
   return this.characters().find((&#123; id &#125;) =&gt; id === selectedId) ?? null;
 &#125;);</code></pre>
             </ng-template>
+            <ng-template #beforeCore>
+              <p>
+                The core example keeps the selection as local TypeScript data
+                and derives the selected record from the latest collection. It
+                preserves the same ownership boundary without depending on
+                Angular Signals.
+              </p>
+              <p>
+                The function receives the current collection as an input and
+                returns either the matching record or
+                <span class="code">null</span>. A framework-specific reactive
+                primitive can rerun that function when either input changes.
+              </p>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">let selectedCharacterId: number | null = null;
+
+const selectedCharacter = (
+  characters: readonly StarWarsCharacter[]
+): StarWarsCharacter | null =&gt;
+  characters.find((&#123; id &#125;) =&gt; id === selectedCharacterId) ?? null;</code></pre>
+            </ng-template>
             <ng-template #afterAngular>
               <p>
                 Notice what the computed value does not do. It does not fetch a
@@ -181,6 +204,14 @@ protected readonly selectedCharacter = computed(() =&gt; &#123;
                 write the selected record back into Feature State. It joins a
                 local presentation input with shared committed data and produces
                 the value required by the detail panel.
+              </p>
+            </ng-template>
+            <ng-template #afterCore>
+              <p>
+                The core function does not copy the record, mutate the shared
+                collection, or write the selection into Feature State. It joins
+                local presentation input with the current committed collection
+                and produces the value required by the detail panel.
               </p>
             </ng-template>
           </sdux-multi-framework-example>

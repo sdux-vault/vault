@@ -1,9 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -12,9 +11,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   standalone: true,
   imports: [
     BlogLayoutComponent,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
     FeatureCellBrandNameComponent,
+    MultiFrameworkExampleComponent,
     RouterModule
   ],
   template: `
@@ -26,18 +24,13 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
       readingTime="9">
       <header class="docs-header">
         <p class="lead">
-          Chapter 8 is a lab, not a fresh application. Start with the completed
-          <a
-            href="/tutorial/angular/chapters/07-filters-and-reducers"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Chapter 7</a
-          >
-          filters-and-reducers checkpoint, then deliberately make one pipeline
-          filter fail. The exercise shows how a
+          What should the UI do when a user action enters the pipeline but a
+          registered filter throws before the candidate can become State? This
+          lab follows that failure through the same service-owned
           <sdux-feature-cell [tm]="true" />
-          can expose a finalized feature error while the UI remains an observer
-          rather than a second source of pipeline authority.
+          boundary, where the feature finalizes an error, the application can
+          observe it globally, and the UI can acknowledge the condition without
+          quietly becoming responsible for recovery.
         </p>
         <p>
           You will keep the Chapter 7 CRUD workflow, pure filter, and ordered
@@ -185,11 +178,19 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             compatibility bridge. Keep error authority in the pipeline and keep
             presentation decisions in the component.
           </p>
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            <sdux-example-viewer-tab
-              [label]="'Register a finalized error observer'">
+          <sdux-multi-framework-example
+            description="Register a finalized error observer">
+            <ng-template #angular>
+              <pre class="code-inline"><code class="language-ts">this.#vault
+  .errors([
+    (error, state) =&gt; &#123;
+      console.error('Employee FeatureCell error:', error.message);
+      console.info('Last known state:', state.value);
+    &#125;
+  ])
+  .initialize();</code></pre>
+            </ng-template>
+            <ng-template #core>
               <pre class="code-inline"><code class="language-ts">employeeCell
   .errors([
     (error, state) =&gt; &#123;
@@ -198,8 +199,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
     &#125;
   ])
   .initialize();</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
+            </ng-template>
+          </sdux-multi-framework-example>
           <p>
             In the lab's Angular service, the equivalent callback stores the
             error and snapshot in a read-only teaching signal. The component

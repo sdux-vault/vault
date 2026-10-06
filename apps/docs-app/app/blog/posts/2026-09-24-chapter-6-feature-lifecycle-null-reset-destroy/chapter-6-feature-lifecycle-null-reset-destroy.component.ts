@@ -1,9 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  ExampleViewerSourceComponent,
-  ExampleViewerTabComponent,
-  FeatureCellBrandNameComponent
+  FeatureCellBrandNameComponent,
+  MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
 
@@ -13,9 +12,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     RouterModule,
-    ExampleViewerSourceComponent,
-    ExampleViewerTabComponent,
-    FeatureCellBrandNameComponent
+    FeatureCellBrandNameComponent,
+    MultiFrameworkExampleComponent
   ],
   template: `
     <sdux-blog-layout
@@ -162,11 +160,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             the component a stable domain-facing API.
           </p>
 
-          <sdux-example-viewer-source
-            [displayTabs]="false"
-            [displayCopyPaste]="false">
-            <sdux-example-viewer-tab
-              [label]="'Angular service lifecycle operations'">
+          <sdux-multi-framework-example
+            description="Service lifecycle operations">
+            <ng-template #angular>
               <pre
                 class="code-inline"><code class="language-ts">destroyFeatureCell(): void &#123;
   this.#vault.destroy();
@@ -179,8 +175,22 @@ resetState(): void &#123;
 persistNullValue(): void &#123;
   this.#vault.replaceState(&#123; value: null &#125;);
 &#125;</code></pre>
-            </sdux-example-viewer-tab>
-          </sdux-example-viewer-source>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">function destroyFeatureCell(): void &#123;
+  characterCell.destroy();
+&#125;
+
+function resetState(): void &#123;
+  characterCell.reset();
+&#125;
+
+function persistNullValue(): void &#123;
+  characterCell.replaceState(&#123; value: null &#125;);
+&#125;</code></pre>
+            </ng-template>
+          </sdux-multi-framework-example>
 
           <p>
             The names are not cosmetic. They prevent callers from having to know
