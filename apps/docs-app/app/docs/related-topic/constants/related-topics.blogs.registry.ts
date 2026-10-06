@@ -409,6 +409,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 8 — Pipeline Failures and Error Observation — SDuX Blog',
       description:
         'Learn how a Chapter 7 lab checkpoint observes finalized pipeline errors, separates acknowledgement from recovery, and restores CRUD safely.'
+    },
+    {
+      link: '/blog/chapter-9-route-async-inputs-through-one-service-owned-pipeline',
+      display:
+        'Chapter 9 — Route Async Inputs Through One Service-Owned Pipeline',
+      title: 'Chapter 9 — Async Inputs and One Pipeline — SDuX Blog',
+      description:
+        'Learn how hydration, Promise, Observable, and HTTP Resource inputs share one FeatureCell pipeline for loading, errors, filtering, and State commitment.'
     }
   ]
 };

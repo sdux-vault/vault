@@ -434,5 +434,13 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 9,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-9-route-async-inputs-through-one-service-owned-pipeline',
+    title: 'Chapter 9 — Route Async Inputs Through One Service-Owned Pipeline',
+    date: '2026-10-06',
+    readingTime: 10,
+    pillar: 'SP',
+    active: true
   }
 ];

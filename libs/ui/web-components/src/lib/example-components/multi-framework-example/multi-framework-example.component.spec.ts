@@ -146,6 +146,35 @@ class TestHostAngularOnlyComponent {}
   standalone: true,
   imports: [MultiFrameworkExampleComponent],
   template: `
+    <sdux-multi-framework-example description="React Only">
+      <ng-template #react>
+        <pre class="code-inline"><code>react code</code></pre>
+      </ng-template>
+    </sdux-multi-framework-example>
+  `
+})
+class TestHostReactOnlyComponent {}
+
+@Component({
+  standalone: true,
+  imports: [MultiFrameworkExampleComponent],
+  template: `
+    <sdux-multi-framework-example description="React Override">
+      <ng-template #core>
+        <pre class="code-inline"><code>core code</code></pre>
+      </ng-template>
+      <ng-template #react>
+        <pre class="code-inline"><code>react code</code></pre>
+      </ng-template>
+    </sdux-multi-framework-example>
+  `
+})
+class TestHostReactOverrideComponent {}
+
+@Component({
+  standalone: true,
+  imports: [MultiFrameworkExampleComponent],
+  template: `
     <sdux-multi-framework-example description="With surrounding text">
       <ng-template #beforeAngular>
         <p class="before-angular">Angular text before the source viewer</p>
@@ -603,6 +632,98 @@ describe('MultiFrameworkExampleComponent without angular template but with gener
     fixture.detectChanges();
     const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
     expect(panel?.textContent).toContain('vue code');
+  });
+});
+
+describe('MultiFrameworkExampleComponent with a React-only template', () => {
+  let fixture: ComponentFixture<TestHostReactOnlyComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        TestHostReactOnlyComponent,
+        MultiFrameworkExampleComponent,
+        MatTabsModule,
+        NoopAnimationsModule
+      ],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostReactOnlyComponent);
+    fixture.detectChanges();
+  });
+
+  it('should render only the React tab', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const labels = Array.from(el.querySelectorAll('.mat-mdc-tab')).map((tab) =>
+      tab.textContent?.trim()
+    );
+
+    expect(labels).toEqual(['React']);
+  });
+
+  it('should project the React template into the React tab', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('.tab-panel')?.textContent).toContain('react code');
+  });
+
+  it('should expose only React through tabLabels', () => {
+    const component = fixture.debugElement.children[0].componentInstance;
+    expect(component.tabLabels()).toEqual(['React']);
+  });
+});
+
+describe('MultiFrameworkExampleComponent with a React override', () => {
+  let fixture: ComponentFixture<TestHostReactOverrideComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        TestHostReactOverrideComponent,
+        MultiFrameworkExampleComponent,
+        MatTabsModule,
+        NoopAnimationsModule
+      ],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostReactOverrideComponent);
+    fixture.detectChanges();
+  });
+
+  it('should include React once when a React template overrides core', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const labels = Array.from(el.querySelectorAll('.mat-mdc-tab')).map((tab) =>
+      tab.textContent?.trim()
+    );
+
+    expect(labels.filter((label) => label === 'React')).toHaveSize(1);
+    expect(labels).toEqual([
+      'Bun',
+      'Deno',
+      'Node.js',
+      'React',
+      'Solid',
+      'Svelte',
+      'Vanilla JS',
+      'Vue',
+      'Web Components'
+    ]);
+  });
+
+  it('should project the React template instead of the core template', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    const tabs = el.querySelectorAll<HTMLElement>('.mat-mdc-tab');
+    const reactIndex = Array.from(tabs).findIndex(
+      (tab) => tab.textContent?.trim() === 'React'
+    );
+
+    tabs[reactIndex].click();
+    fixture.detectChanges();
+
+    const panel = el.querySelector('.mat-mdc-tab-body-active .tab-panel');
+    expect(panel?.textContent).toContain('react code');
+    expect(panel?.textContent).not.toContain('core code');
   });
 });
 

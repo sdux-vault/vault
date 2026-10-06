@@ -176,6 +176,19 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   return character;
 &#125;</code></pre>
             </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">createCharacter(draft: StarWarsCharacterDraft): StarWarsCharacter &#123;
+  const nextCharacterId = getNextCharacterId(characterCell.state.value() ?? []);
+  const character = createCharacterState(nextCharacterId, draft);
+
+  characterCell.mergeState(&#123;
+    value: [character]
+  &#125;);
+
+  return character;
+&#125;</code></pre>
+            </ng-template>
           </sdux-multi-framework-example>
           <p>
             The important detail is not the form event that called this method.
@@ -218,6 +231,26 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   this.#vault.replaceState(&#123;
     value: () =&gt;
       this.#vault.state
+        .value()
+        ?.map((character) =&gt;
+          character.id === id ? updatedCharacter : character
+        ) ?? []
+  &#125;);
+
+  return updatedCharacter;
+&#125;</code></pre>
+            </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">updateCharacter(
+  id: number,
+  changes: StarWarsCharacterDraft
+): StarWarsCharacter &#123;
+  const updatedCharacter = createCharacterState(id, changes);
+
+  characterCell.replaceState(&#123;
+    value: () =&gt;
+      characterCell.state
         .value()
         ?.map((character) =&gt;
           character.id === id ? updatedCharacter : character

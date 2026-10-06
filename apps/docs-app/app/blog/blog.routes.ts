@@ -508,6 +508,18 @@ export const blogRoutes: Routes = [
       import('./posts/2026-10-01-chapter-8-observe-pipeline-failures/chapter-8-observe-pipeline-failures.component').then(
         (m) => m.BlogChapter8ObservePipelineFailuresComponent
       )
+  },
+  {
+    path: 'chapter-9-route-async-inputs-through-one-service-owned-pipeline',
+    data: {
+      category: 'blogs',
+      type: 'chapter-9-route-async-inputs-through-one-service-owned-pipeline'
+    },
+    loadComponent: () =>
+      import('./posts/2026-10-06-chapter-9-route-async-inputs-through-one-service-owned-pipeline/chapter-9-route-async-inputs-through-one-service-owned-pipeline.component').then(
+        (m) =>
+          m.BlogChapter9RouteAsyncInputsThroughOneServiceOwnedPipelineComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

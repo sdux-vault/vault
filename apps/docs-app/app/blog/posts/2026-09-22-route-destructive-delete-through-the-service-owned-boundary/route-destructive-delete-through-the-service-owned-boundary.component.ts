@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   BrandNameComponent,
+  ExampleViewerSourceComponent,
+  ExampleViewerTabComponent,
   MultiFrameworkExampleComponent
 } from '@sdux-vault/ui/web-components';
 import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
@@ -12,6 +14,8 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
   imports: [
     BlogLayoutComponent,
     BrandNameComponent,
+    ExampleViewerSourceComponent,
+    ExampleViewerTabComponent,
     MultiFrameworkExampleComponent
   ],
   template: `
@@ -267,6 +271,19 @@ protected requestDelete(): void &#123;
   &#125;
 &#125;</code></pre>
             </ng-template>
+            <ng-template #core>
+              <pre
+                class="code-inline"><code class="language-ts">let deleteCandidate: StarWarsCharacter | null = null;
+
+function requestDelete(): void &#123;
+  const character = selectedCharacter;
+
+  if (character) &#123;
+    deleteCandidate = character;
+    feedback = null;
+  &#125;
+&#125;</code></pre>
+            </ng-template>
           </sdux-multi-framework-example>
           <p>
             A cancel handler clears
@@ -362,8 +379,11 @@ protected requestDelete(): void &#123;
             same act, settle, assert pattern used throughout the tutorial
             series.
           </p>
-          <div class="code-inline">
-            <pre><code class="language-ts">it('should remove the matching character from the current collection', async () =&gt; &#123;
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="false">
+            <sdux-example-viewer-tab [label]="'A testing example'">
+              <pre><code class="language-ts">it('should remove the matching character from the current collection', async () =&gt; &#123;
   const service = await configureService();
 
   service.removeCharacter(10);
@@ -381,8 +401,9 @@ it('should safely remove against an empty collection when no value exists', asyn
   await vaultSettled(key);
 
   expect(service.state.value()).toBeUndefined();
-&#125;);</code></pre>
-          </div>
+&#125;</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
           <!-- StackBlitz: route-destructive-delete-through-the-service-owned-boundary -->
           <div class="callout callout-info">
             <p>
