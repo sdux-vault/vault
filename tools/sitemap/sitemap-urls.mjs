@@ -21,6 +21,7 @@ export const SITEMAP_URLS = [
   '/blog/behaviors-are-why-the-pipeline-stays-predictable',
   '/blog/chapter-6-feature-lifecycle-null-reset-destroy',
   '/blog/chapter-7-filters-and-reducers',
+  '/blog/chapter-8-observe-pipeline-failures',
   '/blog/circuit-breaker-state-pipeline',
   '/blog/components-without-connect-or-useselector',
   '/blog/controllers-dont-touch-your-data',

@@ -425,5 +425,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 9,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-8-observe-pipeline-failures',
+    title:
+      'Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control',
+    date: '2026-10-01',
+    readingTime: 9,
+    pillar: 'SP',
+    active: true
   }
 ];
