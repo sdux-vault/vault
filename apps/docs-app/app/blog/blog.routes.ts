@@ -520,6 +520,17 @@ export const blogRoutes: Routes = [
         (m) =>
           m.BlogChapter9RouteAsyncInputsThroughOneServiceOwnedPipelineComponent
       )
+  },
+  {
+    path: 'chapter-10-delay-state-transitions-without-changing-state-meaning',
+    data: {
+      category: 'blogs',
+      type: 'chapter-10-delay-state-transitions-without-changing-state-meaning'
+    },
+    loadComponent: () =>
+      import('./posts/2026-10-08-chapter-10-delay-state-transitions-without-changing-state-meaning/chapter-10-delay-state-transitions-without-changing-state-meaning.component').then(
+        (m) => m.BlogChapter10DelayStateTransitionsWithoutChangingStateMeaning
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

@@ -417,6 +417,15 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 9 — Async Inputs and One Pipeline — SDuX Blog',
       description:
         'Learn how hydration, Promise, Observable, and HTTP Resource inputs share one FeatureCell pipeline for loading, errors, filtering, and State commitment.'
+    },
+    {
+      link: '/blog/chapter-10-delay-state-transitions-without-changing-state-meaning',
+      display:
+        'Chapter 10 — Delay State Transitions Without Changing State Meaning',
+      title:
+        'Chapter 10 — Delay State Transitions Without Changing State Meaning — SDuX Blog',
+      description:
+        'Learn how the Delay Controller pauses every State transition without changing its candidate, keeping timing explicit and service-owned.'
     }
   ]
 };
