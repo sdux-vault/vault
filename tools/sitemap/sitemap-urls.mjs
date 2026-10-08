@@ -19,6 +19,7 @@ export const SITEMAP_URLS = [
   '/blog/atomic-deterministic-updates',
   '/blog/atomic-state-commitment',
   '/blog/behaviors-are-why-the-pipeline-stays-predictable',
+  '/blog/chapter-10-delay-state-transitions-without-changing-state-meaning',
   '/blog/chapter-6-feature-lifecycle-null-reset-destroy',
   '/blog/chapter-7-filters-and-reducers',
   '/blog/chapter-8-observe-pipeline-failures',

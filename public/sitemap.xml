@@ -72,6 +72,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-10-delay-state-transitions-without-changing-state-meaning</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/chapter-6-feature-lifecycle-null-reset-destroy</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>

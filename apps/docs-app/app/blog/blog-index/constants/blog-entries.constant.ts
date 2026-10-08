@@ -442,5 +442,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 10,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-10-delay-state-transitions-without-changing-state-meaning',
+    title:
+      'Chapter 10 — Delay State Transitions Without Changing State Meaning',
+    date: '2026-10-08',
+    readingTime: 9,
+    pillar: 'SP',
+    active: true
   }
 ];
