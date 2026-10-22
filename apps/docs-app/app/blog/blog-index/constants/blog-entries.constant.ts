@@ -451,5 +451,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 9,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code',
+    title:
+      'Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code',
+    date: '2026-10-13',
+    readingTime: 10,
+    pillar: 'SP',
+    active: true
   }
 ];
