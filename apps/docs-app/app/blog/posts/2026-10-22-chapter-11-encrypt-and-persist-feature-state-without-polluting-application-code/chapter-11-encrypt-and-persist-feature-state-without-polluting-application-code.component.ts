@@ -253,18 +253,21 @@ characterCell
           <p>
             A stable salt matters because the persisted ciphertext must be
             decryptable after the page reloads. The tutorial also uses a stable
-            storage key so the same FeatureCell can find its Session Storage
-            envelope again. The AES-GCM initialization vector is generated for
-            encryption and stored in the envelope; it is not a replacement for
-            the stable salt.
+            storage key so the same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            can find its Session Storage envelope again. The AES-GCM
+            initialization vector is generated for encryption and stored in the
+            envelope; it is not a replacement for the stable salt.
           </p>
           <p>
             On startup, persisted State takes priority over
             <span class="code">initialState</span>. That is the behavior users
             expect from restoration: the initial characters seed a feature that
             has never been persisted, but they should not overwrite a valid
-            session snapshot on every reload. The FeatureCell still presents the
-            restored value as ordinary State after decryption.
+            session snapshot on every reload. The
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            still presents the restored value as ordinary State after
+            decryption.
           </p>
           <table aria-label="Encrypt and Persist responsibility boundaries">
             <thead>
@@ -277,7 +280,11 @@ characterCell
             <tbody>
               <tr>
                 <td>Feature State</td>
-                <td>FeatureCell</td>
+                <td>
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                </td>
                 <td>Expose plain values to trusted application code.</td>
               </tr>
               <tr>

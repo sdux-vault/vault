@@ -77,6 +77,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/chapter-6-feature-lifecycle-null-reset-destroy</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>

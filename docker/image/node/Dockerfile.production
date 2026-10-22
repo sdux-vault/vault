@@ -1,9 +1,11 @@
-FROM node:22-bullseye AS builder
+FROM node:24-bullseye AS builder
 
 ENV HUSKY=0
 ENV npm_config_ignore_scripts=true
 
 WORKDIR /build
+
+RUN npm install --global npm@11
 
 ARG DOCS_BUILD_CONFIGURATION=enterprise
 
