@@ -531,6 +531,18 @@ export const blogRoutes: Routes = [
       import('./posts/2026-10-08-chapter-10-delay-state-transitions-without-changing-state-meaning/chapter-10-delay-state-transitions-without-changing-state-meaning.component').then(
         (m) => m.BlogChapter10DelayStateTransitionsWithoutChangingStateMeaning
       )
+  },
+  {
+    path: 'chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code',
+    data: {
+      category: 'blogs',
+      type: 'chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code'
+    },
+    loadComponent: () =>
+      import('./posts/2026-10-22-chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code/chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code.component').then(
+        (m) =>
+          m.BlogChapter11EncryptAndPersistFeatureStateWithoutPollutingApplicationCodeComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

@@ -426,6 +426,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Chapter 10 — Delay State Transitions Without Changing State Meaning — SDuX Blog',
       description:
         'Learn how the Delay Controller pauses every State transition without changing its candidate, keeping timing explicit and service-owned.'
+    },
+    {
+      link: '/blog/chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code',
+      display:
+        'Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code',
+      title: 'Chapter 11 — Encrypt and Persist — SDuX Blog',
+      description:
+        'Learn how Pro AES-256 encryption and Session Storage persistence protect finalized Feature State without exposing ciphertext to application code.'
     }
   ]
 };

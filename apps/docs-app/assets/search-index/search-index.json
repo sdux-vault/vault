@@ -3833,6 +3833,18 @@
         "chapter-10-delay-state-transitions-without-changing-state-meaning"
       ],
       "content": "Chapter 10 — Delay State Transitions Without Changing State Meaning chapter-10-delay-state-transitions-without-changing-state-meaning SP"
+    },
+    {
+      "id": "blog:chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code",
+      "title": "Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code",
+      "symbols": [
+        "chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code"
+      ],
+      "content": "Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code SP"
     }
   ]
 }
