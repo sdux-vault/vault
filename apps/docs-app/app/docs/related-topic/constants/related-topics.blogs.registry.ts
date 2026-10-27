@@ -434,6 +434,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 11 — Encrypt and Persist — SDuX Blog',
       description:
         'Learn how Pro AES-256 encryption and Session Storage persistence protect finalized Feature State without exposing ciphertext to application code.'
+    },
+    {
+      link: '/blog/chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic',
+      display:
+        'Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic',
+      title: 'Chapter 12 — State Introspection — SDuX Blog',
+      description:
+        'Learn how StateSnapshot, state$, tap callbacks, and State emission reveal a transition while diagnostics stay outside pipeline control.'
     }
   ]
 };

@@ -557,6 +557,18 @@
         "chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code"
       ],
       "content": "Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code SP"
+    },
+    {
+      "id": "blog:chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic",
+      "title": "Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic",
+      "symbols": [
+        "chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic"
+      ],
+      "content": "Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic SP"
     }
   ]
 }

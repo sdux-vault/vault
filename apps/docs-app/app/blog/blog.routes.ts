@@ -543,6 +543,18 @@ export const blogRoutes: Routes = [
         (m) =>
           m.BlogChapter11EncryptAndPersistFeatureStateWithoutPollutingApplicationCodeComponent
       )
+  },
+  {
+    path: 'chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic',
+    data: {
+      category: 'blogs',
+      type: 'chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic'
+    },
+    loadComponent: () =>
+      import('./posts/2026-10-23-chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic/chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic.component').then(
+        (m) =>
+          m.BlogChapter12InspectStateTransitionsWithoutTurningDiagnosticsIntoControlLogicComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
