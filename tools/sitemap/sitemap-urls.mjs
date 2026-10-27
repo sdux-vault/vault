@@ -21,6 +21,7 @@ export const SITEMAP_URLS = [
   '/blog/behaviors-are-why-the-pipeline-stays-predictable',
   '/blog/chapter-10-delay-state-transitions-without-changing-state-meaning',
   '/blog/chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code',
+  '/blog/chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic',
   '/blog/chapter-6-feature-lifecycle-null-reset-destroy',
   '/blog/chapter-7-filters-and-reducers',
   '/blog/chapter-8-observe-pipeline-failures',

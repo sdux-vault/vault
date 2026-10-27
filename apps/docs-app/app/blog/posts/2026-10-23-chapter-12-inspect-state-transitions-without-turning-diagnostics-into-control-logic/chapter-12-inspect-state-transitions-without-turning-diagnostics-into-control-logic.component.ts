@@ -66,11 +66,12 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <p>
             Chapter 12 adds observation at the boundaries that matter. The
-            service exposes the FeatureCell's reactive state surface and stream,
-            then registers tap callbacks and State-emission observation. The
-            component renders those readings for the lab. The component does not
-            decide which candidate wins, replace a candidate from a callback, or
-            infer lifecycle from a textarea.
+            service exposes the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
+            reactive state surface and stream, then registers tap callbacks and
+            State-emission observation. The component renders those readings for
+            the lab. The component does not decide which candidate wins, replace
+            a candidate from a callback, or infer lifecycle from a textarea.
           </p>
           <table aria-label="Chapter 12 observation surfaces">
             <thead>
@@ -84,7 +85,13 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
               <tr>
                 <td><span class="code">state</span></td>
                 <td>Latest reactive read</td>
-                <td>What is the FeatureCell reporting now?</td>
+                <td>
+                  What is the
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  reporting now?
+                </td>
               </tr>
               <tr>
                 <td><span class="code">state$</span></td>
@@ -169,8 +176,9 @@ const snapshot = featureCell.state;</code></pre>
             <p>
               <strong>Read-only means read-only:</strong> treat every snapshot
               as immutable. Serializing a snapshot for a teaching view is an
-              observation; mutating it and expecting the FeatureCell to adopt
-              the change would bypass the State boundary.
+              observation; mutating it and expecting the
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              to adopt the change would bypass the State boundary.
             </p>
           </div>
         </div>
@@ -326,7 +334,8 @@ featureCell.emitStates([captureEmittedState]);</code></pre>
             mutation, settle the application through its normal test harness,
             and assert the observations at the boundaries it cares about. The
             callbacks remain instrumentation, not a replacement for the
-            FeatureCell's update API.
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>'s
+            update API.
           </p>
         </div>
       </section>
@@ -349,10 +358,11 @@ featureCell.emitStates([captureEmittedState]);</code></pre>
             Restoring that captured collection through
             <span class="code">replaceState()</span> is different from calling
             <span class="code">reset()</span>. The first restores the lab's
-            captured collection. The second invokes the FeatureCell lifecycle
-            reset behavior. Keeping those actions separate prevents a diagnostic
-            label such as “Initial State” from hiding a different lifecycle
-            operation.
+            captured collection. The second invokes the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            lifecycle reset behavior. Keeping those actions separate prevents a
+            diagnostic label such as “Initial State” from hiding a different
+            lifecycle operation.
           </p>
           <table aria-label="Chapter 12 baseline and lifecycle distinction">
             <thead>
@@ -377,7 +387,13 @@ featureCell.emitStates([captureEmittedState]);</code></pre>
               </tr>
               <tr>
                 <td><span class="code">reset()</span></td>
-                <td>Run the separate FeatureCell lifecycle reset operation</td>
+                <td>
+                  Run the separate
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  lifecycle reset operation
+                </td>
               </tr>
             </tbody>
           </table>
