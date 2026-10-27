@@ -460,5 +460,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 10,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic',
+    title:
+      'Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic',
+    date: '2026-10-15',
+    readingTime: 10,
+    pillar: 'SP',
+    active: true
   }
 ];
