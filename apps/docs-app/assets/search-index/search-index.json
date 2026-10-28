@@ -3857,6 +3857,18 @@
         "chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic"
       ],
       "content": "Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic SP"
+    },
+    {
+      "id": "blog:chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state",
+      "title": "Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state",
+      "symbols": [
+        "chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state"
+      ],
+      "content": "Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state SP"
     }
   ]
 }

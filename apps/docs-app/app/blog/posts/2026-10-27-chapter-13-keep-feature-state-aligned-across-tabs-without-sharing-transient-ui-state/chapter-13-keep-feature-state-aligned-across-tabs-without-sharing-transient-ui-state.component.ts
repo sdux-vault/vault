@@ -79,7 +79,13 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             </thead>
             <tbody>
               <tr>
-                <td>Finalized FeatureCell value</td>
+                <td>
+                  Finalized
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                  value
+                </td>
                 <td>Shared with matching same-origin tabs.</td>
               </tr>
               <tr>
@@ -222,9 +228,10 @@ employeeCell.mergeState(&#123;
         <div class="section-body">
           <p>
             A same-origin tab is one using the same scheme, host, and port. The
-            FeatureCell key also has to match. Once those boundaries line up,
-            one tab can commit a character update and the other tabs can observe
-            the resulting State without any component-to-component messaging.
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            key also has to match. Once those boundaries line up, one tab can
+            commit a character update and the other tabs can observe the
+            resulting State without any component-to-component messaging.
           </p>
           <p>
             The new tab also performs initial snapshot negotiation. If a peer
@@ -262,9 +269,10 @@ employeeCell.state$.subscribe(snapshot =&gt; &#123;
           </sdux-multi-framework-example>
           <div class="callout callout-info">
             <p>
-              <strong>What to look for:</strong> committed FeatureCell State
-              values are preserved and updated between tabs, including shared
-              resets. Forms, selection, loading, errors, and other page
+              <strong>What to look for:</strong> committed
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              State values are preserved and updated between tabs, including
+              shared resets. Forms, selection, loading, errors, and other page
               interactions remain local to the tab where they occur. A failed
               pipeline attempt does not update a peer tab.
             </p>
@@ -339,9 +347,11 @@ employeeCell.state$.subscribe(snapshot =&gt; &#123;
           <p>
             Environment support also matters. If the browser does not provide
             the required storage or messaging mechanism, Tab Sync degrades to
-            ordinary single-tab Core State. The same FeatureCell configuration
-            can therefore run in SSR, Node.js, Deno, or web workers without
-            application code adding conditional feature detection.
+            ordinary single-tab Core State. The same
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            configuration can therefore run in SSR, Node.js, Deno, or web
+            workers without application code adding conditional feature
+            detection.
           </p>
           <div class="callout callout-warning">
             <p>
@@ -371,11 +381,14 @@ employeeCell.state$.subscribe(snapshot =&gt; &#123;
             </li>
             <li>
               Each tab keeps its local form and presentation State while sharing
-              the finalized FeatureCell value.
+              the finalized
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              value.
             </li>
             <li>
-              The same FeatureCell key identifies the State that participates in
-              synchronization.
+              The same
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              key identifies the State that participates in synchronization.
             </li>
           </ul>
           <p>
