@@ -469,5 +469,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 10,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state',
+    title:
+      'Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State',
+    date: '2026-10-20',
+    readingTime: 10,
+    pillar: 'SP',
+    active: true
   }
 ];
