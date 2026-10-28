@@ -555,6 +555,18 @@ export const blogRoutes: Routes = [
         (m) =>
           m.BlogChapter12InspectStateTransitionsWithoutTurningDiagnosticsIntoControlLogicComponent
       )
+  },
+  {
+    path: 'chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state',
+    data: {
+      category: 'blogs',
+      type: 'chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state'
+    },
+    loadComponent: () =>
+      import('./posts/2026-10-27-chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state/chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state.component').then(
+        (m) =>
+          m.BlogChapter13KeepFeatureStateAlignedAcrossTabsWithoutSharingTransientUiStateComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //
