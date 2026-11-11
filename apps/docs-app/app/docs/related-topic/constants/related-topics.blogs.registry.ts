@@ -442,6 +442,15 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Chapter 12 — State Introspection — SDuX Blog',
       description:
         'Learn how StateSnapshot, state$, tap callbacks, and State emission reveal a transition while diagnostics stay outside pipeline control.'
+    },
+    {
+      link: '/blog/chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state',
+      display:
+        'Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State',
+      title:
+        'Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State — SDuX Blog',
+      description:
+        'Learn how Tab Sync shares finalized FeatureCell State across same-origin tabs while keeping forms, selection, and transient UI state local.'
     }
   ]
 };
