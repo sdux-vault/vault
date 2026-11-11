@@ -3869,6 +3869,50 @@
         "chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state"
       ],
       "content": "Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state SP"
+    },
+    {
+      "id": "blog:chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule",
+      "title": "Chapter 14 — Suppress Redundant State Candidates with a Deliberate Distinctness Rule",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule",
+      "symbols": [
+        "chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule"
+      ],
+      "content": "Chapter 14 — Suppress Redundant State Candidates with a Deliberate Distinctness Rule chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule SP"
+    },
+    {
+      "id": "blog:chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline",
+      "title": "Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline",
+      "symbols": [
+        "chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline"
+      ],
+      "content": "Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline SP"
+    },
+    {
+      "id": "blog:how-to-use-the-sdux-vault-stackblitz-examples-page",
+      "title": "how to use the sdux vault stackblitz examples page",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/how-to-use-the-sdux-vault-stackblitz-examples-page",
+      "symbols": ["how-to-use-the-sdux-vault-stackblitz-examples-page"],
+      "content": "how to use the sdux vault stackblitz examples page how-to-use-the-sdux-vault-stackblitz-examples-page"
+    },
+    {
+      "id": "blog:how-to-create-and-submit-a-new-stackblitz-example",
+      "title": "how to create and submit a new stackblitz example",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/how-to-create-and-submit-a-new-stackblitz-example",
+      "symbols": ["how-to-create-and-submit-a-new-stackblitz-example"],
+      "content": "how to create and submit a new stackblitz example how-to-create-and-submit-a-new-stackblitz-example"
     }
   ]
 }

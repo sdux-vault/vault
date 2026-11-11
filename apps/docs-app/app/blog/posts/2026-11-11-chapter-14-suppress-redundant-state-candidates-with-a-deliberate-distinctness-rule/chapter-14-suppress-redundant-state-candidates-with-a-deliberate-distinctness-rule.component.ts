@@ -30,9 +30,14 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           Repeated inputs are normal. The difficult question is not whether a
           candidate looks similar to the last one, but what your domain means by
           “unchanged.” Chapter 14 uses the Operator stage and
-          <span class="code">withDistinctUntilChanged</span> to suppress
-          candidates whose character IDs are already present before downstream
-          filters and reducers run.
+          <span class="code"
+            ><a
+              href="/docs/pipeline/addons/operators/with-distinct-until-changed"
+              >withDistinctUntilChanged</a
+            ></span
+          >
+          to suppress candidates whose character IDs are already present before
+          downstream filters and reducers run.
         </p>
         <p>
           The example keeps the comparison function in the service-owned

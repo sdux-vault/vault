@@ -95,6 +95,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/blog/chapter-6-feature-lifecycle-null-reset-destroy</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -169,6 +180,16 @@
   <url>
     <loc>https://www.sdux-vault.com/blog/global-store-shared-dependency</loc>
     <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/how-to-create-and-submit-a-new-stackblitz-example</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.sdux-vault.com/blog/how-to-use-the-sdux-vault-stackblitz-examples-page</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
