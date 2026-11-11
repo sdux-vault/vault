@@ -27,6 +27,7 @@ export const STACKBLITZ_PROJECT_IMPORTS: Record<string, () => Promise<unknown>> 
   'angular/lifecycle-tutorial-example': () => import('../../../stackblitz/projects/angular/lifecycle-tutorial-example.project'),
   'angular/observable-example': () => import('../../../stackblitz/projects/angular/observable-example.project'),
   'angular/promise-example': () => import('../../../stackblitz/projects/angular/promise-example.project'),
+  'angular/redux-v2-example': () => import('../../../stackblitz/projects/angular/redux-v2-example.project'),
   'angular/replace-example': () => import('../../../stackblitz/projects/angular/replace-example.project'),
   'angular/state-introspection-tutorial-example': () => import('../../../stackblitz/projects/angular/state-introspection-tutorial-example.project'),
   'angular/stepwise-tutorial-example': () => import('../../../stackblitz/projects/angular/stepwise-tutorial-example.project'),

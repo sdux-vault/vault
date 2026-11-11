@@ -1,7 +1,7 @@
 import {
-  ANGULAR_REDUX_OUTPUT,
-  ANGULAR_REDUX_OUTPUT_METADATA
-} from '../examples/angular/redux/redux-output';
+  ANGULAR_REDUX_V2_OUTPUT,
+  ANGULAR_REDUX_V2_OUTPUT_METADATA
+} from '../examples/angular/redux-v2/redux-v2-output';
 import {
   ANGULAR_SDUX_OUTPUT,
   ANGULAR_SDUX_OUTPUT_METADATA
@@ -44,10 +44,10 @@ export const FrameworkComparisonRegistryConstant: Record<
     displayCeremony: true,
     left: {
       frameworkLabel: 'Angular',
-      libraryLabel: 'Redux',
-      stackblitzExample: null,
-      files: ANGULAR_REDUX_OUTPUT,
-      metadata: ANGULAR_REDUX_OUTPUT_METADATA
+      libraryLabel: 'NgRx SignalStore',
+      stackblitzExample: 'comparison-redux-v2',
+      files: ANGULAR_REDUX_V2_OUTPUT,
+      metadata: ANGULAR_REDUX_V2_OUTPUT_METADATA
     },
     right: {
       frameworkLabel: 'Angular',

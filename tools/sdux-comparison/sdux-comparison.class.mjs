@@ -49,11 +49,12 @@ const FRAMEWORK_FILE_ORDER = {
     ['employee.selectors.ts']
   ],
   'redux-v2': [
-    ['main.tsx'],
-    ['store.ts'],
-    ['ExampleView.tsx'],
+    ['main.ts', 'main.tsx'],
+    ['app.config.ts', 'store.ts'],
+    ['employee.service.ts', 'employee.api.ts'],
+    ['example.component.ts', 'ExampleView.tsx'],
+    ['example.component.html'],
     ['employee.model.ts'],
-    ['employee.api.ts'],
     ['employee.actions.ts']
   ],
   sdux: [

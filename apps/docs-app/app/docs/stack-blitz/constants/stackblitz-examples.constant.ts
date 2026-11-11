@@ -241,6 +241,15 @@ export function createExampleGroups(brandName: string) {
           languages: [{ name: 'React', key: 'react', iconKey: 'reactRTK' }]
         },
         {
+          title: 'Comparison of Angular and NgRx SignalStore',
+          id: 'comparison-redux-v2',
+          exampleName: 'redux-v2-example',
+          displayCopyIcon: true,
+          display: false,
+          description: `The example from the <a href="/developer">State library</a> comparison guide. The example demonstrates Angular's <strong>NgRx SignalStore</strong> pattern with filtering, replacement, async fetch, loading, error, and reset operations.`,
+          languages: [{ name: 'Angular', key: 'angular', iconKey: 'angular' }]
+        },
+        {
           title: 'Tab Sync',
           id: 'tab-sync',
           exampleName: 'tab-sync-example',

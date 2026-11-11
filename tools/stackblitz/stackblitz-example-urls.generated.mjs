@@ -27,6 +27,7 @@ export const STACKBLITZ_EXAMPLE_URLS = [
   '/examples/angular/lifecycle-tutorial',
   '/examples/angular/observable',
   '/examples/angular/promise',
+  '/examples/angular/redux-v2',
   '/examples/angular/replace',
   '/examples/angular/state-introspection-tutorial',
   '/examples/angular/stepwise-tutorial',
