@@ -567,6 +567,52 @@ export const blogRoutes: Routes = [
         (m) =>
           m.BlogChapter13KeepFeatureStateAlignedAcrossTabsWithoutSharingTransientUiStateComponent
       )
+  },
+  {
+    path: 'chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule',
+    data: {
+      category: 'blogs',
+      type: 'chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule'
+    },
+    loadComponent: () =>
+      import('./posts/2026-11-11-chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule/chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule.component').then(
+        (m) =>
+          m.BlogChapter14SuppressRedundantStateCandidatesWithADeliberateDistinctnessRuleComponent
+      )
+  },
+  {
+    path: 'chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline',
+    data: {
+      category: 'blogs',
+      type: 'chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline'
+    },
+    loadComponent: () =>
+      import('./posts/2026-11-11-chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline/chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline.component').then(
+        (m) =>
+          m.BlogChapter15PutExplicitApprovalBoundariesInsideTheFeaturePipelineComponent
+      )
+  },
+  {
+    path: 'how-to-use-the-sdux-vault-stackblitz-examples-page',
+    data: {
+      category: 'blogs',
+      type: 'how-to-use-the-sdux-vault-stackblitz-examples-page'
+    },
+    loadComponent: () =>
+      import('./posts/2026-11-11-how-to-use-the-sdux-vault-stackblitz-examples-page/how-to-use-the-sdux-vault-stackblitz-examples-page.component').then(
+        (m) => m.BlogHowToUseTheSduxVaultStackblitzExamplesPageComponent
+      )
+  },
+  {
+    path: 'how-to-create-and-submit-a-new-stackblitz-example',
+    data: {
+      category: 'blogs',
+      type: 'how-to-create-and-submit-a-new-stackblitz-example'
+    },
+    loadComponent: () =>
+      import('./posts/2026-11-11-how-to-create-and-submit-a-new-stackblitz-example/how-to-create-and-submit-a-new-stackblitz-example.component').then(
+        (m) => m.BlogHowToCreateAndSubmitANewStackblitzExampleComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

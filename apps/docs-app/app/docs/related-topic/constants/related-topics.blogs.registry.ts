@@ -451,6 +451,37 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
         'Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State — SDuX Blog',
       description:
         'Learn how Tab Sync shares finalized FeatureCell State across same-origin tabs while keeping forms, selection, and transient UI state local.'
+    },
+    {
+      link: '/blog/chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule',
+      display:
+        'Chapter 14 — Suppress Redundant State Candidates with a Deliberate Distinctness Rule',
+      title: 'Chapter 14 — Suppress Redundant State Candidates — SDuX Blog',
+      description:
+        'Learn how withDistinctUntilChanged suppresses identity-only repeats while exposing why edits, removals, and ordering need a wider rule.'
+    },
+    {
+      link: '/blog/chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline',
+      display:
+        'Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline',
+      title:
+        'Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline — SDuX Blog',
+      description:
+        'Learn how Stepwise approval boundaries pause candidates inside the pipeline and how Continue or Block protects committed FeatureCell State.'
+    },
+    {
+      link: '/blog/how-to-use-the-sdux-vault-stackblitz-examples-page',
+      display: 'How to Use the SDuX Vault StackBlitz Examples Page',
+      title: 'How to Use the SDuX Vault StackBlitz Examples Page — SDuX Blog',
+      description:
+        'Learn how to navigate SDuX Vault StackBlitz examples, compare frameworks, extend a live pipeline, and recognize local-only runtimes.'
+    },
+    {
+      link: '/blog/how-to-create-and-submit-a-new-stackblitz-example',
+      display: 'How to Create and Submit a New StackBlitz Example',
+      title: 'How to Create and Submit a New StackBlitz Example — SDuX Blog',
+      description:
+        'Learn how to scaffold, document, port, verify, and submit a standalone StackBlitz example that remains runnable and reviewable.'
     }
   ]
 };
