@@ -1,0 +1,6 @@
+import { ApplicationConfig } from '@angular/core';
+import { EmployeeStore } from './employee.service';
+
+export const appConfig: ApplicationConfig = {
+  providers: [EmployeeStore]
+};

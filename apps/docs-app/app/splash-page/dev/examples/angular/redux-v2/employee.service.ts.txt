@@ -1,0 +1,58 @@
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { Employee } from './employee.model';
+
+const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return employees
+    .filter((employee) => employee.id % 2 !== 0)
+    .sort((left, right) => left.name.localeCompare(right.name));
+};
+
+interface EmployeeState {
+  isLoading: boolean;
+  value: Employee[];
+  error: string | null;
+}
+
+const initialState: EmployeeState = {
+  isLoading: false,
+  value: [],
+  error: null
+};
+
+export const EmployeeStore = signalStore(
+  withState(initialState),
+  withMethods((store) => ({
+    replace(employees: Employee[]): void {
+      patchState(store, {
+        isLoading: false,
+        value: prepareEmployees(employees),
+        error: null
+      });
+    },
+    async replaceAsync(): Promise<void> {
+      patchState(store, { isLoading: true, error: null });
+
+      try {
+        const response = await fetch('/api/employees');
+        if (!response.ok) {
+          throw new Error(`Failed to load employees (${response.status})`);
+        }
+
+        const employees = (await response.json()) as Employee[];
+        patchState(store, {
+          isLoading: false,
+          value: prepareEmployees(employees),
+          error: null
+        });
+      } catch (error: unknown) {
+        patchState(store, {
+          isLoading: false,
+          error: error instanceof Error ? error.message : 'Failed to load employees'
+        });
+      }
+    },
+    reset(): void {
+      patchState(store, initialState);
+    }
+  }))
+);
