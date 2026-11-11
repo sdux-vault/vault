@@ -102,6 +102,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline</loc>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -185,11 +186,13 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/how-to-create-and-submit-a-new-stackblitz-example</loc>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.sdux-vault.com/blog/how-to-use-the-sdux-vault-stackblitz-examples-page</loc>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2740,6 +2743,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.sdux-vault.com/examples/angular/redux-v2</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.sdux-vault.com/examples/angular/replace</loc>
     <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -3110,7 +3118,7 @@
   </url>
   <url>
     <loc>https://www.sdux-vault.com/sitemap</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
