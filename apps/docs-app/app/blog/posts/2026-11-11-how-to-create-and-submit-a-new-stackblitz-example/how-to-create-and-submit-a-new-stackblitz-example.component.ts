@@ -71,12 +71,18 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
             its own package configuration. Start from the repository root with
             the scaffold command:
           </p>
-          <div class="code-inline">
-            <code class="language-ts"
-              >npm run scaffold npm run scaffold:angular npm run scaffold:react
-              npm run scaffold:svelte</code
-            >
-          </div>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="true">
+            <sdux-example-viewer-tab [label]="'Scaffold commands'">
+              <pre
+                class="code-inline"><code class="language-ts">npm run scaffold;
+npm run scaffold:angular;
+npm run scaffold:react;
+npm run scaffold:svelte;
+npm run scaffold:vue;</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
           <p>
             The general command discovers every framework with a scaffolding
             template. The language-specific commands let you create one target
@@ -86,10 +92,10 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           </p>
           <sdux-example-viewer-source
             [displayTabs]="false"
-            [displayCopyPaste]="false">
+            [displayCopyPaste]="true">
             <sdux-example-viewer-tab [label]="'Scaffold name normalization'">
               <pre
-                class="code-inline"><code class="language-ts">const name = input.trim().toLowerCase().replace(/s+/g, '-');
+                class="code-inline"><code class="language-ts">const name = input.trim().toLowerCase().replace(/\\s+/g, '-');
 
 if (!name) &#123;
   throw new Error('Name cannot be empty.');
@@ -99,12 +105,16 @@ return name.endsWith('-example') ? name : name + '-example';</code></pre>
             </sdux-example-viewer-tab>
           </sdux-example-viewer-source>
           <p>After the project is created, run it from its own directory:</p>
-          <div class="code-inline">
-            <code class="language-ts"
-              >cd stackblitz/&lt;framework&gt;/&lt;example-name&gt; npm install
-              npm start</code
-            >
-          </div>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="true">
+            <sdux-example-viewer-tab [label]="'Run the standalone project'">
+              <pre
+                class="code-inline"><code class="language-ts">cd stackblitz/&lt;framework&gt;/&lt;example-name&gt;
+npm install
+npm start</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
           <p>
             A contributor should be able to open this directory, install its
             dependencies, and run the project without importing code from
@@ -158,61 +168,100 @@ return name.endsWith('-example') ? name : name + '-example';</code></pre>
         </div>
         <div class="section-body">
           <p>
-            Once Angular is working, compare it with the Angular base example
-            and isolate the delta: files that were added, pipeline settings that
-            changed, template sections that differ, and utilities that can be
-            copied unchanged. Apply that same delta to the target framework's
-            base example or scaffolding template.
+            Once Angular is working, use the repository's AI instructions to
+            port it instead of starting a framework translation from memory.
+            GitHub Copilot can use the
+            <a
+              href="https://github.com/sdux-vault/stackblitz-examples/blob/main/.github/prompts/port-example.prompt.md"
+              >port-example prompt</a
+            >, while Codex and other repository-aware agents can use the
+            <a
+              href="https://github.com/sdux-vault/stackblitz-examples/blob/main/.agents/skills/port-example/SKILL.md"
+              >port-example skill</a
+            >. Both instructions describe the same disciplined process: read the
+            Angular base, identify the example delta, inspect the target
+            scaffolding, and apply the same behavior to the target framework.
           </p>
-          <table aria-label="Framework port translations">
-            <thead>
-              <tr>
-                <th scope="col" class="column-200">Angular pattern</th>
-                <th scope="col" class="column-150">React</th>
-                <th scope="col" class="column-150">Vue</th>
-                <th scope="col" class="column-auto">Svelte</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>signal()</td>
-                <td>useState()</td>
-                <td>ref()</td>
-                <td>$state() rune</td>
-              </tr>
-              <tr>
-                <td>computed()</td>
-                <td>useMemo()</td>
-                <td>computed()</td>
-                <td>$derived() rune</td>
-              </tr>
-              <tr>
-                <td>(click)=&quot;method()&quot;</td>
-                <td>onClick=&#123;method&#125;</td>
-                <td>&#64;click=&quot;method&quot;</td>
-                <td>on:click=&#123;method&#125;</td>
-              </tr>
-              <tr>
-                <td>&#64;if / &#64;else</td>
-                <td>Ternary or &amp;&amp; in JSX</td>
-                <td>v-if / v-else</td>
-                <td>&#123;#if&#125; / &#123;:else&#125;</td>
-              </tr>
-            </tbody>
-          </table>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="true">
+            <sdux-example-viewer-tab [label]="'GitHub Copilot port request'">
+              <pre
+                class="code-inline"><code class="language-ts">&#64;port interceptor-delay-example --to=react</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
           <p>
-            Preserve the pipeline configuration, UI behavior, class names, and
-            framework-agnostic utilities. Only the reactive wrapper and
-            framework syntax should change. Do not add another state-management
-            library, introduce features absent from Angular, or modify the
-            Angular source while creating a port.
+            In Copilot, open the prompt from
+            <span class="code">.github/prompts/port-example.prompt.md</span>
+            and give it a concrete source example and target framework. The
+            request above asks it to port
+            <span class="code"
+              >stackblitz/angular/interceptor-delay-example/</span
+            >
+            to React. The prompt tells Copilot to preserve the Angular pipeline,
+            UI behavior, CSS classes, framework-agnostic utilities, and
+            instructional JSDoc while translating only the framework delta.
+          </p>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="true">
+            <sdux-example-viewer-tab [label]="'Agent skill port request'">
+              <pre
+                class="code-inline"><code class="language-ts">Use .agents/skills/port-example/SKILL.md to port the Angular example interceptor-delay-example to React. Read the Angular base and source example, compare the delta, use the React scaffolding and base example, preserve the pipeline and JSDoc, and leave the Angular source unchanged.</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+          <p>
+            In Codex or another agent that supports repository skills, reference
+            <span class="code">.agents/skills/port-example/SKILL.md</span> in
+            the task. The skill gives the agent a narrow, reviewable job: read
+            the Angular source and base example, record the delta, inspect the
+            target template and an existing target example, then translate the
+            service, component, template, and framework-specific reactive
+            wrapper. Framework-agnostic utilities are copied unchanged, and the
+            target package is kept standalone.
+          </p>
+          <p>
+            Review the generated files against the Angular source before testing
+            them. Preserve the pipeline configuration, UI behavior, class names,
+            framework-agnostic utilities, and instructional JSDoc. Only the
+            reactive wrapper and framework syntax should change. Do not add
+            another state-management library, introduce features absent from
+            Angular, or modify the Angular source while creating a port.
           </p>
           <div class="callout callout-warning">
-            <strong>Gotcha:</strong> The porting prompt is a translation guide,
-            not permission to redesign the example. If the target version
-            behaves differently, compare it with Angular before changing the
-            shared pipeline or interaction contract.
+            <strong>Gotcha:</strong> The agent is a porting aid, not permission
+            to redesign the example. Its quality checklist still needs a human
+            review: verify identical pipeline configuration, complete UI
+            interactions, copied JSDoc, matching CSS classes, no Angular APIs,
+            and no exposed SDuX Vault internals.
           </div>
+          <p>
+            Verify the port locally before opening it in StackBlitz. Change into
+            the target directory, install its standalone dependencies, and run
+            its development server:
+          </p>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="true">
+            <sdux-example-viewer-tab [label]="'Run the port locally'">
+              <pre
+                class="code-inline"><code class="language-ts">cd stackblitz/react/interceptor-delay-example
+npm install
+npm start</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
+          <p>
+            Exercise every interaction in the local browser: load the example,
+            trigger each state transition, inspect loading and error behavior,
+            and compare the result with Angular. Once the local project works,
+            commit and push the branch, open the repository or branch in
+            StackBlitz, and select the same
+            <span class="code"
+              >stackblitz/react/interceptor-delay-example/</span
+            >
+            directory. Run the browser preview there as a second verification
+            that the project is self-contained and StackBlitz-runnable.
+          </p>
         </div>
       </section>
 
@@ -224,13 +273,19 @@ return name.endsWith('-example') ? name : name + '-example';</code></pre>
             interaction, and confirm that the browser output matches the
             documented contract. Then run the repository checks from its root.
           </p>
-          <div class="code-inline">
-            <code class="language-ts"
-              >npm ci npm run lint npm run format:check npm run typecheck npm
-              run docs:coverage npm run test:coverage:clean npm run
-              test:tools:coverage</code
-            >
-          </div>
+          <sdux-example-viewer-source
+            [displayTabs]="false"
+            [displayCopyPaste]="true">
+            <sdux-example-viewer-tab [label]="'Run the CI verification checks'">
+              <pre class="code-inline"><code class="language-ts">npm ci
+npm run lint
+npm run format:check
+npm run typecheck
+npm run docs:coverage
+npm run test:coverage:clean
+npm run test:tools:coverage</code></pre>
+            </sdux-example-viewer-tab>
+          </sdux-example-viewer-source>
           <p>
             The combined command <span class="code">npm run verify</span> runs
             the main verification sequence as well. CI uses Node.js 22 and
