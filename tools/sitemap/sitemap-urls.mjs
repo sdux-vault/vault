@@ -40,6 +40,7 @@ export const SITEMAP_URLS = [
   '/blog/global-store-shared-dependency',
   '/blog/how-to-create-and-submit-a-new-stackblitz-example',
   '/blog/how-to-use-the-sdux-vault-stackblitz-examples-page',
+  '/blog/initialize-vault-before-featurecell-registration',
   '/blog/keep-selection-local-with-shared-feature-state',
   '/blog/mutation-bugs-eliminated',
   '/blog/new-angular-tutorial-complete-feature',

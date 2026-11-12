@@ -30,13 +30,15 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           That boundary is easy to miss because Vault initialization is small:
           one function call and an optional configuration object. Its
           responsibility is still important. Vault establishes the global
-          execution environment for every FeatureCell, while FeatureCells define
-          state ownership and pipeline capabilities. The first prepares the
-          context; the second declares the feature.
+          execution environment for every
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+          while FeatureCells define state ownership and pipeline capabilities.
+          The first prepares the context; the second declares the feature.
         </p>
         <div class="callout callout-info">
           <strong>Key takeaway:</strong> Vault initialization changes execution
-          context, not state meaning. It must happen before FeatureCell
+          context, not state meaning. It must happen before
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
           registration, and it should happen once.
         </div>
       </header>
@@ -47,11 +49,13 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
         </div>
         <div class="section-body">
           <p>
-            A FeatureCell owns a domain concern: its key, initial state,
-            behaviors, controllers, and public interaction surface. Vault owns
-            the application-scoped services that make those FeatureCells
-            executable. Treating them as separate responsibilities gives you a
-            clearer startup contract.
+            A
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            owns a domain concern: its key, initial state, behaviors,
+            controllers, and public interaction surface. Vault owns the
+            application-scoped services that make those FeatureCells executable.
+            Treating them as separate responsibilities gives you a clearer
+            startup contract.
           </p>
           <p>
             Vault initialization does not compute a value, transform a
@@ -76,7 +80,11 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
                 </td>
               </tr>
               <tr>
-                <td>FeatureCell</td>
+                <td>
+                  <a href="/docs/references/functions/feature-cell"
+                    >FeatureCell</a
+                  >
+                </td>
                 <td>
                   Declares state ownership, behaviors, controllers, and feature
                   identity.
@@ -146,11 +154,13 @@ Vault(&#123;
         </div>
         <div class="section-body">
           <p>
-            Vault initialization must precede FeatureCell registration. A
-            FeatureCell is declared against the global runtime, so registering
-            it before Vault is initialized is invalid and results in a runtime
-            error. This is a startup ordering rule, not a suggestion for how to
-            organize files.
+            Vault initialization must precede
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            registration. A
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a> is
+            declared against the global runtime, so registering it before Vault
+            is initialized is invalid and results in a runtime error. This is a
+            startup ordering rule, not a suggestion for how to organize files.
           </p>
           <p>
             The safe sequence is straightforward: initialize the Vault during
@@ -161,8 +171,13 @@ Vault(&#123;
             a bad feature configuration.
           </p>
           <div class="callout callout-warning">
-            <strong>Do not infer readiness from a FeatureCell alone.</strong>
-            Vault readiness is an application-level prerequisite. A FeatureCell
+            <strong
+              >Do not infer readiness from a
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              alone.</strong
+            >
+            Vault readiness is an application-level prerequisite. A
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             cannot supply the runtime that must exist before its registration.
           </div>
         </div>
@@ -182,12 +197,14 @@ Vault(&#123;
           <p>
             This separation also keeps a production decision visible. The
             application decides its Vault configuration once, while each
-            FeatureCell remains responsible for its own state and behavior
-            contract. A feature can therefore be reused under a different
-            diagnostic policy without rewriting its state logic.
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            remains responsible for its own state and behavior contract. A
+            feature can therefore be reused under a different diagnostic policy
+            without rewriting its state logic.
           </p>
           <p>
-            Use the Vault configuration for runtime concerns. Use FeatureCell
+            Use the Vault configuration for runtime concerns. Use
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
             configuration and pipeline APIs for feature concerns. That simple
             distinction prevents observability settings from becoming hidden
             state dependencies.
@@ -210,7 +227,11 @@ Vault(&#123;
 
           <ul>
             <li>Was Vault initialized?</li>
-            <li>Was it initialized before FeatureCell registration?</li>
+            <li>
+              Was it initialized before
+              <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+              registration?
+            </li>
             <li>
               Are the runtime options being set at the application boundary
               rather than hidden inside a feature?

@@ -88,10 +88,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { EmployeeStore } from './employee.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(),
-    EmployeeStore
-  ]
+  providers: [provideHttpClient(), EmployeeStore]
 };
 `,
     'src/employee.model.ts': `/** Describes the employee records held by the NgRx SignalStore. */
@@ -105,7 +102,14 @@ export interface Employee {
 `,
     'src/employee.service.ts': `import { httpResource } from '@angular/common/http';
 import { effect, inject, Injector } from '@angular/core';
-import { patchState, signalStore, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withHooks,
+  withMethods,
+  withProps,
+  withState
+} from '@ngrx/signals';
 import { Employee } from './employee.model';
 
 const prepareEmployees = (employees: Employee[]): Employee[] => {
