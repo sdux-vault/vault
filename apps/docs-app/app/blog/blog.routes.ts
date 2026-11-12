@@ -613,6 +613,17 @@ export const blogRoutes: Routes = [
       import('./posts/2026-11-11-how-to-create-and-submit-a-new-stackblitz-example/how-to-create-and-submit-a-new-stackblitz-example.component').then(
         (m) => m.BlogHowToCreateAndSubmitANewStackblitzExampleComponent
       )
+  },
+  {
+    path: 'initialize-vault-before-featurecell-registration',
+    data: {
+      category: 'blogs',
+      type: 'initialize-vault-before-featurecell-registration'
+    },
+    loadComponent: () =>
+      import('./posts/2026-11-12-initialize-vault-before-featurecell-registration/initialize-vault-before-featurecell-registration.component').then(
+        (m) => m.BlogInitializeVaultBeforeFeatureCellRegistrationComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

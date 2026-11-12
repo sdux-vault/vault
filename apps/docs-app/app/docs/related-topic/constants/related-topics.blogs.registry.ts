@@ -482,6 +482,13 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'How to Create and Submit a New StackBlitz Example — SDuX Blog',
       description:
         'Learn how to scaffold, document, port, verify, and submit a standalone StackBlitz example that remains runnable and reviewable.'
+    },
+    {
+      link: '/blog/initialize-vault-before-featurecell-registration',
+      display: 'Initialize the Vault Before FeatureCell Registration',
+      title: 'Initialize the Vault Before FeatureCell Registration — SDuX Blog',
+      description:
+        'Learn how Vault initialization prepares the application runtime, enforces FeatureCell registration order, and keeps state semantics explicit.'
     }
   ]
 };

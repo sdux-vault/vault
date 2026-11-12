@@ -393,7 +393,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'add-edit-records-without-mixing-editor-state',
     title:
-      'Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State',
+      'Tutorial Chapter 4 — Add and Edit Records Without Mixing Editor State with Shared Feature State',
     date: '2026-09-17',
     readingTime: 9,
     pillar: 'SP',
@@ -402,7 +402,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'route-destructive-delete-through-the-service-owned-boundary',
     title:
-      'Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary',
+      'Tutorial Chapter 5 — Route Destructive Delete Through the Same Service-Owned Boundary',
     date: '2026-09-22',
     readingTime: 9,
     pillar: 'SP',
@@ -411,7 +411,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-6-feature-lifecycle-null-reset-destroy',
     title:
-      'Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy',
+      'Tutorial Chapter 6 — Make Feature Lifecycle Intentional with Null, Reset, and Destroy',
     date: '2026-09-24',
     readingTime: 8,
     pillar: 'SP',
@@ -420,7 +420,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-7-filters-and-reducers',
     title:
-      'Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline',
+      'Tutorial Chapter 7 — Centralize Filtering and Display Derivation in the Pipeline',
     date: '2026-09-29',
     readingTime: 9,
     pillar: 'SP',
@@ -429,7 +429,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-8-observe-pipeline-failures',
     title:
-      'Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control',
+      'Tutorial Chapter 8 — Observe Pipeline Failures Without Turning UI Feedback into Control',
     date: '2026-10-01',
     readingTime: 9,
     pillar: 'SP',
@@ -437,7 +437,8 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   },
   {
     slug: 'chapter-9-route-async-inputs-through-one-service-owned-pipeline',
-    title: 'Chapter 9 — Route Async Inputs Through One Service-Owned Pipeline',
+    title:
+      'Tutorial Chapter 9 — Route Async Inputs Through One Service-Owned Pipeline',
     date: '2026-10-06',
     readingTime: 10,
     pillar: 'SP',
@@ -446,7 +447,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-10-delay-state-transitions-without-changing-state-meaning',
     title:
-      'Chapter 10 — Delay State Transitions Without Changing State Meaning',
+      'Tutorial Chapter 10 — Delay State Transitions Without Changing State Meaning',
     date: '2026-10-08',
     readingTime: 9,
     pillar: 'SP',
@@ -455,7 +456,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-11-encrypt-and-persist-feature-state-without-polluting-application-code',
     title:
-      'Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code',
+      'Tutorial Chapter 11 — Encrypt and Persist Feature State Without Polluting Application Code',
     date: '2026-10-13',
     readingTime: 10,
     pillar: 'SP',
@@ -464,7 +465,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-12-inspect-state-transitions-without-turning-diagnostics-into-control-logic',
     title:
-      'Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic',
+      'Tutorial Chapter 12 — Inspect State Transitions Without Turning Diagnostics into Control Logic',
     date: '2026-10-15',
     readingTime: 10,
     pillar: 'SP',
@@ -473,7 +474,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-13-keep-feature-state-aligned-across-tabs-without-sharing-transient-ui-state',
     title:
-      'Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State',
+      'Tutorial Chapter 13 — Keep Feature State Aligned Across Tabs Without Sharing Transient UI State',
     date: '2026-10-20',
     readingTime: 10,
     pillar: 'SP',
@@ -482,7 +483,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule',
     title:
-      'Chapter 14 — Suppress Redundant State Candidates with a Deliberate Distinctness Rule',
+      'Tutorial Chapter 14 — Suppress Redundant State Candidates with a Deliberate Distinctness Rule',
     date: '2026-10-22',
     readingTime: 10,
     pillar: 'SP',
@@ -491,7 +492,7 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
   {
     slug: 'chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline',
     title:
-      'Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline',
+      'Tutorial Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline',
     date: '2026-10-27',
     readingTime: 10,
     pillar: 'SP',
@@ -511,6 +512,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     date: '2026-11-03',
     readingTime: 6,
     pillar: 'ED',
+    active: true
+  },
+  {
+    slug: 'initialize-vault-before-featurecell-registration',
+    title: 'Initialize the Vault Before FeatureCell Registration',
+    date: '2026-11-05',
+    readingTime: 6,
+    pillar: 'TA',
     active: true
   }
 ];
