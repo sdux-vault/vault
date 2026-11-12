@@ -41,7 +41,7 @@ export const FrameworkComparisonRegistryConstant: Record<
     id: 'angular',
     selectorLabel: 'Angular',
     sharedSetupFileNames: ['main.ts', 'app.config.ts'],
-    displayCeremony: true,
+    displayCeremony: false,
     left: {
       frameworkLabel: 'Angular',
       libraryLabel: 'NgRx SignalStore',

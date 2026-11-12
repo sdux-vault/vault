@@ -84,10 +84,14 @@ export const reduxV2ExampleProject: Project = {
 }
 `,
     'src/app.config.ts': `import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { EmployeeStore } from './employee.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [EmployeeStore]
+  providers: [
+    provideHttpClient(),
+    EmployeeStore
+  ]
 };
 `,
     'src/employee.model.ts': `/**
@@ -102,7 +106,9 @@ export interface Employee {
   name: string;
 }
 `,
-    'src/employee.service.ts': `import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+    'src/employee.service.ts': `import { httpResource } from '@angular/common/http';
+import { effect, inject, Injector } from '@angular/core';
+import { patchState, signalStore, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { Employee } from './employee.model';
 
 const prepareEmployees = (employees: Employee[]): Employee[] => {
@@ -115,50 +121,77 @@ interface EmployeeState {
   isLoading: boolean;
   value: Employee[];
   error: string | null;
+  requestVersion: number | undefined;
 }
 
 const initialState: EmployeeState = {
   isLoading: false,
   value: [],
-  error: null
+  error: null,
+  requestVersion: undefined
 };
 
 export const EmployeeStore = signalStore(
   withState(initialState),
+  withProps((store, injector = inject(Injector)) => ({
+    employeesResource: httpResource<Employee[]>(
+      () =>
+        store.requestVersion() === undefined
+          ? undefined
+          : 'https://jsonplaceholder.typicode.com/users',
+      {
+        injector,
+        defaultValue: [],
+        parse: (employees) => prepareEmployees(employees as Employee[])
+      }
+    )
+  })),
+  withHooks((store) => ({
+    onInit() {
+      effect(() => {
+        if (store.requestVersion() === undefined) {
+          return;
+        }
+
+        const resource = store.employeesResource;
+        if (resource.isLoading()) {
+          patchState(store, { isLoading: true, error: null });
+        } else if (resource.error()) {
+          patchState(store, {
+            isLoading: false,
+            error: String(resource.error())
+          });
+        } else if (resource.hasValue()) {
+          patchState(store, {
+            isLoading: false,
+            value: resource.value(),
+            error: null
+          });
+        }
+      });
+    }
+  })),
   withMethods((store) => ({
     replace(employees: Employee[]): void {
       patchState(store, {
         isLoading: false,
         value: prepareEmployees(employees),
+        error: null,
+        requestVersion: undefined
+      });
+    },
+    replaceAsync(): void {
+      patchState(store, {
+        requestVersion: (store.requestVersion() ?? 0) + 1,
+        isLoading: true,
         error: null
       });
     },
-    async replaceAsync(): Promise<void> {
-      patchState(store, { isLoading: true, error: null });
-
-      try {
-        const response = await fetch(
-          'https://jsonplaceholder.typicode.com/users'
-        );
-        if (!response.ok) {
-          throw new Error(\`Failed to load employees (\${response.status})\`);
-        }
-
-        const employees = (await response.json()) as Employee[];
-        patchState(store, {
-          isLoading: false,
-          value: prepareEmployees(employees),
-          error: null
-        });
-      } catch (error: unknown) {
-        patchState(store, {
-          isLoading: false,
-          error: error instanceof Error ? error.message : 'Failed to load employees'
-        });
-      }
-    },
     reset(): void {
-      patchState(store, initialState);
+      patchState(store, {
+        ...initialState,
+        requestVersion: undefined
+      });
     }
   }))
 );
