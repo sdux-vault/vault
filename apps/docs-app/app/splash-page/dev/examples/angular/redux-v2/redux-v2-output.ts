@@ -4,9 +4,9 @@
  */
 export const ANGULAR_REDUX_V2_OUTPUT_METADATA = {
   competitorTotalLines: 139,
-  sduxTotalLines: 125,
-  lineDifference: 14,
-  percentageSavings: 10.07
+  sduxTotalLines: 133,
+  lineDifference: 6,
+  percentageSavings: 4.32
 } as const;
 
 export const ANGULAR_REDUX_V2_OUTPUT = [

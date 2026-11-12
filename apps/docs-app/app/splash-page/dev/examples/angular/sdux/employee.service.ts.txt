@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { Injectable, inject, Injector } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.model';
 
 @FeatureCell<Employee[]>('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeCell {
+  readonly #injector = inject(Injector);
   readonly #vault = injectVault<Employee[]>(EmployeeCell);
   readonly state = this.#vault.state;
 
@@ -32,9 +34,11 @@ export class EmployeeCell {
   }
 
   replaceAsync(): void {
-    this.#vault.replaceState({
-      value: () => fetch('/api/employees').then((response) => response.json())
-    });
+    this.#vault.replaceState(
+      httpResource<Employee[]>(() => '/api/employees', {
+        injector: this.#injector
+      })
+    );
   }
 
   reset(): void {
