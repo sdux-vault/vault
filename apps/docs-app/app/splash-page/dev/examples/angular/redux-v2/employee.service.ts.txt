@@ -1,0 +1,87 @@
+import { httpResource } from '@angular/common/http';
+import { effect, inject, Injector } from '@angular/core';
+import { patchState, signalStore, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { Employee } from './employee.model';
+
+const prepareEmployees = (employees: Employee[]): Employee[] => {
+  return employees
+    .filter((employee) => employee.id % 2 !== 0)
+    .sort((left, right) => left.name.localeCompare(right.name));
+};
+
+interface EmployeeState {
+  isLoading: boolean;
+  value: Employee[];
+  error: string | null;
+  requestVersion: number | undefined;
+}
+
+const initialState: EmployeeState = {
+  isLoading: false,
+  value: [],
+  error: null,
+  requestVersion: undefined
+};
+
+export const EmployeeStore = signalStore(
+  withState(initialState),
+  withProps((store, injector = inject(Injector)) => ({
+    employeesResource: httpResource<Employee[]>(
+      () =>
+        store.requestVersion() === undefined ? undefined : '/api/employees',
+      {
+        injector,
+        defaultValue: [],
+        parse: (employees) => prepareEmployees(employees as Employee[])
+      }
+    )
+  })),
+  withHooks((store) => ({
+    onInit() {
+      effect(() => {
+        if (store.requestVersion() === undefined) {
+          return;
+        }
+
+        const resource = store.employeesResource;
+        if (resource.isLoading()) {
+          patchState(store, { isLoading: true, error: null });
+        } else if (resource.error()) {
+          patchState(store, {
+            isLoading: false,
+            error: String(resource.error())
+          });
+        } else if (resource.hasValue()) {
+          patchState(store, {
+            isLoading: false,
+            value: resource.value(),
+            error: null
+          });
+        }
+      });
+    }
+  })),
+  withMethods((store) => ({
+    replace(employees: Employee[]): void {
+      patchState(store, {
+        isLoading: false,
+        value: prepareEmployees(employees),
+        error: null,
+        requestVersion: undefined
+      });
+    },
+    replaceAsync(): void {
+      patchState(store, {
+        requestVersion: (store.requestVersion() ?? 0) + 1,
+        isLoading: true,
+        error: null
+      });
+    },
+    reset(): void {
+      patchState(store, {
+        ...initialState,
+        requestVersion: undefined
+      });
+    }
+  }))
+);

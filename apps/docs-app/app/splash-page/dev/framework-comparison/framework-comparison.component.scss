@@ -59,7 +59,7 @@ $comparison-code-panel-text: global.$sdux-text-primary;
   .comparison-panel-header {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 25px 1fr;
+    grid-template-rows: auto 1fr;
     padding: global.$spacing-lg;
     min-height: 242px;
     background: linear-gradient(

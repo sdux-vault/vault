@@ -28,6 +28,14 @@ export const REACT_REDUX_V2_OUTPUT = [
   },
   {
     type: 'typescript',
+    fileName: 'employee.api.ts',
+    source:
+      "import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';\nimport type { Employee } from './employee.model';\n\nexport const prepareEmployees = (employees: Employee[]): Employee[] => {\n  return employees\n    .filter((employee) => employee.id % 2 !== 0)\n    .sort((left, right) => left.name.localeCompare(right.name));\n};\n\nexport const employeeApi = createApi({\n  reducerPath: 'employeeApi',\n  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),\n  endpoints: (build) => ({\n    getEmployees: build.query<Employee[], void>({\n      query: () => 'employees',\n      transformResponse: prepareEmployees\n    })\n  })\n});\n\nexport const useGetEmployeesState =\n  employeeApi.endpoints.getEmployees.useQueryState;\n",
+    numberedSource:
+      " 1 | import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';\n 2 | import type { Employee } from './employee.model';\n 3 | \n 4 | export const prepareEmployees = (employees: Employee[]): Employee[] => {\n 5 |   return employees\n 6 |     .filter((employee) => employee.id % 2 !== 0)\n 7 |     .sort((left, right) => left.name.localeCompare(right.name));\n 8 | };\n 9 | \n10 | export const employeeApi = createApi({\n11 |   reducerPath: 'employeeApi',\n12 |   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),\n13 |   endpoints: (build) => ({\n14 |     getEmployees: build.query<Employee[], void>({\n15 |       query: () => 'employees',\n16 |       transformResponse: prepareEmployees\n17 |     })\n18 |   })\n19 | });\n20 | \n21 | export const useGetEmployeesState =\n22 |   employeeApi.endpoints.getEmployees.useQueryState;\n23 | "
+  },
+  {
+    type: 'typescript',
     fileName: 'ExampleView.tsx',
     source:
       "import {\n  replaceEmployees,\n  replaceEmployeesAsync,\n  resetEmployees\n} from './employee.actions';\nimport { useGetEmployeesState } from './employee.api';\nimport type { Employee } from './employee.model';\n\nconst sample: Employee[] = [\n  { id: 11, name: 'Luke' },\n  { id: 38, name: 'Leia' },\n  { id: 9, name: 'Han' }\n];\n\nexport function ExampleView() {\n  const snapshot = useGetEmployeesState();\n\n  const loadSample = () => {\n    replaceEmployees(sample);\n  };\n\n  const loadSampleAsync = () => {\n    replaceEmployeesAsync();\n  };\n\n  const resetState = () => {\n    resetEmployees();\n  };\n\n  return (\n    <div>\n      <div>\n        {snapshot.isLoading ? (\n          <div>Loading...</div>\n        ) : snapshot.error ? (\n          <div>{String(snapshot.error)}</div>\n        ) : (\n          <textarea readOnly value={JSON.stringify(snapshot.data ?? [], null, 2)} />\n        )}\n      </div>\n\n      <div>\n        <button type=\"button\" onClick={loadSample}>\n          Load Sample State\n        </button>\n\n        <button type=\"button\" onClick={loadSampleAsync}>\n          Load Async State\n        </button>\n\n        <button type=\"button\" onClick={resetState}>\n          Reset State\n        </button>\n      </div>\n    </div>\n  );\n}\n",
@@ -40,14 +48,6 @@ export const REACT_REDUX_V2_OUTPUT = [
     source: 'export interface Employee {\n  id: number;\n  name: string;\n}\n',
     numberedSource:
       '1 | export interface Employee {\n2 |   id: number;\n3 |   name: string;\n4 | }\n5 | '
-  },
-  {
-    type: 'typescript',
-    fileName: 'employee.api.ts',
-    source:
-      "import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';\nimport type { Employee } from './employee.model';\n\nexport const prepareEmployees = (employees: Employee[]): Employee[] => {\n  return employees\n    .filter((employee) => employee.id % 2 !== 0)\n    .sort((left, right) => left.name.localeCompare(right.name));\n};\n\nexport const employeeApi = createApi({\n  reducerPath: 'employeeApi',\n  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),\n  endpoints: (build) => ({\n    getEmployees: build.query<Employee[], void>({\n      query: () => 'employees',\n      transformResponse: prepareEmployees\n    })\n  })\n});\n\nexport const useGetEmployeesState =\n  employeeApi.endpoints.getEmployees.useQueryState;\n",
-    numberedSource:
-      " 1 | import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';\n 2 | import type { Employee } from './employee.model';\n 3 | \n 4 | export const prepareEmployees = (employees: Employee[]): Employee[] => {\n 5 |   return employees\n 6 |     .filter((employee) => employee.id % 2 !== 0)\n 7 |     .sort((left, right) => left.name.localeCompare(right.name));\n 8 | };\n 9 | \n10 | export const employeeApi = createApi({\n11 |   reducerPath: 'employeeApi',\n12 |   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),\n13 |   endpoints: (build) => ({\n14 |     getEmployees: build.query<Employee[], void>({\n15 |       query: () => 'employees',\n16 |       transformResponse: prepareEmployees\n17 |     })\n18 |   })\n19 | });\n20 | \n21 | export const useGetEmployeesState =\n22 |   employeeApi.endpoints.getEmployees.useQueryState;\n23 | "
   },
   {
     type: 'typescript',

@@ -84,6 +84,7 @@ export const comparisonExampleProject: Project = {
 }
 `,
     'src/app.config.ts': `import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { provideFeatureCell, provideVault } from '@sdux-vault/angular';
 import { EmployeeCell } from './employee.service';
 
@@ -94,6 +95,7 @@ import { EmployeeCell } from './employee.service';
  */
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideVault({ logLevel: 'off' }),
     provideFeatureCell(EmployeeCell, {
       key: 'employees',
@@ -114,7 +116,8 @@ export interface Employee {
   name: string;
 }
 `,
-    'src/employee.service.ts': `import { Injectable } from '@angular/core';
+    'src/employee.service.ts': `import { httpResource } from '@angular/common/http';
+import { Injectable, inject, Injector } from '@angular/core';
 import { FeatureCell, injectVault } from '@sdux-vault/angular';
 import { Employee } from './employee.model';
 
@@ -130,6 +133,7 @@ import { Employee } from './employee.model';
 @FeatureCell<Employee[]>('employees')
 @Injectable({ providedIn: 'root' })
 export class EmployeeCell {
+  readonly #injector = inject(Injector);
   /** Private Vault handle used to configure and update the FeatureCell. */
   readonly #vault = injectVault<Employee[]>(EmployeeCell);
 
@@ -172,12 +176,12 @@ export class EmployeeCell {
    * @returns Nothing; the Vault snapshot reports loading, success, or error state.
    */
   replaceAsync(): void {
-    this.#vault.replaceState({
-      value: () =>
-        fetch('https://jsonplaceholder.typicode.com/users').then((response) =>
-          response.json()
-        )
-    });
+    this.#vault.replaceState(
+      httpResource<Employee[]>(
+        () => 'https://jsonplaceholder.typicode.com/users',
+        { injector: this.#injector }
+      )
+    );
   }
 
   /**

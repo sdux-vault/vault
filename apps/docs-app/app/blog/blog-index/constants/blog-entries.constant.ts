@@ -478,5 +478,39 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 10,
     pillar: 'SP',
     active: true
+  },
+  {
+    slug: 'chapter-14-suppress-redundant-state-candidates-with-a-deliberate-distinctness-rule',
+    title:
+      'Chapter 14 — Suppress Redundant State Candidates with a Deliberate Distinctness Rule',
+    date: '2026-10-22',
+    readingTime: 10,
+    pillar: 'SP',
+    active: true
+  },
+  {
+    slug: 'chapter-15-put-explicit-approval-boundaries-inside-the-feature-pipeline',
+    title:
+      'Chapter 15 — Put Explicit Approval Boundaries Inside the Feature Pipeline',
+    date: '2026-10-27',
+    readingTime: 10,
+    pillar: 'SP',
+    active: true
+  },
+  {
+    slug: 'how-to-use-the-sdux-vault-stackblitz-examples-page',
+    title: 'How to Use the SDuX Vault StackBlitz Examples Page',
+    date: '2026-10-29',
+    readingTime: 7,
+    pillar: 'SP',
+    active: true
+  },
+  {
+    slug: 'how-to-create-and-submit-a-new-stackblitz-example',
+    title: 'How to Create and Submit a New StackBlitz Example',
+    date: '2026-11-03',
+    readingTime: 6,
+    pillar: 'ED',
+    active: true
   }
 ];
