@@ -146,9 +146,10 @@ git checkout -b add-my-first-example;</code></pre>
           </p>
           <p>
             Start with the service. It declares the state shape, registers the
-            FeatureCell, initializes the pipeline, and exposes the methods the
-            component can call. This is the replace example's service, trimmed
-            to its essentials:
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>,
+            initializes the pipeline, and exposes the methods the component can
+            call. This is the replace example's service, trimmed to its
+            essentials:
           </p>
           <sdux-example-viewer-source
             [displayTabs]="false"
