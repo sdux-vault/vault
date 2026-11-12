@@ -94,15 +94,12 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 `,
-    'src/employee.model.ts': `/**
- * Describes the employee records used as the FeatureCell's array state. The
- * filter and reducer pipeline use the identifier and name to process records.
- */
+    'src/employee.model.ts': `/** Describes the employee records held by the NgRx SignalStore. */
 export interface Employee {
   /** Identifies the employee and determines whether the filter keeps it. */
   id: number;
 
-  /** Supplies the employee name used by the sorting reducer. */
+  /** Supplies the employee name used by the sorting transformation. */
   name: string;
 }
 `,
@@ -201,7 +198,8 @@ export const EmployeeStore = signalStore(
   <ol>
     <li>CSS styling</li>
     <li>
-      Async fetch uses NgRx <code>SignalStore</code> with
+      Async loading uses Angular <code>httpResource</code> within NgRx
+      <code>SignalStore</code> with
       "https://jsonplaceholder.typicode.com/users". The live API causes a flash
       in the UI when the "Load Async State" button is clicked because it is too
       responsive to allow for reading the loading message.
