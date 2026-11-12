@@ -3913,6 +3913,16 @@
       "url": "/blog/how-to-create-and-submit-a-new-stackblitz-example",
       "symbols": ["how-to-create-and-submit-a-new-stackblitz-example"],
       "content": "how to create and submit a new stackblitz example how-to-create-and-submit-a-new-stackblitz-example"
+    },
+    {
+      "id": "blog:initialize-vault-before-featurecell-registration",
+      "title": "initialize vault before featurecell registration",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/initialize-vault-before-featurecell-registration",
+      "symbols": ["initialize-vault-before-featurecell-registration"],
+      "content": "initialize vault before featurecell registration initialize-vault-before-featurecell-registration"
     }
   ]
 }
