@@ -521,5 +521,14 @@ export const BLOG_ENTRIES: readonly BlogEntry[] = [
     readingTime: 6,
     pillar: 'TA',
     active: true
+  },
+  {
+    slug: 'initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state',
+    title:
+      "Initialize Once, Hydrate Deliberately: Choosing a FeatureCell's Starting State",
+    date: '2026-11-10',
+    readingTime: 6,
+    pillar: 'ED',
+    active: true
   }
 ];

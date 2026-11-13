@@ -624,6 +624,18 @@ export const blogRoutes: Routes = [
       import('./posts/2026-11-12-initialize-vault-before-featurecell-registration/initialize-vault-before-featurecell-registration.component').then(
         (m) => m.BlogInitializeVaultBeforeFeatureCellRegistrationComponent
       )
+  },
+  {
+    path: 'initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state',
+    data: {
+      category: 'blogs',
+      type: 'initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state'
+    },
+    loadComponent: () =>
+      import('./posts/2026-11-13-initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state/initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state.component').then(
+        (m) =>
+          m.BlogInitializeOnceHydrateDeliberatelyChoosingAFeatureCellsStartingStateComponent
+      )
   }
   // Add new entries here when a post is created by the write-blog-post prompt.
   //

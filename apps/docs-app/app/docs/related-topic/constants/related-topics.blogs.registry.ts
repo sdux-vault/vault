@@ -489,6 +489,14 @@ export const RELATED_TOPICS_BLOGS_REGISTRY: RelatedTopicCategoryShape = {
       title: 'Initialize the Vault Before FeatureCell Registration — SDuX Blog',
       description:
         'Learn how Vault initialization prepares the application runtime, enforces FeatureCell registration order, and keeps state semantics explicit.'
+    },
+    {
+      link: '/blog/initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state',
+      display:
+        "Initialize Once, Hydrate Deliberately: Choosing a FeatureCell's Starting State",
+      title: 'Initialize Once, Hydrate Deliberately — SDuX Blog',
+      description:
+        'Learn how initialize() activates a FeatureCell and how hydrate() outranks Persist behaviors and descriptor defaults at startup.'
     }
   ]
 };
