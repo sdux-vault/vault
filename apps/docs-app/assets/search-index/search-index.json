@@ -3923,6 +3923,18 @@
       "url": "/blog/initialize-vault-before-featurecell-registration",
       "symbols": ["initialize-vault-before-featurecell-registration"],
       "content": "initialize vault before featurecell registration initialize-vault-before-featurecell-registration"
+    },
+    {
+      "id": "blog:initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state",
+      "title": "Initialize Once, Hydrate Deliberately: Choosing a FeatureCell's Starting State",
+      "kind": "blog",
+      "project": "blog",
+      "docLink": "blog",
+      "url": "/blog/initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state",
+      "symbols": [
+        "initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state"
+      ],
+      "content": "Initialize Once, Hydrate Deliberately: Choosing a FeatureCell's Starting State initialize-once-hydrate-deliberately-choosing-a-featurecells-starting-state ED"
     }
   ]
 }

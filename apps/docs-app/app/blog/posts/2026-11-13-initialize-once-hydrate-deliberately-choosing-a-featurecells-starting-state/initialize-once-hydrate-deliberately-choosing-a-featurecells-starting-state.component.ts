@@ -40,7 +40,9 @@ import { BlogLayoutComponent } from '../../blog-layout/blog-layout.component';
           <strong>initialize()</strong> actually activates, when
           <strong>hydrate()</strong> overrides everything else, and how to
           choose between a static default, Persist behaviors, and an explicit
-          factory when your FeatureCell comes online.
+          factory when your
+          <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+          comes online.
         </p>
         <div class="callout callout-info">
           <p>
@@ -407,11 +409,12 @@ employeeCell
               ]"
               >hydrate()</a
             >
-            in the FeatureCell API reference, including the full precedence
-            rules, diagrams, and resolution outcome tables this post draws from.
-            Try the live StackBlitz example above to see
-            <strong>hydrate()</strong> override a descriptor default in a
-            running pipeline.
+            in the
+            <a href="/docs/references/functions/feature-cell">FeatureCell</a>
+            API reference, including the full precedence rules, diagrams, and
+            resolution outcome tables this post draws from. Try the live
+            StackBlitz example above to see <strong>hydrate()</strong> override
+            a descriptor default in a running pipeline.
           </p>
         </div>
       </section>
